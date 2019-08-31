@@ -27,12 +27,13 @@ export default StyleSheet.create({
     marginBottom: 10
   },
   headerWrapper:{
-    flexDirection: 'column'
+    flexDirection: 'column',
+    justifyContent: 'center',
+    marginTop: 10
   },
   headerWrapper1:{
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingTop: 10,
     width: Metrics.screenWidth - 40,
     marginHorizontal: 20
   },
@@ -43,12 +44,14 @@ export default StyleSheet.create({
   },
   headerButtonLeft:{
     flex:1,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   headerButtonRight:{
     flex: 2,
     flexDirection: 'row',
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
+    alignItems: 'center',
   },
   buttonHeader:{
     height: 25,
@@ -173,7 +176,7 @@ export default StyleSheet.create({
     color:Colors.gray
   },
   menuImage:{
-    height: 35,
+    height: 25,
     resizeMode: 'contain'
   }
 })

@@ -14,10 +14,16 @@ const images = {
   wishlist: require('../Images/Icons/wishlist.png'),
   wishlistBlack: require('../Images/Icons/wishlist-black.png'),
   wishlistProduct: require('../Images/Icons/wishlist-2.png'),
+  isWishlistProduct: require('../Images/Icons/wishlist-3.png'),
   search: require('../Images/Icons/search.png'),
   notif: require('../Images/Icons/notif.png'),
   notifWhite: require('../Images/Icons/notif-white.png'),
   back: require('../Images/Icons/back.png'),
+  whatsapp: require('../Images/Icons/wa.png'),
+  facebook: require('../Images/Icons/fb-icon-2.png'),
+  instagram: require('../Images/Icons/ig.png'),
+  sizeGuide: require('../Images/Icons/size-guide.png'),
+  rightArrow: require('../Images/Icons/icon_right_arrow.png'),
 
   //// TEMP:
   catMasaKehamilan: require('../Images/Icons/masa-kehamilan.png'),

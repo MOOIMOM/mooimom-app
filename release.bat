@@ -1,0 +1,1 @@
+cls & cd android & gradlew bundleRelease & gradlew installRelease & cd ..

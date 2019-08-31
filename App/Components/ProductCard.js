@@ -4,6 +4,7 @@ import { View, Text, TouchableWithoutFeedback, Image } from 'react-native'
 import { Images } from '../Themes'
 import Share from 'react-native-share';
 import RNFetchBlob from 'react-native-fetch-blob';
+import {convertToRupiah, share} from '../Lib/utils'
 
 import styles from './Styles/ProductCardStyles'
 
@@ -15,55 +16,17 @@ export default class ProductCard extends Component {
     };
   }
 
-  convertToRupiah (price) {
-    var rupiah = ''
-    var price = price
-      .toString()
-      .split('')
-      .reverse()
-      .join('')
-    for (var i = 0; i < price.length; i++) {
-      if (i % 3 === 0) rupiah += price.substr(i, 3) + '.'
-    }
-    return (
-      'Rp' +
-      rupiah
-        .split('', rupiah.length - 1)
-        .reverse()
-        .join('')
-    )
-  }
-
   onSharePress(){
-    RNFetchBlob.fetch('GET', this.state.product.image)
-      .then(resp => {
-        let base64image = resp.data;
-        this.share('data:image/png;base64,' + base64image);
-      })
-      .catch(err => errorHandler(err));
-  }
-
-  share(base64image){
-    let shareOptions = {
-      url: base64image,
-    };
-
-    Share.open(shareOptions)
-      .then(res => {
-
-      })
-      .catch(err => {
-
-      });
+    share(this.state.product.images)
   }
 
   render () {
-    var price = this.convertToRupiah(this.state.product.price - this.state.product.discPrice)
-    var disc = this.state.product.discPrice > 0 ? this.convertToRupiah(this.state.product.price) : ''
+    var price = convertToRupiah(this.state.product.price - this.state.product.discPrice)
+    var disc = this.state.product.discPrice > 0 ? convertToRupiah(this.state.product.price) : ''
     return (
       <View style={styles.item}>
         <Image
-            source={{uri:this.state.product.image}}
+            source={{uri:this.state.product.images[0].url}}
             style={styles.image}
         />
         <Image
