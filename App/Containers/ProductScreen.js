@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, ImageBackground, View, TouchableOpacity, TouchableWithoutFeedback, Image, KeyboardAvoidingView, TextInput, Picker } from 'react-native'
+import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Clipboard, Alert, FlatList } from 'react-native'
 import { Images, Metrics } from '../Themes'
 import { connect } from 'react-redux'
 import Carousel, { Pagination  } from 'react-native-snap-carousel';
@@ -29,6 +29,15 @@ class ProductScreen extends Component {
       {id:5, size:'2XL'},
       {id:6, size:'3XL'},
     ]
+    var reviews = [
+      {id:'1', name:'Ann', title:'Sudah Diterima', review:'pengiriman cepat , semoga cocok dengan cream nya', star:4, images:[
+        {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public_thumbnails/filer_public/2019/08/30/sc7001-9.jpg__100x100_q85_subsampling-2.jpg'},
+        {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public_thumbnails/filer_public/2018/12/20/q8005-9-compressor.jpg__600x800_q85_subsampling-2.jpg'},
+      ]},
+      {id:'2', name:'Kim Kamasean', title: 'Barang Bagus', review:'Kereen.. packing rapi.. cepat sampai.. trs wangiiii creamnya.. senang!', star:5, images:[
+        {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public_thumbnails/filer_public/2017/06/15/crossover-navy-1.jpg__600x800_q85_subsampling-2.jpg'},
+      ]},
+    ]
     this.state = {
       product: this.props.navigation.state.params.product,
       activeSlide: 0,
@@ -36,7 +45,8 @@ class ProductScreen extends Component {
       colorSelected:colors[0].id,
       sizes:sizes,
       sizeSelected:sizes[0].id,
-      isInWishlist:false
+      isInWishlist:false,
+      reviews:reviews
     }
   }
 
@@ -47,6 +57,10 @@ class ProductScreen extends Component {
 
   shareSocial(social){
     share(this.state.product.images, social)
+  }
+
+  async copyText(){
+    await Clipboard.setString(this.state.product.description);
   }
 
   renderWishlistButton(){
@@ -118,7 +132,43 @@ class ProductScreen extends Component {
     if (id === this.state.sizeSelected){
       return styles.sizeButtonSelected
     }
- }
+  }
+
+  renderReview({item, index}){
+    var stars = []
+    for(var i = 1;i<=5;i++){
+      if(i <= item.star){
+        stars.push({img: Images.star, id:i})
+      } else {
+        stars.push({img: Images.starEmpty, id:i})
+      }
+    }
+    return(
+      <View style={styles.reviewContainer} key={item.id}>
+        <View style={styles.nameWrapper}>
+          <Text style={styles.reviewName1}>Oleh </Text><Text style={styles.reviewName2}> {item.name}</Text>
+        </View>
+        <View style={styles.reviewStarWrapper}>
+          {stars.map((star) => {
+            return (
+              <Image key={star.id} source={star.img} style={styles.reviewStar}/>
+            )
+          })}
+          <Text style={styles.reviewTitle}>{item.title}</Text>
+        </View>
+        <View style={styles.reviewDescriptionWrapper}>
+          <Text style={styles.textReview}>{item.review}</Text>
+        </View>
+        <View style={styles.reviewImageWrapper}>
+          {item.images.map((image, index) => {
+            return (
+              <Image key={index} source={{uri:image.url}} style={styles.reviewImage}/>
+            )
+          })}
+        </View>
+      </View>
+    )
+  }
 
   render () {
     var price = convertToRupiah(this.state.product.price - this.state.product.discPrice)
@@ -198,7 +248,7 @@ class ProductScreen extends Component {
             <View style={styles.descriptionWrapper}>
               <View style={styles.descriptionHeader}>
                 <Text style={styles.productSubtitle}>Deskripsi Produk</Text>
-                <TouchableOpacity style={styles.btnCopy}>
+                <TouchableOpacity style={styles.btnCopy} onPress={() => this.copyText()}>
                   <Text style={styles.textCopy}>Copy</Text>
                 </TouchableOpacity>
               </View>
@@ -216,6 +266,16 @@ class ProductScreen extends Component {
               <View style={styles.sizeGuideRight}>
                 <Image source={Images.rightArrow} style={styles.buttonSizeGuide} />
               </View>
+            </View>
+            <View style={styles.wrapperSeparator}/>
+            <View style={styles.reviewWrapper}>
+              <Text style={styles.productSubtitle}>Ulasan Produk</Text>
+              <FlatList
+                data={this.state.reviews}
+                renderItem={this.renderReview}
+                keyExtractor={(item, index) => item.id}
+                showsHorizontalScrollIndicator={false}
+              />
             </View>
           </ScrollView>
         </View>

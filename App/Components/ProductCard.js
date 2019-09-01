@@ -12,12 +12,31 @@ export default class ProductCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      product: this.props.product
+      product: this.props.product,
+      isInWishlist: false
     };
   }
 
   onSharePress(){
     share(this.state.product.images)
+  }
+
+  renderWishlist(){
+    var image = Images.wishlistProduct
+    if(this.state.isInWishlist)
+      image = Images.isWishlistProduct
+    return(
+      <TouchableWithoutFeedback onPress={() => this.setState({
+        isInWishlist: !this.state.isInWishlist
+      })}>
+        <View style={styles.wishlist}>
+          <Image
+              source={image}
+              style={styles.wishlistImage}
+          />
+        </View>
+      </TouchableWithoutFeedback>
+    )
   }
 
   render () {
@@ -29,10 +48,7 @@ export default class ProductCard extends Component {
             source={{uri:this.state.product.images[0].url}}
             style={styles.image}
         />
-        <Image
-            source={Images.wishlistProduct}
-            style={styles.wishlist}
-        />
+        {this.renderWishlist()}
         <Text style={styles.name}>{this.state.product.name}</Text>
         <View style={styles.priceGroup}>
           <Text style={styles.priceDiscount}>{disc}</Text>

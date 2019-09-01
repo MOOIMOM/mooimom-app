@@ -14,10 +14,12 @@ export default StyleSheet.create({
   },
   wishlist:{
     position: 'absolute',
-    width: 25,
-    height: 25,
     right: 15,
     top: 0,
+  },
+  wishlistImage:{
+    width: 30,
+    height: 30,
     resizeMode: 'contain'
   },
   image:{

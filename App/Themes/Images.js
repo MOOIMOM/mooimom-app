@@ -24,6 +24,8 @@ const images = {
   instagram: require('../Images/Icons/ig.png'),
   sizeGuide: require('../Images/Icons/size-guide.png'),
   rightArrow: require('../Images/Icons/icon_right_arrow.png'),
+  starEmpty: require('../Images/Icons/star-empty.png'),
+  star: require('../Images/Icons/star.png'),
 
   //// TEMP:
   catMasaKehamilan: require('../Images/Icons/masa-kehamilan.png'),

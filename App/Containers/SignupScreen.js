@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, ImageBackground, View, TouchableOpacity, Image, KeyboardAvoidingView, TextInput } from 'react-native'
+import { ScrollView, Text, View, TouchableOpacity, Image, KeyboardAvoidingView, TextInput } from 'react-native'
 import { Images } from '../Themes'
 import { connect } from 'react-redux'
 // Styles

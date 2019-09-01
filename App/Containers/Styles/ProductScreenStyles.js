@@ -88,7 +88,7 @@ export default StyleSheet.create({
   wishlistBtn:{
     position: 'absolute',
     bottom: 0,
-    right: 0    
+    right: 0
   },
   wishlistImage:{
     width: 60,
@@ -260,6 +260,62 @@ export default StyleSheet.create({
     width: 30,
     height: 30,
     resizeMode: 'contain',
+  },
+  reviewWrapper:{
+
+  },
+  reviewContainer:{
+    borderBottomWidth: 1,
+    borderColor: Colors.gray,
+    paddingVertical: 20,
+  },
+  nameWrapper:{
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  reviewName1:{
+    fontSize: 16
+  },
+  reviewName2:{
+    fontSize: 16,
+    fontWeight: 'bold'
+  },
+  reviewStarWrapper:{
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center'
+  },
+  reviewStar:{
+    width: 20,
+    height: 20,
+    resizeMode: 'contain',
+    marginRight: 10
+  },
+  reviewTitle:{
+    marginLeft: 20,
+    fontSize: 16,
+    fontWeight: 'bold'
+  },
+  reviewDescriptionWrapper:{
+    flexWrap: 'wrap'
+  },
+  textReview:{
+    fontSize: 12,
+    color: Colors.gray,
+    textAlign:  'left'
+  },
+  reviewImageWrapper:{
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    marginTop: 5
+  },
+  reviewImage:{
+    width: 100,
+    height: 100,
+    resizeMode: 'contain'
   },
   menuWrapper:{
     position:'absolute',

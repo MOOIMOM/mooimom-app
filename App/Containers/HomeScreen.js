@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, ImageBackground, View, TouchableOpacity, TouchableWithoutFeedback , Image, FlatList } from 'react-native'
+import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback , Image, FlatList } from 'react-native'
 import { Images, Metrics } from '../Themes'
 import { connect } from 'react-redux'
 import Carousel, { ParallaxImage, Pagination  } from 'react-native-snap-carousel';
