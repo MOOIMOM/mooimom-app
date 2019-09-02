@@ -12,8 +12,9 @@ export default StyleSheet.create({
   headerWrapper:{
     flexDirection: 'row',
     alignItems: 'center',
-    marginHorizontal: 20,
+    marginHorizontal: 10,
     marginTop: 10,
+    justifyContent: 'space-between'
   },
   headerButtonLeft:{
     flex: 1,
@@ -30,13 +31,13 @@ export default StyleSheet.create({
   headerButtonRight:{
     flex: 2,
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center'
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   buttonHeader:{
     height: 25,
     width: 25,
-    resizeMode: 'contain',
+    resizeMode: 'contain'
   },
   searchButton:{
     width: Metrics.screenWidth / 1.8,
@@ -55,7 +56,7 @@ export default StyleSheet.create({
   textSearch:{
     color:Colors.gray,
     fontStyle: 'italic',
-    fontSize: 12
+    fontSize: 10
   },
   productContainer:{
     width: Metrics.screenWidth - 40,

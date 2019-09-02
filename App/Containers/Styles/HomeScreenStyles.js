@@ -136,19 +136,6 @@ export default StyleSheet.create({
     fontSize: 10,
     marginTop: 10
   },
-  promotionWrapper:{
-    flex:1,
-    width: Metrics.screenWidth - 40,
-    marginHorizontal: 20
-  },
-  itemPromoBanner: {
-    marginRight: 10
-  },
-  imagePromoBanner: {
-    resizeMode: 'contain',
-    width: 368 / 2.5,
-    height: 250 / 2.5,
-  },
   productWrapper:{
     flex:1,
     width: Metrics.screenWidth - 40,

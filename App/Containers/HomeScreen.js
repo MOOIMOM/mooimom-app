@@ -16,11 +16,6 @@ class HomeScreen extends Component {
       Images.banner1,
       Images.banner3
     ]
-    var dataPromoBanner = [
-      {id: '1', image: Images.promo1},
-      {id: '2', image: Images.promo2},
-      {id: '3', image: Images.promo3}
-    ]
     var dataProducts = [
       {id: '1', images: [
         {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2018/11/21/b8003-b4-compressor.jpg'},
@@ -112,7 +107,6 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
     ]
     this.state = {
       heroBanners: dataHeroBanner,
-      promoBanners: dataPromoBanner,
       products: dataProducts,
       activeSlide: 0
     }
@@ -133,19 +127,6 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
             </View>
         );
     }
-
-  _renderPromoBanner ({item, index}) {
-      return (
-        <View style={styles.itemPromoBanner}>
-          <TouchableWithoutFeedback>
-              <Image
-                  source={item.image}
-                  style={styles.imagePromoBanner}
-              />
-          </TouchableWithoutFeedback >
-        </View>
-      );
-  }
 
   _renderProduct ({item, index}) {
     const { navigate } = this.props.navigation
@@ -238,16 +219,6 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
               </TouchableOpacity>
             </View>
             <View style={styles.wrapperSeparator}/>
-            <View style={styles.promotionWrapper}>
-              <Text style={styles.subTitleWrapper}>Promo Saat Ini</Text>
-              <FlatList
-                horizontal
-                data={this.state.promoBanners}
-                renderItem={this._renderPromoBanner}
-                keyExtractor={(item, index) => item.id}
-                showsHorizontalScrollIndicator={false}
-              />
-            </View>
             <View style={styles.wrapperSeparator}/>
             <View style={styles.productWrapper}>
               <Text style={styles.subTitleWrapper}>Produk Terlaris</Text>
