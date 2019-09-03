@@ -1,5 +1,5 @@
 const colors = {
-  background: '#1F0808',
+  background: '#82DED2',
   clear: 'rgba(0,0,0,0)',
   facebook: '#3b5998',
   transparent: 'rgba(0,0,0,0)',
@@ -26,7 +26,8 @@ const colors = {
   white: '#FFFFFF',
   gray: '#aaaaaa',
   black: '#000000',
-  lightGray: '#EFEFEF'
+  lightGray: '#EFEFEF',
+  modal:'rgba(100,100,100,0.8)'
 }
 
 export default colors

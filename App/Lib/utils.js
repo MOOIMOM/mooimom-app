@@ -40,7 +40,7 @@ export async function downloadFile(url, filename){
    return base64Text + base64image
 }
 
-export async function share(images, social = ''){
+export async function share(images, description, social = '') {
   var files = []
   var urls = []
   images.map((image) => {
@@ -53,6 +53,9 @@ export async function share(images, social = ''){
   var allowedStorage = await PermissionsAndroid.request(
     PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
   )
+  var shareOptions2 = {
+    message: description,
+  };
   if (allowedStorage === 'granted') {
     let check = checkFolder()
     await check
@@ -76,28 +79,22 @@ export async function share(images, social = ''){
             shareOptions.social = Share.Social.FACEBOOK
             break
         }
-        Share.shareSingle(shareOptions)
-        .then(res => {
-
+        Share.shareSingle(shareOptions).then((resp) => {
+          console.info(resp)
         })
-        .catch(err => {
-
-        });
       } else {
-        Share.open(shareOptions)
-        .then(res => {
-
+        Share.open(shareOptions).then((resp) => {
+          Share.open(shareOptions2)
         })
-        .catch(err => {
-
-        });
       }
     })
     .catch((e) => {
         // Handle errors here
+        return null
     });
   } else {
-    Alert.alert('Please allow permission to access photos to share the product')
+    Alert.alert('Please allow permission to share the product')
+    return null
   }
 }
 

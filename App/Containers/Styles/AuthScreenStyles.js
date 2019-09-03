@@ -35,6 +35,8 @@ export default StyleSheet.create({
     color:Colors.white,
     fontSize: 20,
     fontFamily: Fonts.type.gotham3,
+    textAlign: 'center',
+    alignItems: 'center'
   },
   SignUpContainer:{
     flexDirection: 'row',
@@ -54,18 +56,22 @@ export default StyleSheet.create({
     fontFamily: Fonts.type.gotham2,
   },
   textInput: {
-    width: Metrics.screenWidth * 0.8,
-    height: 50,
+    flexDirection: 'row',
     justifyContent: 'center',
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.white,
     marginTop: 30,
-    marginBottom: 50
+    marginBottom: 50,
+    justifyContent: 'space-around'
   },
-  textTextInput:{
-    color: Colors.white,
-    fontSize: 18,
-    fontStyle: 'italic',
-    fontFamily: Fonts.type.gotham3,
+  codeInput:{
+    flex:1,
+    margin: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+    color: Colors.mooimom,
+    fontSize: 20,
+    backgroundColor: Colors.white,
+    borderRadius: 10,
+    fontFamily: Fonts.type.gotham4,
   },
 })

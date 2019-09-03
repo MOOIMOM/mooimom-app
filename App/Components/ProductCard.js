@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { View, Text, TouchableWithoutFeedback, Image } from 'react-native'
 import { Images } from '../Themes'
-import Share from 'react-native-share';
-import RNFetchBlob from 'react-native-fetch-blob';
 import {convertToRupiah, share} from '../Lib/utils'
 
 import styles from './Styles/ProductCardStyles'
@@ -18,13 +15,13 @@ export default class ProductCard extends Component {
   }
 
   onSharePress(){
-    share(this.state.product.images)
+    share(this.state.product.images, this.state.product.description)
   }
 
   renderWishlist(){
-    var image = Images.wishlistProduct
+    var image = Images.wishlistBlack
     if(this.state.isInWishlist)
-      image = Images.isWishlistProduct
+      image = Images.wishlist1
     return(
       <TouchableWithoutFeedback onPress={() => this.setState({
         isInWishlist: !this.state.isInWishlist

@@ -7,22 +7,25 @@ export default StyleSheet.create({
   },
   containerScroll:{
     paddingTop: 0,
-    height: Metrics.screenHeight - 100
+    height: Metrics.screenHeight - (70 * Metrics.screenWidth / 320)
   },
-  backgroundImage: {
+  backgroundHeader: {
     width: Metrics.screenWidth,
-    height: Metrics.screenHeight / 3,
+    height: Metrics.screenWidth,
     position:'absolute',
-    resizeMode: 'cover',
-    top: 0,
-    left: 0
+    alignSelf: "center",
+    alignContent: "center",
+    top: Metrics.screenHeight * -0.17,
+    backgroundColor: Colors.mooimom,
+    borderRadius: Metrics.screenWidth / 2,
+    transform: [{ scaleX: 2 }, { scaleY: 0.5 }]
   },
   wrapperSeparator:{
     marginTop: 10,
   },
   subTitleWrapper:{
-    fontSize: 23,
-    fontWeight: 'bold',
+    fontSize: 16 * Metrics.screenWidth / 320,
+    fontFamily: Fonts.type.gotham4,
     color: Colors.mooimom,
     marginBottom: 10
   },
@@ -79,7 +82,7 @@ export default StyleSheet.create({
   },
   textSearch:{
     color:Colors.gray,
-    fontStyle: 'italic'
+    fontFamily: Fonts.type.gotham5,
   },
   heroBannerWrapper:{
     flex:1
@@ -134,36 +137,12 @@ export default StyleSheet.create({
     textAlign: 'center',
     maxWidth: 70,
     fontSize: 10,
-    marginTop: 10
+    marginTop: 10,
+    fontFamily: Fonts.type.gotham2,
   },
   productWrapper:{
     flex:1,
     width: Metrics.screenWidth - 40,
     marginHorizontal: 20
   },
-  menuWrapper:{
-    position:'absolute',
-    backgroundColor: Colors.white,
-    borderTopWidth: 1,
-    borderTopColor: Colors.gray,
-    bottom: 0,
-    left: 0,
-    height: 70,
-    width: Metrics.screenWidth,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingTop: 10
-  },
-  menuButton:{
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    alignItems: 'center'
-  },
-  menuText:{
-    color:Colors.gray
-  },
-  menuImage:{
-    height: 25,
-    resizeMode: 'contain'
-  }
 })

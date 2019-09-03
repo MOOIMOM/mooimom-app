@@ -7,8 +7,15 @@ import ProductCard from '../Components/ProductCard'
 
 // Styles
 import styles from './Styles/HomeScreenStyles'
+import menuStyles from './Styles/MenuComponentStyles'
 
 class HomeScreen extends Component {
+  static navigationOptions = {
+      tabBarIcon: ({ focused, tintColor }) => {
+          const iconName = (focused ? Images.home2 : Images.home)
+          return <Image source={iconName} style={menuStyles.menuImage}/>
+      },
+  };
   constructor (props) {
     super(props)
     var dataHeroBanner = [
@@ -112,6 +119,12 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
     }
 
     this._renderProduct = this._renderProduct.bind(this)
+    this.navigate_to = this.navigate_to.bind(this)
+  }
+
+  navigate_to(page) {
+    const { navigate } = this.props.navigation
+    navigate(page)
   }
 
   _renderHeroBanner ({item, index}, parallaxProps) {
@@ -147,112 +160,90 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
 
   render () {
     return (
-      <View style={styles.container}>
-        <View style={styles.containerScroll}>
-          <ScrollView
-          showsVerticalScrollIndicator={false}
-          >
-            <Image source={Images.homeBG} style={styles.backgroundImage} />
-            <View style={styles.headerWrapper}>
-              <View style={styles.headerWrapper1}>
-                <View style={styles.headerButtonLeft}>
-                  <Image source={Images.mooimomLogoWhite} style={styles.logo} />
-                </View>
-                <View style={styles.headerButtonRight}>
-                  <Image source={Images.wishlist} style={styles.buttonHeader} />
-                  <Image source={Images.shoppingCart} style={styles.buttonHeader} />
-                  <Image source={Images.notifWhite} style={styles.buttonHeader} />
-                </View>
+    <View style={styles.container}>
+      <View style={styles.containerScroll}>
+        <ScrollView
+        showsVerticalScrollIndicator={false}
+        >
+          <View style={styles.backgroundHeader} />
+          <View style={styles.headerWrapper}>
+            <View style={styles.headerWrapper1}>
+              <View style={styles.headerButtonLeft}>
+                <Image source={Images.mooimomLogoWhite} style={styles.logo} />
               </View>
-              <View style={styles.headerWrapper2}>
-                <TouchableOpacity style={styles.searchButton}>
-                  <Image source={Images.search} style={styles.imageSearch}/>
-                  <Text style={styles.textSearch}>Cari Baju Hamil, Bra, Korset, dll</Text>
-                </TouchableOpacity>
+              <View style={styles.headerButtonRight}>
+                <Image source={Images.wishlist} style={styles.buttonHeader} />
+                <Image source={Images.shoppingCart} style={styles.buttonHeader} />
+                <Image source={Images.notifWhite} style={styles.buttonHeader} />
               </View>
             </View>
-            <View style={styles.wrapperSeparator}/>
-            <View style={styles.heroBannerWrapper}>
-              <Carousel
-                sliderWidth={Metrics.screenWidth}
-                sliderHeight={220}
-                itemWidth={Metrics.screenWidth - 60}
-                data={this.state.heroBanners}
-                renderItem={this._renderHeroBanner}
-                hasParallaxImages={true}
-                autoplay={true}
-                lockScrollWhileSnapping={true}
-                loop={true}
-                onSnapToItem={(index) => this.setState({ activeSlide: index }) }
-              />
-              <Pagination
-                dotsLength={this.state.heroBanners.length}
-                activeDotIndex={this.state.activeSlide}
-                dotStyle={styles.paginationDotStyleHeroBanner}
-                inactiveDotOpacity={0.4}
-                inactiveDotScale={0.6}
-                containerStyle={styles.paginationContainerStyleHeroBanner}
-                dotContainerStyle={styles.paginationDotContainerStyleHeroBanner}
-              />
-            </View>
-            <View style={styles.wrapperSeparator}/>
-            <View style={styles.categoryWrapper}>
-              <TouchableOpacity style={styles.catButton}>
-                <Image source={Images.catMasaKehamilan} style={styles.catImage}/>
-                <Text style={styles.catText}>Masa Kehamilan</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.catButton}>
-                <Image source={Images.catMasaMenyusui} style={styles.catImage}/>
-                <Text style={styles.catText}>Masa Menyusui</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.catButton}>
-                <Image source={Images.catPascaMelahirkan} style={styles.catImage}/>
-                <Text style={styles.catText}>Pasca Melahirkan</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.catButton}>
-                <Image source={Images.catProdukBayi} style={styles.catImage}/>
-                <Text style={styles.catText}>Produk Bayi</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.catButton}>
-                <Image source={Images.catGiftSet} style={styles.catImage}/>
-                <Text style={styles.catText}>Gift Set</Text>
+            <View style={styles.headerWrapper2}>
+              <TouchableOpacity style={styles.searchButton}>
+                <Image source={Images.search} style={styles.imageSearch}/>
+                <Text style={styles.textSearch}>Cari Baju Hamil, Bra, Korset, dll</Text>
               </TouchableOpacity>
             </View>
-            <View style={styles.wrapperSeparator}/>
-            <View style={styles.wrapperSeparator}/>
-            <View style={styles.productWrapper}>
-              <Text style={styles.subTitleWrapper}>Produk Terlaris</Text>
-              <FlatList
-                data={this.state.products}
-                renderItem={this._renderProduct}
-                keyExtractor={(item, index) => item.id}
-                showsHorizontalScrollIndicator={false}
-                numColumns={2}
-              />
-            </View>
-            </ScrollView>
           </View>
-        <View style={styles.menuWrapper}>
-          <TouchableOpacity style={styles.menuButton}>
-            <Image source={Images.home} style={styles.menuImage}/>
-            <Text style={styles.menuText}>Home</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.menuButton}>
-            <Image source={Images.learn} style={styles.menuImage}/>
-            <Text style={styles.menuText}>Learn</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.menuButton}>
-            <Image source={Images.category} style={styles.menuImage}/>
-            <Text style={styles.menuText}>Category</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.menuButton}>
-            <Image source={Images.order} style={styles.menuImage}/>
-            <Text style={styles.menuText}>Order</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.menuButton}>
-            <Image source={Images.account} style={styles.menuImage}/>
-            <Text style={styles.menuText}>Akun</Text>
-          </TouchableOpacity>
+          <View style={styles.wrapperSeparator}/>
+          <View style={styles.heroBannerWrapper}>
+            <Carousel
+              ref={(carousel) => { this._carousel = carousel; }}
+              sliderWidth={Metrics.screenWidth}
+              sliderHeight={220}
+              itemWidth={Metrics.screenWidth - 60}
+              data={this.state.heroBanners}
+              renderItem={this._renderHeroBanner}
+              hasParallaxImages={true}
+              autoplay={true}
+              lockScrollWhileSnapping={true}
+              onSnapToItem={(index) => this.setState({ activeSlide: index }) }
+            />
+            <Pagination
+              dotsLength={this.state.heroBanners.length}
+              activeDotIndex={this.state.activeSlide}
+              dotStyle={styles.paginationDotStyleHeroBanner}
+              inactiveDotOpacity={0.4}
+              inactiveDotScale={0.6}
+              containerStyle={styles.paginationContainerStyleHeroBanner}
+              dotContainerStyle={styles.paginationDotContainerStyleHeroBanner}
+            />
+          </View>
+          <View style={styles.wrapperSeparator}/>
+          <View style={styles.categoryWrapper}>
+            <TouchableOpacity style={styles.catButton}>
+              <Image source={Images.catMasaKehamilan} style={styles.catImage}/>
+              <Text style={styles.catText}>Masa Kehamilan</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.catButton}>
+              <Image source={Images.catMasaMenyusui} style={styles.catImage}/>
+              <Text style={styles.catText}>Masa Menyusui</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.catButton}>
+              <Image source={Images.catPascaMelahirkan} style={styles.catImage}/>
+              <Text style={styles.catText}>Pasca Melahirkan</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.catButton}>
+              <Image source={Images.catProdukBayi} style={styles.catImage}/>
+              <Text style={styles.catText}>Produk Bayi</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.catButton}>
+              <Image source={Images.catGiftSet} style={styles.catImage}/>
+              <Text style={styles.catText}>Gift Set</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.wrapperSeparator}/>
+          <View style={styles.wrapperSeparator}/>
+          <View style={styles.productWrapper}>
+            <Text style={styles.subTitleWrapper}>Produk Terlaris</Text>
+            <FlatList
+              data={this.state.products}
+              renderItem={this._renderProduct}
+              keyExtractor={(item, index) => item.id}
+              showsHorizontalScrollIndicator={false}
+              numColumns={2}
+            />
+          </View>
+          </ScrollView>
         </View>
       </View>
     )

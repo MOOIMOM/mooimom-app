@@ -40,6 +40,12 @@
 		BF48400D78CF46DBBA944E21 /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B74164DFAC44F4D90B7351B /* libRNGestureHandler.a */; };
 		3407A66A566A42B4957B1E22 /* libRNShare.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 97926DC5FE594A6BA7BDD6C9 /* libRNShare.a */; };
 		842643EBAE9B43449110191E /* libRNFetchBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0019236E53844ABA94120CD0 /* libRNFetchBlob.a */; };
+		D168AAE07DD94BF8BF36AF4F /* libReactNativeConfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2676742B7A5E48B1986EC0E1 /* libReactNativeConfig.a */; };
+		CE379B5CFB694155802D065F /* Gotham Bold.TTF in Resources */ = {isa = PBXBuildFile; fileRef = AC668D3D66E744A284E591D4 /* Gotham Bold.TTF */; };
+		1DFE25EF43F64F1C9CA84CD3 /* Gotham Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = BF3A4486442E43809C59C0DA /* Gotham Book.otf */; };
+		65BDD7D7EC3C460E8611EF47 /* Gotham Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = FB04DE2A9E6C49678AF85F04 /* Gotham Light.otf */; };
+		BE4CC9771F7D4A9390D88262 /* Gotham Rounded Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 209946536A084E348256DFBF /* Gotham Rounded Bold.otf */; };
+		2A18C78D1FE349FD99F6B7D4 /* Gotham Book Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2371A356974141059E3C30F6 /* Gotham Book Italic.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -351,6 +357,13 @@
 		97926DC5FE594A6BA7BDD6C9 /* libRNShare.a */ = {isa = PBXFileReference; name = "libRNShare.a"; path = "libRNShare.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		8CFE55A6374C4B08ADB31E32 /* RNFetchBlob.xcodeproj */ = {isa = PBXFileReference; name = "RNFetchBlob.xcodeproj"; path = "../node_modules/react-native-fetch-blob/ios/RNFetchBlob.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		0019236E53844ABA94120CD0 /* libRNFetchBlob.a */ = {isa = PBXFileReference; name = "libRNFetchBlob.a"; path = "libRNFetchBlob.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		0AC2F0BE9EA24B20ABE5085D /* ReactNativeConfig.xcodeproj */ = {isa = PBXFileReference; name = "ReactNativeConfig.xcodeproj"; path = "../node_modules/react-native-config/ios/ReactNativeConfig.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		2676742B7A5E48B1986EC0E1 /* libReactNativeConfig.a */ = {isa = PBXFileReference; name = "libReactNativeConfig.a"; path = "libReactNativeConfig.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		AC668D3D66E744A284E591D4 /* Gotham Bold.TTF */ = {isa = PBXFileReference; name = "Gotham Bold.TTF"; path = "../App/fonts/Gotham Bold.TTF"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		BF3A4486442E43809C59C0DA /* Gotham Book.otf */ = {isa = PBXFileReference; name = "Gotham Book.otf"; path = "../App/fonts/Gotham Book.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		FB04DE2A9E6C49678AF85F04 /* Gotham Light.otf */ = {isa = PBXFileReference; name = "Gotham Light.otf"; path = "../App/fonts/Gotham Light.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		209946536A084E348256DFBF /* Gotham Rounded Bold.otf */ = {isa = PBXFileReference; name = "Gotham Rounded Bold.otf"; path = "../App/fonts/Gotham Rounded Bold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		2371A356974141059E3C30F6 /* Gotham Book Italic.otf */ = {isa = PBXFileReference; name = "Gotham Book Italic.otf"; path = "../App/fonts/Gotham Book Italic.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -381,6 +394,7 @@
 				BF48400D78CF46DBBA944E21 /* libRNGestureHandler.a in Frameworks */,
 				3407A66A566A42B4957B1E22 /* libRNShare.a in Frameworks */,
 				842643EBAE9B43449110191E /* libRNFetchBlob.a in Frameworks */,
+				D168AAE07DD94BF8BF36AF4F /* libReactNativeConfig.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -570,6 +584,7 @@
 				2F524662220549359AD7DD9D /* RNGestureHandler.xcodeproj */,
 				552DF2DC1E0B4C959441F0BA /* RNShare.xcodeproj */,
 				8CFE55A6374C4B08ADB31E32 /* RNFetchBlob.xcodeproj */,
+				0AC2F0BE9EA24B20ABE5085D /* ReactNativeConfig.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -591,6 +606,7 @@
 				00E356EF1AD99517003FC87E /* mooimomTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
+				DFE7935994274C8D80941CE7 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -616,6 +632,19 @@
 			);
 			name = Products;
 			sourceTree = "<group>";
+		};
+		DFE7935994274C8D80941CE7 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				AC668D3D66E744A284E591D4 /* Gotham Bold.TTF */,
+				BF3A4486442E43809C59C0DA /* Gotham Book.otf */,
+				FB04DE2A9E6C49678AF85F04 /* Gotham Light.otf */,
+				209946536A084E348256DFBF /* Gotham Rounded Bold.otf */,
+				2371A356974141059E3C30F6 /* Gotham Book Italic.otf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -1063,6 +1092,11 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				CE379B5CFB694155802D065F /* Gotham Bold.TTF in Resources */,
+				1DFE25EF43F64F1C9CA84CD3 /* Gotham Book.otf in Resources */,
+				65BDD7D7EC3C460E8611EF47 /* Gotham Light.otf in Resources */,
+				BE4CC9771F7D4A9390D88262 /* Gotham Rounded Bold.otf in Resources */,
+				2A18C78D1FE349FD99F6B7D4 /* Gotham Book Italic.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1200,12 +1234,14 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-gesture-handler\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-share\ios",
 					"$(SRCROOT)\..\node_modules\react-native-fetch-blob\ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-config\ios\ReactNativeConfig",
 				);
 			};
 			name = Debug;
@@ -1230,12 +1266,14 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-gesture-handler\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-share\ios",
 					"$(SRCROOT)\..\node_modules\react-native-fetch-blob\ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-config\ios\ReactNativeConfig",
 				);
 			};
 			name = Release;
@@ -1261,6 +1299,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-gesture-handler\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-share\ios",
 					"$(SRCROOT)\..\node_modules\react-native-fetch-blob\ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-config\ios\ReactNativeConfig",
 				);
 			};
 			name = Debug;
@@ -1285,6 +1324,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-gesture-handler\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-share\ios",
 					"$(SRCROOT)\..\node_modules\react-native-fetch-blob\ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-config\ios\ReactNativeConfig",
 				);
 			};
 			name = Release;
@@ -1317,12 +1357,14 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-gesture-handler\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-share\ios",
 					"$(SRCROOT)\..\node_modules\react-native-fetch-blob\ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-config\ios\ReactNativeConfig",
 				);
 			};
 			name = Debug;
@@ -1355,12 +1397,14 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-gesture-handler\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-share\ios",
 					"$(SRCROOT)\..\node_modules\react-native-fetch-blob\ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-config\ios\ReactNativeConfig",
 				);
 			};
 			name = Release;
@@ -1392,12 +1436,14 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-gesture-handler\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-share\ios",
 					"$(SRCROOT)\..\node_modules\react-native-fetch-blob\ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-config\ios\ReactNativeConfig",
 				);
 			};
 			name = Debug;
@@ -1429,12 +1475,14 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-gesture-handler\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-share\ios",
 					"$(SRCROOT)\..\node_modules\react-native-fetch-blob\ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-config\ios\ReactNativeConfig",
 				);
 			};
 			name = Release;

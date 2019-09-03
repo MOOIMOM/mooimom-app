@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import { Metrics, ApplicationStyles, Colors } from '../../Themes/'
+import { Metrics, ApplicationStyles, Colors, Fonts } from '../../Themes/'
 
 export default StyleSheet.create({
   container: {
@@ -25,7 +25,7 @@ export default StyleSheet.create({
   },
   btnText:{
     color: Colors.white,
-    fontWeight: 'bold',
+    fontFamily: Fonts.type.gotham4,
     fontSize: 24,
   },
   title:{
@@ -36,15 +36,18 @@ export default StyleSheet.create({
   },
   caption1:{
     color: Colors.white,
+    fontFamily: Fonts.type.gotham2,
     fontSize: 50,
   },
   caption2:{
     color: Colors.white,
     fontWeight: 'bold',
+    fontFamily: Fonts.type.gotham1,
     fontSize: 54,
   },
   caption3:{
     color: Colors.white,
+    fontFamily: Fonts.type.gotham3,
     fontSize: 25,
   },
 })

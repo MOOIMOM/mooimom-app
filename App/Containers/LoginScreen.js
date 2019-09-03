@@ -42,7 +42,7 @@ class LoginScreen extends Component {
             </View>
             <TouchableOpacity
               style={styles.button}
-              onPress={() => this.actNavigate('HomeScreen')}
+              onPress={() => this.actNavigate('AuthScreen')}
             >
               <Text style={styles.btnText}>Sign In</Text>
             </TouchableOpacity>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Clipboard, Alert, FlatList } from 'react-native'
+import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Clipboard, Alert, FlatList, Modal } from 'react-native'
 import { Images, Metrics } from '../Themes'
 import { connect } from 'react-redux'
 import Carousel, { Pagination  } from 'react-native-snap-carousel';
@@ -46,7 +46,8 @@ class ProductScreen extends Component {
       sizes:sizes,
       sizeSelected:sizes[0].id,
       isInWishlist:false,
-      reviews:reviews
+      reviews:reviews,
+      modalVisible: false
     }
   }
 
@@ -56,11 +57,19 @@ class ProductScreen extends Component {
   }
 
   shareSocial(social){
-    share(this.state.product.images, social)
+    share(this.state.product.images, this.state.product.description, social)
   }
 
   async copyText(){
+    this.setState({
+      modalVisible: true
+    })
     await Clipboard.setString(this.state.product.description);
+    setTimeout(() => {
+      this.setState({
+        modalVisible: false
+      })
+    }, 1000);
   }
 
   renderWishlistButton(){
@@ -204,9 +213,7 @@ class ProductScreen extends Component {
                 itemWidth={Metrics.screenWidth}
                 data={this.state.product.images}
                 renderItem={this._renderImage}
-                autoplay={true}
                 lockScrollWhileSnapping={true}
-                loop={true}
                 onSnapToItem={(index) => this.setState({ activeSlide: index }) }
               />
               <Pagination
@@ -287,6 +294,9 @@ class ProductScreen extends Component {
             <Text style={styles.textShare}>SHARE</Text>
           </TouchableOpacity>
         </View>
+        {this.state.modalVisible && <View style={styles.modalView}>
+          <Text style={styles.modalText}>Text Copied to Clipboard</Text>
+        </View>}
       </View>
     )
   }

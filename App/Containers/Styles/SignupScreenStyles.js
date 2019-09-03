@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import { Metrics, ApplicationStyles, Colors } from '../../Themes/'
+import { Metrics, ApplicationStyles, Colors, Fonts } from '../../Themes/'
 
 export default StyleSheet.create({
   container: {
@@ -28,26 +28,30 @@ export default StyleSheet.create({
   },
   btnText:{
     color: Colors.mooimom,
-    fontWeight: 'bold',
     fontSize: 20,
+    fontFamily: Fonts.type.gotham4,
   },
   caption1:{
     color:Colors.white,
-    fontSize: 20
+    fontSize: 20,
+    fontFamily: Fonts.type.gotham3,
   },
   SignInContainer:{
     flexDirection: 'row',
     flex:1,
-    marginTop: 20
+    marginTop: 20,
+    justifyContent: 'center'
   },
   caption2:{
     color:Colors.white,
-    fontSize: 20
+    fontSize: 20,
+    fontFamily: Fonts.type.gotham2,
   },
   textSignUp:{
     color:Colors.white,
     fontSize: 20,
-    textDecorationLine:'underline'
+    textDecorationLine:'underline',
+    fontFamily: Fonts.type.gotham2,
   },
   textInput: {
     width: Metrics.screenWidth * 0.8,
@@ -55,10 +59,13 @@ export default StyleSheet.create({
     justifyContent: 'center',
     borderBottomWidth: 1,
     borderBottomColor: Colors.white,
-    marginBottom: 50,
+    marginTop: 30,
+    marginBottom: 50
   },
   textTextInput:{
     color: Colors.white,
-    fontSize: 18
+    fontSize: 18,
+    fontStyle: 'italic',
+    fontFamily: Fonts.type.gotham3,
   },
 })
