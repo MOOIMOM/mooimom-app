@@ -40,7 +40,34 @@ export async function downloadFile(url, filename){
    return base64Text + base64image
 }
 
-export async function share(images, description, social = '') {
+export function shareDescripton(description, social = ''){
+  if (!description || description === '') description = 'Empty Description'
+  var shareOptions = {
+    message: description,
+  };
+  if(social !== ''){
+    switch(social){
+      case 'whatsapp':
+        shareOptions.social = Share.Social.WHATSAPP
+        break
+      case 'instagram':
+        shareOptions.social = Share.Social.INSTAGRAM
+        break
+      case 'facebook':
+        shareOptions.social = Share.Social.FACEBOOK
+        break
+    }
+    Share.shareSingle(shareOptions)
+      .then(result => {})
+      .catch((e) => {
+        Share.open(shareOptions).then(result => {}).catch((e) => {})
+      })
+  } else {
+    Share.open(shareOptions).then((resp) => {}).catch((e) => {})
+  }
+}
+
+export async function share(images, social = '') {
   var files = []
   var urls = []
   images.map((image) => {
@@ -53,9 +80,6 @@ export async function share(images, description, social = '') {
   var allowedStorage = await PermissionsAndroid.request(
     PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
   )
-  var shareOptions2 = {
-    message: description,
-  };
   if (allowedStorage === 'granted') {
     let check = checkFolder()
     await check
@@ -79,13 +103,13 @@ export async function share(images, description, social = '') {
             shareOptions.social = Share.Social.FACEBOOK
             break
         }
-        Share.shareSingle(shareOptions).then((resp) => {
-          console.info(resp)
-        })
+        Share.shareSingle(shareOptions)
+          .then(result => {})
+          .catch((e) => {
+            Share.open(shareOptions).then(result => {}).catch((e) => {})
+          })
       } else {
-        Share.open(shareOptions).then((resp) => {
-          Share.open(shareOptions2)
-        })
+        Share.open(shareOptions).then((resp) => {}).catch((e) => {})
       }
     })
     .catch((e) => {

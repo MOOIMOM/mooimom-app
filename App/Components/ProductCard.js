@@ -15,7 +15,7 @@ export default class ProductCard extends Component {
   }
 
   onSharePress(){
-    share(this.state.product.images, this.state.product.description)
+    share(this.state.product.images)
   }
 
   renderWishlist(){

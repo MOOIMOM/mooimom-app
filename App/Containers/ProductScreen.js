@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Clipboard, Alert, FlatList, Modal } from 'react-native'
+import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Clipboard, Alert, FlatList, Modal, AppState } from 'react-native'
 import { Images, Metrics } from '../Themes'
 import { connect } from 'react-redux'
 import Carousel, { Pagination  } from 'react-native-snap-carousel';
-import {convertToRupiah, share} from '../Lib/utils'
+import {convertToRupiah, share, shareDescripton} from '../Lib/utils'
 // Styles
 import styles from './Styles/ProductScreenStyles'
 
@@ -39,6 +39,7 @@ class ProductScreen extends Component {
       ]},
     ]
     this.state = {
+      appState: AppState.currentState,
       product: this.props.navigation.state.params.product,
       activeSlide: 0,
       colors:colors,
@@ -47,7 +48,10 @@ class ProductScreen extends Component {
       sizeSelected:sizes[0].id,
       isInWishlist:false,
       reviews:reviews,
-      modalVisible: false
+      modalVisible: false,
+      willShareDescription:false,
+      finishShareImage: false,
+      socialShare: ''
     }
   }
 
@@ -56,8 +60,45 @@ class ProductScreen extends Component {
     navigate(screen, {})
   }
 
+  componentDidMount() {
+    AppState.addEventListener('change', this._handleAppStateChange);
+  }
+
+  componentWillUnmount() {
+    AppState.removeEventListener('change', this._handleAppStateChange);
+  }
+
+  _handleAppStateChange = (nextAppState) => {
+    if (
+      this.state.appState.match(/inactive|background/) &&
+      nextAppState === 'active'
+    ) {
+      if(this.state.willShareDescription === true){
+        this.setState({
+          finishShareImage: true
+        })
+        setTimeout(() => {
+          shareDescripton(this.state.product.description, this.state.socialShare)
+          this.setState({
+            willShareDescription: false,
+            socialShare: ''
+          })
+        }, 1000);
+      }
+    }
+    console.info(nextAppState)
+    this.setState({appState: nextAppState});
+  };
+
   shareSocial(social){
-    share(this.state.product.images, this.state.product.description, social)
+    if(this.state.willShareDescription === false){
+      this.setState({
+        willShareDescription: true,
+        finishShareImage : false,
+        socialShare: social
+      });
+      share(this.state.product.images, social)
+    }
   }
 
   async copyText(){
@@ -296,6 +337,12 @@ class ProductScreen extends Component {
         </View>
         {this.state.modalVisible && <View style={styles.modalView}>
           <Text style={styles.modalText}>Text Copied to Clipboard</Text>
+        </View>}
+        {this.state.willShareDescription && <View style={styles.modalShareView}>
+          <View style={styles.modalShareContainer}>
+            <Text style={styles.modalShareText}>Images Downloaded</Text>
+            <Text style={(this.state.finishShareImage ? styles.modalShareText : styles.modalShareText2)}>Description Copied</Text>
+          </View>
         </View>}
       </View>
     )
