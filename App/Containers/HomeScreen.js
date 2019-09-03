@@ -159,24 +159,28 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
   }
 
   render () {
+    const { navigate } = this.props.navigation
     return (
     <View style={styles.container}>
       <View style={styles.containerScroll}>
         <ScrollView
         showsVerticalScrollIndicator={false}
+        stickyHeaderIndices={[2]}
         >
           <View style={styles.backgroundHeader} />
           <View style={styles.headerWrapper}>
-            <View style={styles.headerWrapper1}>
-              <View style={styles.headerButtonLeft}>
-                <Image source={Images.mooimomLogoWhite} style={styles.logo} />
-              </View>
-              <View style={styles.headerButtonRight}>
-                <Image source={Images.wishlist} style={styles.buttonHeader} />
-                <Image source={Images.shoppingCart} style={styles.buttonHeader} />
-                <Image source={Images.notifWhite} style={styles.buttonHeader} />
-              </View>
+          <View style={styles.headerWrapper1}>
+            <View style={styles.headerButtonLeft}>
+              <Image source={Images.mooimomLogoWhite} style={styles.logo} />
             </View>
+            <View style={styles.headerButtonRight}>
+              <Image source={Images.wishlist} style={styles.buttonHeader} />
+              <Image source={Images.shoppingCart} style={styles.buttonHeader} />
+              <Image source={Images.notifWhite} style={styles.buttonHeader} />
+            </View>
+          </View>
+          </View>
+          <View style={styles.headerWrapper}>
             <View style={styles.headerWrapper2}>
               <TouchableOpacity style={styles.searchButton}>
                 <Image source={Images.search} style={styles.imageSearch}/>
@@ -184,7 +188,6 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
               </TouchableOpacity>
             </View>
           </View>
-          <View style={styles.wrapperSeparator}/>
           <View style={styles.heroBannerWrapper}>
             <Carousel
               ref={(carousel) => { this._carousel = carousel; }}
@@ -210,23 +213,23 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
           </View>
           <View style={styles.wrapperSeparator}/>
           <View style={styles.categoryWrapper}>
-            <TouchableOpacity style={styles.catButton}>
+            <TouchableOpacity style={styles.catButton} onPress={() => navigate('Category', {category_id: 0})}>
               <Image source={Images.catMasaKehamilan} style={styles.catImage}/>
               <Text style={styles.catText}>Masa Kehamilan</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.catButton}>
+            <TouchableOpacity style={styles.catButton} onPress={() => navigate('Category', {category_id: 1})}>
               <Image source={Images.catMasaMenyusui} style={styles.catImage}/>
               <Text style={styles.catText}>Masa Menyusui</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.catButton}>
+            <TouchableOpacity style={styles.catButton} onPress={() => navigate('Category', {category_id: 2})}>
               <Image source={Images.catPascaMelahirkan} style={styles.catImage}/>
               <Text style={styles.catText}>Pasca Melahirkan</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.catButton}>
+            <TouchableOpacity style={styles.catButton} onPress={() => navigate('Category', {category_id: 3})}>
               <Image source={Images.catProdukBayi} style={styles.catImage}/>
               <Text style={styles.catText}>Produk Bayi</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.catButton}>
+            <TouchableOpacity style={styles.catButton} onPress={() => navigate('Category', {category_id: 4})}>
               <Image source={Images.catGiftSet} style={styles.catImage}/>
               <Text style={styles.catText}>Gift Set</Text>
             </TouchableOpacity>

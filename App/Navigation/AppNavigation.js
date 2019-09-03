@@ -23,7 +23,7 @@ const MainNav = createBottomTabNavigator({
   // Default config for all screens
   // Default config for all screens
   headerMode: 'none',
-  initialRouteName: 'Category',
+  initialRouteName: 'Home',
   tabBarOptions: {
     activeTintColor: Colors.mooimom,
     labelStyle: {
@@ -44,7 +44,7 @@ const PrimaryNav = createStackNavigator({
 }, {
   // Default config for all screens
   headerMode: 'none',
-  initialRouteName: 'MainScreen',
+  initialRouteName: 'LaunchScreen',
   navigationOptions: {
     headerStyle: styles.header
   }

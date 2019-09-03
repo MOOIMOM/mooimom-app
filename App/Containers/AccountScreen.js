@@ -30,7 +30,7 @@ class AccountScreen extends Component {
           showsVerticalScrollIndicator={false}
           >
           <Image source={Images.homeBG} style={styles.backgroundImage} />
-          <Text>This is Category Screen</Text>
+          <Text>This is Account Screen</Text>
           </ScrollView>
         </View>
       </View>

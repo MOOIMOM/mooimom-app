@@ -86,7 +86,6 @@ class ProductScreen extends Component {
         }, 1000);
       }
     }
-    console.info(nextAppState)
     this.setState({appState: nextAppState});
   };
 
@@ -132,6 +131,31 @@ class ProductScreen extends Component {
     return (
       <Image source={{uri:item.url}} style={styles.productImage} />
     );
+  }
+
+  renderRating(){
+    var stars = []
+    var rating = Math.min(Math.floor(Math.random() * 4) + 1, 2)
+    var review = Math.floor(Math.random() * 100)
+    for(var i = 1;i<=5;i++){
+      if(i <= rating){
+        stars.push({img: Images.star, id:i})
+      } else {
+        stars.push({img: Images.starEmpty, id:i})
+      }
+    }
+    return(
+      <View style={styles.ratingWrapper}>
+        <View style={styles.ratingStarWrapper}>
+          {stars.map((star) => {
+            return (
+              <Image key={star.id} source={star.img} style={styles.reviewStar}/>
+            )
+          })}
+        </View>
+        <Text style={styles.ratingText}>{review} reviews</Text>
+      </View>
+    )
   }
 
   renderColor(){
@@ -293,6 +317,7 @@ class ProductScreen extends Component {
               </TouchableOpacity>
             </View>
             <View style={styles.wrapperSeparator}/>
+            {this.renderRating()}
             <View style={styles.descriptionWrapper}>
               <View style={styles.descriptionHeader}>
                 <Text style={styles.productSubtitle}>Deskripsi Produk</Text>

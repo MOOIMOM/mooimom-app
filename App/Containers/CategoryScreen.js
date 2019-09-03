@@ -309,6 +309,14 @@ class CategoryScreen extends Component {
     this._renderSubCategories = this._renderSubCategories.bind(this)
   }
 
+  componentWillReceiveProps(newProps){
+    if(newProps.navigation.state.params.category_id !== this.state.selectedCategoriesIdx){
+      this.setState({
+        selectedCategoriesIdx: newProps.navigation.state.params.category_id
+      })
+    }
+  }
+
   _renderCategories({item, index}){
     let style = styles.categoryView
     if(this.state.selectedCategoriesIdx === index){
@@ -361,6 +369,7 @@ class CategoryScreen extends Component {
   }
 
   render () {
+    console.log(this.state.selectedCategoriesIdx)
     return (
       <View style={styles.container}>
         <View style={styles.backgroundHeader} />

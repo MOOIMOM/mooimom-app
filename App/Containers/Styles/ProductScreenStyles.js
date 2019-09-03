@@ -96,6 +96,23 @@ export default StyleSheet.create({
     height: 50 * Metrics.screenWidth / 320,
     resizeMode: 'contain'
   },
+  ratingWrapper:{
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    marginBottom: 20
+  },
+  ratingStarWrapper:{
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center'
+  },
+  ratingText:{
+    fontFamily: Fonts.type.gotham3,
+    fontSize: 10 * Metrics.screenWidth / 320,
+    fontWeight: 'bold',
+    marginLeft: 10
+  },
   productDescriptionWrapper:{
 
   },

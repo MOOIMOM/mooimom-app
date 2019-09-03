@@ -63,7 +63,9 @@ export default StyleSheet.create({
     resizeMode: 'contain'
   },
   headerWrapper2:{
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: Colors.mooimom,
+    paddingBottom: 10
   },
   searchButton:{
     width: Metrics.screenWidth - 40,
