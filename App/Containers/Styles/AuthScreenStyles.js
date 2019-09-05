@@ -21,19 +21,19 @@ export default StyleSheet.create({
   },
   button:{
     backgroundColor: Colors.white,
-    height: 60,
+    height: 40 * Metrics.screenWidth / 320,
     width: Metrics.screenWidth - 80,
     justifyContent: 'center',
     alignItems: 'center',
   },
   btnText:{
     color: Colors.mooimom,
-    fontSize: 20,
+    fontSize: 15 * Metrics.screenWidth / 320,
     fontFamily: Fonts.type.gotham4,
   },
   caption1:{
     color:Colors.white,
-    fontSize: 20,
+    fontSize: 15 * Metrics.screenWidth / 320,
     fontFamily: Fonts.type.gotham3,
     textAlign: 'center',
     alignItems: 'center'
@@ -46,12 +46,12 @@ export default StyleSheet.create({
   },
   caption2:{
     color:Colors.white,
-    fontSize: 20,
+    fontSize: 15 * Metrics.screenWidth / 320,
     fontFamily: Fonts.type.gotham2,
   },
   textSignIn:{
     color:Colors.white,
-    fontSize: 20,
+    fontSize: 15 * Metrics.screenWidth / 320,
     textDecorationLine:'underline',
     fontFamily: Fonts.type.gotham2,
   },
@@ -69,7 +69,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
     textAlign: 'center',
     color: Colors.mooimom,
-    fontSize: 20,
+    fontSize: 20 * Metrics.screenWidth / 320,
     backgroundColor: Colors.white,
     borderRadius: 10,
     fontFamily: Fonts.type.gotham4,

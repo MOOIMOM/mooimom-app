@@ -89,13 +89,16 @@ class ProductScreen extends Component {
     this.setState({appState: nextAppState});
   };
 
-  shareSocial(social){
-    if(this.state.willShareDescription === false){
+  async shareSocial(social){
+    if(this.state.willShareDescription === false && social === 'whatsapp'){
       this.setState({
         willShareDescription: true,
         finishShareImage : false,
         socialShare: social
       });
+      share(this.state.product.images, social)
+    } else {
+      await Clipboard.setString(this.state.product.description);
       share(this.state.product.images, social)
     }
   }
@@ -266,7 +269,6 @@ class ProductScreen extends Component {
             <Image source={Images.notif} style={styles.buttonHeader} />
           </View>
         </View>
-        <View style={styles.wrapperSeparator}/>
         <View style={styles.productContainer}>
           <ScrollView
           showsVerticalScrollIndicator={false}

@@ -98,13 +98,15 @@ export async function share(images, social = '') {
             break
           case 'instagram':
             shareOptions.social = Share.Social.INSTAGRAM
+            shareOptions.urls = undefined
+            shareOptions.url = results[0]
             break
           case 'facebook':
             shareOptions.social = Share.Social.FACEBOOK
             break
         }
         Share.shareSingle(shareOptions)
-          .then(result => {})
+          .then(result => {console.info(result)})
           .catch((e) => {
             Share.open(shareOptions).then(result => {}).catch((e) => {})
           })

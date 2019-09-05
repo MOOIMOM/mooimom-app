@@ -62,7 +62,7 @@ export default StyleSheet.create({
     width: Metrics.screenWidth - 40,
     height: Metrics.screenHeight - (110 * Metrics.screenWidth / 320),
     marginHorizontal: 20,
-    paddingTop: 0,
+    marginTop: 5,
   },
   productImageWrapper:{
 
@@ -367,7 +367,7 @@ export default StyleSheet.create({
   textAddToCart:{
     color:Colors.white,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 20,
+    fontSize: 15 * Metrics.screenWidth / 320,
   },
   btnShare:{
     width: Metrics.screenWidth / 2,
@@ -378,7 +378,7 @@ export default StyleSheet.create({
   textShare:{
     color:Colors.black,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 20,
+    fontSize: 15 * Metrics.screenWidth / 320,
   },
   modalView:{
     width: Metrics.screenWidth - 80,

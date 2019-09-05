@@ -18,7 +18,7 @@ export default StyleSheet.create({
   },
   button:{
     backgroundColor: Colors.mooimom,
-    height: 60,
+    height: 40 * Metrics.screenWidth / 320,
     width: Metrics.screenWidth - 80,
     justifyContent: 'center',
     alignItems: 'center',
@@ -26,7 +26,7 @@ export default StyleSheet.create({
   btnText:{
     color: Colors.white,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 24,
+    fontSize: 20 * Metrics.screenWidth / 320,
   },
   title:{
     width: Metrics.screenWidth - 150,
@@ -37,17 +37,17 @@ export default StyleSheet.create({
   caption1:{
     color: Colors.white,
     fontFamily: Fonts.type.gotham2,
-    fontSize: 50,
+    fontSize: 35 * Metrics.screenWidth / 320,
   },
   caption2:{
     color: Colors.white,
     fontWeight: 'bold',
     fontFamily: Fonts.type.gotham1,
-    fontSize: 54,
+    fontSize: 40 * Metrics.screenWidth / 320,
   },
   caption3:{
     color: Colors.white,
     fontFamily: Fonts.type.gotham3,
-    fontSize: 25,
+    fontSize: 20 * Metrics.screenWidth / 320,
   },
 })

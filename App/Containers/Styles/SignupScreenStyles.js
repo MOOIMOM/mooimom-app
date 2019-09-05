@@ -21,41 +21,43 @@ export default StyleSheet.create({
   },
   button:{
     backgroundColor: Colors.white,
-    height: 60,
+    height: 40 * Metrics.screenWidth / 320,
     width: Metrics.screenWidth - 80,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   btnText:{
     color: Colors.mooimom,
-    fontSize: 20,
+    fontSize: 18 * Metrics.screenWidth / 320,
     fontFamily: Fonts.type.gotham4,
   },
   caption1:{
     color:Colors.white,
-    fontSize: 20,
+    fontSize: 15 * Metrics.screenWidth / 320,
     fontFamily: Fonts.type.gotham3,
+    textAlign: 'center'
   },
   SignInContainer:{
     flexDirection: 'row',
     flex:1,
     marginTop: 20,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   caption2:{
     color:Colors.white,
-    fontSize: 20,
+    fontSize: 15 * Metrics.screenWidth / 320,
     fontFamily: Fonts.type.gotham2,
   },
   textSignUp:{
     color:Colors.white,
-    fontSize: 20,
+    fontSize: 15 * Metrics.screenWidth / 320,
     textDecorationLine:'underline',
     fontFamily: Fonts.type.gotham2,
   },
   textInput: {
-    width: Metrics.screenWidth * 0.8,
-    height: 50,
+    maxWidth: Metrics.screenWidth * 0.8,
+    height: 45 * Metrics.screenWidth / 320,
     justifyContent: 'center',
     borderBottomWidth: 1,
     borderBottomColor: Colors.white,
@@ -64,7 +66,7 @@ export default StyleSheet.create({
   },
   textTextInput:{
     color: Colors.white,
-    fontSize: 18,
+    fontSize: 15 * Metrics.screenWidth / 320,
     fontStyle: 'italic',
     fontFamily: Fonts.type.gotham3,
   },
