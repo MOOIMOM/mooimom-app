@@ -9,6 +9,10 @@ import LearnScreen from '../Containers/LearnScreen'
 import CategoryScreen from '../Containers/CategoryScreen'
 import OrderScreen from '../Containers/OrderScreen'
 import AccountScreen from '../Containers/AccountScreen'
+import CartScreen from '../Containers/CartScreen'
+import DeliveryScreen from '../Containers/DeliveryScreen'
+import AddressListScreen from '../Containers/AddressListScreen'
+import NewAddressScreen from '../Containers/NewAddressScreen'
 import { Images, Colors } from '../Themes'
 
 import styles from './Styles/NavigationStyles'
@@ -38,13 +42,17 @@ const PrimaryNav = createStackNavigator({
   LoginScreen: { screen: LoginScreen },
   AuthScreen: { screen: AuthScreen },
   ProductScreen: { screen: ProductScreen },
+  CartScreen: { screen: CartScreen },
+  DeliveryScreen: { screen: DeliveryScreen },
+  AddressListScreen: { screen: AddressListScreen },
+  NewAddressScreen: { screen: NewAddressScreen },
   MainScreen: {
      screen: MainNav
   }
 }, {
   // Default config for all screens
   headerMode: 'none',
-  initialRouteName: 'LaunchScreen',
+  initialRouteName: 'MainScreen',
   navigationOptions: {
     headerStyle: styles.header
   }

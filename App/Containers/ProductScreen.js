@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Clipboard, Alert, FlatList, Modal, AppState } from 'react-native'
+import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Clipboard, Alert, FlatList, AppState } from 'react-native'
 import { Images, Metrics } from '../Themes'
 import { connect } from 'react-redux'
 import Carousel, { Pagination  } from 'react-native-snap-carousel';
@@ -48,16 +48,16 @@ class ProductScreen extends Component {
       sizeSelected:sizes[0].id,
       isInWishlist:false,
       reviews:reviews,
-      modalVisible: false,
+      modalClipboardVisible: false,
       willShareDescription:false,
       finishShareImage: false,
-      socialShare: ''
+      socialShare: '',
     }
   }
 
-  actNavigate (screen) {
+  actNavigate (screen , obj = {}) {
     const { navigate } = this.props.navigation
-    navigate(screen, {})
+    navigate(screen, obj)
   }
 
   componentDidMount() {
@@ -105,12 +105,12 @@ class ProductScreen extends Component {
 
   async copyText(){
     this.setState({
-      modalVisible: true
+      modalClipboardVisible: true
     })
     await Clipboard.setString(this.state.product.description);
     setTimeout(() => {
       this.setState({
-        modalVisible: false
+        modalClipboardVisible: false
       })
     }, 1000);
   }
@@ -355,14 +355,14 @@ class ProductScreen extends Component {
           </ScrollView>
         </View>
         <View style={styles.menuWrapper}>
-          <TouchableOpacity style={styles.btnAddToCart}>
+          <TouchableOpacity style={styles.btnAddToCart} onPress={() =>this.actNavigate('CartScreen')}>
             <Text style={styles.textAddToCart}>ADD TO CART</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.btnShare} onPress={() => this.shareSocial('')}>
             <Text style={styles.textShare}>SHARE</Text>
           </TouchableOpacity>
         </View>
-        {this.state.modalVisible && <View style={styles.modalView}>
+        {this.state.modalClipboardVisible && <View style={styles.modalView}>
           <Text style={styles.modalText}>Text Copied to Clipboard</Text>
         </View>}
         {this.state.willShareDescription && <View style={styles.modalShareView}>

@@ -110,6 +110,6 @@ export default StyleSheet.create({
   textBtn:{
     color: Colors.white,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 14 * Metrics.screenWidth / 320
+    fontSize: 12 * Metrics.screenWidth / 320
   },
 })

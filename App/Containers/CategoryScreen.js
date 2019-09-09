@@ -214,6 +214,7 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
     this._renderSubCategoryView = this._renderSubCategoryView.bind(this)
     this._renderTopCategories = this._renderTopCategories.bind(this)
     this._renderProduct = this._renderProduct.bind(this)
+    this._onLayout = this._onLayout.bind(this)
   }
 
   componentWillReceiveProps(newProps){
@@ -366,6 +367,10 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
     )
   }
 
+  _onLayout(){
+    this.list.scrollToIndex({index: this.state.selectedSubCategoriesIdx})
+  }
+
   _renderSubCategoryView(){
     return (
       <View style={styles.containerScroll}>
@@ -385,14 +390,17 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
         </View>
         <View style={styles.wrapperSeparator}/>
         <View style={styles.contentContainer2}>
-          <View style={styles.topContainer}>
+          <View style={styles.topContainer} onLayout={() => this._onLayout()}>
             <FlatList
+              ref={el => this.list = el}
               horizontal
-              initialScrollIndex={this.state.selectedSubCategoriesIdx}
               showsHorizontalScrollIndicator={false}
               data={this.state.arrTopCategory}
               renderItem={this._renderTopCategories}
               keyExtractor={(item, index) => item.id}
+              getItemLayout={(data, index) => (
+                {length: Metrics.screenWidth / 4, offset: (Metrics.screenWidth / 4) * index, index}
+              )}
             />
           </View>
           <View style={styles.bottomContainer}>
