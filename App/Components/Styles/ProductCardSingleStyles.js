@@ -84,7 +84,7 @@ export default StyleSheet.create({
     height: 25
   },
   textBtnExtra:{
-    fontSize: 9 * Metrics.screenWidth / 320
+    fontSize: 8 * Metrics.screenWidth / 320
   },
   bottomRightItem:{
     flex:1,

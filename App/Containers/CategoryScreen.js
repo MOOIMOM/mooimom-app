@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, FlatList, SectionList } from 'react-native'
+import { ScrollView, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, FlatList, SectionList, BackHandler } from 'react-native'
 import { Images, Metrics } from '../Themes'
 import ProductCardSingle from '../Components/ProductCardSingle'
 import { connect } from 'react-redux'
@@ -215,6 +215,7 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
     this._renderTopCategories = this._renderTopCategories.bind(this)
     this._renderProduct = this._renderProduct.bind(this)
     this._onLayout = this._onLayout.bind(this)
+    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
   }
 
   componentWillReceiveProps(newProps){
@@ -222,6 +223,23 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
       this.setState({
         selectedCategoriesIdx: newProps.navigation.state.params.category_id
       })
+    }
+  }
+
+  componentWillMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  handleBackButtonClick() {
+    if(this.state.isSelectSubCategory){
+      this.setState({
+        isSelectSubCategory: false
+      })
+      return true;
     }
   }
 
@@ -337,7 +355,6 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
   _renderCategoryView(){
     return (
       <View style={styles.containerScroll}>
-        <View style={styles.backgroundHeader} />
         <View style={styles.headerWrapper}>
           <TouchableOpacity style={styles.searchButton}>
             <Image source={Images.search} style={styles.imageSearch}/>
@@ -351,7 +368,7 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
               extraData={this.state.selectedCategoriesIdx}
               data={this.state.categories}
               renderItem={this._renderCategories}
-              keyExtractor={(item, index) => item.id}
+              keyExtractor={(item, index) => index.toString()}
             />
           </View>
           <View style={styles.rightContainer}>
@@ -360,6 +377,7 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
               renderSectionHeader={this._renderSectionHeader}
               sections={this.state.categories[this.state.selectedCategoriesIdx].subcategory}
               showsVerticalScrollIndicator={false}
+              keyExtractor={(item, index) => index.toString()}
             />
           </View>
         </View>
@@ -397,7 +415,7 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
               showsHorizontalScrollIndicator={false}
               data={this.state.arrTopCategory}
               renderItem={this._renderTopCategories}
-              keyExtractor={(item, index) => item.id}
+              keyExtractor={(item, index) => index.toString()}
               getItemLayout={(data, index) => (
                 {length: Metrics.screenWidth / 4, offset: (Metrics.screenWidth / 4) * index, index}
               )}
@@ -409,7 +427,7 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
               showsVerticalScrollIndicator={false}
               data={this.state.products}
               renderItem={this._renderProduct}
-              keyExtractor={(item, index) => item.id}
+              keyExtractor={(item, index) => index.toString()}
             />
           </View>
         </View>

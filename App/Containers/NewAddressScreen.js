@@ -47,6 +47,7 @@ class NewAddressScreen extends Component {
         <ScrollView showsVerticalScrollIndicator={false}>
           <KeyboardAvoidingView
             behavior='padding'
+            keyboardVerticalOffset={50}
             enabled
           >
           <Text style={styles.productSubtitle}>Alamat Baru</Text>
