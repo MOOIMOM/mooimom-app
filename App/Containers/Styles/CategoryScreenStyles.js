@@ -21,22 +21,24 @@ export default StyleSheet.create({
     transform: [{ scaleX: 2 }, { scaleY: 0.5 }]
   },
   wrapperSeparator:{
-    marginTop: 10,
+    marginTop: 20,
   },
   headerWrapper:{
-    flexDirection: 'column',
-    justifyContent: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
     alignItems: 'center',
-    marginTop: 10
+    paddingHorizontal: 10,
+    width: Metrics.screenWidth,
+    marginTop: 20,
+    height: 40
   },
   searchButton:{
-    width: Metrics.screenWidth - 20,
+    width: Metrics.screenWidth - 100,
     height: 40,
-    marginTop: 10,
     borderRadius: 25,
     backgroundColor: Colors.lightGray,
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   imageSearch:{
     height:20,
@@ -47,24 +49,6 @@ export default StyleSheet.create({
   textSearch:{
     color:Colors.gray,
     fontFamily: Fonts.type.gotham5,
-  },
-  headerWrapper2:{
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 10,
-    marginTop: 10,
-    width: Metrics.screenWidth,
-    marginTop: 20,
-    height: 40
-  },
-  searchButton2:{
-    width: Metrics.screenWidth - 100,
-    height: 40,
-    borderRadius: 25,
-    backgroundColor: Colors.lightGray,
-    flexDirection: 'row',
-    alignItems: 'center',
   },
   btnHeader:{
     width: 30,

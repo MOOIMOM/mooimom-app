@@ -207,12 +207,10 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
     }
   }
 
-  componentWillMount() {
-    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
-  }
-
-  componentWillUnmount() {
+  navigate_to(page, obj = {}) {
     BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+    const { navigate } = this.props.navigation
+    navigate(page, obj)
   }
 
   handleBackButtonClick() {
@@ -236,6 +234,7 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
       })
     })
     var index = arrTopCategory.findIndex(item => item.id === id)
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
     this.setState({
       isSelectSubCategory: true,
       arrTopCategory:arrTopCategory,
@@ -337,9 +336,12 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
     return (
       <View style={styles.containerScroll}>
         <View style={styles.headerWrapper}>
-          <TouchableOpacity style={styles.searchButton}>
+          <TouchableOpacity style={styles.searchButton} onPress={() => this.navigate_to('SearchScreen')}>
             <Image source={Images.search} style={styles.imageSearch}/>
             <Text style={styles.textSearch}>Cari Baju Hamil, Bra, Korset, dll</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.btnHeader} onPress={() => this.navigate_to('CartScreen')}>
+            <Image source={Images.shoppingCartBlack} style={styles.imgHeader}/>
           </TouchableOpacity>
         </View>
         <View style={styles.wrapperSeparator}/>
@@ -373,17 +375,17 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
   _renderSubCategoryView(){
     return (
       <View style={styles.containerScroll}>
-        <View style={styles.headerWrapper2}>
+        <View style={styles.headerWrapper}>
           <TouchableOpacity style={styles.btnHeader} onPress={
             () => this.setState({isSelectSubCategory: false})
           }>
             <Image source={Images.back} style={styles.imgHeader}/>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.searchButton2}>
+          <TouchableOpacity style={styles.searchButton} onPress={() => this.navigate_to('SearchScreen')}>
             <Image source={Images.search} style={styles.imageSearch}/>
             <Text style={styles.textSearch}>Cari Baju Hamil, Bra, Korset, dll</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.btnHeader}>
+          <TouchableOpacity style={styles.btnHeader} onPress={() => this.navigate_to('CartScreen')}>
             <Image source={Images.shoppingCartBlack} style={styles.imgHeader}/>
           </TouchableOpacity>
         </View>

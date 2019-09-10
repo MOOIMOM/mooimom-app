@@ -35,11 +35,11 @@ class AccountScreen extends Component {
       <View style={styles.container}>
         <View style={styles.containerScroll}>
           <View style={styles.headerWrapper}>
-            <TouchableOpacity style={styles.searchButton}>
+            <TouchableOpacity style={styles.searchButton} onPress={() => this.actNavigate('SearchScreen')}>
               <Image source={Images.search} style={styles.imageSearch}/>
               <Text style={styles.textSearch}>Cari Baju Hamil, Bra, Korset, dll</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.btnHeader}>
+            <TouchableOpacity style={styles.btnHeader} onPress={() => this.actNavigate('CartScreen')}>
               <Image source={Images.shoppingCartBlack} style={styles.imgHeader}/>
             </TouchableOpacity>
           </View>

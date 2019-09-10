@@ -258,14 +258,14 @@ class ProductScreen extends Component {
             <Image source={Images.back} style={styles.buttonHeader} />
           </TouchableOpacity>
           <View style={styles.headerButtonCenter}>
-            <TouchableOpacity style={styles.searchButton}>
+            <TouchableOpacity style={styles.searchButton} onPress={() => this.actNavigate('SearchScreen')}>
               <Image source={Images.search} style={styles.imageSearch}/>
               <Text style={styles.textSearch}>Cari Baju Hamil, Bra, Korset, dll</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.headerButtonRight}>
             <Image source={Images.wishlistBlack} style={styles.buttonHeader} />
-            <Image source={Images.shoppingCartBlack} style={styles.buttonHeader} />
+            <TouchableOpacity onPress={() => this.actNavigate('CartScreen')}><Image source={Images.shoppingCartBlack} style={styles.buttonHeader} /></TouchableOpacity>
             <Image source={Images.notif} style={styles.buttonHeader} />
           </View>
         </View>

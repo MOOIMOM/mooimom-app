@@ -14,6 +14,7 @@ import DeliveryScreen from '../Containers/DeliveryScreen'
 import AddressListScreen from '../Containers/AddressListScreen'
 import NewAddressScreen from '../Containers/NewAddressScreen'
 import EditProfileScreen from '../Containers/EditProfileScreen'
+import SearchScreen from '../Containers/SearchScreen'
 import { Images, Colors } from '../Themes'
 
 import styles from './Styles/NavigationStyles'
@@ -28,7 +29,7 @@ const MainNav = createBottomTabNavigator({
   // Default config for all screens
   // Default config for all screens
   headerMode: 'none',
-  initialRouteName: 'Akun',
+  initialRouteName: 'Home',
   tabBarOptions: {
     activeTintColor: Colors.mooimom,
     labelStyle: {
@@ -48,13 +49,14 @@ const PrimaryNav = createStackNavigator({
   AddressListScreen: { screen: AddressListScreen },
   NewAddressScreen: { screen: NewAddressScreen },
   EditProfileScreen: { screen: EditProfileScreen },
+  SearchScreen: { screen: SearchScreen },
   MainScreen: {
      screen: MainNav
   }
 }, {
   // Default config for all screens
   headerMode: 'none',
-  initialRouteName: 'MainScreen',
+  initialRouteName: 'LaunchScreen',
   navigationOptions: {
     headerStyle: styles.header
   }

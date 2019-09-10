@@ -192,14 +192,14 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
             </View>
             <View style={styles.headerButtonRight}>
               <Image source={Images.wishlist} style={styles.buttonHeader} />
-              <Image source={Images.shoppingCart} style={styles.buttonHeader} />
+              <TouchableOpacity onPress={() => this.navigate_to('CartScreen')}><Image source={Images.shoppingCart} style={styles.buttonHeader} /></TouchableOpacity>
               <Image source={Images.notifWhite} style={styles.buttonHeader} />
             </View>
           </View>
           </View>
           <View style={styles.headerWrapper}>
             <View style={styles.headerWrapper2}>
-              <TouchableOpacity style={styles.searchButton}>
+              <TouchableOpacity style={styles.searchButton} onPress={() => this.navigate_to('SearchScreen')}>
                 <Image source={Images.search} style={styles.imageSearch}/>
                 <Text style={styles.textSearch}>Cari Baju Hamil, Bra, Korset, dll</Text>
               </TouchableOpacity>

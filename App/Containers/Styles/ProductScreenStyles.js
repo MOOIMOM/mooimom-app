@@ -13,7 +13,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginHorizontal: 10,
-    marginTop: 10,
+    marginTop: 20,
     justifyContent: 'space-between'
   },
   headerButtonLeft:{
