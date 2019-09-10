@@ -1,5 +1,8 @@
 import './App/Config/ReactotronConfig'
-import { AppRegistry } from 'react-native'
+import { AppRegistry, Text, TextInput } from 'react-native'
 import App from './App/Containers/App'
-
+Text.defaultProps = Text.defaultProps || {};
+Text.defaultProps.allowFontScaling = false;
+TextInput.defaultProps = TextInput.defaultProps || {};
+TextInput.defaultProps.allowFontScaling = false;
 AppRegistry.registerComponent('mooimom', () => App)

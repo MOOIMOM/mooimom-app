@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { ApplicationStyles, Colors, Metrics } from '../../Themes';
+import { ApplicationStyles, Colors, Metrics, Fonts } from '../../Themes';
 
 export default StyleSheet.create({
   // menu
@@ -23,6 +23,7 @@ export default StyleSheet.create({
     paddingRight: 20,
     textAlign: 'left',
     fontSize: 18,
+    fontFamily: Fonts.type.gotham1,
     color: 'gray'
   },
   inputLabelWrapper: {
@@ -39,12 +40,14 @@ export default StyleSheet.create({
     marginLeft: 20,
     paddingLeft: 20,
     paddingRight: 20,
-    color: 'gray'
+    color: 'gray',
+    fontFamily: Fonts.type.gotham4,
   },
   labelRP: {
     // zIndex: 2,
     // height: 30,
     fontSize: 18,
+    fontFamily: Fonts.type.gotham1,
     color: 'gray',
     width: 30,
     // backgroundColor: 'red',

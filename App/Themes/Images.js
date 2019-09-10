@@ -32,6 +32,13 @@ const images = {
   share: require('../Images/Icons/share.png'),
   starEmpty: require('../Images/Icons/star-empty.png'),
   star: require('../Images/Icons/star.png'),
+  bank: require('../Images/Icons/bank.png'),
+  card: require('../Images/Icons/card.png'),
+  refer: require('../Images/Icons/refer.png'),
+  profile: require('../Images/Icons/profile.png'),
+  address: require('../Images/Icons/address.png'),
+  contact: require('../Images/Icons/contact.png'),
+  logout: require('../Images/Icons/logout.png'),
 
   //// TEMP:
   catMasaKehamilan: require('../Images/Icons/masa-kehamilan.png'),

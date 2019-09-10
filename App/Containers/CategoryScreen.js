@@ -90,25 +90,6 @@ class CategoryScreen extends Component {
           {id:'42', name:'Diapers', images:'https://screenshotlayer.com/images/assets/placeholder.png'},
         ]},
       ]},
-      {id:'5', category:'Gift Set', subcategory:[
-        {id:'11', title:'Combo Packs', data:[
-          {id:'43', name:'Buy 2 Get 1 FREE Breastmilk Sotrage Bags', images:'https://screenshotlayer.com/images/assets/placeholder.png'},
-          {id:'44', name:'2 in 1 Pumping Pack', images:'https://screenshotlayer.com/images/assets/placeholder.png'},
-          {id:'45', name:'3 in 1 Gift Set', images:'https://screenshotlayer.com/images/assets/placeholder.png'},
-          {id:'46', name:'6 in 1 Gift Set', images:'https://screenshotlayer.com/images/assets/placeholder.png'},
-          {id:'47', name:'7 in 1 Gift Set', images:'https://screenshotlayer.com/images/assets/placeholder.png'},
-        ]},
-        {id:'12', title:'Combo Series', data:[
-          {id:'48', name:'3 Pack Seamless Bra', images:'https://screenshotlayer.com/images/assets/placeholder.png'},
-          {id:'49', name:'3 Pack Crossver Bra', images:'https://screenshotlayer.com/images/assets/placeholder.png'},
-          {id:'50', name:'3 Pack Stripe Bra', images:'https://screenshotlayer.com/images/assets/placeholder.png'},
-          {id:'51', name:'3 Pack High Waist Briefs', images:'https://screenshotlayer.com/images/assets/placeholder.png'},
-          {id:'52', name:'4 Pack 120ml Kantong ASI', images:'https://screenshotlayer.com/images/assets/placeholder.png'},
-          {id:'53', name:'4 Pack 250ml Kantong ASI', images:'https://screenshotlayer.com/images/assets/placeholder.png'},
-          {id:'54', name:'4 Pack Breastpad', images:'https://screenshotlayer.com/images/assets/placeholder.png'},
-          {id:'55', name:'24 Pack Breastpad', images:'https://screenshotlayer.com/images/assets/placeholder.png'},
-        ]},
-      ]},
     ]
     var dataProducts = [
       {id: '1', images: [

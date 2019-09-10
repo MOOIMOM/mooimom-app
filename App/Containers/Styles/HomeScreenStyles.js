@@ -121,13 +121,13 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     width: Metrics.screenWidth - 40,
-    marginHorizontal: 20
+    marginLeft: 20
   },
   catButton:{
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    maxWidth: Metrics.screenWidth / 5
+    maxWidth: (Metrics.screenWidth - 40) / 4
   },
   catImage:{
     height: 35,

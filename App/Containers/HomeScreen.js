@@ -112,19 +112,27 @@ Filling : 100% Polyurethane (Memory Foam)
 Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
       },
     ]
+    var categories = [
+      {name:'Masa Kehamilan', image:Images.catMasaKehamilan, category_id:0},
+      {name:'Masa Menyusui', image:Images.catMasaMenyusui, category_id:1},
+      {name:'Pasca Melahirkan', image:Images.catPascaMelahirkan, category_id:2},
+      {name:'Produk Bayi', image:Images.catProdukBayi, category_id:3},
+    ]
+
     this.state = {
       heroBanners: dataHeroBanner,
       products: dataProducts,
-      activeSlide: 0
+      activeSlide: 0,
+      categories:categories
     }
 
     this._renderProduct = this._renderProduct.bind(this)
     this.navigate_to = this.navigate_to.bind(this)
   }
 
-  navigate_to(page) {
+  navigate_to(page, obj = {}) {
     const { navigate } = this.props.navigation
-    navigate(page)
+    navigate(page, obj)
   }
 
   _renderHeroBanner ({item, index}, parallaxProps) {
@@ -140,6 +148,15 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
             </View>
         );
     }
+
+  _renderCategories({item, index}){
+    return(
+      <TouchableOpacity style={styles.catButton} onPress={() => this.navigate_to('Category', {category_id: item.category_id})}>
+        <Image source={item.image} style={styles.catImage}/>
+        <Text style={styles.catText}>{item.name}</Text>
+      </TouchableOpacity>
+    )
+  }
 
   _renderProduct ({item, index}) {
     const { navigate } = this.props.navigation
@@ -213,26 +230,13 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
           </View>
           <View style={styles.wrapperSeparator}/>
           <View style={styles.categoryWrapper}>
-            <TouchableOpacity style={styles.catButton} onPress={() => navigate('Category', {category_id: 0})}>
-              <Image source={Images.catMasaKehamilan} style={styles.catImage}/>
-              <Text style={styles.catText}>Masa Kehamilan</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.catButton} onPress={() => navigate('Category', {category_id: 1})}>
-              <Image source={Images.catMasaMenyusui} style={styles.catImage}/>
-              <Text style={styles.catText}>Masa Menyusui</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.catButton} onPress={() => navigate('Category', {category_id: 2})}>
-              <Image source={Images.catPascaMelahirkan} style={styles.catImage}/>
-              <Text style={styles.catText}>Pasca Melahirkan</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.catButton} onPress={() => navigate('Category', {category_id: 3})}>
-              <Image source={Images.catProdukBayi} style={styles.catImage}/>
-              <Text style={styles.catText}>Produk Bayi</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.catButton} onPress={() => navigate('Category', {category_id: 4})}>
-              <Image source={Images.catGiftSet} style={styles.catImage}/>
-              <Text style={styles.catText}>Gift Set</Text>
-            </TouchableOpacity>
+            <FlatList
+              data={this.state.categories}
+              renderItem={this._renderCategories.bind(this)}
+              keyExtractor={(item, index) => index.toString()}
+              showsHorizontalScrollIndicator={false}
+              horizontal={true}
+            />
           </View>
           <View style={styles.wrapperSeparator}/>
           <View style={styles.wrapperSeparator}/>
