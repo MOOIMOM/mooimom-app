@@ -58,7 +58,6 @@ export default StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    backgroundColor: Colors.mooimom,
     width: Metrics.screenWidth,
     height: Metrics.screenHeight / 6,
     paddingVertical: 10
@@ -86,6 +85,14 @@ export default StyleSheet.create({
     fontFamily: Fonts.type.gotham4,
     fontSize: 14,
     textAlign: 'center'
+  },
+  iconRight:{
+    width: 30,
+    height: 30,
+    resizeMode: 'contain',
+    position: 'absolute',
+    right: -30,
+    top:(Metrics.screenHeight / 12) - 30
   },
   bottomContainer:{
     width: Metrics.screenWidth - 40,

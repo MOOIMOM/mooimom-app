@@ -4,9 +4,13 @@ import { Metrics, ApplicationStyles, Colors, Fonts } from '../../Themes/'
 export default StyleSheet.create({
   container: {
     flex:6,
-    backgroundColor: Colors.mooimom,
     alignItems: 'center',
     color:Colors.white
+  },
+  linergradient:{
+    width: Metrics.screenWidth,
+    height: Metrics.screenHeight,
+    alignItems: 'center',
   },
   title:{
     width: Metrics.screenWidth - 150,
@@ -56,13 +60,25 @@ export default StyleSheet.create({
     fontFamily: Fonts.type.gotham2,
   },
   textInput: {
-    maxWidth: Metrics.screenWidth * 0.8,
-    height: 45 * Metrics.screenWidth / 320,
+    height: 45,
     justifyContent: 'center',
     borderBottomWidth: 1,
     borderBottomColor: Colors.white,
     marginTop: 30,
-    marginBottom: 50
+    marginBottom: 50,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center'
+  },
+  number62:{
+    color: Colors.white,
+    fontSize: 15 * Metrics.screenWidth / 320,
+    fontStyle: 'italic',
+    fontFamily: Fonts.type.gotham3,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    marginLeft: 20,
+    marginTop: -4,
+    marginRight: 10
   },
   textTextInput:{
     color: Colors.white,

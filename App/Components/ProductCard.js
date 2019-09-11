@@ -16,6 +16,12 @@ export default class ProductCard extends Component {
 
   onSharePress(){
     share(this.state.product.images)
+    if(this.props.sharedProductProcess){
+      let data = {
+        product: this.state.product
+      }
+      this.props.sharedProductProcess(data)
+    }
   }
 
   renderWishlist(){

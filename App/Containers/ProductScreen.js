@@ -3,6 +3,7 @@ import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Ima
 import { Images, Metrics } from '../Themes'
 import { connect } from 'react-redux'
 import Carousel, { Pagination  } from 'react-native-snap-carousel';
+import SharedProductActions from '../Redux/SharedProductRedux'
 import {convertToRupiah, share, shareDescripton} from '../Lib/utils'
 // Styles
 import styles from './Styles/ProductScreenStyles'
@@ -101,6 +102,10 @@ class ProductScreen extends Component {
       await Clipboard.setString(this.state.product.description);
       share(this.state.product.images, social)
     }
+    let data = {
+      product: this.state.product
+    }
+    this.props.sharedProductProcess(data)
   }
 
   async copyText(){
@@ -264,7 +269,7 @@ class ProductScreen extends Component {
             </TouchableOpacity>
           </View>
           <View style={styles.headerButtonRight}>
-            <Image source={Images.wishlistBlack} style={styles.buttonHeader} />
+            <TouchableOpacity onPress={() => this.actNavigate('SharedProductScreen')}><Image source={Images.wishlistBlack} style={styles.buttonHeader} /></TouchableOpacity>
             <TouchableOpacity onPress={() => this.actNavigate('CartScreen')}><Image source={Images.shoppingCartBlack} style={styles.buttonHeader} /></TouchableOpacity>
             <Image source={Images.notif} style={styles.buttonHeader} />
           </View>
@@ -384,7 +389,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-
+    sharedProductProcess: data => {
+      dispatch(SharedProductActions.sharedProductRequest(data))
+    }
   }
 };
 

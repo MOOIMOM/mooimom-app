@@ -7,7 +7,7 @@
 import React, {
   Component,
 } from 'react';
-import { Metrics, Colors, Fonts } from '../Themes/'
+import { Metrics, Colors, Fonts, Images } from '../Themes/'
 import {
   StyleSheet,
   Dimensions,
@@ -20,6 +20,7 @@ import {
   TouchableHighlight,
   Modal,
   ActivityIndicator,
+  Image
 } from 'react-native';
 
 import PropTypes from 'prop-types';
@@ -182,6 +183,7 @@ export default class ModalDropdown extends Component {
                 {buttonText}
               </Text>)}
               {isColor && (<View style={{width: 30,height: 30, backgroundColor: buttonText}}/>)}
+              <Image source={Images.down} style={{position: 'absolute', right: 5, width: 10, height: 10}}/>
             </View>
           )
         }
@@ -385,6 +387,7 @@ export default class ModalDropdown extends Component {
 
 const styles = StyleSheet.create({
   button: {
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     width: (Metrics.screenWidth) / 5,

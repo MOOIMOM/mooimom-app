@@ -158,7 +158,7 @@ class CartScreen extends Component {
         <View style={styles.productImageWrapper}>
           <Image source={{uri:item.images[0].url}} style={styles.productImage}/>
           <TouchableOpacity style={styles.removeBtn} onPress={() => {this.removeFromCart(index)}}>
-            <Image source={Images.wishlistBlack} style={styles.removeImg}/>
+            <Image source={Images.x} style={styles.removeImg}/>
           </TouchableOpacity>
         </View>
         <View style={styles.productDescriptionWrapper}>

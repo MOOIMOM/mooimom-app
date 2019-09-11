@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { ScrollView, Text, View, TouchableOpacity, Image, KeyboardAvoidingView, TextInput } from 'react-native'
 import { Images, Colors } from '../Themes'
 import { connect } from 'react-redux'
+import LinearGradient from 'react-native-linear-gradient';
 import _ from 'lodash';
 // Styles
 import styles from './Styles/AuthScreenStyles'
@@ -108,7 +109,7 @@ class AuthScreen extends Component {
           ]}
           underlineColorAndroid="transparent"
           selectionColor={Colors.mooimom}
-          keyboardType={'name-phone-pad'}
+          keyboardType={'numeric'}
           returnKeyType={'done'}
           onFocus={() => this._onFocus(id)}
           value={this.state.codeArr[id] ? this.state.codeArr[id].toString() : ''}
@@ -120,26 +121,28 @@ class AuthScreen extends Component {
     }
     return (
       <View style={styles.container}>
-        <Image source={Images.mooimomLogoWhite} style={styles.title}/>
-        <View style={styles.loginContainer}>
-          <KeyboardAvoidingView>
-            <Text style={styles.caption1}>Masukkan kode verifikasi</Text>
-            <View style={styles.textInput}>
-              {codeInputs}
-            </View>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => this.onFulfill()}
-            >
-              <Text style={styles.btnText}>Verifikasi</Text>
-            </TouchableOpacity>
-            <View style={styles.SignUpContainer}>
-              <TouchableOpacity>
-                <Text style={styles.textSignIn}>Kirim ulang kode verifikasi</Text>
+        <LinearGradient colors={['#82DED2', '#66CCCC']} style={styles.linergradient}>
+          <Image source={Images.mooimomLogoWhite} style={styles.title}/>
+          <View style={styles.loginContainer}>
+            <KeyboardAvoidingView>
+              <Text style={styles.caption1}>Masukkan kode verifikasi</Text>
+              <View style={styles.textInput}>
+                {codeInputs}
+              </View>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => this.onFulfill()}
+              >
+                <Text style={styles.btnText}>Verifikasi</Text>
               </TouchableOpacity>
-            </View>
-          </KeyboardAvoidingView>
-        </View>
+              <View style={styles.SignUpContainer}>
+                <TouchableOpacity>
+                  <Text style={styles.textSignIn}>Kirim ulang kode verifikasi</Text>
+                </TouchableOpacity>
+              </View>
+            </KeyboardAvoidingView>
+          </View>
+        </LinearGradient>
       </View>
     )
   }

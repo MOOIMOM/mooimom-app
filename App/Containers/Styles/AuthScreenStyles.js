@@ -8,6 +8,11 @@ export default StyleSheet.create({
     alignItems: 'center',
     color:Colors.white
   },
+  linergradient:{
+    width: Metrics.screenWidth,
+    height: Metrics.screenHeight,
+    alignItems: 'center',
+  },
   title:{
     width: Metrics.screenWidth - 150,
     resizeMode: 'contain',

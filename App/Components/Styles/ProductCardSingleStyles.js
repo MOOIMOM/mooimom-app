@@ -112,4 +112,20 @@ export default StyleSheet.create({
     fontFamily: Fonts.type.gotham4,
     fontSize: 12 * Metrics.screenWidth / 320
   },
+  modalView:{
+    width: Metrics.screenWidth - 80,
+    height: 40,
+    backgroundColor: Colors.modal,
+    borderRadius: 20,
+    position: 'absolute',
+    bottom: 40,
+    left: 20,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  modalText:{
+    fontSize: 18,
+    color: Colors.white,
+    fontFamily: Fonts.type.gotham2,
+  },
 })

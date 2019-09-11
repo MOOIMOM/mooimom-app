@@ -4,6 +4,7 @@ import { Images, Metrics } from '../Themes'
 import { connect } from 'react-redux'
 import Carousel, { ParallaxImage, Pagination  } from 'react-native-snap-carousel';
 import ProductCard from '../Components/ProductCard'
+import SharedProductActions from '../Redux/SharedProductRedux'
 
 // Styles
 import styles from './Styles/HomeScreenStyles'
@@ -169,6 +170,7 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
         <View>
           <ProductCard
             product={item}
+            sharedProductProcess={this.props.sharedProductProcess}
           />
         </View>
       </TouchableWithoutFeedback>
@@ -191,7 +193,7 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
               <Image source={Images.mooimomLogoWhite} style={styles.logo} />
             </View>
             <View style={styles.headerButtonRight}>
-              <Image source={Images.wishlist} style={styles.buttonHeader} />
+              <TouchableOpacity onPress={() => this.navigate_to('SharedProductScreen')}><Image source={Images.wishlist} style={styles.buttonHeader} /></TouchableOpacity>
               <TouchableOpacity onPress={() => this.navigate_to('CartScreen')}><Image source={Images.shoppingCart} style={styles.buttonHeader} /></TouchableOpacity>
               <Image source={Images.notifWhite} style={styles.buttonHeader} />
             </View>
@@ -264,7 +266,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-
+    sharedProductProcess: data => {
+      dispatch(SharedProductActions.sharedProductRequest(data))
+    }
   }
 };
 

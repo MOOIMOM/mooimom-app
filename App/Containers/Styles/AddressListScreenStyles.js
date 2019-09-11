@@ -29,7 +29,7 @@ export default StyleSheet.create({
   },
   cartContainer:{
     width: Metrics.screenWidth - 40,
-    height: Metrics.screenHeight - 160,
+    height: Metrics.screenHeight - 80,
     marginHorizontal: 20,
     marginTop: 5
   },
@@ -47,13 +47,31 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     paddingVertical: 20,
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
+    marginBottom: 10
   },
   deliveryAddressContainer2:{
+    borderWidth: 1,
+    borderColor: Colors.mooimom,
     borderRadius: 10,
     paddingVertical: 20,
     paddingHorizontal: 20,
-    backgroundColor: Colors.mooimom
+    backgroundColor: Colors.mooimom,
+    marginBottom: 10
+  },
+  btnContainer:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 5
+  },
+  btnContainer2:{
+    flexDirection: 'row'
+  },
+  btnEditAddress:{
+    width: 25,
+    height: 25,
+    resizeMode: 'contain',
+    marginLeft: 10
   },
   addressName:{
     fontSize: 12 * Metrics.screenWidth / 320,

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { ScrollView, Text, View, TouchableOpacity, Image, KeyboardAvoidingView, TextInput } from 'react-native'
 import { Images } from '../Themes'
+import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux'
 // Styles
 import styles from './Styles/LoginScreenStyles'
@@ -21,17 +22,19 @@ class LoginScreen extends Component {
   render () {
     return (
       <View style={styles.container}>
+        <LinearGradient colors={['#82DED2', '#66CCCC']} style={styles.linergradient}>
         <Image source={Images.mooimomLogoWhite} style={styles.title}/>
         <View style={styles.loginContainer}>
           <KeyboardAvoidingView>
             <Text style={styles.caption1}>Sign In Sekarang</Text>
             <View style={styles.textInput}>
+              <Text style={styles.number62}>+62</Text>
               <TextInput style={styles.textTextInput}
                 // onFocus={() => this.onFocus1()}
                 // onBlur={() => this.onBlur()}
                 onChangeText={phone => this.setState({ phone })}
                 autoCapitalize='none'
-                keyboardType='phone-pad'
+                keyboardType='numeric'
                 value={this.state.phone}
                 returnKeyType='done'
                 placeholder='No Handphone'
@@ -56,6 +59,7 @@ class LoginScreen extends Component {
             </View>
           </KeyboardAvoidingView>
         </View>
+        </LinearGradient>
       </View>
     )
   }

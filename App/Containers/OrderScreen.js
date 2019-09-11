@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { ScrollView, Text, View, Image, TouchableOpacity, FlatList} from 'react-native'
 import { Images, Metrics } from '../Themes'
+import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux'
 import {convertToRupiah} from '../Lib/utils'
 
@@ -11,7 +12,7 @@ import menuStyles from './Styles/MenuComponentStyles'
 var dataOrder = [
   {status:'Pembayaran', statusname:'Menunggu Pembayaran',orderID:'#12345345', orderDate:'2019-09-03', products:[
     {
-      name:'Full Coverage Seamless Maternity & Nursing Bra', price: 350000, images: [
+      name:'Full Coverage Seamless Maternity & Nursing Bra', price: 350000, discPrice:0, qty:1, images: [
         {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2018/11/21/b8003-b4-compressor.jpg'},
         {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2018/11/21/b8003-f1-compressor.jpg'},
         {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2018/11/21/b8003-b3-compressor.jpg'},
@@ -22,7 +23,7 @@ var dataOrder = [
   },
   {status:'Selesai', statusname: 'Pesanan Selesai', orderID:'#3328127638', orderDate:'2019-09-03', products:[
     {
-      name:'Bamboo Postpartum Belly Band Corset', price: 920000, images: [
+      name:'Bamboo Postpartum Belly Band Corset', price: 920000, discPrice:0, qty:1, images: [
         {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2019/05/08/main-c7889-1-compressor.jpg'},
         {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2017/11/20/c7889-4.jpg'},
         {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2017/11/20/c7889-5.jpg'},
@@ -33,7 +34,7 @@ var dataOrder = [
   },
   {status:'Dibatalkan', statusname: 'Pesanan Dibatalkan', orderID:'#127839876', orderDate:'2019-09-07', products:[
     {
-      name:'Mooimom Casual Hipseat Carrier', price: 399000, images: [
+      name:'Mooimom Casual Hipseat Carrier', price: 399000, discPrice:0, qty:1, images: [
         {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2019/04/30/h9502-1-compressor.jpg'},
         {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2019/05/01/1556697513950-compressor.jpg'},
         {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2019/04/30/h9502-2-compressor.jpg'},
@@ -43,10 +44,18 @@ var dataOrder = [
   },
   {status:'Selesai', statusname: 'Pesanan Selesai', orderID:'#77282821', orderDate:'2019-08-11', products:[
     {
-      name:'Sloped Pillow Bantal Bayi', price: 449000, images: [
+      name:'Sloped Pillow Bantal Bayi', price: 449000, discPrice:0, qty:1, images: [
         {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2019/06/24/q90301-2.jpg'},
         {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2019/07/01/q90801_1.jpg'},
         {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2019/08/30/pillow-for-baby-4-4.jpg'},
+      ]
+    }
+    ]
+  },
+  {status:'Diproses', statusname: 'Pesanan Diproses', orderID:'#3331232', orderDate:'2019-09-09', products:[
+    {
+      name:'Seamless Slimming Suit / Baju Pelangsing', price: 279000, discPrice:0, qty:3, images: [
+        {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2017/06/20/s7001x-1.jpg'},
       ]
     }
     ]
@@ -95,26 +104,28 @@ class OrderScreen extends Component {
   _renderOrders({item, index}){
     if(item.status === this.state.menuStatus[this.state.selectedMenuIdx] || this.state.selectedMenuIdx === 0){
       return (
-        <View style={styles.orderContainer}>
-          <View style={styles.orderContainerTop}>
-            <Text style={styles.orderStatusText}>{item.statusname}</Text>
-          </View>
-          <View style={styles.orderContainerMid}>
-            <Text style={styles.orderDateText}>{item.orderDate}</Text>
-            <Text style={styles.orderIDText}>No Order {item.orderID}</Text>
-          </View>
-          <View style={styles.orderContainerBottom}>
-            <View style={styles.orderContainerProductWrapper}>
-              <View style={styles.orderContainerLeft}>
-                <Image source={{uri:item.products[0].images[0].url}} style={styles.productImage}/>
-              </View>
-              <View style={styles.orderContainerRight}>
-                <Text style={styles.productName}>{item.products[0].name}</Text>
-                <Text style={styles.productPrice}>{convertToRupiah(item.products[0].price)}</Text>
+        <TouchableOpacity onPress={() => this.actNavigate('DetailOrderScreen', {order:item})}>
+          <View style={styles.orderContainer}>
+            <View style={styles.orderContainerTop}>
+              <Text style={styles.orderStatusText}>{item.statusname}</Text>
+            </View>
+            <View style={styles.orderContainerMid}>
+              <Text style={styles.orderDateText}>{item.orderDate}</Text>
+              <Text style={styles.orderIDText}>No Order {item.orderID}</Text>
+            </View>
+            <View style={styles.orderContainerBottom}>
+              <View style={styles.orderContainerProductWrapper}>
+                <View style={styles.orderContainerLeft}>
+                  <Image source={{uri:item.products[0].images[0].url}} style={styles.productImage}/>
+                </View>
+                <View style={styles.orderContainerRight}>
+                  <Text style={styles.productName}>{item.products[0].name}</Text>
+                  <Text style={styles.productPrice}>{convertToRupiah(item.products[0].price)}</Text>
+                </View>
               </View>
             </View>
           </View>
-        </View>
+        </TouchableOpacity>
       )
     } else {
       return <View/>
@@ -139,13 +150,14 @@ class OrderScreen extends Component {
             <ScrollView
             showsVerticalScrollIndicator={false}
             >
-              <View style={styles.topContainer}>
-                <TouchableOpacity>
+              <LinearGradient colors={['#82DED2', '#66CCCC']} style={styles.topContainer}>
+                <TouchableOpacity onPress={() => this.actNavigate('DetailTargetScreen')}>
                   <Text style={styles.textTarget}>Target Bonus Minggu Ini</Text>
                   <Text style={styles.textTargetAmount}>Rp500.000</Text>
                   <Text style={styles.textTargetMore}>Raih Target dan dapatkan bonus lebih banyak</Text>
+                  <Image source={Images.rightArrow} style={styles.iconRight}/>
                 </TouchableOpacity>
-              </View>
+              </LinearGradient>
               <View style={styles.wrapperSeparator}/>
               <View style={styles.bottomContainer}>
                 <Text style={styles.textMenuStatus}>Pesanan Saya</Text>

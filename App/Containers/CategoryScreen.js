@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { ScrollView, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, FlatList, SectionList, BackHandler } from 'react-native'
 import { Images, Metrics } from '../Themes'
 import ProductCardSingle from '../Components/ProductCardSingle'
+import SharedProductActions from '../Redux/SharedProductRedux'
 import { connect } from 'react-redux'
 
 // Styles
@@ -326,6 +327,7 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
         <View>
           <ProductCardSingle
             product={item}
+            sharedProductProcess={this.props.sharedProductProcess}
           />
         </View>
       </TouchableWithoutFeedback>
@@ -435,7 +437,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-
+    sharedProductProcess: data => {
+      dispatch(SharedProductActions.sharedProductRequest(data))
+    }
   }
 };
 

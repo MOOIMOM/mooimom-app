@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, Image, TouchableOpacity } from 'react-native'
+import { ScrollView, Text, View, Image, TouchableOpacity, Alert } from 'react-native'
 import { Images, Metrics } from '../Themes'
 import { connect } from 'react-redux'
 import {convertToRupiah} from '../Lib/utils'
+import { NavigationActions, StackActions } from 'react-navigation'
 
 // Styles
 import styles from './Styles/AccountScreenStyles'
@@ -28,6 +29,35 @@ class AccountScreen extends Component {
   actNavigate (screen , obj = {}) {
     const { navigate } = this.props.navigation
     navigate(screen, obj)
+  }
+
+  logout(){
+    const { dispatch } = this.props.navigation
+    Alert.alert(
+      'Logout',
+      'Are you sure to log out?',
+      [
+        {
+          text: 'Yes',
+          onPress: () => {
+            dispatch(
+              StackActions.reset({
+                index: 0,
+                actions: [
+                  NavigationActions.navigate({
+                    routeName: 'LaunchScreen'
+                  })
+                ]
+              })
+            )
+          }
+        },
+        {
+          text: 'No'
+        }
+      ],
+      { cancelable: true }
+    )
   }
 
   render () {
@@ -56,7 +86,9 @@ class AccountScreen extends Component {
                 </TouchableOpacity>
               </View>
               <View style={styles.topRightView}>
-                <Image source={Images.profile} style={styles.imgProfile}/>
+                <TouchableOpacity>
+                  <Image source={Images.profile} style={styles.imgProfile}/>
+                </TouchableOpacity>
               </View>
             </View>
             <View style={styles.wrapperSeparator}/>
@@ -79,19 +111,13 @@ class AccountScreen extends Component {
                 </TouchableOpacity>
               </View>
               <View style={styles.menu}>
-                <TouchableOpacity style={styles.btnMenu}>
+                <TouchableOpacity style={styles.btnMenu} onPress={() => this.actNavigate('SharedProductScreen', {selectedMenuIdx:1})}>
                   <Image source={Images.share} style={styles.imgMenu}/>
                   <Text style={styles.imgText}>Produk Dibagikan</Text>
                 </TouchableOpacity>
               </View>
               <View style={styles.menu}>
-                <TouchableOpacity style={styles.btnMenu}>
-                  <Image source={Images.refer} style={styles.imgMenu}/>
-                  <Text style={styles.imgText}>Refer & Earn</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.menu}>
-                <TouchableOpacity style={styles.btnMenu}>
+                <TouchableOpacity style={styles.btnMenu} onPress={() => this.actNavigate('AddressListScreen', {})}>
                   <Image source={Images.address} style={styles.imgMenu}/>
                   <Text style={styles.imgText}>Daftar Alamat</Text>
                 </TouchableOpacity>
@@ -103,7 +129,7 @@ class AccountScreen extends Component {
                 </TouchableOpacity>
               </View>
               <View style={styles.menu}>
-                <TouchableOpacity style={styles.btnMenu}>
+                <TouchableOpacity style={styles.btnMenu} onPress={() => this.logout()}>
                   <Image source={Images.logout} style={styles.imgMenu}/>
                   <Text style={styles.imgText}>Log out</Text>
                 </TouchableOpacity>

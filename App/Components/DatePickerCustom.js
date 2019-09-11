@@ -23,7 +23,6 @@ export default class DatePickerCustom extends Component {
           style={
             !this.state.focous
               ? [
-                  styles.inputText,
                   {
                     width: widthFix, height: 60,
                     backgroundColor: 'rgba(230,230,230,0.5)',
@@ -35,7 +34,6 @@ export default class DatePickerCustom extends Component {
                   }
                 ]
               : [
-                  styles.inputText,
                   {
                     width: widthFix, height: 60,
                     backgroundColor: 'rgba(230,230,230,0.5)',

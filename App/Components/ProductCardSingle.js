@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableWithoutFeedback, Image } from 'react-native'
 import { Images } from '../Themes'
-import {convertToRupiah, share} from '../Lib/utils'
+import {convertToRupiah, share, download} from '../Lib/utils'
 
 import styles from './Styles/ProductCardSingleStyles'
 
@@ -10,12 +10,33 @@ export default class ProductCardSingle extends Component {
     super(props);
     this.state = {
       product: this.props.product,
-      isInWishlist: false
+      isInWishlist: false,
+      modalClipboardVisible: false
     };
   }
 
-  onSharePress(){
-    share(this.state.product.images)
+  onSharePress(social = ''){
+    share(this.state.product.images, social)
+    if(this.props.sharedProductProcess){
+      let data = {
+        product: this.state.product
+      }
+      this.props.sharedProductProcess(data)
+    }
+  }
+
+  async onDownloadPress(){
+    let finish = await download(this.state.product.images)
+    if(finish){
+      this.setState({
+        modalClipboardVisible: true
+      })
+      setTimeout(() => {
+        this.setState({
+          modalClipboardVisible: false
+        })
+      }, 1000);
+    }
   }
 
   renderWishlist(){
@@ -59,27 +80,27 @@ export default class ProductCardSingle extends Component {
         </View>
         <View style={styles.bottomItem}>
           <View style={styles.bottomLeftItem}>
-            <TouchableWithoutFeedback>
+            <TouchableWithoutFeedback onPress={() => this.onDownloadPress()}>
               <View style={styles.btnExtra}>
-                <Image source={Images.rightArrow} style={styles.imageExtra}/>
+                <Image source={Images.download} style={styles.imageExtra}/>
                 <Text style={styles.textBtnExtra}>Download</Text>
               </View>
             </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback>
+            <TouchableWithoutFeedback onPress={() => this.onSharePress('facebook')}>
               <View style={styles.btnExtra}>
-                <Image source={Images.facebook} style={styles.imageExtra}/>
+                <Image source={Images.fb} style={styles.imageExtra}/>
                 <Text style={styles.textBtnExtra}>FB</Text>
               </View>
             </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback>
+            <TouchableWithoutFeedback onPress={() => this.onSharePress('')}>
               <View style={styles.btnExtra}>
-                <Image source={Images.share} style={styles.imageExtra}/>
+                <Image source={Images.share2} style={styles.imageExtra}/>
                 <Text style={styles.textBtnExtra}>Lainnya</Text>
               </View>
             </TouchableWithoutFeedback>
           </View>
           <View style={styles.bottomRightItem}>
-            <TouchableWithoutFeedback onPress={() => this.onSharePress()}>
+            <TouchableWithoutFeedback onPress={() => this.onSharePress('whatsapp')}>
               <View style={styles.btn}>
                 <Image source={Images.whatsapp} style={styles.imageBtn}/>
                 <Text style={styles.textBtn}>Bagikan</Text>
@@ -87,6 +108,9 @@ export default class ProductCardSingle extends Component {
             </TouchableWithoutFeedback>
           </View>
         </View>
+        {this.state.modalClipboardVisible && <View style={styles.modalView}>
+          <Text style={styles.modalText}>Images have been downloaded</Text>
+        </View>}
       </View>
     );
   }

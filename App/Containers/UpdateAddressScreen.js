@@ -6,9 +6,9 @@ import {convertToRupiah } from '../Lib/utils'
 import TextInputCustom from '../Components/TextInputCustom'
 import CheckBox from '../Components/CheckBox'
 // Styles
-import styles from './Styles/NewAddressScreenStyles'
+import styles from './Styles/UpdateAddressScreenStyles'
 
-class NewAddressScreen extends Component {
+class UpdateAddressScreen extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -50,7 +50,7 @@ class NewAddressScreen extends Component {
             keyboardVerticalOffset={50}
             enabled
           >
-          <Text style={styles.productSubtitle}>Alamat Baru</Text>
+          <Text style={styles.productSubtitle}>Ubah Alamat</Text>
           <View style={styles.wrapperSeparator}/>
           <TextInputCustom
             placeholder='Nama Penerima'
@@ -155,4 +155,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(NewAddressScreen)
+)(UpdateAddressScreen)

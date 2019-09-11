@@ -13,8 +13,12 @@ import CartScreen from '../Containers/CartScreen'
 import DeliveryScreen from '../Containers/DeliveryScreen'
 import AddressListScreen from '../Containers/AddressListScreen'
 import NewAddressScreen from '../Containers/NewAddressScreen'
+import UpdateAddressScreen from '../Containers/UpdateAddressScreen'
 import EditProfileScreen from '../Containers/EditProfileScreen'
 import SearchScreen from '../Containers/SearchScreen'
+import SharedProductScreen from '../Containers/SharedProductScreen'
+import DetailTargetScreen from '../Containers/DetailTargetScreen'
+import DetailOrderScreen from '../Containers/DetailOrderScreen'
 import { Images, Colors } from '../Themes'
 
 import styles from './Styles/NavigationStyles'
@@ -48,8 +52,12 @@ const PrimaryNav = createStackNavigator({
   DeliveryScreen: { screen: DeliveryScreen },
   AddressListScreen: { screen: AddressListScreen },
   NewAddressScreen: { screen: NewAddressScreen },
+  UpdateAddressScreen: { screen: UpdateAddressScreen },
   EditProfileScreen: { screen: EditProfileScreen },
   SearchScreen: { screen: SearchScreen },
+  SharedProductScreen: { screen: SharedProductScreen },
+  DetailTargetScreen: { screen: DetailTargetScreen },
+  DetailOrderScreen: { screen: DetailOrderScreen },
   MainScreen: {
      screen: MainNav
   }

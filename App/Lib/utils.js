@@ -67,6 +67,32 @@ export function shareDescripton(description, social = ''){
   }
 }
 
+export async function download(images){
+  var files = []
+  var urls = []
+  images.map((image) => {
+    var file = {}
+    file.url = image.url
+    file.name = image.url.substring(image.url.lastIndexOf('/')+1);
+    files.push(file)
+  })
+
+  var allowedStorage = await PermissionsAndroid.request(
+    PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
+  )
+  if (allowedStorage === 'granted') {
+    let check = checkFolder()
+    await check
+    for(var i = 0; i< files.length;i++){
+      urls.push(getFileToShare(files[i]))
+    }
+    return await Promise.all(urls)
+  } else {
+    Alert.alert('Please allow permission to download the images')
+    return false
+  }
+}
+
 export async function share(images, social = '') {
   var files = []
   var urls = []
@@ -106,7 +132,7 @@ export async function share(images, social = '') {
             break
         }
         Share.shareSingle(shareOptions)
-          .then(result => {console.info(result)})
+          .then(result => {})
           .catch((e) => {
             Share.open(shareOptions).then(result => {}).catch((e) => {})
           })
