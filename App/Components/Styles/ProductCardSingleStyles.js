@@ -10,8 +10,9 @@ export default StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'column',
     paddingHorizontal: 15,
-    marginBottom: 20,
-    borderBottomWidth: 1
+    marginBottom: 10,
+    borderBottomWidth: 0.5,
+    borderBottomColor: Colors.black
   },
   topItem:{
     flexDirection: 'row',
@@ -30,12 +31,12 @@ export default StyleSheet.create({
   },
   wishlist:{
     position: 'absolute',
-    right: 0,
+    right: 15,
     top: 0,
   },
   wishlistImage:{
-    width: 25,
-    height: 25,
+    width: 20,
+    height: 20,
     resizeMode: 'contain'
   },
   image:{
@@ -124,7 +125,7 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   modalText:{
-    fontSize: 18,
+    fontSize: 14,
     color: Colors.white,
     fontFamily: Fonts.type.gotham2,
   },

@@ -97,12 +97,10 @@ export default class TextInputCustom extends Component {
         <View style={styles.inputLabelWrapper}>
           <Text
             style={
-              !this.state.focous
-                ? styles.inputLabel
-                : [
-                    styles.inputLabel,
-                    { color: 'white', backgroundColor: this.props.color }
-                  ]
+              [
+                styles.inputLabel,
+                { color: 'white', backgroundColor: Colors.mooimom }
+              ]
             }
           >
             {this.props.label ? this.props.label : 'Label'}

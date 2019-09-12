@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity } from 'react-native';
+import { Colors } from '../Themes';
 
 export default class CheckBox extends Component {
   constructor(props) {
@@ -23,14 +24,14 @@ export default class CheckBox extends Component {
           height: 24,
           width: 24,
           borderWidth: 2,
-          borderColor: '#000',
+          borderColor: Colors.mooimom,
           alignItems: 'center',
           justifyContent: 'center',
         }}>
           <View style={{
             height: 12,
             width: 12,
-            backgroundColor: this.state.isCheck ? '#000' : '#FFF',
+            backgroundColor: this.state.isCheck ? Colors.mooimom : '#FFF',
           }} />
         </View>
       </TouchableOpacity>

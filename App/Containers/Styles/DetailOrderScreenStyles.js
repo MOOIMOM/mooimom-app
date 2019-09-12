@@ -179,8 +179,8 @@ export default StyleSheet.create({
     borderWidth: 1,
     paddingLeft: 30,
     paddingVertical: 10,
+    borderColor: Colors.black,
     width: Metrics.screenWidth / 2,
-    backgroundColor: Colors.lightGray,
     justifyContent: 'center',
     alignItems: 'flex-start'
   },

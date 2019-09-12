@@ -102,7 +102,7 @@ export default class ProductCardSingle extends Component {
           <View style={styles.bottomRightItem}>
             <TouchableWithoutFeedback onPress={() => this.onSharePress('whatsapp')}>
               <View style={styles.btn}>
-                <Image source={Images.whatsapp} style={styles.imageBtn}/>
+                <Image source={Images.wa2} style={styles.imageBtn}/>
                 <Text style={styles.textBtn}>Bagikan</Text>
               </View>
             </TouchableWithoutFeedback>

@@ -7,7 +7,7 @@ export default StyleSheet.create({
   },
   containerScroll:{
     paddingTop: 0,
-    height: Metrics.screenHeight - (Metrics.screenHeight / 3)
+    height: Metrics.screenHeight - 160
   },
   wrapperSeparator:{
     marginTop: 20,
@@ -49,37 +49,8 @@ export default StyleSheet.create({
     resizeMode: 'contain'
   },
   contentContainer:{
+    flexDirection:'row',
     width: Metrics.screenWidth - 40,
     marginHorizontal: 20,
-  },
-  menuStatus:{
-    marginTop:10
-  },
-  menuBtn:{
-    marginRight: 10,
-    paddingVertical: 5,
-    paddingHorizontal: 20,
-    borderWidth: 2,
-    borderColor: Colors.mooimom,
-    borderRadius: 5
-  },
-  menuText:{
-    color:Colors.black,
-    fontFamily: Fonts.type.gotham4,
-    fontSize: 14,
-  },
-  menuBtn2:{
-    marginRight: 10,
-    paddingVertical: 5,
-    paddingHorizontal: 20,
-    borderWidth: 2,
-    borderColor: Colors.mooimom,
-    backgroundColor: Colors.mooimom,
-    borderRadius: 5
-  },
-  menuText2:{
-    color:Colors.white,
-    fontFamily: Fonts.type.gotham4,
-    fontSize: 14,
   },
 })

@@ -271,7 +271,7 @@ class ProductScreen extends Component {
           <View style={styles.headerButtonRight}>
             <TouchableOpacity onPress={() => this.actNavigate('SharedProductScreen')}><Image source={Images.wishlistBlack} style={styles.buttonHeader} /></TouchableOpacity>
             <TouchableOpacity onPress={() => this.actNavigate('CartScreen')}><Image source={Images.shoppingCartBlack} style={styles.buttonHeader} /></TouchableOpacity>
-            <Image source={Images.notif} style={styles.buttonHeader} />
+            <TouchableOpacity onPress={() => this.actNavigate('NotificationScreen')}><Image source={Images.notif} style={styles.buttonHeader} /></TouchableOpacity>
           </View>
         </View>
         <View style={styles.productContainer}>
@@ -344,7 +344,7 @@ class ProductScreen extends Component {
                 <Image source={Images.sizeGuide} style={styles.imageSizeGuide} />
               </View>
               <View style={styles.sizeGuideRight}>
-                <Image source={Images.rightArrow} style={styles.buttonSizeGuide} />
+                <Image source={Images.rightArrowBlack} style={styles.buttonSizeGuide} />
               </View>
             </View>
             <View style={styles.wrapperSeparator}/>

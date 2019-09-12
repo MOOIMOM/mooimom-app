@@ -15,7 +15,6 @@ export default StyleSheet.create({
   },
   inputText: {
     width: Metrics.screenWidth - 40,
-    backgroundColor: 'rgba(230,230,230,0.5)',
     borderColor: 'gray',
     borderWidth: 2,
     borderRadius: 10,
@@ -24,7 +23,7 @@ export default StyleSheet.create({
     textAlign: 'left',
     fontSize: 18,
     fontFamily: Fonts.type.gotham1,
-    color: 'gray'
+    color: Colors.black
   },
   inputLabelWrapper: {
     // backgroundColor: 'rgb(50, 50, 200)',

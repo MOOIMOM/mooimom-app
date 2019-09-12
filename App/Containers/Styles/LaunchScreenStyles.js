@@ -48,6 +48,6 @@ export default StyleSheet.create({
   caption3:{
     color: Colors.white,
     fontFamily: Fonts.type.gotham3,
-    fontSize: 20 * Metrics.screenWidth / 320,
+    fontSize: 22,
   },
 })

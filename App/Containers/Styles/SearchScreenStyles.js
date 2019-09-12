@@ -28,6 +28,7 @@ export default StyleSheet.create({
     backgroundColor: Colors.lightGray,
     flexDirection: 'row',
     alignItems: 'center',
+    paddingHorizontal: 20
   },
   imageSearch:{
     height:20,
@@ -36,18 +37,18 @@ export default StyleSheet.create({
     resizeMode: 'contain'
   },
   textSearch:{
+    width: Metrics.screenWidth - 140,
+    height: 40,
     color:Colors.gray,
     fontFamily: Fonts.type.gotham5,
   },
   btnHeader:{
-    width: 30,
-    height: 30,
     justifyContent: 'center',
     alignItems: 'center',
   },
   imgHeader:{
-    width: 30,
-    height: 30,
+    height: 20 * Metrics.screenWidth / 320,
+    width: 20 * Metrics.screenWidth / 320,
     resizeMode: 'contain'
   },
   contentContainer:{

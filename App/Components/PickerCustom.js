@@ -27,7 +27,6 @@ export default class PickerCustom extends Component {
       <View style={[styles.inputCustom, {height:80}]}>
         <View style={{
           width: widthFix, height: 60,
-          backgroundColor: 'rgba(230,230,230,0.5)',
           borderColor: 'gray',
           borderWidth: 2,
           borderRadius: 10,
@@ -48,10 +47,16 @@ export default class PickerCustom extends Component {
           </Picker>
         </View>
         <View style={styles.inputLabelWrapper}>
-        <Text
-          style={styles.inputLabel}>
-          {this.props.label ? this.props.label : 'Label'}
-        </Text>
+          <Text
+            style={
+              [
+                styles.inputLabel,
+                { color: 'white', backgroundColor: Colors.mooimom }
+              ]
+            }
+          >
+            {this.props.label ? this.props.label : 'Label'}
+          </Text>
         </View>
       </View>
     )

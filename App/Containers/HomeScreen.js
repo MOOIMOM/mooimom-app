@@ -195,7 +195,7 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
             <View style={styles.headerButtonRight}>
               <TouchableOpacity onPress={() => this.navigate_to('SharedProductScreen')}><Image source={Images.wishlist} style={styles.buttonHeader} /></TouchableOpacity>
               <TouchableOpacity onPress={() => this.navigate_to('CartScreen')}><Image source={Images.shoppingCart} style={styles.buttonHeader} /></TouchableOpacity>
-              <Image source={Images.notifWhite} style={styles.buttonHeader} />
+              <TouchableOpacity onPress={() => this.navigate_to('NotificationScreen')}><Image source={Images.notifWhite} style={styles.buttonHeader} /></TouchableOpacity>
             </View>
           </View>
           </View>

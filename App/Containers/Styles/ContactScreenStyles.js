@@ -40,74 +40,20 @@ export default StyleSheet.create({
     fontFamily: Fonts.type.gotham5,
   },
   btnHeader:{
-    width: 30,
-    height: 30,
+    height: 20 * Metrics.screenWidth / 320,
+    width: 20 * Metrics.screenWidth / 320,
     justifyContent: 'center',
     alignItems: 'center',
   },
   imgHeader:{
-    width: 30,
-    height: 30,
+    height: 20 * Metrics.screenWidth / 320,
+    width: 20 * Metrics.screenWidth / 320,
     resizeMode: 'contain'
   },
   contentContainer:{
     flexDirection:'row',
     width: Metrics.screenWidth - 40,
     marginHorizontal: 20,
-  },
-  topView:{
-    flexDirection: 'row',
-    justifyContent: 'space-between'
-  },
-  topLeftView:{
-    justifyContent: 'center'
-  },
-  topRightView:{
-    justifyContent: 'center'
-  },
-  imgProfile:{
-    width: 90,
-    height: 90,
-    resizeMode: 'contain'
-  },
-  textPhone:{
-    color:Colors.black,
-    fontFamily: Fonts.type.gotham4,
-    fontSize: 20
-  },
-  btnEditProfile:{
-    backgroundColor: Colors.mooimom,
-    width: Metrics.screenWidth / 3,
-    height:35,
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginVertical: 10
-  },
-  textEditProfile:{
-    color: Colors.white,
-    fontFamily: Fonts.type.gotham4,
-    fontSize: 14
-  },
-  saldoContainer:{
-    borderRadius: 10,
-    backgroundColor: Colors.lightGray,
-    width: Metrics.screenWidth - 40,
-    height: 100,
-    justifyContent: 'center',
-    paddingLeft: 20
-  },
-  textSaldo:{
-    color: Colors.black,
-    fontFamily: Fonts.type.gotham4,
-    fontSize: 16,
-    marginVertical: 3
-  },
-  textSaldoAmount:{
-    color:Colors.mooimom,
-    fontSize: 24,
-    fontFamily: Fonts.type.gotham4,
-    marginVertical: 3
   },
   containerMenu:{
 
@@ -116,22 +62,48 @@ export default StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: Colors.gray,
     paddingVertical: 15,
-    paddingLeft: 20,
+    paddingHorizontal: 20,
+  },
+  leftContainerMenu:{
+    flexDirection: 'row'
+  },
+  contactContainer:{
+    flexDirection: 'column',
+    marginLeft: 20
   },
   btnMenu:{
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-start'
+    justifyContent: 'space-between'
   },
   imgMenu:{
     width: 35,
     height:35,
     resizeMode: 'contain'
   },
+  imgMenu2:{
+    width: 20,
+    height:20,
+    resizeMode: 'contain'
+  },
   imgText:{
     color: Colors.gray,
     fontFamily: Fonts.type.gotham2,
     fontSize: 16,
-    marginLeft: 20
+  },
+  imgText2:{
+    color: Colors.gray,
+    fontFamily: Fonts.type.gotham2,
+    fontSize: 14,
+  },
+  imgText3:{
+    color: Colors.black,
+    fontFamily: Fonts.type.gotham2,
+    fontSize: 16,
+  },
+  menuBottom:{
+    marginTop: 80,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 })

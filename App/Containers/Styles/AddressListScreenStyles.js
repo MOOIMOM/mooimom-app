@@ -68,8 +68,8 @@ export default StyleSheet.create({
     flexDirection: 'row'
   },
   btnEditAddress:{
-    width: 25,
-    height: 25,
+    height: 20 * Metrics.screenWidth / 320,
+    width: 20 * Metrics.screenWidth / 320,
     resizeMode: 'contain',
     marginLeft: 10
   },

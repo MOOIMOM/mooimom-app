@@ -40,14 +40,14 @@ export default StyleSheet.create({
     fontFamily: Fonts.type.gotham5,
   },
   btnHeader:{
-    width: 30,
-    height: 30,
+    height: 20 * Metrics.screenWidth / 320,
+    width: 20 * Metrics.screenWidth / 320,
     justifyContent: 'center',
     alignItems: 'center',
   },
   imgHeader:{
-    width: 30,
-    height: 30,
+    height: 20 * Metrics.screenWidth / 320,
+    width: 20 * Metrics.screenWidth / 320,
     resizeMode: 'contain'
   },
   contentContainer:{

@@ -57,8 +57,8 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   buttonHeader:{
-    height: 25,
-    width: 25,
+    height: 20 * Metrics.screenWidth / 320,
+    width: 20 * Metrics.screenWidth / 320,
     marginLeft: 10,
     resizeMode: 'contain'
   },

@@ -51,14 +51,14 @@ export default StyleSheet.create({
     fontFamily: Fonts.type.gotham5,
   },
   btnHeader:{
-    width: 30,
-    height: 30,
+    height: 20 * Metrics.screenWidth / 320,
+    width: 20 * Metrics.screenWidth / 320,
     justifyContent: 'center',
     alignItems: 'center',
   },
   imgHeader:{
-    width: 30,
-    height: 30,
+    height: 20 * Metrics.screenWidth / 320,
+    width: 20 * Metrics.screenWidth / 320,
     resizeMode: 'contain'
   },
   contentContainer:{
@@ -123,7 +123,8 @@ export default StyleSheet.create({
   productText:{
     fontSize: 9 * Metrics.screenWidth / 320,
     textAlign: 'center',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    paddingHorizontal: 2
   },
   contentContainer2:{
     width: Metrics.screenWidth - 20,

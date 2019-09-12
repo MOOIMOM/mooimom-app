@@ -58,8 +58,8 @@ export default StyleSheet.create({
     left: 0
   },
   removeImg:{
-    width: 30,
-    height: 30,
+    height: 20 * Metrics.screenWidth / 320,
+    width: 20 * Metrics.screenWidth / 320,
     resizeMode: 'contain',
   },
   productDescriptionWrapper:{
@@ -199,7 +199,7 @@ export default StyleSheet.create({
     paddingLeft: 30,
     paddingVertical: 10,
     width: Metrics.screenWidth / 2,
-    backgroundColor: Colors.lightGray,
+    borderColor: Colors.black,
     justifyContent: 'center',
     alignItems: 'flex-start'
   },

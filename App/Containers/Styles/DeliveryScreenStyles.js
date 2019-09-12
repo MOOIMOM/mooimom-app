@@ -154,6 +154,46 @@ export default StyleSheet.create({
     fontFamily: Fonts.type.gotham4,
     color: Colors.white,
   },
+  deliveryOptionWrapper:{
+    paddingVertical: 10,
+    borderTopWidth: 0.5,
+    borderColor: Colors.black,
+    paddingHorizontal: 20
+  },
+  chooseDeliveryBtn2:{
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    marginVertical: 20
+  },
+  imageClose:{
+    width: 20,
+    height: 20,
+    resizeMode: 'contain'
+  },
+  chooseDeliveryText2:{
+    fontSize: 12 * Metrics.screenWidth / 320,
+    fontFamily: Fonts.type.gotham4,
+    color: Colors.black,
+    marginLeft: 10
+  },
+  deliveryNameText:{
+    fontSize: 12 * Metrics.screenWidth / 320,
+    fontFamily: Fonts.type.gotham1,
+    color: Colors.black,
+    fontWeight: 'bold'
+  },
+  deliveryPriceText:{
+    fontSize: 10 * Metrics.screenWidth / 320,
+    fontFamily: Fonts.type.gotham1,
+    color: Colors.black,
+  },
+  selectedDeliveryWrapper:{
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderWidth: 0.5,
+    marginBottom: 10
+  },
   menuWrapper:{
     position:'absolute',
     bottom: 0,
@@ -180,7 +220,7 @@ export default StyleSheet.create({
     paddingLeft: 30,
     paddingVertical: 10,
     width: Metrics.screenWidth / 2,
-    backgroundColor: Colors.lightGray,
+    borderColor: Colors.black,
     justifyContent: 'center',
     alignItems: 'flex-start'
   },

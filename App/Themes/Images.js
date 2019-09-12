@@ -29,6 +29,7 @@ const images = {
   instagram: require('../Images/Icons/ig.png'),
   sizeGuide: require('../Images/Icons/size-guide.png'),
   rightArrow: require('../Images/Icons/next.png'),
+  rightArrowBlack: require('../Images/Icons/next2.png'),
   share: require('../Images/Icons/share.png'),
   starEmpty: require('../Images/Icons/star-empty.png'),
   star: require('../Images/Icons/star.png'),
@@ -51,6 +52,12 @@ const images = {
   caution: require('../Images/Icons/caution.png'),
   check: require('../Images/Icons/check.png'),
   info: require('../Images/Icons/info.png'),
+  ig2: require('../Images/Icons/ig-2.png'),
+  line: require('../Images/Icons/line-icon-(blue).png'),
+  mail: require('../Images/Icons/mail-icon-(blue).png'),
+  phone: require('../Images/Icons/phone-icon.png'),
+  wa: require('../Images/Icons/wa-icon-(blue).png'),
+  wa2: require('../Images/Icons/wa-only.png'),
 
   //// TEMP:
   catMasaKehamilan: require('../Images/Icons/masa-kehamilan.png'),

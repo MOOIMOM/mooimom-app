@@ -1,4 +1,5 @@
 import { createStackNavigator, createAppContainer, createBottomTabNavigator } from 'react-navigation'
+import SplashScreen from '../Containers/SplashScreen'
 import LaunchScreen from '../Containers/LaunchScreen'
 import SignupScreen from '../Containers/SignupScreen'
 import LoginScreen from '../Containers/LoginScreen'
@@ -8,7 +9,7 @@ import ProductScreen from '../Containers/ProductScreen'
 import LearnScreen from '../Containers/LearnScreen'
 import CategoryScreen from '../Containers/CategoryScreen'
 import OrderScreen from '../Containers/OrderScreen'
-import AccountScreen from '../Containers/AccountScreen'
+import ProfileScreen from '../Containers/ProfileScreen'
 import CartScreen from '../Containers/CartScreen'
 import DeliveryScreen from '../Containers/DeliveryScreen'
 import AddressListScreen from '../Containers/AddressListScreen'
@@ -19,6 +20,13 @@ import SearchScreen from '../Containers/SearchScreen'
 import SharedProductScreen from '../Containers/SharedProductScreen'
 import DetailTargetScreen from '../Containers/DetailTargetScreen'
 import DetailOrderScreen from '../Containers/DetailOrderScreen'
+import ContactScreen from '../Containers/ContactScreen'
+import NotificationScreen from '../Containers/NotificationScreen'
+import AccountListScreen from '../Containers/AccountListScreen'
+import NewAccountScreen from '../Containers/NewAccountScreen'
+import UpdateAccountScreen from '../Containers/UpdateAccountScreen'
+import PaymentScreen from '../Containers/PaymentScreen'
+import NewPaymentRequestScreen from '../Containers/NewPaymentRequestScreen'
 import { Images, Colors } from '../Themes'
 
 import styles from './Styles/NavigationStyles'
@@ -28,7 +36,7 @@ const MainNav = createBottomTabNavigator({
   Learn: { screen: LearnScreen},
   Category: { screen: CategoryScreen},
   Order: { screen: OrderScreen},
-  Akun: { screen: AccountScreen},
+  Akun: { screen: ProfileScreen},
 }, {
   // Default config for all screens
   // Default config for all screens
@@ -43,6 +51,7 @@ const MainNav = createBottomTabNavigator({
 })
 // Manifest of possible screens
 const PrimaryNav = createStackNavigator({
+  SplashScreen: { screen: SplashScreen },
   LaunchScreen: { screen: LaunchScreen },
   SignupScreen: { screen: SignupScreen },
   LoginScreen: { screen: LoginScreen },
@@ -58,13 +67,20 @@ const PrimaryNav = createStackNavigator({
   SharedProductScreen: { screen: SharedProductScreen },
   DetailTargetScreen: { screen: DetailTargetScreen },
   DetailOrderScreen: { screen: DetailOrderScreen },
+  ContactScreen: { screen: ContactScreen },
+  NotificationScreen: { screen: NotificationScreen },
+  AccountListScreen: { screen: AccountListScreen },
+  NewAccountScreen: { screen: NewAccountScreen },
+  UpdateAccountScreen: { screen: UpdateAccountScreen },
+  PaymentScreen: { screen: PaymentScreen },
+  NewPaymentRequestScreen: { screen: NewPaymentRequestScreen },
   MainScreen: {
      screen: MainNav
   }
 }, {
   // Default config for all screens
   headerMode: 'none',
-  initialRouteName: 'LaunchScreen',
+  initialRouteName: 'SplashScreen',
   navigationOptions: {
     headerStyle: styles.header
   }

@@ -6,10 +6,10 @@ import {convertToRupiah} from '../Lib/utils'
 import { NavigationActions, StackActions } from 'react-navigation'
 
 // Styles
-import styles from './Styles/AccountScreenStyles'
+import styles from './Styles/ProfileScreenStyles'
 import menuStyles from './Styles/MenuComponentStyles'
 
-class AccountScreen extends Component {
+class ProfileScreen extends Component {
   static navigationOptions = {
       title: 'Akun',
       tabBarIcon: ({ focused, tintColor }) => {
@@ -99,13 +99,7 @@ class AccountScreen extends Component {
             <View style={styles.wrapperSeparator}/>
             <View style={styles.containerMenu}>
               <View style={styles.menu}>
-                <TouchableOpacity style={styles.btnMenu}>
-                  <Image source={Images.bank} style={styles.imgMenu}/>
-                  <Text style={styles.imgText}>Detail Bank</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.menu}>
-                <TouchableOpacity style={styles.btnMenu}>
+                <TouchableOpacity style={styles.btnMenu} onPress={() => this.actNavigate('PaymentScreen')}>
                   <Image source={Images.card} style={styles.imgMenu}/>
                   <Text style={styles.imgText}>Pembayaran Saya</Text>
                 </TouchableOpacity>
@@ -123,7 +117,13 @@ class AccountScreen extends Component {
                 </TouchableOpacity>
               </View>
               <View style={styles.menu}>
-                <TouchableOpacity style={styles.btnMenu}>
+                <TouchableOpacity style={styles.btnMenu} onPress={() => this.actNavigate('AccountListScreen')}>
+                  <Image source={Images.bank} style={styles.imgMenu}/>
+                  <Text style={styles.imgText}>Daftar Rekening Bank</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.menu}>
+                <TouchableOpacity style={styles.btnMenu} onPress={() => this.actNavigate('ContactScreen', {})}>
                   <Image source={Images.contact} style={styles.imgMenu}/>
                   <Text style={styles.imgText}>Hubungi Kami</Text>
                 </TouchableOpacity>
@@ -157,4 +157,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AccountScreen)
+)(ProfileScreen)

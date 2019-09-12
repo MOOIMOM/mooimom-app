@@ -27,13 +27,21 @@ var dataProducts = [
 var dataAddress = [
   {name:'James', street:'Graha Boulevard BO5', district:'Kelapa Gading Timur, Kelapa Gading, Jakarta Utara, DKI Jakarta', zipCode:'14240', phone:'081823908879'}
 ]
+var dataDelivery = [
+  {name:'JNE CTC (1-2 hari)', price:9000},
+  {name:'JNE CTC YES (1 hari)', price:18000},
+  {name:'Ninja Express (COD)', price:0},
+]
 class DeliveryScreen extends Component {
   constructor (props) {
     super(props)
     this.state = {
       carts: dataProducts,
       totalPrice:0,
-      selectedAddress: dataAddress[0]
+      selectedAddress: dataAddress[0],
+      deliveryOptions: dataDelivery,
+      isShowDelivery: false,
+      selectedDelivery: {}
     }
   }
 
@@ -51,9 +59,34 @@ class DeliveryScreen extends Component {
     this.state.carts.map(cart => {
       price += (cart.qty * (cart.discPrice > 0 ? cart.discPrice : cart.price))
     })
+
+    if(this.state.selectedDelivery.price && this.state.selectedDelivery.price > 0)
+      price += this.state.selectedDelivery.price
+
     this.setState({
       totalPrice: price
     })
+  }
+
+  calculateDelivery(){
+    this.setState({
+      isShowDelivery:true
+    })
+  }
+
+  async selectDelivery(index){
+    await this.setState({
+      isShowDelivery: false,
+      selectedDelivery: this.state.deliveryOptions[index]
+    })
+    await this.calculatePrice()
+  }
+
+  processBuy(){
+    if(!this.state.selectedDelivery.name){
+      Alert.alert('', 'Please select one of delivery option first')
+      return
+    }
   }
 
   _renderProductCart({item, index}){
@@ -100,6 +133,53 @@ class DeliveryScreen extends Component {
     )
   }
 
+  _renderDeliveriesOption({item, index}){
+    return (
+      <TouchableOpacity style={styles.deliveryOptionWrapper} onPress={() => this.selectDelivery(index)}>
+        <Text style={styles.deliveryNameText}>{item.name}</Text>
+        <Text style={styles.deliveryPriceText}>{convertToRupiah(item.price)}</Text>
+      </TouchableOpacity>
+    )
+  }
+
+  renderDelivery(){
+    var selectedDelivery = <View/>
+    if(this.state.selectedDelivery.name){
+      selectedDelivery =
+        <View style={styles.selectedDeliveryWrapper}>
+          <Text style={styles.deliveryNameText}>{this.state.selectedDelivery.name}</Text>
+          <Text style={styles.deliveryPriceText}>{convertToRupiah(this.state.selectedDelivery.price)}</Text>
+        </View>
+      }
+    if(this.state.isShowDelivery){
+      return (
+        <View style={styles.chooseDeliveryWrapper}>
+          {selectedDelivery}
+          <TouchableOpacity style={styles.chooseDeliveryBtn2} onPress={() => this.setState({
+            isShowDelivery:false
+          })}>
+            <Image source={Images.x} style={styles.imageClose}/>
+            <Text style={styles.chooseDeliveryText2}>Pilih Opsi Pengiriman</Text>
+          </TouchableOpacity>
+          <FlatList
+            data={this.state.deliveryOptions}
+            renderItem={this._renderDeliveriesOption.bind(this)}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        </View>
+      )
+    } else {
+      return (
+        <View style={styles.chooseDeliveryWrapper}>
+          {selectedDelivery}
+          <TouchableOpacity style={styles.chooseDeliveryBtn} onPress={() => this.calculateDelivery()}>
+            <Text style={styles.chooseDeliveryText}>Pilih Opsi Pengiriman</Text>
+          </TouchableOpacity>
+        </View>
+      )
+    }
+  }
+
   render () {
     var totalPrice = convertToRupiah(this.state.totalPrice)
     var commission = convertToRupiah(this.state.totalPrice / 10)
@@ -130,11 +210,7 @@ class DeliveryScreen extends Component {
             keyExtractor={(item, index) => item.id}
           />
           <View style={styles.wrapperSeparator}/>
-          <View style={styles.chooseDeliveryWrapper}>
-            <TouchableOpacity style={styles.chooseDeliveryBtn}>
-              <Text style={styles.chooseDeliveryText}>Pilih Opsi Pengiriman</Text>
-            </TouchableOpacity>
-          </View>
+          {this.renderDelivery()}
           </ScrollView>
         </View>
         <View style={styles.menuWrapper}>
@@ -143,7 +219,7 @@ class DeliveryScreen extends Component {
             <Text style={styles.priceText}>{totalPrice}</Text>
             <Text style={styles.commissionText}>Komisi {commission}</Text>
           </View>
-          <TouchableOpacity style={styles.buyBtn}>
+          <TouchableOpacity style={styles.buyBtn} onPress={() => this.processBuy()}>
             <Text style={styles.buyText}>Beli</Text>
           </TouchableOpacity>
         </View>

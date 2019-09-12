@@ -25,7 +25,7 @@ const colors = {
   mooimom: '#82DED2',
   white: '#FFFFFF',
   gray: '#999999',
-  black: '#000000',
+  black: '#5d5d5d',
   lightGray: '#EFEFEF',
   modal:'rgba(100,100,100,0.8)'
 }
