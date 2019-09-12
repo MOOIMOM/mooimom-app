@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Clipboard, Alert, FlatList, AppState } from 'react-native'
+import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Clipboard, Alert, FlatList, AppState, Linking } from 'react-native'
 import { Images, Metrics } from '../Themes'
 import { connect } from 'react-redux'
 import Carousel, { Pagination  } from 'react-native-snap-carousel';
@@ -91,21 +91,74 @@ class ProductScreen extends Component {
   };
 
   async shareSocial(social){
-    if(this.state.willShareDescription === false && social === 'whatsapp'){
-      this.setState({
-        willShareDescription: true,
-        finishShareImage : false,
-        socialShare: social
-      });
-      share(this.state.product.images, social)
+    if(social === 'whatsapp') {
+      const url = `whatsapp://send?phone=6281288446533`;
+      Linking.canOpenURL(url).then(supported => {
+          if (supported) {
+            if(this.state.willShareDescription === false){
+              this.setState({
+                willShareDescription: true,
+                finishShareImage : false,
+                socialShare: social
+              });
+              share(this.state.product.images, social)
+            } else {
+              Clipboard.setString(this.state.product.description);
+              share(this.state.product.images, social)
+            }
+            let data = {
+              product: this.state.product
+            }
+            this.props.sharedProductProcess(data)
+          } else {
+              Alert.alert(
+                  'Sorry',
+                  'WhatsApp is not installed on your phone',
+              )
+          }
+      })
+    } else if(social === 'facebook') {
+      const url = `fb://profile/mooimom.id`;
+      Linking.canOpenURL(url).then(supported => {
+          if (supported) {
+            Clipboard.setString(this.state.product.description);
+            share(this.state.product.images, social)
+          } else {
+              Alert.alert(
+                  'Sorry',
+                  'Facebook is not installed on your phone',
+              )
+          }
+          let data = {
+            product: this.state.product
+          }
+          this.props.sharedProductProcess(data)
+      })
+    } else if(social === 'instagram') {
+      const url = `instagram://user?username=mooimom.id`;
+      Linking.canOpenURL(url).then(supported => {
+          if (supported) {
+            Clipboard.setString(this.state.product.description);
+            share(this.state.product.images, social)
+          } else {
+              Alert.alert(
+                  'Sorry',
+                  'Instagram is not installed on your phone',
+              )
+          }
+          let data = {
+            product: this.state.product
+          }
+          this.props.sharedProductProcess(data)
+      })
     } else {
-      await Clipboard.setString(this.state.product.description);
+      Clipboard.setString(this.state.product.description);
       share(this.state.product.images, social)
+      let data = {
+        product: this.state.product
+      }
+      this.props.sharedProductProcess(data)
     }
-    let data = {
-      product: this.state.product
-    }
-    this.props.sharedProductProcess(data)
   }
 
   async copyText(){

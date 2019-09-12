@@ -65,7 +65,7 @@ class ContactScreen extends Component {
           }
       });
     } else if(contact === 'instagram'){
-      const url = `instagram://user?username=${this.state.mail}`;
+      const url = `instagram://user?username=${this.state.instagram}`;
       Linking.canOpenURL(url).then(supported => {
           if (supported) {
               Linking.openURL(url);

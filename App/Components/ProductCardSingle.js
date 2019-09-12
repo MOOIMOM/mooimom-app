@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableWithoutFeedback, Image } from 'react-native'
+import { View, Text, TouchableWithoutFeedback, Image, Linking, Alert } from 'react-native'
 import { Images } from '../Themes'
 import {convertToRupiah, share, download} from '../Lib/utils'
 
@@ -16,12 +16,42 @@ export default class ProductCardSingle extends Component {
   }
 
   onSharePress(social = ''){
-    share(this.state.product.images, social)
-    if(this.props.sharedProductProcess){
-      let data = {
-        product: this.state.product
-      }
-      this.props.sharedProductProcess(data)
+    if(social === 'whatsapp') {
+      const url = `whatsapp://send?phone=6281288446533`;
+      Linking.canOpenURL(url).then(supported => {
+          if (supported) {
+            share(this.state.product.images, social)
+            if(this.props.sharedProductProcess){
+              let data = {
+                product: this.state.product
+              }
+              this.props.sharedProductProcess(data)
+            }
+          } else {
+              Alert.alert(
+                  'Sorry',
+                  'WhatsApp is not installed on your phone',
+              )
+          }
+      })
+    } else if(social === 'facebook') {
+      const url = `fb://profile/1234567`;
+      Linking.canOpenURL(url).then(supported => {
+          if (supported) {
+            share(this.state.product.images, social)
+            if(this.props.sharedProductProcess){
+              let data = {
+                product: this.state.product
+              }
+              this.props.sharedProductProcess(data)
+            }
+          } else {
+              Alert.alert(
+                  'Sorry',
+                  'Facebook is not installed on your phone',
+              )
+          }
+      })
     }
   }
 

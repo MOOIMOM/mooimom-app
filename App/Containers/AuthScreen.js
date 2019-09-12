@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { ScrollView, Text, View, TouchableOpacity, Image, KeyboardAvoidingView, TextInput } from 'react-native'
+import { NavigationActions, StackActions } from 'react-navigation'
 import { Images, Colors } from '../Themes'
 import { connect } from 'react-redux'
 import LinearGradient from 'react-native-linear-gradient';
@@ -17,11 +18,6 @@ class AuthScreen extends Component {
     };
 
     this.codeInputRefs = [];
-  }
-
-  actNavigate (screen) {
-    const { navigate } = this.props.navigation
-    navigate(screen, {})
   }
 
   clear() {
@@ -93,7 +89,7 @@ class AuthScreen extends Component {
   }
 
   onFulfill(){
-    this.actNavigate('Home')
+    this.props.navigation.navigate('App');
   }
 
   render () {

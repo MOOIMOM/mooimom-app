@@ -1,4 +1,4 @@
-import { createStackNavigator, createAppContainer, createBottomTabNavigator } from 'react-navigation'
+import { createStackNavigator, createAppContainer, createBottomTabNavigator, createSwitchNavigator } from 'react-navigation'
 import SplashScreen from '../Containers/SplashScreen'
 import LaunchScreen from '../Containers/LaunchScreen'
 import SignupScreen from '../Containers/SignupScreen'
@@ -49,13 +49,26 @@ const MainNav = createBottomTabNavigator({
     },
   }
 })
-// Manifest of possible screens
-const PrimaryNav = createStackNavigator({
-  SplashScreen: { screen: SplashScreen },
+
+const AuthStack = createStackNavigator({
   LaunchScreen: { screen: LaunchScreen },
   SignupScreen: { screen: SignupScreen },
   LoginScreen: { screen: LoginScreen },
   AuthScreen: { screen: AuthScreen },
+}, {
+  // Default config for all screens
+  headerMode: 'none',
+  initialRouteName: 'LaunchScreen',
+  navigationOptions: {
+    headerStyle: styles.header
+  }
+})
+
+// Manifest of possible screens
+const AppStack = createStackNavigator({
+  MainScreen: {
+     screen: MainNav
+  },
   ProductScreen: { screen: ProductScreen },
   CartScreen: { screen: CartScreen },
   DeliveryScreen: { screen: DeliveryScreen },
@@ -74,16 +87,24 @@ const PrimaryNav = createStackNavigator({
   UpdateAccountScreen: { screen: UpdateAccountScreen },
   PaymentScreen: { screen: PaymentScreen },
   NewPaymentRequestScreen: { screen: NewPaymentRequestScreen },
-  MainScreen: {
-     screen: MainNav
-  }
 }, {
   // Default config for all screens
   headerMode: 'none',
-  initialRouteName: 'SplashScreen',
+  initialRouteName: 'MainScreen',
   navigationOptions: {
     headerStyle: styles.header
   }
 })
 
-export default createAppContainer(PrimaryNav)
+export default createAppContainer(
+  createSwitchNavigator(
+    {
+      AuthLoading: SplashScreen,
+      App: AppStack,
+      Auth: AuthStack,
+    },
+    {
+      initialRouteName: 'AuthLoading',
+    }
+  )
+)

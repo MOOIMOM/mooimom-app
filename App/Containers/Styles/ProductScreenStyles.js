@@ -392,7 +392,7 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   modalText:{
-    fontSize: 18,
+    fontSize: 14,
     color: Colors.white,
     fontFamily: Fonts.type.gotham2,
   },

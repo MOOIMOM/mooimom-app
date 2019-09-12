@@ -3,7 +3,6 @@ import { ScrollView, Text, View, Image, TouchableOpacity, Alert } from 'react-na
 import { Images, Metrics } from '../Themes'
 import { connect } from 'react-redux'
 import {convertToRupiah} from '../Lib/utils'
-import { NavigationActions, StackActions } from 'react-navigation'
 
 // Styles
 import styles from './Styles/ProfileScreenStyles'
@@ -40,16 +39,7 @@ class ProfileScreen extends Component {
         {
           text: 'Yes',
           onPress: () => {
-            dispatch(
-              StackActions.reset({
-                index: 0,
-                actions: [
-                  NavigationActions.navigate({
-                    routeName: 'LaunchScreen'
-                  })
-                ]
-              })
-            )
+            this.props.navigation.navigate('AuthLoading');
           }
         },
         {
