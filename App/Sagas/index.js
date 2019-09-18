@@ -8,12 +8,14 @@ import DebugConfig from '../Config/DebugConfig'
 import { StartupTypes } from '../Redux/StartupRedux'
 import { GithubTypes } from '../Redux/GithubRedux'
 import { SharedProductTypes } from '../Redux/SharedProductRedux'
+import { SignUpTypes } from '../Redux/SignUpRedux'
 
 /* ------------- Sagas ------------- */
 
 import { startup } from './StartupSagas'
 import { getUserAvatar } from './GithubSagas'
 import { saveSharedProduct } from './SharedProductSagas'
+import { postSignUp } from './SignUpSagas'
 
 /* ------------- API ------------- */
 
@@ -30,6 +32,7 @@ export default function * root () {
 
     // some sagas receive extra parameters in addition to an action
     takeLatest(GithubTypes.USER_REQUEST, getUserAvatar, api),
-    takeLatest(SharedProductTypes.SHARED_PRODUCT_REQUEST, saveSharedProduct)
+    takeLatest(SharedProductTypes.SHARED_PRODUCT_REQUEST, saveSharedProduct),
+    takeLatest(SignUpTypes.SIGNUP_REQUEST, postSignUp),
   ])
 }

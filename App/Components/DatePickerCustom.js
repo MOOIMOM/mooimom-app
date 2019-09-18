@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, AppRegistry } from 'react-native'
-import { ApplicationStyles, Colors, Metrics } from '../Themes';
+import { ApplicationStyles, Fonts, Colors, Metrics } from '../Themes';
 import DatePicker from 'react-native-datepicker';
 import PropTypes from 'prop-types';
 
@@ -25,8 +25,8 @@ export default class DatePickerCustom extends Component {
               ? [
                   {
                     width: widthFix, height: 60,
-                    borderColor: 'gray',
-                    borderWidth: 2,
+                    borderColor: Colors.mooimom,
+                    borderWidth: 1,
                     borderRadius: 10,
                     paddingLeft: 20,
                     paddingRight: 20
@@ -35,8 +35,8 @@ export default class DatePickerCustom extends Component {
               : [
                   {
                     width: widthFix, height: 60,
-                    borderColor: this.props.color,
-                    borderWidth: 2,
+                    borderColor: Colors.mooimom,
+                    borderWidth: 1,
                     borderRadius: 10,
                     paddingLeft: 20,
                     paddingRight: 20
@@ -61,7 +61,8 @@ export default class DatePickerCustom extends Component {
             },
             placeholderText:{
               color: 'gray',
-              fontSize: 18
+              fontSize: 18,
+              fontFamily: Fonts.type.gotham2
             },
             dateText:{
               color:'gray',

@@ -2,7 +2,7 @@
 import apisauce from 'apisauce'
 
 // our "constructor"
-const create = (baseURL = 'https://api.github.com/') => {
+const create = (baseURL = 'https://www.mooimom.id/') => {
   // ------
   // STEP 1
   // ------
@@ -36,7 +36,8 @@ const create = (baseURL = 'https://api.github.com/') => {
   //
   const getRoot = () => api.get('')
   const getRate = () => api.get('rate_limit')
-  const getUser = (username) => api.get('search/users', {q: username})
+  const register = params =>
+    api.post('app-register', params.data_request)
 
   // ------
   // STEP 3
@@ -54,7 +55,7 @@ const create = (baseURL = 'https://api.github.com/') => {
     // a list of the API functions from step 2
     getRoot,
     getRate,
-    getUser
+    register
   }
 }
 

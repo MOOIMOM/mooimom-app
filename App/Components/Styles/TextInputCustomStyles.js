@@ -15,14 +15,14 @@ export default StyleSheet.create({
   },
   inputText: {
     width: Metrics.screenWidth - 40,
-    borderColor: 'gray',
-    borderWidth: 2,
+    borderColor: Colors.mooimom,
+    borderWidth: 1,
     borderRadius: 10,
     paddingLeft: 20,
     paddingRight: 20,
     textAlign: 'left',
     fontSize: 18,
-    fontFamily: Fonts.type.gotham1,
+    fontFamily: Fonts.type.gotham2,
     color: Colors.black
   },
   inputLabelWrapper: {
@@ -31,8 +31,6 @@ export default StyleSheet.create({
   inputLabel: {
     alignSelf: 'flex-start',
     backgroundColor: 'white',
-    borderColor: 'gray',
-    borderWidth: 1,
     borderRadius: 20,
     height: 24,
     marginBottom: -12,

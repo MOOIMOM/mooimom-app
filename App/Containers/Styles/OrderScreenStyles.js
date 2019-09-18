@@ -91,7 +91,7 @@ export default StyleSheet.create({
     height: 30,
     resizeMode: 'contain',
     position: 'absolute',
-    right: -30,
+    right: 0,
     top:(Metrics.screenHeight / 12) - 30
   },
   bottomContainer:{

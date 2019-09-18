@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { ScrollView, Text, View, TouchableOpacity, Image, KeyboardAvoidingView, TextInput } from 'react-native'
 import { Images } from '../Themes'
 import LinearGradient from 'react-native-linear-gradient';
+import SignUpActions from '../Redux/SignUpRedux'
 import { connect } from 'react-redux'
 // Styles
 import styles from './Styles/SignupScreenStyles'
@@ -14,9 +15,22 @@ class SignupScreen extends Component {
     }
   }
 
+  componentWillReceiveProps (newProps) {
+    if (this.props.register !== newProps.register) {
+      console.info(newProps)
+
+    }
+  }
+
   actNavigate (screen) {
     const { navigate } = this.props.navigation
     navigate(screen, {})
+  }
+
+  signUp(){
+    const form = new FormData()
+    form.append('phone_number', this.state.phone)
+    this.props.signUpProcess(form)
   }
 
   render () {
@@ -45,7 +59,7 @@ class SignupScreen extends Component {
               </View>
               <TouchableOpacity
                 style={styles.button}
-                onPress={() => this.actNavigate('AuthScreen')}
+                onPress={() => this.signUp()}
               >
                 <Text style={styles.btnText}>Daftar</Text>
               </TouchableOpacity>
@@ -67,13 +81,15 @@ class SignupScreen extends Component {
 
 const mapStateToProps = state => {
   return {
-
+    register: state.register
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-
+    signUpProcess: data => {
+      dispatch(SignUpActions.signUpRequest(data))
+    }
   }
 };
 

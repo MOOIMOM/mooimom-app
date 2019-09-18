@@ -96,7 +96,7 @@ export default StyleSheet.create({
   },
   textTargetMore:{
     color:Colors.white,
-    fontFamily: Fonts.type.gotham1,
+    fontFamily: Fonts.type.gotham2,
     fontSize: 14,
     textAlign: 'center'
   },
@@ -108,7 +108,7 @@ export default StyleSheet.create({
   textString:{
     flex:1,
     color:Colors.white,
-    fontFamily: Fonts.type.gotham1,
+    fontFamily: Fonts.type.gotham2,
     fontSize: 14,
     marginVertical: 10
   },
@@ -149,12 +149,12 @@ export default StyleSheet.create({
   textInfo:{
     marginLeft: 20,
     textAlign: 'justify',
-    fontFamily: Fonts.type.gotham1,
+    fontFamily: Fonts.type.gotham2,
     fontSize: 12,
     flex:1
   },
   textBonusWeekly:{
-    fontFamily: Fonts.type.gotham1,
+    fontFamily: Fonts.type.gotham2,
     fontSize: 14,
     fontWeight: 'bold'
   },
@@ -172,29 +172,28 @@ export default StyleSheet.create({
   },
   textInfo2:{
     textAlign: 'justify',
-    fontFamily: Fonts.type.gotham1,
-    fontSize: 14,
+    fontFamily: Fonts.type.gotham2,
+    fontSize: 12,
     flex:2
   },
   textPenjualan1:{
     textAlign: 'left',
-    fontFamily: Fonts.type.gotham1,
-    fontSize: 14,
+    fontFamily: Fonts.type.gotham2,
+    fontSize: 12,
     flex:1,
     color:Colors.mooimom
   },
   textPenjualan2:{
     textAlign: 'left',
-    fontFamily: Fonts.type.gotham1,
-    fontSize: 14,
+    fontFamily: Fonts.type.gotham2,
+    fontSize: 12,
     flex:1,
     color:Colors.fire
   },
   textPenjualan3:{
     textAlign: 'left',
-    fontFamily: Fonts.type.gotham4,
-    fontSize: 14,
-    fontWeight: 'bold',
+    fontFamily: Fonts.type.gotham2,
+    fontSize: 12,
     flex:1
   },
   tablesimulationHeader:{
@@ -206,14 +205,14 @@ export default StyleSheet.create({
     flex:3,
     textAlign: 'center',
     fontFamily: Fonts.type.gotham4,
-    fontSize: 14,
+    fontSize: 13,
     color: Colors.white
   },
   tableHeaderText2:{
     flex:2,
     textAlign: 'center',
     fontFamily: Fonts.type.gotham4,
-    fontSize: 14,
+    fontSize: 13,
     color: Colors.white
   },
   itemSimulation:{
@@ -227,7 +226,7 @@ export default StyleSheet.create({
     flex:3,
     textAlign: 'center',
     fontFamily: Fonts.type.gotham4,
-    fontSize: 14,
+    fontSize: 12,
     color: Colors.gray
   },
   textSimulation2:{
