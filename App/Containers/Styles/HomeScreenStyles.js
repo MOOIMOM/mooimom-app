@@ -57,9 +57,15 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   buttonHeader:{
+    height: 18 * Metrics.screenWidth / 320,
+    width: 18 * Metrics.screenWidth / 320,
+    marginLeft: 18,
+    resizeMode: 'contain'
+  },
+  buttonHeader2:{
     height: 20 * Metrics.screenWidth / 320,
     width: 20 * Metrics.screenWidth / 320,
-    marginLeft: 10,
+    marginLeft: 15,
     resizeMode: 'contain'
   },
   headerWrapper2:{
@@ -85,6 +91,7 @@ export default StyleSheet.create({
   textSearch:{
     color:Colors.gray,
     fontFamily: Fonts.type.gotham5,
+    fontSize:12
   },
   heroBannerWrapper:{
     flex:1
@@ -119,7 +126,7 @@ export default StyleSheet.create({
   categoryWrapper:{
     flex:1,
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     width: Metrics.screenWidth - 40,
     marginLeft: 20
   },
@@ -130,7 +137,8 @@ export default StyleSheet.create({
     maxWidth: (Metrics.screenWidth - 40) / 4
   },
   catImage:{
-    height: 35,
+    height: 50,
+    width:50,
     resizeMode: 'contain'
   },
   catText:{

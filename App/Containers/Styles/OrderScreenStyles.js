@@ -38,6 +38,7 @@ export default StyleSheet.create({
   textSearch:{
     color:Colors.gray,
     fontFamily: Fonts.type.gotham5,
+    fontSize:12
   },
   btnHeader:{
     height: 20 * Metrics.screenWidth / 320,
@@ -59,7 +60,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     width: Metrics.screenWidth,
-    height: Metrics.screenHeight / 6,
+    height: Metrics.screenHeight / 5,
     paddingVertical: 10
   },
   textTarget:{
@@ -77,22 +78,22 @@ export default StyleSheet.create({
     alignSelf: 'center',
     borderRadius: 5,
     marginVertical: 5,
-    width: (Metrics.screenWidth - 40) / 2,
+    width: (Metrics.screenWidth - 20) / 2,
     backgroundColor: 'rgba(0,0,0,0.5)'
   },
   textTargetMore:{
     color:Colors.white,
     fontFamily: Fonts.type.gotham4,
     fontSize: 14,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   iconRight:{
-    width: 30,
-    height: 30,
+    width: 20,
+    height: 20,
     resizeMode: 'contain',
     position: 'absolute',
     right: 0,
-    top:(Metrics.screenHeight / 12) - 30
+    top:(Metrics.screenHeight / 10) - 20
   },
   bottomContainer:{
     width: Metrics.screenWidth - 40,
@@ -175,7 +176,8 @@ export default StyleSheet.create({
     fontSize: 12,
   },
   orderContainerBottom:{
-    marginHorizontal: 20
+    marginHorizontal: 20,
+    paddingTop:5
   },
   orderContainerProductWrapper:{
     flexDirection: 'row',
@@ -195,8 +197,9 @@ export default StyleSheet.create({
   },
   productName:{
     color:Colors.black,
-    fontFamily: Fonts.type.gotham1,
-    fontSize: 14,
+    fontFamily: Fonts.type.gotham2,
+    fontSize: 12,
+    lineHeight:18
   },
   productPrice:{
     color:Colors.mooimom,

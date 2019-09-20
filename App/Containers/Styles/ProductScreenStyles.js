@@ -35,9 +35,16 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   buttonHeader:{
+    height: 18 * Metrics.screenWidth / 320,
+    width: 18 * Metrics.screenWidth / 320,
+    marginRight: 12,
+    resizeMode: 'contain'
+  },
+  buttonHeader2:{
     height: 20 * Metrics.screenWidth / 320,
     width: 20 * Metrics.screenWidth / 320,
-    resizeMode: 'contain'
+    resizeMode: 'contain',
+    marginRight:5
   },
   searchButton:{
     width: Metrics.screenWidth / 1.8,
@@ -56,11 +63,12 @@ export default StyleSheet.create({
   textSearch:{
     color:Colors.gray,
     fontFamily: Fonts.type.gotham5,
-    fontSize: 9 * Metrics.screenWidth / 320
+    fontSize:10,
+    marginLeft: -5
   },
   productContainer:{
     width: Metrics.screenWidth - 40,
-    height: Metrics.screenHeight - (110 * Metrics.screenWidth / 320),
+    height: Metrics.screenHeight - (115 * Metrics.screenWidth / 320),
     marginHorizontal: 20,
     marginTop: 5,
   },
@@ -92,8 +100,8 @@ export default StyleSheet.create({
     right: 0
   },
   wishlistImage:{
-    width: 50 * Metrics.screenWidth / 320,
-    height: 50 * Metrics.screenWidth / 320,
+    width: 45 * Metrics.screenWidth / 320,
+    height: 45 * Metrics.screenWidth / 320,
     resizeMode: 'contain'
   },
   ratingWrapper:{
@@ -142,6 +150,7 @@ export default StyleSheet.create({
     fontSize: 12 * Metrics.screenWidth / 320,
     fontFamily: Fonts.type.gotham4,
     textDecorationLine: 'line-through',
+    color: Colors.fire,
     marginLeft: 20
   },
   shareSocialWrapper:{
@@ -208,7 +217,8 @@ export default StyleSheet.create({
   productDescriptionText:{
     flexWrap: 'wrap',
     fontSize: 12 * Metrics.screenWidth / 320,
-    color: Colors.gray,
+    color: Colors.black,
+    lineHeight:17 * Metrics.screenWidth / 320,
     fontFamily: Fonts.type.gotham3,
   },
   colorWrapper:{

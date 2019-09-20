@@ -38,6 +38,7 @@ export default StyleSheet.create({
   textSearch:{
     color:Colors.gray,
     fontFamily: Fonts.type.gotham5,
+    fontSize:12
   },
   btnHeader:{
     height: 20 * Metrics.screenWidth / 320,

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "659465029963",
+    "firebase_url": "https://mooimom-87768.firebaseio.com",
+    "project_id": "mooimom-87768",
+    "storage_bucket": "mooimom-87768.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:659465029963:android:2e81f40d94e0c1e1bb80ce",
+        "android_client_info": {
+          "package_name": "com.mooimom.id"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "659465029963-bv7nvlh57fs0nsrg8jqiu4p6u9d0eucb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSOo37AePY_XPedeFjRD8wbNBcLgxK4S0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "659465029963-bv7nvlh57fs0nsrg8jqiu4p6u9d0eucb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

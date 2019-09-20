@@ -20,119 +20,17 @@ class HomeScreen extends Component {
   };
   constructor (props) {
     super(props)
-    var dataHeroBanner = [
-      Images.banner2,
-      Images.banner1,
-      Images.banner3
-    ]
-    var dataProducts = [
-      {id: '1', images: [
-        {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2018/11/21/b8003-b4-compressor.jpg'},
-        {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2018/11/21/b8003-f1-compressor.jpg'},
-        {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2018/11/21/b8003-b3-compressor.jpg'},
-        {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2018/11/21/b8003-b2-compressor.jpg'},
-      ],
-        name:'Full Coverage Seamless Maternity & Nursing Bra', price: 350000, discPrice: 0,
-        description: `* Bahan : 85% Nylon, 15% Polyester
-* Bahan yang sangat halus, tanpa jahitan, sentuhannya lembut pada setiap sisi tubuh
-* Kancing Bra Menyusui yang sangat tahan lama, mudah digunakan dengan satu tangan, tertutup dan juga praktis
-* Desain yang sempurna yang dapat mengikuti perubahan bentuk payudara dari masa kehamilan sampai menyusui
-* Tanpa kawat, tidak menekan dan nyaman
-* Memiliki elastisitas yang tinggi, cup bra bisa stretch sampai 2-3 cup, sehingga bisa menyesuaikan bentuk dan ukuran payudara pada saat kehamilan dan menyusui.
-* Memiliki sirkulasi udara yang baik, sehingga tidak panas dan sangat nyaman saat menyusui
-
-* Cara pencucian : Mesin Cuci / Suhu Rendah / Kantong Cuci / Jangan Direndam / Tanpa Pemutih / Tanpa Pengering
-
-※ Pelanggan Yth., tampilan warna dapat berbeda pada setiap monitor komputer, warna standar adalah warna dari produk, sehingga harap perhatikan dengan seksama tabel ukuran pakaian & hasil uji pakaian sebelum melakukan pemesanan. Pilihlah ukuran yang sesuai dengan postur Anda.`
-      },
-      {id: '2', images: [
-        {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2019/05/08/main-c7889-1-compressor.jpg'},
-        {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2017/11/20/c7889-4.jpg'},
-        {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2017/11/20/c7889-5.jpg'},
-        {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2017/11/20/c7889-3.jpg'},
-      ],
-        name:'Bamboo Postpartum Belly Band Corset', price: 920000, discPrice: 200000,
-        description: `Bamboo Postpartum Belly Band
-
-* Anti Radiasi Elekromagnetik - Perlindungan terhadap gelombang radiasi elektromagnetik yang dapat menganggu kesehatan Anda
-* Anti bau dan anti bakteri
-* Ringan, dengan permeabilitas yang baik, lembut, efektif untuk mengencangkan panggul, perut dan pinggang pasca melahirkan.
-* Bisa digunakan pasca melahirkan
-* Mengatasi permasalahan perut buncit, sakit punggung karena posisi duduk yang salah/terlalu lama duduk
-* Mengembalikan rahim ke posisi semula dan membantu mengecilkan rahim.
-* Dengan 2 perekat tambahan, dan setiap bagian bisa ditempel sehingga bisa mengatur elastisitas sesuai dengan keinginan
-
-Bahan : 41% Nylon, 16% Rayon, 24% Rubber Thread, 19% Bamboo Charcoal
-Cara Perawatan & Pencucian : Disarankan handwash, jangan menggunakan mesin`
-      },
-      {id: '3', images: [
-        {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2019/04/30/h9502-1-compressor.jpg'},
-        {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2019/05/01/1556697513950-compressor.jpg'},
-        {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2019/04/30/h9502-2-compressor.jpg'},
-      ],
-        name:'Mooimom Casual Hipseat Carrier', price: 399000, discPrice: 0,
-        description: `* Bahan 100% Polyester
-* Tali bahu empuk, lebar dan dapat diatur sesuai kebutuhan
-* Mengurangi beban pada bahu dan pinggang saat menggendong bayi
-* Menggendong bayi menjadi lebih stabil
-* Cushion seat didesain ergonomis
-* Ritsleting panel yang mudah dilepas pasang
-* Waistband lebar, dilengkapi dengan velcro dan strap pengencang dan pengunci yang lebar
-* Terdapat kantong di bagian sabuk pinggang untuk menyimpan barang
-* Terdapat kantong jaring di bagian depan untuk menyimpan aksesoris lainnya
-
-· Mampu menahan berat beban bayi hingga 20 kg
-· Saran usia pemakaian : 3 - 36 bulan
-
-Cara Perawatan & Pencucian :
-· Bersihkan kotoran dengan handuk basah, jangan menggunakan mesin, lebih disarankan Handwash
-· Keluarkan cushion seat sebelum dicuci
-· Pencucian dipisahkan dengan pakaian yang mudah luntur
-· Jangan gunakan pemutih
-· Dijemur ditempat yang teduh`
-      },
-      {id: '4', images: [
-        {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2019/06/24/q90301-2.jpg'},
-        {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2019/07/01/q90801_1.jpg'},
-        {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2019/08/30/pillow-for-baby-4-4.jpg'},
-      ],
-        name:'Sloped Pillow Bantal Bayi', price: 449000, discPrice: 0,
-        description: `Bahan
-Cover : 40% Bamboo Fiber, 60% Polyester
-Lining : 100% Polyester
-Filling : 100% Polyurethane (Memory Foam)
-* Membantu bayi tidur dengan posisi badan bagian atas lebih tinggi
-* Mencegah bayi muntah/gumoh, membantu mengurangi hidung tersumbat saat flu ataupun infeksi pernapasan
-* Sudut kemiringan bantal 10 derajat
-* Multifungsi sebagai bantal hamil maupun bantal bayi
-* Busa bantal berupa memory foam yang lembut dan adem
-* Sarung bantal bisa dilepas pasang dan dicuci
-* Tidak mudah berubah bentuk
-* Lapisan luar bantal terbuat dari serat bambu yang adem & anti bakteri
-* Cocok untuk bayi usia 3 bulan keatas
-
-Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
-      },
-    ]
-    var categories = [
-      {name:'Masa Kehamilan', image:Images.catMasaKehamilan, category_id:0},
-      {name:'Masa Menyusui', image:Images.catMasaMenyusui, category_id:1},
-      {name:'Pasca Melahirkan', image:Images.catPascaMelahirkan, category_id:2},
-      {name:'Produk Bayi', image:Images.catProdukBayi, category_id:3},
-    ]
 
     this.state = {
-      heroBanners: dataHeroBanner,
-      products: dataProducts,
+      products: [],
       activeSlide: 0,
-      categories:categories
     }
 
     this._renderProduct = this._renderProduct.bind(this)
     this.navigate_to = this.navigate_to.bind(this)
   }
 
-  componentDidMount(){
+  async componentDidMount(){
     let data = {
       data_request:{
         user_id: this.props.auth.payload.user_id,
@@ -150,9 +48,7 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
         !newProps.getHomepage.fetching
       ) {
           this.setState({
-            heroBanners: newProps.getHomepage.payload.big_banner,
             products: newProps.getHomepage.payload.best_seller,
-            categories: newProps.getHomepage.payload.categories,
           })
         }
       }
@@ -164,7 +60,6 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
   }
 
   _renderHeroBanner ({item, index}, parallaxProps) {
-      console.info(item)
         return (
             <View style={styles.itemHeroBanner}>
                 <ParallaxImage
@@ -179,6 +74,7 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
     }
 
   _renderCategories({item, index}){
+    console.info(item)
     return(
       <TouchableOpacity style={styles.catButton} onPress={() => this.navigate_to('Category', {category_id: item.slug})}>
         <Image source={{uri:item.img_url}} style={styles.catImage}/>
@@ -192,7 +88,8 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
     return (
       <TouchableWithoutFeedback
         onPress={() => navigate('ProductScreen', {
-          product: item
+          product: item,
+          auth: this.props.auth
         })}
       >
         <View>
@@ -224,7 +121,7 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
             <View style={styles.headerButtonRight}>
               <TouchableOpacity onPress={() => this.navigate_to('SharedProductScreen')}><Image source={Images.wishlist} style={styles.buttonHeader} /></TouchableOpacity>
               <TouchableOpacity onPress={() => this.navigate_to('CartScreen')}><Image source={Images.shoppingCart} style={styles.buttonHeader} /></TouchableOpacity>
-              <TouchableOpacity onPress={() => this.navigate_to('NotificationScreen')}><Image source={Images.notifWhite} style={styles.buttonHeader} /></TouchableOpacity>
+              <TouchableOpacity onPress={() => this.navigate_to('NotificationScreen')}><Image source={Images.notifWhite} style={styles.buttonHeader2} /></TouchableOpacity>
             </View>
           </View>
           </View>
@@ -250,7 +147,7 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
               onSnapToItem={(index) => this.setState({ activeSlide: index }) }
             />
             <Pagination
-              dotsLength={this.state.heroBanners.length}
+              dotsLength={this.props.getHomepage.payload.big_banner.length}
               activeDotIndex={this.state.activeSlide}
               dotStyle={styles.paginationDotStyleHeroBanner}
               inactiveDotOpacity={0.4}
@@ -262,7 +159,7 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
           <View style={styles.wrapperSeparator}/>
           <View style={styles.categoryWrapper}>
             <FlatList
-              data={this.state.categories}
+              data={this.props.getHomepage.payload.categories}
               renderItem={this._renderCategories.bind(this)}
               keyExtractor={(item, index) => index.toString()}
               showsHorizontalScrollIndicator={false}
@@ -276,7 +173,7 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
             <FlatList
               data={this.state.products}
               renderItem={this._renderProduct}
-              keyExtractor={(item, index) => item.id}
+              keyExtractor={(item, index) => index.toString()}
               showsHorizontalScrollIndicator={false}
               numColumns={2}
             />

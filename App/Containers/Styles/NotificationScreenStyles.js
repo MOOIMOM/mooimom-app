@@ -38,6 +38,7 @@ export default StyleSheet.create({
   textSearch:{
     color:Colors.gray,
     fontFamily: Fonts.type.gotham5,
+    fontSize: 12
   },
   btnHeader:{
     justifyContent: 'center',

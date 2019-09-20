@@ -137,7 +137,7 @@ class SignupScreen extends Component {
   render () {
     return (
       <View style={styles.container}>
-        <LinearGradient colors={['#82DED2', '#66CCCC']} style={styles.linergradient}>
+        <LinearGradient colors={['#7CE0D3', '#28C9B9']} style={styles.linergradient}>
           <Image source={Images.mooimomLogoWhite} style={styles.title}/>
           <View style={styles.signUpContainer}>
             <KeyboardAvoidingView>
@@ -152,7 +152,7 @@ class SignupScreen extends Component {
                   keyboardType='numeric'
                   value={this.state.phone}
                   returnKeyType='done'
-                  placeholder='No Handphone'
+                  placeholder='contoh : 831345679989'
                   underlineColorAndroid='transparent'
                   placeholderTextColor='white'
                   selectionColor='white'

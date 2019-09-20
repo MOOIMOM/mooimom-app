@@ -26,7 +26,8 @@ export default StyleSheet.create({
     width: Metrics.screenWidth / 2,
     maxHeight: 200,
     resizeMode: 'contain',
-    flex: 5
+    flex: 5,
+    marginBottom:5
   },
   name:{
     flexWrap: 'wrap',

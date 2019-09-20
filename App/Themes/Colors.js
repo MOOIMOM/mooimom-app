@@ -16,18 +16,19 @@ const colors = {
   bloodOrange: '#fb5f26',
   snow: 'white',
   ember: 'rgba(164, 0, 48, 0.5)',
-  fire: '#e73536',
+  fire: '#db8a88',
   drawer: 'rgba(30, 30, 29, 0.95)',
   eggplant: '#251a34',
   border: '#483F53',
   banner: '#5F3E63',
   text: '#E0D7E5',
-  mooimom: '#82DED2',
+  mooimom: '#7CE0D3',
   white: '#FFFFFF',
   gray: '#999999',
   black: '#5d5d5d',
   lightGray: '#EFEFEF',
-  modal:'rgba(100,100,100,0.8)'
+  modal:'rgba(100,100,100,0.8)',
+  blueMooimom: '#5cbfaf'
 }
 
 export default colors

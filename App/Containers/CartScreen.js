@@ -203,7 +203,7 @@ class CartScreen extends Component {
             </View>
           </View>
           <View style={styles.priceWrapper}>
-            <Text style={styles.itemText}>{price}</Text>
+            <Text style={styles.itemText2}>{price}</Text>
           </View>
         </View>
       </View>
@@ -236,7 +236,7 @@ class CartScreen extends Component {
           <View style={styles.subtotalWrapper}>
             <Text style={styles.subtotalText}>SUBTOTAL</Text>
             <Text style={styles.priceText}>{totalPrice}</Text>
-            <Text style={styles.commissionText}>Komisi {commission}</Text>
+            <Text style={styles.commissionText}>Est. Komisi {commission}</Text>
           </View>
           <TouchableOpacity style={styles.buyBtn} onPress={() =>this.actNavigate('DeliveryScreen')}>
             <Text style={styles.buyText}>Beli</Text>

@@ -93,17 +93,17 @@ export default StyleSheet.create({
   textAmount:{
     color: Colors.black,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 20,
+    fontSize: 15,
     textAlign: 'right'
   },
   imgText:{
     color: Colors.black,
     fontFamily: Fonts.type.gotham2,
-    fontSize: 16
+    fontSize: 13
   },
   imgTextBold:{
     color: Colors.black,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 16
+    fontSize: 13
   }
 })

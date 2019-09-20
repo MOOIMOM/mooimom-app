@@ -45,11 +45,12 @@ export default StyleSheet.create({
     width: Metrics.screenWidth
   },
   deliveryAddressContainer:{
-    borderWidth: 1,
+    borderWidth: 0.5,
     borderRadius: 10,
     paddingVertical: 15,
     paddingHorizontal: 20,
-    marginBottom: 10
+    marginBottom: 10,
+    borderColor: Colors.mooimom
   },
   addressName:{
     fontSize: 12 * Metrics.screenWidth / 320,
@@ -87,11 +88,9 @@ export default StyleSheet.create({
   inputLabel: {
     alignSelf: 'flex-start',
     backgroundColor: 'white',
-    borderColor: 'gray',
-    borderWidth: 1,
     borderRadius: 20,
-    height: 24,
-    marginBottom: -12,
+    height: 20,
+    marginBottom: -10,
     marginLeft: 20,
     paddingLeft: 20,
     paddingRight: 20,

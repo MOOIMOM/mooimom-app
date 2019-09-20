@@ -85,7 +85,7 @@ export default StyleSheet.create({
   },
   productImage:{
     width: (Metrics.screenWidth - 40) / 3 - 5,
-    height: Metrics.screenHeight / 4 - 5,
+    height: Metrics.screenHeight / 4,
     resizeMode: 'contain'
   },
   productDescriptionWrapper:{
@@ -95,6 +95,11 @@ export default StyleSheet.create({
   },
   itemText:{
     fontSize: 12 * Metrics.screenWidth / 320,
+    color: Colors.black,
+    fontFamily: Fonts.type.gotham4,
+  },
+  itemText2:{
+    fontSize: 14 * Metrics.screenWidth / 320,
     color: Colors.black,
     fontFamily: Fonts.type.gotham4,
   },
@@ -108,8 +113,9 @@ export default StyleSheet.create({
   },
   propertyWrapper:{
     flex:2,
-    justifyContent: 'center',
-    alignItems: 'flex-start'
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    paddingVertical:21
   },
   sizeWrapper:{
     flex:1,
@@ -177,7 +183,7 @@ export default StyleSheet.create({
   },
   subtotalWrapper:{
     borderWidth: 1,
-    paddingLeft: 30,
+    paddingLeft: 20,
     paddingVertical: 10,
     borderColor: Colors.black,
     width: Metrics.screenWidth / 2,
@@ -217,9 +223,8 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   commissionText2:{
-    color:Colors.mooimom,
+    color:Colors.blueMooimom,
     fontFamily: Fonts.type.gotham4,
     fontSize: 14 * Metrics.screenWidth / 320,
-    marginVertical: -3,
   }
 })

@@ -38,6 +38,7 @@ export default StyleSheet.create({
   textSearch:{
     color:Colors.gray,
     fontFamily: Fonts.type.gotham5,
+    fontSize:12
   },
   btnHeader:{
     height: 20 * Metrics.screenWidth / 320,
@@ -61,8 +62,9 @@ export default StyleSheet.create({
   menu:{
     borderBottomWidth: 1,
     borderBottomColor: Colors.gray,
-    paddingVertical: 15,
-    paddingHorizontal: 20,
+    paddingVertical: 10,
+    paddingLeft: 10,
+    paddingRight:10
   },
   leftContainerMenu:{
     flexDirection: 'row'
@@ -77,32 +79,32 @@ export default StyleSheet.create({
     justifyContent: 'space-between'
   },
   imgMenu:{
-    width: 35,
-    height:35,
+    width: 25,
+    height:25,
     resizeMode: 'contain'
   },
   imgMenu2:{
-    width: 20,
-    height:20,
+    width: 10,
+    height:10,
     resizeMode: 'contain'
   },
   imgText:{
     color: Colors.gray,
     fontFamily: Fonts.type.gotham2,
-    fontSize: 16,
+    fontSize: 13,
   },
   imgText2:{
     color: Colors.gray,
     fontFamily: Fonts.type.gotham2,
-    fontSize: 14,
+    fontSize: 13,
   },
   imgText3:{
     color: Colors.black,
     fontFamily: Fonts.type.gotham2,
-    fontSize: 16,
+    fontSize: 13,
   },
   menuBottom:{
-    marginTop: 80,
+    marginTop: 70,
     justifyContent: 'center',
     alignItems: 'center'
   }

@@ -32,7 +32,7 @@ class NewPaymentRequestScreen extends Component {
   }
 
   renderSelectedAccount(){
-    var viewInput = <View style={[styles.deliveryAddressContainer, {height: 60}]}/>
+    var viewInput = <View style={[styles.deliveryAddressContainer, {height: 50}]}/>
     if(this.state.selectedAccount.name){
       viewInput = <View style={styles.deliveryAddressContainer}>
         <Text style={styles.addressName}>{this.state.selectedAccount.name}</Text>

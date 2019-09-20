@@ -4,6 +4,7 @@ import { Images, Metrics } from '../Themes'
 import { connect } from 'react-redux'
 import Carousel, { Pagination  } from 'react-native-snap-carousel';
 import SharedProductActions from '../Redux/SharedProductRedux'
+import GetProductActions from '../Redux/GetProductRedux'
 import {convertToRupiah, share, shareDescripton} from '../Lib/utils'
 // Styles
 import styles from './Styles/ProductScreenStyles'
@@ -63,10 +64,33 @@ class ProductScreen extends Component {
 
   componentDidMount() {
     AppState.addEventListener('change', this._handleAppStateChange);
+    let data = {
+      data_request:{
+        product_slug: this.props.navigation.state.params.product.slug,
+        user_id: this.props.navigation.state.params.auth.payload.user_id,
+        unique_token: this.props.navigation.state.params.auth.payload.unique_token
+      }
+    }
+    this.props.loadProductProcess(data)
   }
 
   componentWillUnmount() {
     AppState.removeEventListener('change', this._handleAppStateChange);
+  }
+
+  componentWillReceiveProps (newProps) {
+    console.info(newProps)
+    if(this.props.product !== newProps.product){
+      if (
+        newProps.product.payload !== null &&
+        newProps.product.error === null &&
+        !newProps.product.fetching
+      ) {
+        this.setState({
+          product: newProps.product.payload
+        })
+      }
+    }
   }
 
   _handleAppStateChange = (nextAppState) => {
@@ -175,7 +199,7 @@ class ProductScreen extends Component {
 
   renderWishlistButton(){
     var image = Images.wishlistProduct
-    if(this.state.isInWishlist)
+    if(this.state.product.wishlist === 1)
       image = Images.isWishlistProduct
     return (
       <View style={styles.wishlistBtn}>
@@ -196,8 +220,8 @@ class ProductScreen extends Component {
 
   renderRating(){
     var stars = []
-    var rating = Math.min(Math.floor(Math.random() * 4) + 1, 2)
-    var review = Math.floor(Math.random() * 100)
+    var rating = this.state.product.average_review
+    var review = this.state.product.total_review
     for(var i = 1;i<=5;i++){
       if(i <= rating){
         stars.push({img: Images.star, id:i})
@@ -306,9 +330,12 @@ class ProductScreen extends Component {
   }
 
   render () {
-    var price = convertToRupiah(this.state.product.price - this.state.product.discPrice)
-    var disc = this.state.product.discPrice > 0 ? convertToRupiah(this.state.product.price) : ''
-
+    var price = 0
+    var disc = 0
+    if(this.state.product && this.state.product.product_sale_price){
+       price = this.state.product.product_sale_price > 0 ? convertToRupiah(this.state.product.product_sale_price) : convertToRupiah(this.state.product.product_regular_price)
+       disc = this.state.product.product_sale_price > 0 ? convertToRupiah(this.state.product.product_regular_price) : ''
+    }
     return (
       <View style={styles.container}>
         <View style={styles.headerWrapper}>
@@ -324,7 +351,7 @@ class ProductScreen extends Component {
           <View style={styles.headerButtonRight}>
             <TouchableOpacity onPress={() => this.actNavigate('SharedProductScreen')}><Image source={Images.wishlistBlack} style={styles.buttonHeader} /></TouchableOpacity>
             <TouchableOpacity onPress={() => this.actNavigate('CartScreen')}><Image source={Images.shoppingCartBlack} style={styles.buttonHeader} /></TouchableOpacity>
-            <TouchableOpacity onPress={() => this.actNavigate('NotificationScreen')}><Image source={Images.notif} style={styles.buttonHeader} /></TouchableOpacity>
+            <TouchableOpacity onPress={() => this.actNavigate('NotificationScreen')}><Image source={Images.notif} style={styles.buttonHeader2} /></TouchableOpacity>
           </View>
         </View>
         <View style={styles.productContainer}>
@@ -354,7 +381,7 @@ class ProductScreen extends Component {
             </View>
             <View style={styles.wrapperSeparator}/>
             <View style={styles.productDescriptionWrapper}>
-              <Text style={styles.productCode}>PRODUCT CODE - {this.state.product.id}</Text>
+              <Text style={styles.productCode}>PRODUCT CODE - {this.state.product.sku}</Text>
               <Text style={styles.productName}>{this.state.product.name}</Text>
               <View style={styles.priceGroup}>
                 <Text style={styles.productPrice}>{price}</Text>
@@ -385,7 +412,7 @@ class ProductScreen extends Component {
                   <Text style={styles.textCopy}>Copy</Text>
                 </TouchableOpacity>
               </View>
-              <Text style={styles.productDescriptionText}>{this.state.product.description}</Text>
+              <Text style={styles.productDescriptionText}>{this.state.product.product_description}</Text>
             </View>
               {this.renderColor()}
             <View style={styles.wrapperSeparator}/>
@@ -404,7 +431,7 @@ class ProductScreen extends Component {
             <View style={styles.reviewWrapper}>
               <Text style={styles.productSubtitle}>Ulasan Produk</Text>
               <FlatList
-                data={this.state.reviews}
+                data={this.state.product.reviews}
                 renderItem={this.renderReview}
                 keyExtractor={(item, index) => item.id}
                 showsHorizontalScrollIndicator={false}
@@ -436,7 +463,7 @@ class ProductScreen extends Component {
 
 const mapStateToProps = state => {
   return {
-
+    product: state.product
   }
 };
 
@@ -444,7 +471,10 @@ const mapDispatchToProps = dispatch => {
   return {
     sharedProductProcess: data => {
       dispatch(SharedProductActions.sharedProductRequest(data))
-    }
+    },
+    loadProductProcess: data => {
+      dispatch(GetProductActions.getProductRequest(data))
+    },
   }
 };
 

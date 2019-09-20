@@ -217,7 +217,7 @@ class DeliveryScreen extends Component {
           <View style={styles.subtotalWrapper}>
             <Text style={styles.subtotalText}>SUBTOTAL</Text>
             <Text style={styles.priceText}>{totalPrice}</Text>
-            <Text style={styles.commissionText}>Komisi {commission}</Text>
+            <Text style={styles.commissionText}>Est. Komisi {commission}</Text>
           </View>
           <TouchableOpacity style={styles.buyBtn} onPress={() => this.processBuy()}>
             <Text style={styles.buyText}>Beli</Text>

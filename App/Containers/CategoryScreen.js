@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, FlatList, SectionList, BackHandler } from 'react-native'
+import { ScrollView, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, FlatList, SectionList, BackHandler, AppState } from 'react-native'
 import { Images, Metrics } from '../Themes'
 import ProductCardSingle from '../Components/ProductCardSingle'
 import SharedProductActions from '../Redux/SharedProductRedux'
@@ -182,12 +182,16 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
       },
     ]
     this.state = {
+      appState: AppState.currentState,
       categories: dataCategories,
       selectedCategoriesIdx: 0,
       selectedSubCategoriesId: 0,
       selectedSubCategoriesIdx: 0,
       isSelectSubCategory: false,
       arrTopCategory:[],
+      willShareDescription:false,
+      finishShareImage: false,
+      socialShare: '',
       products: dataProducts
     }
     this._renderCategories = this._renderCategories.bind(this)
@@ -199,6 +203,35 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
     this._onLayout = this._onLayout.bind(this)
     this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
   }
+
+  componentDidMount() {
+    AppState.addEventListener('change', this._handleAppStateChange);
+  }
+
+  componentWillUnmount() {
+    AppState.removeEventListener('change', this._handleAppStateChange);
+  }
+
+  _handleAppStateChange = (nextAppState) => {
+    if (
+      this.state.appState.match(/inactive|background/) &&
+      nextAppState === 'active'
+    ) {
+      if(this.state.willShareDescription === true){
+        this.setState({
+          finishShareImage: true
+        })
+        setTimeout(() => {
+          shareDescripton(this.state.product.description, this.state.socialShare)
+          this.setState({
+            willShareDescription: false,
+            socialShare: ''
+          })
+        }, 1000);
+      }
+    }
+    this.setState({appState: nextAppState});
+  };
 
   componentWillReceiveProps(newProps){
     if(newProps.navigation.state.params.category_id !== this.state.selectedCategoriesIdx){
@@ -337,13 +370,14 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
   _renderCategoryView(){
     return (
       <View style={styles.containerScroll}>
+        <View style={styles.backgroundHeader} />
         <View style={styles.headerWrapper}>
           <TouchableOpacity style={styles.searchButton} onPress={() => this.navigate_to('SearchScreen')}>
             <Image source={Images.search} style={styles.imageSearch}/>
             <Text style={styles.textSearch}>Cari Baju Hamil, Bra, Korset, dll</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.btnHeader} onPress={() => this.navigate_to('CartScreen')}>
-            <Image source={Images.shoppingCartBlack} style={styles.imgHeader}/>
+            <Image source={Images.shoppingCart} style={styles.imgHeader}/>
           </TouchableOpacity>
         </View>
         <View style={styles.wrapperSeparator}/>

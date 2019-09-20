@@ -38,15 +38,15 @@ export default StyleSheet.create({
   },
   caption1:{
     color:Colors.white,
-    fontSize: 15 * Metrics.screenWidth / 320,
-    fontFamily: Fonts.type.gotham3,
+    fontSize: 16 * Metrics.screenWidth / 320,
+    fontFamily: Fonts.type.gotham2,
     textAlign: 'center',
     alignItems: 'center'
   },
   SignUpContainer:{
     flexDirection: 'row',
     flex:1,
-    marginTop: 20,
+    marginTop: 10,
     justifyContent: 'center'
   },
   caption2:{

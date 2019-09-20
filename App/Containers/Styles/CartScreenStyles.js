@@ -29,7 +29,7 @@ export default StyleSheet.create({
   },
   cartContainer:{
     width: Metrics.screenWidth - 40,
-    height: Metrics.screenHeight - 160,
+    height: Metrics.screenHeight - 130,
     marginHorizontal: 20,
     marginTop: 5
   },
@@ -40,7 +40,8 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
-    marginBottom: 20,
+    marginBottom: 10,
+    marginTop:10
   },
   productImageWrapper:{
     flex:1,
@@ -72,6 +73,11 @@ export default StyleSheet.create({
     color: Colors.black,
     fontFamily: Fonts.type.gotham4,
   },
+  itemText2:{
+    fontSize: 14 * Metrics.screenWidth / 320,
+    color: Colors.black,
+    fontFamily: Fonts.type.gotham4,
+  },
   nameWrapper:{
     flex:1,
   },
@@ -90,11 +96,13 @@ export default StyleSheet.create({
     width: (Metrics.screenWidth - 40) / 2,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginBottom: 5
   },
   size_dropdown: {
-    borderWidth: 1,
-    borderRadius: 3,
+    borderWidth: 0.5,
+    borderColor: Colors.black,
+    borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -104,7 +112,7 @@ export default StyleSheet.create({
     fontFamily: Fonts.type.gotham4,
   },
   dropdown_dropdown: {
-    borderWidth: 1,
+    borderWidth: 0.5,
     borderRadius: 3,
     borderColor: Colors.black,
   },
@@ -123,7 +131,8 @@ export default StyleSheet.create({
     width: (Metrics.screenWidth - 40) / 2,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginBottom: 5
   },
   colorBtn:{
     width: Metrics.screenWidth / 5,
@@ -131,8 +140,8 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   colorPick:{
-    width: 30,
-    height: 30,
+    width: 20,
+    height: 20,
   },
   qtyWrapper:{
     flex:1,
@@ -142,12 +151,12 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   qtyContainer:{
-    width: Metrics.screenWidth / 5 + 2,
+    width: Metrics.screenWidth / 5 + 1,
     height: 30,
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    borderWidth: 1,
+    borderWidth: 0.5,
     borderRadius: 3,
     borderColor: Colors.black
   },
@@ -196,7 +205,7 @@ export default StyleSheet.create({
   },
   subtotalWrapper:{
     borderWidth: 1,
-    paddingLeft: 30,
+    paddingLeft: 20,
     paddingVertical: 10,
     width: Metrics.screenWidth / 2,
     borderColor: Colors.black,
@@ -216,9 +225,9 @@ export default StyleSheet.create({
     marginVertical: -3,
   },
   commissionText:{
-    color:Colors.mooimom,
-    fontFamily: Fonts.type.gotham4,
+    color:Colors.blueMooimom,
+    fontFamily: Fonts.type.gotham2,
     fontSize: 10 * Metrics.screenWidth / 320,
-    marginVertical: -3,
+    marginVertical: 0,
   },
 })

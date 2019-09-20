@@ -4,20 +4,20 @@ import { Fonts, Colors, Metrics } from '../../Themes/'
 export default StyleSheet.create({
   item: {
     width: Metrics.screenWidth - 40,
-    height: Metrics.screenHeight / 3,
     flex:1,
     justifyContent: 'flex-start',
     alignItems: 'center',
     flexDirection: 'column',
     paddingHorizontal: 15,
     marginBottom: 10,
+    paddingBottom: 10,
     borderBottomWidth: 0.5,
     borderBottomColor: Colors.black
   },
   topItem:{
     flexDirection: 'row',
     justifyContent: 'space-between',
-    flex:1
+    height:Metrics.screenHeight / 3
   },
   topLeftItem:{
     flex:2
@@ -26,13 +26,13 @@ export default StyleSheet.create({
     flex:3,
     flexDirection: 'column',
     justifyContent: 'space-between',
-    paddingTop: 20,
-    paddingTop: 15
+    paddingTop: 15,
+    paddingLeft:5
   },
   wishlist:{
     position: 'absolute',
     right: 15,
-    top: 0,
+    top: 10,
   },
   wishlistImage:{
     width: 20,
@@ -64,9 +64,8 @@ export default StyleSheet.create({
     fontFamily: Fonts.type.gotham2
   },
   bottomItem:{
-    flex:1,
     flexDirection: 'row',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   bottomLeftItem:{
     flex:1,

@@ -182,7 +182,7 @@ export default class ModalDropdown extends Component {
               >
                 {buttonText}
               </Text>)}
-              {isColor && (<View style={{width: 30,height: 30, backgroundColor: buttonText}}/>)}
+              {isColor && (<View style={{width: 20,height: 20, backgroundColor: buttonText}}/>)}
               <Image source={Images.down} style={{position: 'absolute', right: 5, width: 10, height: 10}}/>
             </View>
           )
@@ -390,7 +390,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    width: (Metrics.screenWidth) / 5,
+    width: (Metrics.screenWidth) / 5 + 1,
     height: 30,
   },
   buttonText: {
@@ -399,12 +399,13 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center'
   },
   modal: {
-    flexGrow: 1
+    flexGrow: 1,
+    marginTop:0
   },
   dropdown: {
     position: 'absolute',
     height: (25 + StyleSheet.hairlineWidth) * 5,
-    borderWidth: StyleSheet.hairlineWidth,
+    borderWidth: 0,
     borderColor: Colors.black,
     borderRadius: 1,
     backgroundColor: 'white',

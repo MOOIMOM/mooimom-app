@@ -38,8 +38,8 @@ export default class TextInputCustom extends Component {
       widthFix = this.props.width;
     }
 
-    var height=80
-    var heightText = 60
+    var height=70
+    var heightText = 50
     if(this.props.multiline){
       heightText = (60 / 1.5 * this.props.numberOfLines)
       height = heightText + 20
@@ -83,7 +83,6 @@ export default class TextInputCustom extends Component {
                   }
                 ]
           }
-          underlineColorAndroid="transparent"
           value={this.props.value}
           editable={this.props.editable}
           onChangeText={val => this.props.onChangeText(val)}

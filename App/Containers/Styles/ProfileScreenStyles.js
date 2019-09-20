@@ -38,6 +38,7 @@ export default StyleSheet.create({
   textSearch:{
     color:Colors.gray,
     fontFamily: Fonts.type.gotham5,
+    fontSize:12
   },
   btnHeader:{
     justifyContent: 'center',
@@ -64,8 +65,8 @@ export default StyleSheet.create({
     justifyContent: 'center'
   },
   imgProfile:{
-    width: 90,
-    height: 90,
+    width: 70,
+    height: 70,
     resizeMode: 'contain'
   },
   textPhone:{
@@ -113,7 +114,7 @@ export default StyleSheet.create({
   menu:{
     borderBottomWidth: 1,
     borderBottomColor: Colors.gray,
-    paddingVertical: 15,
+    paddingVertical: 10,
     paddingLeft: 20,
   },
   btnMenu:{
@@ -122,14 +123,14 @@ export default StyleSheet.create({
     justifyContent: 'flex-start'
   },
   imgMenu:{
-    width: 35,
-    height:35,
+    width: 25,
+    height:25,
     resizeMode: 'contain'
   },
   imgText:{
     color: Colors.gray,
     fontFamily: Fonts.type.gotham2,
-    fontSize: 16,
+    fontSize: 13,
     marginLeft: 20
   }
 })

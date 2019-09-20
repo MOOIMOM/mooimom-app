@@ -52,7 +52,7 @@ class SplashScreen extends Component {
   render () {
     return (
       <View style={styles.container}>
-        <LinearGradient colors={['#82DED2', '#66CCCC']} style={styles.linergradient}>
+        <LinearGradient colors={['#7CE0D3', '#28C9B9']} style={styles.linergradient}>
           <Image source={Images.mooimomLogoWhite} style={styles.title}/>
         </LinearGradient>
       </View>

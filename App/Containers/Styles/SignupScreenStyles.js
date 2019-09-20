@@ -37,14 +37,14 @@ export default StyleSheet.create({
   },
   caption1:{
     color:Colors.white,
-    fontSize: 15 * Metrics.screenWidth / 320,
-    fontFamily: Fonts.type.gotham3,
+    fontSize: 16 * Metrics.screenWidth / 320,
+    fontFamily: Fonts.type.gotham2,
     textAlign: 'center'
   },
   SignInContainer:{
     flexDirection: 'row',
     flex:1,
-    marginTop: 20,
+    marginTop: -100,
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -61,29 +61,35 @@ export default StyleSheet.create({
   },
   textInput: {
     height: 45,
-    justifyContent: 'center',
     borderBottomWidth: 1,
     borderBottomColor: Colors.white,
     marginTop: 30,
     marginBottom: 50,
+    marginLeft: 50,
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   number62:{
     color: Colors.white,
-    fontSize: 15 * Metrics.screenWidth / 320,
+    fontSize: 16 * Metrics.screenWidth / 320,
     fontStyle: 'italic',
-    fontFamily: Fonts.type.gotham3,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    marginLeft: 20,
-    marginTop: -4,
-    marginRight: 10
+    fontFamily: Fonts.type.gotham1,
+    backgroundColor: 'rgba(0,0,0,0.3)',
+    width:50,
+    borderRadius:5,
+    justifyContent:'center',
+    alignItems:'center',
+    textAlign:'center',
+    height:45,
+    paddingTop:10,
+    marginLeft:-60,
+    marginRight:10
   },
   textTextInput:{
     color: Colors.white,
-    fontSize: 15 * Metrics.screenWidth / 320,
+    fontSize: 16 * Metrics.screenWidth / 320,
     fontStyle: 'italic',
-    fontFamily: Fonts.type.gotham3,
+    fontFamily: Fonts.type.gotham1,
   },
 })

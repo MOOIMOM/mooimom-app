@@ -63,6 +63,8 @@ const create = (baseURL = 'https://www.mooimom.id/') => {
     api.post('app-user-otp-verification', params.data_request)
   const postGetHomepage = params =>
     api.post('app-homepage', params.data_request)
+  const postGetProduct = params =>
+    api.post('app-get-product', params.data_request)
 
 
   // ------
@@ -86,6 +88,7 @@ const create = (baseURL = 'https://www.mooimom.id/') => {
     postLogin,
     postAuth,
     postGetHomepage,
+    postGetProduct,
   }
 }
 

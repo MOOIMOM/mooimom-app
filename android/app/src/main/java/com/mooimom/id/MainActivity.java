@@ -1,4 +1,4 @@
-package com.mooimom;
+package com.mooimom.id;
 
 import com.facebook.react.ReactActivity;
 

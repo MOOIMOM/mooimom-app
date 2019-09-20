@@ -16,7 +16,7 @@ export default class DatePickerCustom extends Component {
   render(){
     var widthFix = Metrics.screenWidth - 40;
     return (
-      <View style={[styles.inputCustom, {height:80}]}>
+      <View style={[styles.inputCustom, {height:70}]}>
         <DatePicker
           onOpenModal={() => this.setState({ focous: true })}
           onCloseModal={() => this.setState({ focous: false })}
@@ -24,9 +24,9 @@ export default class DatePickerCustom extends Component {
             !this.state.focous
               ? [
                   {
-                    width: widthFix, height: 60,
+                    width: widthFix, height: 50,
                     borderColor: Colors.mooimom,
-                    borderWidth: 1,
+                    borderWidth: 0.5,
                     borderRadius: 10,
                     paddingLeft: 20,
                     paddingRight: 20
@@ -34,9 +34,9 @@ export default class DatePickerCustom extends Component {
                 ]
               : [
                   {
-                    width: widthFix, height: 60,
+                    width: widthFix, height: 50,
                     borderColor: Colors.mooimom,
-                    borderWidth: 1,
+                    borderWidth: 0.5,
                     borderRadius: 10,
                     paddingLeft: 20,
                     paddingRight: 20
@@ -61,12 +61,12 @@ export default class DatePickerCustom extends Component {
             },
             placeholderText:{
               color: 'gray',
-              fontSize: 18,
+              fontSize: 14,
               fontFamily: Fonts.type.gotham2
             },
             dateText:{
               color:'gray',
-              fontSize: 18
+              fontSize: 14
             }
             // ... You can check the source to find the other keys.
           }}

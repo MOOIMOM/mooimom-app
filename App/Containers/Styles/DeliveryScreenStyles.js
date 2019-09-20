@@ -217,7 +217,7 @@ export default StyleSheet.create({
   },
   subtotalWrapper:{
     borderWidth: 1,
-    paddingLeft: 30,
+    paddingLeft: 20,
     paddingVertical: 10,
     width: Metrics.screenWidth / 2,
     borderColor: Colors.black,
@@ -240,6 +240,5 @@ export default StyleSheet.create({
     color:Colors.mooimom,
     fontFamily: Fonts.type.gotham4,
     fontSize: 10 * Metrics.screenWidth / 320,
-    marginVertical: -3,
   },
 })

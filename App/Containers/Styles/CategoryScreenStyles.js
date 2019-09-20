@@ -15,10 +15,10 @@ export default StyleSheet.create({
     position:'absolute',
     alignSelf: "center",
     alignContent: "center",
-    top: Metrics.screenHeight * -0.17,
+    top: Metrics.screenHeight * -0.25,
     backgroundColor: Colors.mooimom,
     borderRadius: Metrics.screenWidth / 2,
-    transform: [{ scaleX: 2 }, { scaleY: 0.5 }]
+    transform: [{ scaleX: 2 }, { scaleY: 0.25}]
   },
   wrapperSeparator:{
     marginTop: 20,
@@ -49,6 +49,7 @@ export default StyleSheet.create({
   textSearch:{
     color:Colors.gray,
     fontFamily: Fonts.type.gotham5,
+    fontSize:12
   },
   btnHeader:{
     height: 20 * Metrics.screenWidth / 320,
@@ -91,6 +92,7 @@ export default StyleSheet.create({
   categoryText:{
     fontSize: 11 * Metrics.screenWidth / 320,
     fontFamily: Fonts.type.gotham2,
+    paddingRight: 5
   },
   rightContainer:{
     flex:2,
@@ -119,12 +121,15 @@ export default StyleSheet.create({
     resizeMode: 'contain',
     width: Metrics.screenWidth / 5,
     height: Metrics.screenWidth / 5,
+    marginBottom:10
   },
   productText:{
     fontSize: 9 * Metrics.screenWidth / 320,
+    lineHeight: 11 * Metrics.screenWidth / 320,
     textAlign: 'center',
     flexWrap: 'wrap',
-    paddingHorizontal: 2
+    paddingHorizontal: 6,
+    fontFamily: Fonts.type.gotham2,
   },
   contentContainer2:{
     width: Metrics.screenWidth - 20,
@@ -165,7 +170,8 @@ export default StyleSheet.create({
     textAlign: 'center',
     color: Colors.white,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 9 * Metrics.screenWidth / 320
+    fontSize: 9 * Metrics.screenWidth / 320,
+    textShadowRadius:0,
   },
   bottomContainer:{
     marginHorizontal: 10,

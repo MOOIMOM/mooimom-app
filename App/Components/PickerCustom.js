@@ -24,11 +24,11 @@ export default class PickerCustom extends Component {
     }
 
     return (
-      <View style={[styles.inputCustom, {height:80}]}>
+      <View style={[styles.inputCustom, {height:70}]}>
         <View style={{
-          width: widthFix, height: 60,
+          width: widthFix, height: 50,
           borderColor: Colors.mooimom,
-          borderWidth: 1,
+          borderWidth: 0.5,
           borderRadius: 10,
           paddingLeft: 20,
           paddingRight: 20
@@ -37,7 +37,7 @@ export default class PickerCustom extends Component {
           mode="dropdown"
           selectedValue={this.props.selectedValue}
           style={{
-            width: widthFix - 20, height: 60,
+            width: widthFix - 20, height: 50,
           }}
           itemStyle={{fontSize: 18, fontFamily: Fonts.type.gotham2}}
           onValueChange={(itemValue, itemIndex) => {

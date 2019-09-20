@@ -12,6 +12,7 @@ import { SendOtpTypes } from '../Redux/SendOtpRedux'
 import { LoginTypes } from '../Redux/LoginRedux'
 import { AuthTypes } from '../Redux/AuthRedux'
 import { GetHomepageTypes } from '../Redux/GetHomepageRedux'
+import { GetProductTypes } from '../Redux/GetProductRedux'
 
 /* ------------- Sagas ------------- */
 
@@ -22,6 +23,7 @@ import { postSendOtp } from './SendOtpSagas'
 import { postLogin } from './LoginSagas'
 import { postAuth } from './AuthSagas'
 import { postGetHomepage } from './GetHomepageSagas'
+import { postGetProduct } from './GetProductSagas'
 
 /* ------------- API ------------- */
 
@@ -43,5 +45,6 @@ export default function * root () {
     takeLatest(LoginTypes.LOGIN_REQUEST, postLogin, api),
     takeLatest(AuthTypes.AUTH_REQUEST, postAuth, api),
     takeLatest(GetHomepageTypes.GET_HOMEPAGE_REQUEST, postGetHomepage, api),
+    takeLatest(GetProductTypes.GET_PRODUCT_REQUEST, postGetProduct, api),
   ])
 }

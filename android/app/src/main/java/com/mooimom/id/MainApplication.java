@@ -1,4 +1,4 @@
-package com.mooimom;
+package com.mooimom.id;
 
 import android.app.Application;
 
@@ -26,7 +26,7 @@ public class MainApplication extends Application implements ReactApplication {
     @Override
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
-          new MainReactPackage(),
+            new MainReactPackage(),
             new RNFetchBlobPackage(),
             new RNSharePackage(),
             new RNGestureHandlerPackage(),
