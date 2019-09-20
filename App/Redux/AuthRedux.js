@@ -4,12 +4,13 @@ import Immutable from 'seamless-immutable'
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
-  signUpRequest: ['data'],
-  signUpSuccess: ['payload'],
-  signUpFailure: ['error']
+  authRequest: ['data'],
+  authSuccess: ['payload'],
+  authFailure: ['error'],
+  logout:['payload']
 })
 
-export const SignUpTypes = Types
+export const AuthTypes = Types
 export default Creators
 
 /* ------------- Initial State ------------- */
@@ -23,7 +24,7 @@ export const INITIAL_STATE = Immutable({
 
 /* ------------- Selectors ------------- */
 
-export const SignUpSelectors = {
+export const AuthSelectors = {
   getData: state => state.data
 }
 
@@ -44,10 +45,14 @@ export const failure = (state, action) => {
   const { error } = action
   return state.merge({ fetching: false, error: error, payload: null })
 }
+export const successLogout = (state, action) => {
+  return INITIAL_STATE
+}
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
-  [Types.SIGN_UP_REQUEST]: request,
-  [Types.SIGN_UP_SUCCESS]: success,
-  [Types.SIGN_UP_FAILURE]: failure
+  [Types.AUTH_REQUEST]: request,
+  [Types.AUTH_SUCCESS]: success,
+  [Types.AUTH_FAILURE]: failure,
+  [Types.LOGOUT]: successLogout,
 })

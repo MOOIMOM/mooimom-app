@@ -1,23 +1,83 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, TouchableOpacity, Image, KeyboardAvoidingView, TextInput } from 'react-native'
+import { ScrollView, Text, View, TouchableOpacity, Image, KeyboardAvoidingView, TextInput, Alert, Keyboard } from 'react-native'
 import { NavigationActions, StackActions } from 'react-navigation'
 import { Images, Colors } from '../Themes'
 import { connect } from 'react-redux'
+import AuthActions from '../Redux/AuthRedux'
+import SendOtpActions from '../Redux/SendOtpRedux'
 import LinearGradient from 'react-native-linear-gradient';
 import _ from 'lodash';
 // Styles
 import styles from './Styles/AuthScreenStyles'
 
 const codeLength = 4
+var isSendAuth = false
+var timeoutOtp
 class AuthScreen extends Component {
   constructor (props) {
     super(props)
     this.state = {
       codeArr: new Array(codeLength).fill(''),
-      currentIndex: 0
+      currentIndex: 0,
+      isRequestOtp: false
     };
 
     this.codeInputRefs = [];
+  }
+
+  componentWillUnMount(){
+    timeoutOtp.clear()
+  }
+
+  componentWillReceiveProps (newProps) {
+    console.info(newProps)
+    if (this.props.auth !== newProps.auth) {
+      if (
+        newProps.auth.payload !== null &&
+        newProps.auth.error === null &&
+        !newProps.auth.fetching && isSendAuth
+      ) {
+          isSendAuth = false
+          this.clear()
+          this.actNavigate('MainScreen')
+        }
+      else if (
+        newProps.auth.payload === null &&
+        !newProps.auth.fetching && isSendAuth
+      ) {
+        isSendAuth = false
+        this.clear()
+        try {
+          Alert.alert(
+            '',
+            'Tolong Masukkan Kode Verifikasi Dengan Benar',
+            [
+              {
+                text: 'OK'
+              }
+            ],
+            { cancelable: false }
+          )
+        } catch (err) {
+          // Alert.alert('Can not connect server now')
+          Alert.alert(
+            AppConfig.appName,
+            'Can not connect to the server now',
+            [
+              {
+                text: 'OK'
+              }
+            ],
+            { cancelable: false }
+          )
+        }
+      }
+    }
+  }
+
+  actNavigate (screen) {
+    const { navigate } = this.props.navigation
+    navigate(screen, {})
   }
 
   clear() {
@@ -25,7 +85,6 @@ class AuthScreen extends Component {
       codeArr: new Array(codeLength).fill(''),
       currentIndex: 0
     });
-    this._setFocus(0);
   }
 
   _setFocus(index) {
@@ -59,8 +118,6 @@ class AuthScreen extends Component {
     newCodeArr[index] = character;
 
     if (index == codeLength - 1) {
-      const code = newCodeArr.join('');
-      this.onFulfill(code);
       this._blur(this.state.currentIndex);
     } else {
       this._setFocus(this.state.currentIndex + 1);
@@ -89,7 +146,50 @@ class AuthScreen extends Component {
   }
 
   onFulfill(){
-    this.props.navigation.navigate('App');
+    Keyboard.dismiss()
+    const code = this.state.codeArr.join('');
+    console.log(code)
+    if(code.length < 4){
+      Alert.alert(
+        '',
+        'Tolong masukkan kode verifikasi terlebih dahulu',
+        [
+          {
+            text: 'OK'
+          }
+        ],
+        { cancelable: false }
+      )
+      return;
+    }
+    // this.props.navigation.navigate('App');
+    let data ={
+      data_request: {
+        phone_number: this.props.sendOtp.data.data_request.phone_number,
+        user_id: this.props.sendOtp.data.data_request.user_id,
+        otp_number: code,
+      }
+    }
+    this.props.authProcess(data)
+    isSendAuth = true
+  }
+
+  requestOtp(){
+    let data ={
+      data_request: {
+        phone_number: this.props.sendOtp.data.data_request.phone_number,
+        user_id: this.props.sendOtp.data.data_request.user_id,
+      }
+    }
+    this.setState({
+      isRequestOtp: true
+    })
+    timeoutOtp = setTimeout(() => {
+      this.setState({
+        isRequestOtp: false
+      })
+    }, 30000);
+    this.props.sendOtpProcess(data)
   }
 
   render () {
@@ -132,9 +232,9 @@ class AuthScreen extends Component {
                 <Text style={styles.btnText}>Verifikasi</Text>
               </TouchableOpacity>
               <View style={styles.SignUpContainer}>
-                <TouchableOpacity>
+                {!this.state.isRequestOtp && <TouchableOpacity onPress={() => this.requestOtp()}>
                   <Text style={styles.textSignIn}>Kirim ulang kode verifikasi</Text>
-                </TouchableOpacity>
+                </TouchableOpacity>}
               </View>
             </KeyboardAvoidingView>
           </View>
@@ -146,13 +246,19 @@ class AuthScreen extends Component {
 
 const mapStateToProps = state => {
   return {
-
+    auth: state.auth,
+    sendOtp: state.sendOtp
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-
+    authProcess: data => {
+      dispatch(AuthActions.authRequest(data))
+    },
+    sendOtpProcess: data => {
+      dispatch(SendOtpActions.sendOtpRequest(data))
+    }
   }
 };
 

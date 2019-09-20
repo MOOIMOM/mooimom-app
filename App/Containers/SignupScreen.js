@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, TouchableOpacity, Image, KeyboardAvoidingView, TextInput } from 'react-native'
+import { ScrollView, Text, View, TouchableOpacity, Image, KeyboardAvoidingView, TextInput, Alert } from 'react-native'
 import { Images } from '../Themes'
 import LinearGradient from 'react-native-linear-gradient';
 import SignUpActions from '../Redux/SignUpRedux'
+import SendOtpActions from '../Redux/SendOtpRedux'
 import { connect } from 'react-redux'
 // Styles
 import styles from './Styles/SignupScreenStyles'
@@ -17,10 +18,91 @@ class SignupScreen extends Component {
 
   componentWillReceiveProps (newProps) {
     if (this.props.register !== newProps.register) {
-      console.info(newProps)
+      if (
+        newProps.register.payload !== null &&
+        newProps.register.error === null &&
+        !newProps.register.fetching
+      ) {
+          let data ={
+            data_request: {
+              phone_number: this.props.register.data.data_request.phone_number,
+              user_id: newProps.register.payload.user_id
+            }
+          }
+          this.props.sendOtpProcess(data)
+        }
+      else if (
+        newProps.register.payload === null &&
+        !newProps.register.fetching
+      ) {
+        try {
+          Alert.alert(
+            '',
+            newProps.register.error.human_message,
+            [
+              {
+                text: 'OK'
+              }
+            ],
+            { cancelable: false }
+          )
+        } catch (err) {
+          // Alert.alert('Can not connect server now')
+          Alert.alert(
+            AppConfig.appName,
+            'Can not connect to the server now',
+            [
+              {
+                text: 'OK'
+              }
+            ],
+            { cancelable: false }
+          )
+        }
+      }
+    }
 
+    if (this.props.sendOtp !== newProps.sendOtp) {
+      console.info(newProps)
+      if (
+        newProps.sendOtp.payload !== null &&
+        newProps.sendOtp.error === null &&
+        !newProps.sendOtp.fetching
+      ) {
+          this.actNavigate('AuthScreen')
+        }
+      else if (
+        newProps.sendOtp.payload === null &&
+        !newProps.sendOtp.fetching
+      ) {
+        try {
+          Alert.alert(
+            '',
+            newProps.sendOtp.error.human_message,
+            [
+              {
+                text: 'OK'
+              }
+            ],
+            { cancelable: false }
+          )
+        } catch (err) {
+          // Alert.alert('Can not connect server now')
+          Alert.alert(
+            AppConfig.appName,
+            'Can not connect to the server now',
+            [
+              {
+                text: 'OK'
+              }
+            ],
+            { cancelable: false }
+          )
+        }
+      }
     }
   }
+
 
   actNavigate (screen) {
     const { navigate } = this.props.navigation
@@ -28,9 +110,28 @@ class SignupScreen extends Component {
   }
 
   signUp(){
-    const form = new FormData()
-    form.append('phone_number', this.state.phone)
-    this.props.signUpProcess(form)
+    const {phone} = this.state
+    var myPhoneNumber = phone.indexOf('0') == 0 ? phone.substring(1) : phone;
+    if(myPhoneNumber === "" || myPhoneNumber.length <= 9) {
+      Alert.alert(
+        '',
+        'Please insert your correct phone number',
+        [
+          {
+            text: 'OK'
+          }
+        ],
+        { cancelable: false }
+      )
+      return
+    }
+    let data = {
+      data_request: {
+        phone_number: myPhoneNumber
+      }
+    }
+    console.info(data)
+    this.props.signUpProcess(data)
   }
 
   render () {
@@ -81,7 +182,8 @@ class SignupScreen extends Component {
 
 const mapStateToProps = state => {
   return {
-    register: state.register
+    register: state.register,
+    sendOtp: state.sendOtp
   }
 };
 
@@ -89,6 +191,9 @@ const mapDispatchToProps = dispatch => {
   return {
     signUpProcess: data => {
       dispatch(SignUpActions.signUpRequest(data))
+    },
+    sendOtpProcess: data => {
+      dispatch(SendOtpActions.sendOtpRequest(data))
     }
   }
 };

@@ -3,6 +3,8 @@ import { ScrollView, Text, View, Image, TouchableOpacity, Alert } from 'react-na
 import { Images, Metrics } from '../Themes'
 import { connect } from 'react-redux'
 import {convertToRupiah} from '../Lib/utils'
+import AuthActions from '../Redux/AuthRedux'
+import SendOtpActions from '../Redux/SendOtpRedux'
 
 // Styles
 import styles from './Styles/ProfileScreenStyles'
@@ -39,7 +41,8 @@ class ProfileScreen extends Component {
         {
           text: 'Yes',
           onPress: () => {
-            this.props.navigation.navigate('AuthLoading');
+            this.props.logoutProcess()
+            this.props.navigation.navigate('LaunchScreen');
           }
         },
         {
@@ -140,7 +143,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-
+    logoutProcess: () => {
+      dispatch(AuthActions.logout(null)),
+      dispatch(SendOtpActions.logout(null))
+    },
   }
 };
 

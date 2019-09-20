@@ -11,11 +11,42 @@ class SplashScreen extends Component {
     super(props)
   }
 
-  componentDidMount(){
+  componentWillReceiveProps (newProps) {
+    console.info(newProps)
+    if (this.props.auth !== newProps.auth) {
+      if (
+        newProps.auth.payload !== null &&
+        newProps.auth.error === null &&
+        !newProps.auth.fetching
+      ) {
+        setTimeout(() => {
+          this.actNavigate('MainScreen')
+        }, 1000);
+        return;
+        }
+      else if (this.props.sendOtp !== newProps.sendOtp) {
+          if (
+            newProps.sendOtp.payload !== null &&
+            newProps.sendOtp.error === null &&
+            !newProps.sendOtp.fetching &&
+            newProps.sendOtp.payload.success === 1
+          ) {
+              setTimeout(() => {
+                this.actNavigate('AuthScreen')
+              }, 1000);
+              return;
+            } else {
+              setTimeout(() => {
+                this.actNavigate('Auth')
+              }, 1000);
+            }
+        }
+    }
+  }
+
+  actNavigate (screen) {
     const { navigate } = this.props.navigation
-    setTimeout(() => {
-      navigate('Auth')
-    }, 1000);
+    navigate(screen, {})
   }
 
   render () {
@@ -31,7 +62,8 @@ class SplashScreen extends Component {
 
 const mapStateToProps = state => {
   return {
-
+    auth: state.auth,
+    sendOtp: state.sendOtp
   }
 };
 

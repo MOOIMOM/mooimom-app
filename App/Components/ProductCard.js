@@ -9,8 +9,7 @@ export default class ProductCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      product: this.props.product,
-      isInWishlist: false
+      product: this.props.product
     };
   }
 
@@ -26,12 +25,10 @@ export default class ProductCard extends Component {
 
   renderWishlist(){
     var image = Images.wishlistBlack
-    if(this.state.isInWishlist)
+    if(this.state.product.wishlist === 1)
       image = Images.wishlist1
     return(
-      <TouchableWithoutFeedback onPress={() => this.setState({
-        isInWishlist: !this.state.isInWishlist
-      })}>
+      <TouchableWithoutFeedback>
         <View style={styles.wishlist}>
           <Image
               source={image}
@@ -43,8 +40,9 @@ export default class ProductCard extends Component {
   }
 
   render () {
-    var price = convertToRupiah(this.state.product.price - this.state.product.discPrice)
-    var disc = this.state.product.discPrice > 0 ? convertToRupiah(this.state.product.price) : ''
+    if(!this.state.product.product_regular_price) return (<View/>)
+    var price = this.state.product.product_sale_price > 0 ? convertToRupiah(this.state.product.product_sale_price) : convertToRupiah(this.state.product.product_regular_price)
+    var disc = this.state.product.product_sale_price > 0 ? convertToRupiah(this.state.product.product_regular_price) : ''
     return (
       <View style={styles.item}>
         <Image
@@ -52,7 +50,7 @@ export default class ProductCard extends Component {
             style={styles.image}
         />
         {this.renderWishlist()}
-        <Text style={styles.name}>{this.state.product.name}</Text>
+        <Text style={styles.name}>{this.state.product.product_name}</Text>
         <View style={styles.priceGroup}>
           <Text style={styles.priceDiscount}>{disc}</Text>
           <Text style={styles.price}>{price}</Text>

@@ -1,6 +1,7 @@
 // a library to wrap and simplify api calls
 import apisauce from 'apisauce'
-
+import qs from 'qs';
+import R from 'ramda';
 // our "constructor"
 const create = (baseURL = 'https://www.mooimom.id/') => {
   // ------
@@ -14,12 +15,28 @@ const create = (baseURL = 'https://www.mooimom.id/') => {
     baseURL,
     // here are some default headers
     headers: {
-      'Cache-Control': 'no-cache'
+      Accept: 'application/json',
+       'Cache-Control': 'no-cache',
+
     },
     // 10 second timeout...
     timeout: 10000
   })
-
+  const monitor = (response) => {
+    const { config: { method, url }, data, status } = response;
+    console.group(`Requesting [${method.toUpperCase()}] ${url}:`);
+    console.log('Response Status:', status);
+    console.log('Response Data:', data);
+    console.groupEnd();
+  };
+  api.addMonitor(monitor);
+  api.addRequestTransform((request) => {
+    if (R.contains(request.method, ['post'])) {
+      request.data = qs.stringify(request.data);
+      request.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+    }
+    console.info(request)
+  });
   // ------
   // STEP 2
   // ------
@@ -36,8 +53,17 @@ const create = (baseURL = 'https://www.mooimom.id/') => {
   //
   const getRoot = () => api.get('')
   const getRate = () => api.get('rate_limit')
-  const register = params =>
+  const postSignUp = params =>
     api.post('app-register', params.data_request)
+  const postSendOtp = params =>
+    api.post('app-send-sms-otp', params.data_request)
+  const postLogin = params =>
+    api.post('app-login-verification', params.data_request)
+  const postAuth = params =>
+    api.post('app-user-otp-verification', params.data_request)
+  const postGetHomepage = params =>
+    api.post('app-homepage', params.data_request)
+
 
   // ------
   // STEP 3
@@ -55,7 +81,11 @@ const create = (baseURL = 'https://www.mooimom.id/') => {
     // a list of the API functions from step 2
     getRoot,
     getRate,
-    register
+    postSignUp,
+    postSendOtp,
+    postLogin,
+    postAuth,
+    postGetHomepage,
   }
 }
 

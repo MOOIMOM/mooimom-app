@@ -11,6 +11,10 @@ export const reducers = combineReducers({
   search: require('./SearchRedux').reducer,
   sharedProduct: require('./SharedProductRedux').reducer,
   register: require('./SignUpRedux').reducer,
+  login: require('./LoginRedux').reducer,
+  sendOtp: require('./SendOtpRedux').reducer,
+  auth: require('./AuthRedux').reducer,
+  getHomepage: require('./GetHomepageRedux').reducer,  
 })
 
 export default () => {

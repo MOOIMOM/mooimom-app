@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import Carousel, { ParallaxImage, Pagination  } from 'react-native-snap-carousel';
 import ProductCard from '../Components/ProductCard'
 import SharedProductActions from '../Redux/SharedProductRedux'
+import GetHomepageActions from '../Redux/GetHomepageRedux'
 
 // Styles
 import styles from './Styles/HomeScreenStyles'
@@ -131,16 +132,43 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
     this.navigate_to = this.navigate_to.bind(this)
   }
 
+  componentDidMount(){
+    let data = {
+      data_request:{
+        user_id: this.props.auth.payload.user_id,
+        unique_token: this.props.auth.payload.unique_token
+      }
+    }
+    this.props.getHomepageRequest(data)
+  }
+
+  componentWillReceiveProps (newProps) {
+    if (this.props.getHomepage !== newProps.getHomepage) {
+      if (
+        newProps.getHomepage.payload !== null &&
+        newProps.getHomepage.error === null &&
+        !newProps.getHomepage.fetching
+      ) {
+          this.setState({
+            heroBanners: newProps.getHomepage.payload.big_banner,
+            products: newProps.getHomepage.payload.best_seller,
+            categories: newProps.getHomepage.payload.categories,
+          })
+        }
+      }
+  }
+
   navigate_to(page, obj = {}) {
     const { navigate } = this.props.navigation
     navigate(page, obj)
   }
 
   _renderHeroBanner ({item, index}, parallaxProps) {
+      console.info(item)
         return (
             <View style={styles.itemHeroBanner}>
                 <ParallaxImage
-                    source={item}
+                    source={{uri:item.img_url}}
                     containerStyle={styles.imageContainerHeroBanner}
                     style={styles.imageHeroBanner}
                     parallaxFactor={0.6}
@@ -152,8 +180,8 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
 
   _renderCategories({item, index}){
     return(
-      <TouchableOpacity style={styles.catButton} onPress={() => this.navigate_to('Category', {category_id: item.category_id})}>
-        <Image source={item.image} style={styles.catImage}/>
+      <TouchableOpacity style={styles.catButton} onPress={() => this.navigate_to('Category', {category_id: item.slug})}>
+        <Image source={{uri:item.img_url}} style={styles.catImage}/>
         <Text style={styles.catText}>{item.name}</Text>
       </TouchableOpacity>
     )
@@ -178,6 +206,7 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
   }
 
   render () {
+    if(this.props.getHomepage.fetching === null || this.props.getHomepage.fetching === true) return <View/>
     const { navigate } = this.props.navigation
     return (
     <View style={styles.container}>
@@ -213,7 +242,7 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
               sliderWidth={Metrics.screenWidth}
               sliderHeight={220}
               itemWidth={Metrics.screenWidth - 60}
-              data={this.state.heroBanners}
+              data={this.props.getHomepage.payload.big_banner}
               renderItem={this._renderHeroBanner}
               hasParallaxImages={true}
               autoplay={true}
@@ -260,7 +289,8 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
 }
 const mapStateToProps = state => {
   return {
-
+    getHomepage: state.getHomepage,
+    auth:state.auth
   }
 };
 
@@ -268,6 +298,9 @@ const mapDispatchToProps = dispatch => {
   return {
     sharedProductProcess: data => {
       dispatch(SharedProductActions.sharedProductRequest(data))
+    },
+    getHomepageRequest: data => {
+      dispatch(GetHomepageActions.getHomepageRequest(data))
     }
   }
 };

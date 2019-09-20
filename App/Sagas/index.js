@@ -6,16 +6,22 @@ import DebugConfig from '../Config/DebugConfig'
 /* ------------- Types ------------- */
 
 import { StartupTypes } from '../Redux/StartupRedux'
-import { GithubTypes } from '../Redux/GithubRedux'
 import { SharedProductTypes } from '../Redux/SharedProductRedux'
 import { SignUpTypes } from '../Redux/SignUpRedux'
+import { SendOtpTypes } from '../Redux/SendOtpRedux'
+import { LoginTypes } from '../Redux/LoginRedux'
+import { AuthTypes } from '../Redux/AuthRedux'
+import { GetHomepageTypes } from '../Redux/GetHomepageRedux'
 
 /* ------------- Sagas ------------- */
 
 import { startup } from './StartupSagas'
-import { getUserAvatar } from './GithubSagas'
 import { saveSharedProduct } from './SharedProductSagas'
 import { postSignUp } from './SignUpSagas'
+import { postSendOtp } from './SendOtpSagas'
+import { postLogin } from './LoginSagas'
+import { postAuth } from './AuthSagas'
+import { postGetHomepage } from './GetHomepageSagas'
 
 /* ------------- API ------------- */
 
@@ -29,10 +35,13 @@ export default function * root () {
   yield all([
     // some sagas only receive an action
     takeLatest(StartupTypes.STARTUP, startup),
+    takeLatest(SharedProductTypes.SHARED_PRODUCT_REQUEST, saveSharedProduct),
 
     // some sagas receive extra parameters in addition to an action
-    takeLatest(GithubTypes.USER_REQUEST, getUserAvatar, api),
-    takeLatest(SharedProductTypes.SHARED_PRODUCT_REQUEST, saveSharedProduct),
-    takeLatest(SignUpTypes.SIGNUP_REQUEST, postSignUp),
+    takeLatest(SignUpTypes.SIGN_UP_REQUEST, postSignUp, api),
+    takeLatest(SendOtpTypes.SEND_OTP_REQUEST, postSendOtp, api),
+    takeLatest(LoginTypes.LOGIN_REQUEST, postLogin, api),
+    takeLatest(AuthTypes.AUTH_REQUEST, postAuth, api),
+    takeLatest(GetHomepageTypes.GET_HOMEPAGE_REQUEST, postGetHomepage, api),
   ])
 }
