@@ -6,8 +6,8 @@ export default StyleSheet.create({
     flex:1,
   },
   containerScroll:{
+    flex: 1,
     paddingTop: 0,
-    height: Metrics.screenHeight - (70 * Metrics.screenWidth / 320)
   },
   backgroundHeader: {
     width: Metrics.screenWidth,
@@ -18,10 +18,12 @@ export default StyleSheet.create({
     top: Metrics.screenHeight * -0.17,
     backgroundColor: Colors.mooimom,
     borderRadius: Metrics.screenWidth / 2,
-    transform: [{ scaleX: 2 }, { scaleY: 0.5 }]
+    transform: [{ scaleX: 2 }, { scaleY: 0.5 }],
+    flex: 1
   },
   wrapperSeparator:{
     marginTop: 10,
+    flex: 1
   },
   subTitleWrapper:{
     fontSize: 16 * Metrics.screenWidth / 320,
@@ -32,7 +34,8 @@ export default StyleSheet.create({
   headerWrapper:{
     flexDirection: 'column',
     justifyContent: 'center',
-    marginTop: 10
+    marginTop: 10,
+    flex: 1
   },
   headerWrapper1:{
     flexDirection: 'row',
@@ -154,6 +157,7 @@ export default StyleSheet.create({
   productWrapper:{
     flex:1,
     width: Metrics.screenWidth - 40,
+    flexGrow: 1,
     marginHorizontal: 20
   },
 })

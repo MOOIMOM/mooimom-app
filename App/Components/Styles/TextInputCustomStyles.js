@@ -41,15 +41,17 @@ export default StyleSheet.create({
     color: 'gray',
     fontFamily: Fonts.type.gotham4,
   },
-  labelRP: {
+  labelPhone: {
     // zIndex: 2,
     // height: 30,
-    fontSize: 18,
-    fontFamily: Fonts.type.gotham1,
-    color: 'gray',
+    fontSize: 14,
+    fontFamily: Fonts.type.gotham2,
+    color: Colors.white,
     width: 30,
     // backgroundColor: 'red',
-    marginLeft: 40,
-    marginBottom: -52
+    marginLeft: 20,
+    marginBottom: -50,
+    backgroundColor: 'gray',
+    paddingVertical: 5
   }
 });

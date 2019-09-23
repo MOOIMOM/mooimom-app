@@ -11,21 +11,21 @@
  *************************************************************/
 
 import { call, put } from 'redux-saga/effects'
-import GetAddressActions from '../Redux/GetAddressRedux'
+import EditAddressActions from '../Redux/EditAddressRedux'
 // import { RegisterSelectors } from '../Redux/RegisterRedux'
 
-export function * postGetAddress(api, action) {
+export function * postEditAddress(api, action) {
   const { data } = action
   // get current data from Store
   // const currentData = yield select(RegisterSelectors.getData)
   // make the call to the api
-  const response = yield call(api.postGetAddress, data)
+  const response = yield call(api.postEditAddress, data)
     // success?
     if (response.data.success === 1) {
       console.tron.log(response)
       // You might need to change the response here - do this with a 'transform',
       // located in ../Transforms/. Otherwise, just pass the data back from the api.
-      yield put(GetAddressActions.getAddressSuccess(response.data))
+      yield put(EditAddressActions.editAddressSuccess(response.data))
     } else if (response.problem === 'TIMEOUT_ERROR') {
       var err = {
         error: {
@@ -33,8 +33,8 @@ export function * postGetAddress(api, action) {
           error_message: 'Can not connect server now'
         }
       }
-      yield put(GetAddressActions.getAddressFailure(err))
+      yield put(EditAddressActions.editAddressFailure(err))
     } else {
-      yield put(GetAddressActions.getAddressFailure(response.data))
+      yield put(EditAddressActions.editAddressFailure(response.data))
     }
 }

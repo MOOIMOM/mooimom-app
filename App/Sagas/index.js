@@ -14,7 +14,13 @@ import { AuthTypes } from '../Redux/AuthRedux'
 import { GetHomepageTypes } from '../Redux/GetHomepageRedux'
 import { GetProductTypes } from '../Redux/GetProductRedux'
 import { CartTypes } from '../Redux/CartRedux'
-import { AddressTypes } from '../Redux/AddressRedux'
+import { GetAddressTypes } from '../Redux/GetAddressRedux'
+import { EditAddressTypes } from '../Redux/EditAddressRedux'
+import { ProvinceTypes } from '../Redux/ProvinceRedux'
+import { CityTypes } from '../Redux/CityRedux'
+import { DistrictTypes } from '../Redux/DistrictRedux'
+import { GetShippingOptionsTypes } from '../Redux/GetShippingOptionsRedux'
+import { CategoryTypes } from '../Redux/CategoryRedux'
 
 /* ------------- Sagas ------------- */
 
@@ -29,6 +35,14 @@ import { postGetProduct } from './GetProductSagas'
 import { postGetProductVariation } from './GetProductVariationSagas'
 import { addCart } from './AddCartSagas'
 import { postGetAddress } from './GetAddressSagas'
+import { postAddAddress } from './AddAddressSagas'
+import { postEditAddress } from './EditAddressSagas'
+import { postDeleteAddress } from './DeleteAddressSagas'
+import { postGetProvince } from './GetProvinceSagas'
+import { postGetCity } from './GetCitySagas'
+import { postGetDistrict } from './GetDistrictSagas'
+import { postGetShippingOptions } from './GetShippingOptionsSagas'
+import { postGetCategory } from './GetCategorySagas'
 
 /* ------------- API ------------- */
 
@@ -53,6 +67,14 @@ export default function * root () {
     takeLatest(GetHomepageTypes.GET_HOMEPAGE_REQUEST, postGetHomepage, api),
     takeLatest(GetProductTypes.GET_PRODUCT_REQUEST, postGetProduct, api),
     takeLatest(GetProductTypes.GET_PRODUCT_VARIATION_REQUEST, postGetProductVariation, api),
-    takeLatest(AddressTypes.GET_ADDRESS_REQUEST, postGetAddress, api),
+    takeLatest(GetAddressTypes.GET_ADDRESS_REQUEST, postGetAddress, api),
+    takeLatest(EditAddressTypes.ADD_ADDRESS_REQUEST, postAddAddress, api),
+    takeLatest(EditAddressTypes.EDIT_ADDRESS_REQUEST, postEditAddress, api),
+    takeLatest(EditAddressTypes.DELETE_ADDRESS_REQUEST, postDeleteAddress, api),
+    takeLatest(ProvinceTypes.GET_PROVINCE_REQUEST, postGetProvince, api),
+    takeLatest(CityTypes.GET_CITY_REQUEST, postGetCity, api),
+    takeLatest(DistrictTypes.GET_DISTRICT_REQUEST, postGetDistrict, api),
+    takeLatest(GetShippingOptionsTypes.GET_SHIPPING_OPTIONS_REQUEST, postGetShippingOptions, api),
+    takeLatest(CategoryTypes.GET_CATEGORY_REQUEST, postGetCategory, api),
   ])
 }

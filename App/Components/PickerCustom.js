@@ -8,13 +8,28 @@ import styles from './Styles/TextInputCustomStyles';
 export default class PickerCustom extends Component {
   constructor(props){
     super(props)
+    this.state = {
+      selectedValue: this.props.selectedValue ? this.props.selectedValue : '',
+      selectedLabel: this.props.selectedLabel ? this.props.selectedLabel : ''
+    }
   }
 
   _renderPicker(){
-    if(!this.props.data) return <View/>
-    return this.props.data.map((item) =>{
-      return <Picker.Item key={item.label} label={item.label} value={item.value} color={'gray'}/>
+    var arr = [...this.props.data]
+    for(var i = 0;i < arr.length; i++){
+      if(arr[i].id == this.state.selectedValue && this.state.selectedLabel !== ''){
+        arr.splice(i, 1)
+      }
+    }
+    return arr.map((item) => {
+      return <Picker.Item key={item.id} label={item.name} value={item.id} color={Colors.black}/>
     })
+  }
+  _renderDefault(){
+    if(this.state.selectedLabel !== ''){
+      return <Picker.Item key={0} label={this.state.selectedLabel} value={this.state.selectedValue} color={Colors.black}/>
+    }
+    return <Picker.Item key={0} label={this.props.label0} value={''} color={Colors.black}/>
   }
 
   render(){
@@ -40,10 +55,15 @@ export default class PickerCustom extends Component {
             width: widthFix - 20, height: 50,
             backgroundColor: 'rgba(0,0,0,0)'
           }}
-          itemStyle={{fontSize: 18, fontFamily: Fonts.type.gotham2}}
+          itemStyle={{fontSize: 18, fontFamily: Fonts.type.gotham4}}
           onValueChange={(itemValue, itemIndex) => {
+            this.setState({
+              selectedValue: '',
+              selectedLabel: ''
+            })
             this.props.onValueChange(itemValue, itemIndex)
           }}>
+          {this._renderDefault()}
           {this._renderPicker()}
           </Picker>
           <Image source={Images.down} style={{position:'absolute', width:10, height:10, resizeMode: 'contain', top:20, right:20}}/>

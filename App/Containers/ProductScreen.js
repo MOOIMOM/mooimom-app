@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Clipboard, Alert, FlatList, AppState, Linking, Modal } from 'react-native'
+import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Clipboard, Alert, AsyncStorage, FlatList, AppState, Linking, Modal } from 'react-native'
 import { Images, Metrics } from '../Themes'
 import { connect } from 'react-redux'
 import Carousel, { Pagination  } from 'react-native-snap-carousel';
 import SharedProductActions from '../Redux/SharedProductRedux'
 import GetProductActions from '../Redux/GetProductRedux'
 import CartActions from '../Redux/CartRedux'
+import { CachedImage } from 'react-native-cached-image';
 import {convertToRupiah, share, shareDescripton} from '../Lib/utils'
 // Styles
 import styles from './Styles/ProductScreenStyles'
@@ -13,40 +14,19 @@ import styles from './Styles/ProductScreenStyles'
 class ProductScreen extends Component {
   constructor (props) {
     super(props)
-    var colors = [
-      {id:1, color:'#FFFFCC'},
-      {id:2, color:'pink'},
-      {id:3, color:'red'},
-      {id:4, color:'green'},
-      {id:5, color:'gray'},
-      {id:6, color:'blue'},
-      {id:7, color:'yellow'},
-      {id:8, color:'orange'},
-      {id:9, color:'purple'},
-    ]
-    var sizes = [
-      {id:1, size:'S'},
-      {id:2, size:'M'},
-      {id:3, size:'L'},
-      {id:4, size:'XL'},
-      {id:5, size:'2XL'},
-      {id:6, size:'3XL'},
-    ]
     this.state = {
       appState: AppState.currentState,
       product: this.props.navigation.state.params.product,
       activeSlide: 0,
-      colors:colors,
       colorSelected:'',
-      sizes:sizes,
       sizeSelected:'',
       isInWishlist:false,
-      reviews:[],
       modalClipboardVisible: false,
       willShareDescription:false,
       finishShareImage: false,
       socialShare: '',
       isShowSizeGuide: false,
+      fcmToken: ''
     }
   }
 
@@ -55,13 +35,15 @@ class ProductScreen extends Component {
     navigate(screen, obj)
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     AppState.addEventListener('change', this._handleAppStateChange);
+    this.setState({ fcmToken: await AsyncStorage.getItem('fcmToken') })
     let data = {
       data_request:{
         product_slug: this.props.navigation.state.params.product.slug,
         user_id: this.props.navigation.state.params.auth.payload.user_id,
-        unique_token: this.props.navigation.state.params.auth.payload.unique_token
+        unique_token: this.props.navigation.state.params.auth.payload.unique_token,
+        fcmToken: this.state.fcmToken
       }
     }
     this.props.loadProductProcess(data)
@@ -239,7 +221,7 @@ class ProductScreen extends Component {
 
   _renderImage ({item, index}, parallaxProps) {
     return (
-      <Image source={{uri:item.url}} style={styles.productImage} />
+      <CachedImage source={{uri:item.url}} style={styles.productImage} />
     );
   }
 
@@ -282,7 +264,7 @@ class ProductScreen extends Component {
           return(
             <TouchableOpacity key={data.slug} onPress={
               () => this.selectColor(data.slug)} disabled={isEmpty}>
-              <Image source={{uri:data.image_url}} style={[styles.colorButton, this.colorStyling(data.slug, data.color)]}/>
+              <CachedImage source={{uri:data.image_url}} style={[styles.colorButton, this.colorStyling(data.slug, data.color)]}/>
               <View style={styleDisabled}/>
             </TouchableOpacity>
           )})}
@@ -445,7 +427,7 @@ class ProductScreen extends Component {
       }
     }
     return(
-      <View style={styles.reviewContainer} key={item.id}>
+      <View style={styles.reviewContainer}>
         <View style={styles.nameWrapper}>
           <Text style={styles.reviewName1}>Oleh </Text><Text style={styles.reviewName2}> {item.name}</Text>
         </View>
@@ -455,10 +437,10 @@ class ProductScreen extends Component {
               <Image key={star.id} source={star.img} style={styles.reviewStar}/>
             )
           })}
-          <Text style={styles.reviewTitle}>{item.title}</Text>
         </View>
         <View style={styles.reviewDescriptionWrapper}>
-          <Text style={styles.textReview}>{item.review}</Text>
+          <Text style={styles.reviewTitle}>{item.review_title}</Text>
+          <Text style={styles.textReview}>{item.review_content}</Text>
         </View>
         <View style={styles.reviewImageWrapper}>
           {item.images.map((image, index) => {
@@ -596,7 +578,7 @@ class ProductScreen extends Component {
               <FlatList
                 data={this.state.product.reviews}
                 renderItem={this.renderReview}
-                keyExtractor={(item, index) => item.id}
+                keyExtractor={(item, index) => index.toString()}
                 showsHorizontalScrollIndicator={false}
               />
             </View>

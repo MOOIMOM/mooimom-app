@@ -387,6 +387,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     flex:1,
     paddingVertical: 3,
+    marginVertical: 0.1
   },
   tableText:{
     flex:1,
@@ -428,7 +429,6 @@ export default StyleSheet.create({
     marginRight: 5 * Metrics.screenWidth / 320
   },
   reviewTitle:{
-    marginLeft: 10 * Metrics.screenWidth / 320,
     fontSize: 12 * Metrics.screenWidth / 320,
     fontFamily: Fonts.type.gotham4,
   },
@@ -440,6 +440,7 @@ export default StyleSheet.create({
     color: Colors.gray,
     textAlign:  'left',
     fontFamily: Fonts.type.gotham3,
+    lineHeight: 14 * Metrics.screenWidth / 320,
   },
   reviewImageWrapper:{
     flexDirection: 'row',

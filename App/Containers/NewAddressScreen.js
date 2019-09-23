@@ -1,13 +1,19 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, TouchableOpacity, TextInput, Image, KeyboardAvoidingView } from 'react-native'
+import { ScrollView, Text, View, TouchableOpacity, TextInput, Image, KeyboardAvoidingView, Alert } from 'react-native'
 import { Images, Metrics, Colors } from '../Themes'
 import { connect } from 'react-redux'
 import {convertToRupiah } from '../Lib/utils'
 import TextInputCustom from '../Components/TextInputCustom'
+import ProvinceActions from '../Redux/ProvinceRedux'
+import CityActions from '../Redux/CityRedux'
+import DistrictActions from '../Redux/DistrictRedux'
+import EditAddressActions from '../Redux/EditAddressRedux'
 import CheckBox from '../Components/CheckBox'
+import PickerCustom from '../Components/PickerCustom'
 // Styles
 import styles from './Styles/NewAddressScreenStyles'
 
+var requestAdd = false
 class NewAddressScreen extends Component {
   constructor (props) {
     super(props)
@@ -17,7 +23,6 @@ class NewAddressScreen extends Component {
       province: '',
       city: '',
       district: '',
-      village: '',
       zipCode: '',
       phone: '',
       isSetPrimary:false
@@ -25,13 +30,29 @@ class NewAddressScreen extends Component {
   }
 
   componentDidMount(){
-    // let data = {
-    //   data_request:{
-    //     user_id: this.props.auth.payload.user_id,
-    //     unique_token: this.props.auth.payload.unique_token
-    //   }
-    // }
-    // this.props.getAddressProcess(data)
+    let data = {
+      data_request:{
+        user_id: this.props.auth.payload.user_id,
+        unique_token: this.props.auth.payload.unique_token
+      }
+    }
+    this.props.getProvincesProcess(data)
+  }
+
+  componentWillReceiveProps (newProps) {
+    if (this.props.editaddress !== newProps.editaddress) {
+      if (
+        newProps.editaddress.payload !== null &&
+        newProps.editaddress.error === null &&
+        !newProps.editaddress.fetching && requestAdd
+      ) {
+          requestAdd = false
+          if(this.props.navigation.state.params.reloadAddresses){
+            this.props.navigation.state.params.reloadAddresses()
+          }
+          this.actNavigate('AddressListScreen')
+        }
+      }
   }
 
   actNavigate (screen) {
@@ -43,6 +64,56 @@ class NewAddressScreen extends Component {
     this.setState({
       isSetPrimary: isCheck
     })
+  }
+
+  changeProvince(val){
+    this.setState({ province: val, city: '', district: ''})
+    let data = {
+      data_request:{
+        user_id: this.props.auth.payload.user_id,
+        unique_token: this.props.auth.payload.unique_token,
+        province_id: val
+      }
+    }
+    this.props.getCitiesProcess(data)
+  }
+
+  changeCity(val){
+    this.setState({ city: val, district: '' })
+    let data = {
+      data_request:{
+        user_id: this.props.auth.payload.user_id,
+        unique_token: this.props.auth.payload.unique_token,
+        city_id: val
+      }
+    }
+    this.props.getDistrictsProcess(data)
+  }
+
+  saveAddress(){
+    const {name, street, province, city, district, zipCode, phone, isSetPrimary} = this.state
+    if(name === '' || street === '' || province === '' || city === '' || district === '' || zipCode === '' || phone === ''){
+      Alert.alert('Sorry', 'Please fill in all of the form', [{ text: 'OK'}])
+      return;
+    }
+    var receiver_phone = phone.indexOf('0') == 0 ? phone.substring(1) : phone
+    var isPrimary = isSetPrimary === true ? 1 : 0
+    let data = {
+      data_request:{
+        user_id: this.props.auth.payload.user_id,
+        unique_token: this.props.auth.payload.unique_token,
+        receiver_name: name,
+        address: street,
+        province_id: province,
+        city_id: city,
+        district_id: district,
+        zip_code: zipCode,
+        receiver_phone: receiver_phone,
+        is_primary: isPrimary,
+      }
+    }
+    this.props.addAddressProcess(data)
+    requestAdd = true
   }
 
   render () {
@@ -80,45 +151,42 @@ class NewAddressScreen extends Component {
             onChangeText={val => this.setState({ street: val })}
             autoCapitalize= 'words'
           />
-          <TextInputCustom
+          <PickerCustom
             placeholder='Pilih Propinsi'
+            data={this.props.province.payload ? this.props.province.payload.provinces : []}
+            selectedValue={this.state.province}
             color={Colors.black}
             label={'Propinsi'}
-            textAlign='left'
+            label0={'Pilih Propinsi'}
             value={this.state.province}
-            onChangeText={val => this.setState({ province: val })}
+            onValueChange={val => this.changeProvince(val)}
           />
-          <TextInputCustom
+          <PickerCustom
             placeholder='Pilih Kota'
+            data={this.props.city.payload ? this.props.city.payload.cities : []}
+            selectedValue={this.state.city}
             color={Colors.black}
             label={'Kota'}
-            textAlign='left'
+            label0={'Pilih Kota'}
             value={this.state.city}
-            onChangeText={val => this.setState({ city: val })}
+            onValueChange={val => this.changeCity(val)}
           />
-          <TextInputCustom
+          <PickerCustom
             placeholder='Pilih Kecamatan'
+            data={this.props.district.payload ? this.props.district.payload.districts : []}
+            selectedValue={this.state.district}
             color={Colors.black}
             label={'Kecamatan'}
-            textAlign='left'
+            label0={'Pilih Kecamatan'}
             value={this.state.district}
-            onChangeText={val => this.setState({ district: val })}
-            autoCapitalize= 'words'
-          />
-          <TextInputCustom
-            placeholder='Pilih Kelurahan / Desa'
-            color={Colors.black}
-            label={'Kelurahan / Desa'}
-            textAlign='left'
-            value={this.state.village}
-            onChangeText={val => this.setState({ village: val })}
-            autoCapitalize= 'words'
+            onValueChange={val => this.setState({district: val})}
           />
           <TextInputCustom
             placeholder='Kode Pos'
             color={Colors.black}
             label={'Kode Pos'}
             textAlign='left'
+            keyboardType={'numeric'}
             value={this.state.zipCode}
             onChangeText={val => this.setState({ zipCode: val })}
             autoCapitalize= 'words'
@@ -129,6 +197,7 @@ class NewAddressScreen extends Component {
             label={'Nomor Telepon'}
             textAlign='left'
             value={this.state.phone}
+            keyboardType={'numeric'}
             onChangeText={val => this.setState({ phone: val })}
             autoCapitalize= 'words'
           />
@@ -141,7 +210,7 @@ class NewAddressScreen extends Component {
           </ScrollView>
         </View>
         <View style={styles.menuWrapper}>
-          <TouchableOpacity style={styles.chooseAddressBtn} onPress={() => {this.actNavigate('AddressListScreen')}}>
+          <TouchableOpacity style={styles.chooseAddressBtn} onPress={() => this.saveAddress()}>
             <Text style={styles.chooseAddressText}>Simpan Alamat</Text>
           </TouchableOpacity>
         </View>
@@ -152,13 +221,28 @@ class NewAddressScreen extends Component {
 
 const mapStateToProps = state => {
   return {
-
+    auth: state.auth,
+    province: state.province,
+    city: state.city,
+    district: state.district,
+    editaddress: state.editaddress
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-
+    getProvincesProcess: data => {
+      dispatch(ProvinceActions.getProvinceRequest(data))
+    },
+    getCitiesProcess: data => {
+      dispatch(CityActions.getCityRequest(data))
+    },
+    getDistrictsProcess: data => {
+      dispatch(DistrictActions.getDistrictRequest(data))
+    },
+    addAddressProcess: data => {
+      dispatch(EditAddressActions.addAddressRequest(data))
+    },
   }
 };
 

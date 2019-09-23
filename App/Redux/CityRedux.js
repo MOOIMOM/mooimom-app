@@ -4,12 +4,12 @@ import Immutable from 'seamless-immutable'
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
-  getAddressRequest: ['data'],
-  getAddressSuccess: ['payload'],
-  getAddressFailure: ['error'],
+  getCityRequest: ['data'],
+  getCitySuccess: ['payload'],
+  getCityFailure: ['error'],
 })
 
-export const AddressTypes = Types
+export const CityTypes = Types
 export default Creators
 
 /* ------------- Initial State ------------- */
@@ -23,7 +23,7 @@ export const INITIAL_STATE = Immutable({
 
 /* ------------- Selectors ------------- */
 
-export const AddressSelectors = {
+export const CitySelectors = {
   getData: state => state.data
 }
 
@@ -48,7 +48,7 @@ export const failure = (state, action) => {
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
-  [Types.GET_ADDRESS_REQUEST]: request,
-  [Types.GET_ADDRESS_SUCCESS]: success,
-  [Types.GET_ADDRESS_FAILURE]: failure,
+  [Types.GET_CITY_REQUEST]: request,
+  [Types.GET_CITY_SUCCESS]: success,
+  [Types.GET_CITY_FAILURE]: failure,
 })

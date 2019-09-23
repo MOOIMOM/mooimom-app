@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableWithoutFeedback, Image } from 'react-native'
 import { Images } from '../Themes'
+import { CachedImage } from 'react-native-cached-image';
 import {convertToRupiah, share} from '../Lib/utils'
 
 import styles from './Styles/ProductCardStyles'
@@ -45,7 +46,7 @@ export default class ProductCard extends Component {
     var disc = this.state.product.product_sale_price > 0 ? convertToRupiah(this.state.product.product_regular_price) : ''
     return (
       <View style={styles.item}>
-        <Image
+        <CachedImage
             source={{uri:this.state.product.images[0].url}}
             style={styles.image}
         />

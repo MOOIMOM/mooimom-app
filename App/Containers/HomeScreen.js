@@ -1,16 +1,20 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback , Image, FlatList } from 'react-native'
+import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback , Image, FlatList, Alert, AsyncStorage } from 'react-native'
 import { Images, Metrics } from '../Themes'
 import { connect } from 'react-redux'
 import Carousel, { ParallaxImage, Pagination  } from 'react-native-snap-carousel';
 import ProductCard from '../Components/ProductCard'
 import SharedProductActions from '../Redux/SharedProductRedux'
 import GetHomepageActions from '../Redux/GetHomepageRedux'
+import CategoryActions from '../Redux/CategoryRedux'
+import { CachedImage } from 'react-native-cached-image';
+import firebase from 'react-native-firebase'
 
 // Styles
 import styles from './Styles/HomeScreenStyles'
 import menuStyles from './Styles/MenuComponentStyles'
 
+var isReloadPage = false
 class HomeScreen extends Component {
   static navigationOptions = {
       tabBarIcon: ({ focused, tintColor }) => {
@@ -23,7 +27,11 @@ class HomeScreen extends Component {
 
     this.state = {
       products: [],
+      banners: [],
+      categories: [],
       activeSlide: 0,
+      fcmToken: '',
+      currentPage: 1,
     }
 
     this._renderProduct = this._renderProduct.bind(this)
@@ -31,13 +39,105 @@ class HomeScreen extends Component {
   }
 
   async componentDidMount(){
-    let data = {
-      data_request:{
-        user_id: this.props.auth.payload.user_id,
-        unique_token: this.props.auth.payload.unique_token
+    this.checkPermission()
+    setTimeout(() => {
+      this.createNotificationListeners()
+      let data = {
+        data_request:{
+          user_id: this.props.auth.payload.user_id,
+          unique_token: this.props.auth.payload.unique_token,
+          fcm_token: this.state.fcmToken
+        }
+      }
+      this.props.getHomepageRequest(data)
+      let data2 = {
+        data_request:{
+          user_id: this.props.auth.payload.user_id,
+          unique_token: this.props.auth.payload.unique_token,
+          fcm_token: this.state.fcmToken
+        }
+      }
+      this.props.getCategoryRequest(data2)
+    }, 200)
+  }
+
+  componentWillUnmount () {
+    this.notificationListener()
+    this.notificationOpenedListener()
+    this.messageListener()
+  }
+
+  async checkPermission () {
+    const enabled = await firebase.messaging().hasPermission()
+    if (enabled) {
+      this.getToken()
+    } else {
+      this.requestPermission()
+    }
+  }
+
+  async getToken () {
+    let fcmToken = await AsyncStorage.getItem('fcmToken')
+    if (!fcmToken) {
+      fcmToken = await firebase.messaging().getToken()
+      if (fcmToken) {
+        // user has a device token
+        await AsyncStorage.setItem('fcmToken', fcmToken)
       }
     }
-    this.props.getHomepageRequest(data)
+    this.setState({ fcmToken: fcmToken })
+  }
+
+  async requestPermission () {
+    try {
+      await firebase.messaging().requestPermission()
+      // User has authorised
+      this.getToken()
+    } catch (error) {
+    }
+  }
+
+  async createNotificationListeners () {
+    /*
+     * Triggered when a particular notification has been received in foreground
+     * */
+
+    // buka saat aplikasi kebuka
+    this.notificationListener = firebase
+      .notifications()
+      .onNotification(notification => {
+        const { title, body } = notification
+        Alert.alert(title, body, [{ text: 'OK'}])
+      })
+
+    /*
+     * If your app is in background, you can listen for when a notification is clicked / tapped / opened as follows:
+     * */
+    this.notificationOpenedListener = firebase
+      .notifications()
+      .onNotificationOpened(notificationOpen => {
+        const { title, body } = notificationOpen.notification
+        Alert.alert(title, body, [{ text: 'OK'}])
+      })
+
+    /*
+     * If your app is closed, you can check if it was opened by a notification being clicked / tapped / opened as follows:
+     * */
+
+    // buka dari notif luar
+    const notificationOpen = await firebase
+      .notifications()
+      .getInitialNotification()
+    if (notificationOpen) {
+      const { title, body } = notificationOpen.notification
+      // this.actionGo()
+    }
+    /*
+     * Triggered for data only payload in foreground
+     * */
+    this.messageListener = firebase.messaging().onMessage(message => {
+      // this.actReloadOrder()
+    })
   }
 
   componentWillReceiveProps (newProps) {
@@ -45,13 +145,27 @@ class HomeScreen extends Component {
       if (
         newProps.getHomepage.payload !== null &&
         newProps.getHomepage.error === null &&
-        !newProps.getHomepage.fetching
+        !newProps.getHomepage.fetching && !isReloadPage
       ) {
           this.setState({
             products: newProps.getHomepage.payload.best_seller,
+            banners: newProps.getHomepage.payload.big_banner,
+            categories: newProps.getHomepage.payload.categories,
           })
+      } else if (
+          newProps.getHomepage.payload !== null &&
+          newProps.getHomepage.error === null &&
+          !newProps.getHomepage.fetching && isReloadPage
+        ) {
+            var arr = [...this.state.products]
+            arr = arr.concat(newProps.getHomepage.payload.best_seller)
+            this.setState({
+              currentPage: this.state.currentPage + 1,
+              products: arr
+            })
+            isReloadPage = false
         }
-      }
+    }
   }
 
   navigate_to(page, obj = {}) {
@@ -76,7 +190,7 @@ class HomeScreen extends Component {
   _renderCategories({item, index}){
     return(
       <TouchableOpacity style={styles.catButton} onPress={() => this.navigate_to('Category', {category_id: item.slug})}>
-        <Image source={{uri:item.img_url}} style={styles.catImage}/>
+        <CachedImage source={{uri:item.img_url}} style={styles.catImage}/>
         <Text style={styles.catText}>{item.name}</Text>
       </TouchableOpacity>
     )
@@ -101,8 +215,31 @@ class HomeScreen extends Component {
     );
   }
 
+  loadMoreData(){
+    if (!isReloadPage) {
+      if (this.state.currentPage + 1 <= this.props.getHomepage.payload.total_pages) {
+        isReloadPage = true
+        let data = {
+          data_request:{
+            user_id: this.props.auth.payload.user_id,
+            unique_token: this.props.auth.payload.unique_token,
+            fcm_token: this.state.fcmToken,
+            current_page: this.state.currentPage + 1
+          }
+        }
+        this.props.getHomepageRequest(data)
+      }
+    }
+  }
+
+  isCloseToBottom(nativeEvent){
+    const {layoutMeasurement, contentOffset, contentSize} = nativeEvent
+    const paddingToBottom = Metrics.screenHeight;
+    return layoutMeasurement.height + contentOffset.y >=
+      contentSize.height - paddingToBottom;
+  };
+
   render () {
-    if(this.props.getHomepage.fetching === null || this.props.getHomepage.fetching === true) return <View/>
     const { navigate } = this.props.navigation
     return (
     <View style={styles.container}>
@@ -110,19 +247,25 @@ class HomeScreen extends Component {
         <ScrollView
         showsVerticalScrollIndicator={false}
         stickyHeaderIndices={[2]}
+        onScroll={({nativeEvent}) => {
+          if (this.isCloseToBottom(nativeEvent)) {
+            this.loadMoreData();
+          }
+        }}
+        scrollEventThrottle={0}
         >
           <View style={styles.backgroundHeader} />
           <View style={styles.headerWrapper}>
-          <View style={styles.headerWrapper1}>
-            <View style={styles.headerButtonLeft}>
-              <Image source={Images.mooimomLogoWhite} style={styles.logo} />
+            <View style={styles.headerWrapper1}>
+              <View style={styles.headerButtonLeft}>
+                <Image source={Images.mooimomLogoWhite} style={styles.logo} />
+              </View>
+              <View style={styles.headerButtonRight}>
+                <TouchableOpacity onPress={() => this.navigate_to('SharedProductScreen')}><Image source={Images.wishlist} style={styles.buttonHeader} /></TouchableOpacity>
+                <TouchableOpacity onPress={() => this.navigate_to('CartScreen')}><Image source={Images.shoppingCart} style={styles.buttonHeader} /></TouchableOpacity>
+                <TouchableOpacity onPress={() => this.navigate_to('NotificationScreen')}><Image source={Images.notifWhite} style={styles.buttonHeader2} /></TouchableOpacity>
+              </View>
             </View>
-            <View style={styles.headerButtonRight}>
-              <TouchableOpacity onPress={() => this.navigate_to('SharedProductScreen')}><Image source={Images.wishlist} style={styles.buttonHeader} /></TouchableOpacity>
-              <TouchableOpacity onPress={() => this.navigate_to('CartScreen')}><Image source={Images.shoppingCart} style={styles.buttonHeader} /></TouchableOpacity>
-              <TouchableOpacity onPress={() => this.navigate_to('NotificationScreen')}><Image source={Images.notifWhite} style={styles.buttonHeader2} /></TouchableOpacity>
-            </View>
-          </View>
           </View>
           <View style={styles.headerWrapper}>
             <View style={styles.headerWrapper2}>
@@ -138,7 +281,7 @@ class HomeScreen extends Component {
               sliderWidth={Metrics.screenWidth}
               sliderHeight={220}
               itemWidth={Metrics.screenWidth - 60}
-              data={this.props.getHomepage.payload.big_banner}
+              data={this.state.banners}
               renderItem={this._renderHeroBanner}
               hasParallaxImages={true}
               autoplay={true}
@@ -146,7 +289,7 @@ class HomeScreen extends Component {
               onSnapToItem={(index) => this.setState({ activeSlide: index }) }
             />
             <Pagination
-              dotsLength={this.props.getHomepage.payload.big_banner.length}
+              dotsLength={this.state.banners.length}
               activeDotIndex={this.state.activeSlide}
               dotStyle={styles.paginationDotStyleHeroBanner}
               inactiveDotOpacity={0.4}
@@ -158,7 +301,7 @@ class HomeScreen extends Component {
           <View style={styles.wrapperSeparator}/>
           <View style={styles.categoryWrapper}>
             <FlatList
-              data={this.props.getHomepage.payload.categories}
+              data={this.state.categories}
               renderItem={this._renderCategories.bind(this)}
               keyExtractor={(item, index) => index.toString()}
               showsHorizontalScrollIndicator={false}
@@ -168,14 +311,20 @@ class HomeScreen extends Component {
           <View style={styles.wrapperSeparator}/>
           <View style={styles.wrapperSeparator}/>
           <View style={styles.productWrapper}>
-            <Text style={styles.subTitleWrapper}>Produk Terlaris</Text>
+          <View>
+            {this.state.products.length > 0 && <Text style={styles.subTitleWrapper}>Produk Terlaris</Text>}
             <FlatList
+              ref={(flatlist) => { this._flatlist = flatlist; }}
               data={this.state.products}
               renderItem={this._renderProduct}
               keyExtractor={(item, index) => index.toString()}
-              showsHorizontalScrollIndicator={false}
+              showsVerticalScrollIndicator={false}
               numColumns={2}
+              getItemLayout={(data, index) => (
+                {length: Metrics.screenHeight / 2, offset: Metrics.screenHeight / 2 * index, index}
+              )}
             />
+          </View>
           </View>
           </ScrollView>
         </View>
@@ -197,6 +346,9 @@ const mapDispatchToProps = dispatch => {
     },
     getHomepageRequest: data => {
       dispatch(GetHomepageActions.getHomepageRequest(data))
+    },
+    getCategoryRequest: data => {
+      dispatch(CategoryActions.getCategoryRequest(data))
     }
   }
 };

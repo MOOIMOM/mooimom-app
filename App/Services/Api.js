@@ -69,6 +69,22 @@ const create = (baseURL = 'https://www.mooimom.id/') => {
     api.post('app-get-product-variation', params.data_request)
   const postGetAddress = params =>
     api.post('app-get-addresses', params.data_request)
+  const postAddAddress = params =>
+    api.post('app-add-new-address', params.data_request)
+  const postEditAddress = params =>
+    api.post('app-update-address', params.data_request)
+  const postDeleteAddress = params =>
+    api.post('app-delete-address', params.data_request)
+  const postGetProvince = params =>
+    api.post('app-get-provinces', params.data_request)
+  const postGetCity = params =>
+    api.post('app-get-cities', params.data_request)
+  const postGetDistrict = params =>
+    api.post('app-get-districts', params.data_request)
+  const postGetShippingOptions = params =>
+    api.post('app-get-shipping-options', params.data_request)
+  const postGetCategory = params =>
+    api.post('app-get-categories', params.data_request)
 
 
   // ------
@@ -95,6 +111,14 @@ const create = (baseURL = 'https://www.mooimom.id/') => {
     postGetProduct,
     postGetProductVariation,
     postGetAddress,
+    postAddAddress,
+    postEditAddress,
+    postDeleteAddress,
+    postGetProvince,
+    postGetCity,
+    postGetDistrict,
+    postGetShippingOptions,
+    postGetCategory,
   }
 }
 

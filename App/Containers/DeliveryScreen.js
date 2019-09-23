@@ -2,23 +2,19 @@ import React, { Component } from 'react'
 import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Alert, FlatList, Modal } from 'react-native'
 import { Images, Metrics } from '../Themes'
 import { connect } from 'react-redux'
-import AddressActions from '../Redux/AddressRedux'
+import GetAddressActions from '../Redux/GetAddressRedux'
+import GetShippingOptionsActions from '../Redux/GetShippingOptionsRedux'
 import {convertToRupiah } from '../Lib/utils'
 import ModalDropDown from '../Components/ModalDropDown'
 // Styles
 import styles from './Styles/DeliveryScreenStyles'
-var dataDelivery = [
-  {name:'JNE CTC (1-2 hari)', price:9000},
-  {name:'JNE CTC YES (1 hari)', price:18000},
-  {name:'Ninja Express (COD)', price:0},
-]
 class DeliveryScreen extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      deliveryOptions: dataDelivery,
       isShowDelivery: false,
-      selectedDelivery: {}
+      selectedDelivery: {},
+      selectedAddressID: ''
     }
   }
 
@@ -32,9 +28,9 @@ class DeliveryScreen extends Component {
     this.props.getAddressProcess(data)
   }
 
-  actNavigate (screen) {
+  actNavigate (screen, data = {}) {
     const { navigate } = this.props.navigation
-    navigate(screen, {})
+    navigate(screen, data)
   }
 
   calculatePrice(){
@@ -50,17 +46,39 @@ class DeliveryScreen extends Component {
         Alert.alert('', 'Please input the delivery address first')
       return;
     }
+    var selectedAddress = this.props.address.payload.addresses.find(address => address.id === this.state.selectedAddressID)
+    if(!selectedAddress)
+      selectedAddress = this.props.address.payload.addresses.find(address => address.is_primary === 1)
+    if(!selectedAddress){
+      Alert.alert('', 'Please input the delivery address first')
+      return;
+    }
+    let dataCart = '['
+    this.props.cart.data.map(cart => {
+      dataCart = dataCart + '{"sku":"' + cart.sku + '","quantity":' + cart.qty + '},'
+    })
+    if(dataCart.length > 1)
+      dataCart = dataCart.substring(0, dataCart.length - 1)
+    dataCart = dataCart + ']'
+    let data = {
+      data_request:{
+        user_id: this.props.auth.payload.user_id,
+        unique_token: this.props.auth.payload.unique_token,
+        district_id: selectedAddress.district_id,
+        product_variations_sku_and_quantity: dataCart
+      }
+    }
+    this.props.getShippingOptionsProcess(data)
     this.setState({
       isShowDelivery:true
     })
   }
 
-  async selectDelivery(index){
-    await this.setState({
+  selectDelivery(index){
+    this.setState({
       isShowDelivery: false,
-      selectedDelivery: this.state.deliveryOptions[index]
+      selectedDelivery: this.props.shippingOptions.payload.shipping_options[index]
     })
-    await this.calculatePrice()
   }
 
   processBuy(){
@@ -68,7 +86,7 @@ class DeliveryScreen extends Component {
         Alert.alert('', 'Please input the delivery address first')
       return;
     }
-    if(!this.state.selectedDelivery.name){
+    if(!this.state.selectedDelivery.jne_or_jnt){
       Alert.alert('', 'Please select one of delivery option first')
       return
     }
@@ -108,30 +126,32 @@ class DeliveryScreen extends Component {
   }
 
   renderSelectedAddress(){
-    console.info(this.props.address)
     if(this.props.address.payload === null || this.props.address.payload.addresses.length === 0){
       return <View/>
     }
-    var selectedAddress = this.props.address.payload.addresses.find(address => address.is_primary === 1)
-    return(
-      <View>
-        <Text style={styles.productSubtitle2}>KIRIM KE</Text>
-        <View style={styles.wrapperSeparator}/>
-        <View style={styles.deliveryAddressContainer}>
-          <Text style={styles.addressName}>{selectedAddress.name}</Text>
-          <Text style={styles.address}>{selectedAddress.street}</Text>
-          <Text style={styles.address}>{selectedAddress.district}</Text>
-          <Text style={styles.address}>{selectedAddress.zipCode}</Text>
-          <Text style={styles.address}>{selectedAddress.phone}</Text>
+    var selectedAddress = this.props.address.payload.addresses.find(address => address.id === this.state.selectedAddressID)
+    if(!selectedAddress)
+      selectedAddress = this.props.address.payload.addresses.find(address => address.is_primary === 1)
+    if(selectedAddress)
+      return(
+        <View>
+          <Text style={styles.productSubtitle2}>KIRIM KE</Text>
+          <View style={styles.wrapperSeparator}/>
+          <View style={styles.deliveryAddressContainer}>
+            <Text style={styles.addressName}>{selectedAddress.receiver_name}</Text>
+            <Text style={styles.address}>{selectedAddress.address}</Text>
+            <Text style={styles.address}>{selectedAddress.district_name}, {selectedAddress.city_name}</Text>
+            <Text style={styles.address}>{selectedAddress.province_name} - {selectedAddress.zip_code}</Text>
+            <Text style={styles.address}>{selectedAddress.receiver_phone}</Text>
+          </View>
         </View>
-      </View>
-    )
+      )
   }
 
   _renderDeliveriesOption({item, index}){
     return (
       <TouchableOpacity style={styles.deliveryOptionWrapper} onPress={() => this.selectDelivery(index)}>
-        <Text style={styles.deliveryNameText}>{item.name}</Text>
+        <Text style={styles.deliveryNameText}>{item.jne_or_jnt} {item.service} ({item.delivery_time}) hari</Text>
         <Text style={styles.deliveryPriceText}>{convertToRupiah(item.price)}</Text>
       </TouchableOpacity>
     )
@@ -139,10 +159,10 @@ class DeliveryScreen extends Component {
 
   renderDelivery(){
     var selectedDelivery = <View/>
-    if(this.state.selectedDelivery.name){
+    if(this.state.selectedDelivery.jne_or_jnt){
       selectedDelivery =
         <View style={styles.selectedDeliveryWrapper}>
-          <Text style={styles.deliveryNameText}>{this.state.selectedDelivery.name}</Text>
+          <Text style={styles.deliveryNameText}>{this.state.selectedDelivery.jne_or_jnt} {this.state.selectedDelivery.service} ({this.state.selectedDelivery.delivery_time}) hari</Text>
           <Text style={styles.deliveryPriceText}>{convertToRupiah(this.state.selectedDelivery.price)}</Text>
         </View>
       }
@@ -177,7 +197,7 @@ class DeliveryScreen extends Component {
                 <Text style={styles.chooseDeliveryText2}>Pilih Opsi Pengiriman</Text>
               </TouchableOpacity>
               <FlatList
-                data={this.state.deliveryOptions}
+                data={this.props.shippingOptions.payload ? this.props.shippingOptions.payload.shipping_options : []}
                 renderItem={this._renderDeliveriesOption.bind(this)}
                 keyExtractor={(item, index) => index.toString()}
               />
@@ -189,9 +209,17 @@ class DeliveryScreen extends Component {
     )
   }
 
+  setSelectAddress(param){
+    this.setState({
+      selectedAddressID: param,
+      selectedDelivery: {}
+    })
+  }
+
   render () {
     var price = this.calculatePrice()
-    var totalPrice = convertToRupiah(price)
+    var deliveryPrice = this.state.selectedDelivery.price ? this.state.selectedDelivery.price : 0
+    var totalPrice = convertToRupiah(price + deliveryPrice)
     var commission = convertToRupiah(price / 10)
     return (
       <View style={styles.container}>
@@ -209,7 +237,9 @@ class DeliveryScreen extends Component {
             {this.renderSelectedAddress()}
           <View style={styles.wrapperSeparator}/>
           <View style={styles.wrapperSeparator}/>
-          <TouchableOpacity style={styles.chooseAddressBtn} onPress={() => {this.actNavigate('AddressListScreen')}}>
+          <TouchableOpacity style={styles.chooseAddressBtn} onPress={() => {this.actNavigate('AddressListScreen', {
+            setSelectAddress: this.setSelectAddress.bind(this)
+          })}}>
             <Text style={styles.chooseAddressText}>Pilih Alamat</Text>
           </TouchableOpacity>
           <FlatList
@@ -240,14 +270,18 @@ const mapStateToProps = state => {
   return {
     cart: state.cart,
     address: state.address,
-    auth: state.auth
+    auth: state.auth,
+    shippingOptions: state.shippingOptions
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     getAddressProcess: data => {
-      dispatch(AddressActions.getAddressRequest(data))
+      dispatch(GetAddressActions.getAddressRequest(data))
+    },
+    getShippingOptionsProcess: data => {
+      dispatch(GetShippingOptionsActions.getShippingOptionsRequest(data))
     },
   }
 };

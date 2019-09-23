@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableWithoutFeedback, Image, Linking, Alert } from 'react-native'
 import { Images } from '../Themes'
+import { CachedImage } from 'react-native-cached-image';
 import {convertToRupiah, share, download} from '../Lib/utils'
 
 import styles from './Styles/ProductCardSingleStyles'
@@ -97,7 +98,7 @@ export default class ProductCardSingle extends Component {
       <View style={styles.item}>
         <View style={styles.topItem}>
           <View style={styles.topLeftItem}>
-          <Image
+          <CachedImage
               source={{uri:this.state.product.images[0].url}}
               style={styles.image}
           />

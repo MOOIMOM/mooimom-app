@@ -28,9 +28,9 @@ export default class TextInputCustom extends Component {
   }
 
   render() {
-    var labelRP;
-    if (this.props.isRP) {
-      labelRP = <Text style={styles.labelRP}>Rp</Text>;
+    var labelPhone;
+    if (this.props.isPhone) {
+      labelPhone = <Text style={styles.labelPhone}>+62</Text>;
     }
 
     var widthFix = Metrics.screenWidth - 40;
@@ -50,7 +50,7 @@ export default class TextInputCustom extends Component {
         <TextInput
           onFocus={() => this.setState({ focous: true })}
           onBlur={() => this.setState({ focous: false })}
-          placeholderTextColor={!this.state.focous ? 'gray' : this.props.color}
+          placeholderTextColor={!this.state.focous ? Colors.black : this.props.color}
           placeholder={
             this.props.isRP
               ? ''
@@ -65,7 +65,7 @@ export default class TextInputCustom extends Component {
                   {
                     textAlign: this.props.textAlign,
                     textAlignVertical: this.props.textAlignVertical,
-                    paddingLeft: this.props.isRP ? 50 : 20,
+                    paddingLeft: this.props.isPhone ? 50 : 20,
                     width: widthFix,
                     height: heightText
                   }
@@ -77,7 +77,7 @@ export default class TextInputCustom extends Component {
                     borderColor: this.props.color,
                     textAlign: this.props.textAlign,
                     textAlignVertical: this.props.textAlignVertical,
-                    paddingLeft: this.props.isRP ? 50 : 20,
+                    paddingLeft: this.props.isPhone ? 50 : 20,
                     width: widthFix,
                     height: heightText
                   }
@@ -105,7 +105,7 @@ export default class TextInputCustom extends Component {
             {this.props.label ? this.props.label : 'Label'}
           </Text>
         </View>
-        {labelRP}
+        {labelPhone}
       </View>
     );
   }

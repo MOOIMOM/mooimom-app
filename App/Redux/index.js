@@ -17,7 +17,13 @@ export const reducers = combineReducers({
   getHomepage: require('./GetHomepageRedux').reducer,
   product: require('./GetProductRedux').reducer,
   cart: require('./CartRedux').reducer,
-  address: require('./AddressRedux').reducer,  
+  address: require('./GetAddressRedux').reducer,
+  editaddress: require('./EditAddressRedux').reducer,
+  province: require('./ProvinceRedux').reducer,
+  city: require('./CityRedux').reducer,
+  district: require('./DistrictRedux').reducer,
+  shippingOptions: require('./GetShippingOptionsRedux').reducer,
+  category: require('./CategoryRedux').reducer,
 })
 
 export default () => {
