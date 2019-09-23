@@ -27,6 +27,9 @@ export default class ProductCardSingle extends Component {
               }
               this.props.sharedProductProcess(data)
             }
+            if(this.props.shareWhatsapp){
+              this.props.shareWhatsapp(this.state.product.name)
+            }
           } else {
               Alert.alert(
                   'Sorry',

@@ -134,7 +134,7 @@ export default StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    maxWidth: (Metrics.screenWidth - 40) / 4
+    width: (Metrics.screenWidth - 40) / 4
   },
   catImage:{
     height: 50,
@@ -145,7 +145,8 @@ export default StyleSheet.create({
     color:Colors.gray,
     flexWrap: 'wrap',
     textAlign: 'center',
-    maxWidth: 70,
+    maxWidth: (Metrics.screenWidth - 40) / 4,
+    paddingHorizontal: 9,
     fontSize: 10,
     marginTop: 10,
     fontFamily: Fonts.type.gotham2,

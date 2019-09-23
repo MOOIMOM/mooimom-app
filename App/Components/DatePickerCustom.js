@@ -66,7 +66,8 @@ export default class DatePickerCustom extends Component {
             },
             dateText:{
               color:'gray',
-              fontSize: 14
+              fontSize: 14,
+              fontFamily: Fonts.type.gotham2
             }
             // ... You can check the source to find the other keys.
           }}

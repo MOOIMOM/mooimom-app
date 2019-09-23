@@ -273,13 +273,28 @@ export default StyleSheet.create({
     fontSize: 14 * Metrics.screenWidth / 320,
     fontFamily: Fonts.type.gotham1,
   },
+  buttonDisabled:{
+    backgroundColor: 'rgba(1,1,1,0.2)',
+  },
+  buttonColorDisabled:{
+    backgroundColor: 'rgba(1,1,1,0.5)',
+    width:30 * Metrics.screenWidth / 320,
+    height:30 * Metrics.screenWidth / 320,
+    marginRight: 10,
+    marginVertical: 5,
+    top:0,
+    left: 0,
+    position: 'absolute'
+  },
   sizeGuideWrapper:{
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
     borderBottomWidth: 1,
     borderColor: Colors.gray,
     paddingBottom: 20,
+  },
+  sizeGuideWrapper2:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   sizeGuideLeft:{
     flexDirection: 'row',
@@ -296,9 +311,89 @@ export default StyleSheet.create({
     justifyContent: 'flex-end'
   },
   buttonSizeGuide:{
-    width: 20 * Metrics.screenWidth / 320,
-    height: 20 * Metrics.screenWidth / 320,
+    width: 10 * Metrics.screenWidth / 320,
+    height: 10 * Metrics.screenWidth / 320,
     resizeMode: 'contain',
+  },
+  sizeGuideWrapperContainer:{
+    width: Metrics.screenWidth,
+    height: Metrics.screenHeight,
+    backgroundColor: Colors.white,
+    paddingBottom: 25
+  },
+  imageClose:{
+    width: 20,
+    height: 20,
+    resizeMode: 'contain'
+  },
+  sizeGuideWrapperContainer2:{
+    flex:1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  textRincian:{
+    fontSize: 14 * Metrics.screenWidth / 320,
+    fontFamily: Fonts.type.gotham4,
+    color: Colors.black,
+    textAlign: 'center'
+  },
+  textRincian2:{
+    fontSize: 12 * Metrics.screenWidth / 320,
+    fontFamily: Fonts.type.gotham2,
+    color: Colors.black,
+    textAlign: 'center',
+    flexWrap: 'wrap',
+    marginTop:20
+  },
+  textRincian3:{
+    paddingHorizontal: 20,
+    fontSize: 10 * Metrics.screenWidth / 320,
+    fontFamily: Fonts.type.gotham3,
+    color: Colors.black,
+    lineHeight: 15 * Metrics.screenWidth / 320,
+    textAlign: 'left',
+    flexWrap: 'wrap'
+  },
+  imageHowTo:{
+    marginLeft: Metrics.screenWidth/4,
+    width: Metrics.screenWidth/2,
+    height: Metrics.screenWidth/2,
+    resizeMode: 'contain'
+  },
+  headerTable:{
+    flexDirection: 'row',
+    width: Metrics.screenWidth - 20,
+    marginHorizontal: 10,
+    backgroundColor: Colors.mooimom,
+    alignItems: 'center',
+    flex:1,
+    paddingVertical: 5,
+    marginTop:10
+  },
+  headerTableText:{
+    flex:1,
+    fontSize: 10,
+    textAlign: 'center',
+    color:Colors.white,
+    fontFamily: Fonts.type.gotham4,
+  },
+  tableContent:{
+    flexDirection: 'row',
+    width: Metrics.screenWidth - 20,
+    marginHorizontal: 10,
+    borderBottomWidth: 0.5,
+    backgroundColor: Colors.lightGray,
+    alignItems: 'center',
+    flex:1,
+    paddingVertical: 3,
+  },
+  tableText:{
+    flex:1,
+    fontSize: 10,
+    textAlign: 'center',
+    color:Colors.black,
+    fontFamily: Fonts.type.gotham4,
   },
   reviewWrapper:{
 

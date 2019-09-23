@@ -1,32 +1,12 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Alert, FlatList } from 'react-native'
+import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Alert, FlatList, Modal } from 'react-native'
 import { Images, Metrics } from '../Themes'
 import { connect } from 'react-redux'
+import AddressActions from '../Redux/AddressRedux'
 import {convertToRupiah } from '../Lib/utils'
 import ModalDropDown from '../Components/ModalDropDown'
 // Styles
 import styles from './Styles/DeliveryScreenStyles'
-var dataProducts = [
-  {id: '1', images: [
-    {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2018/11/21/b8003-b4-compressor.jpg'},
-    {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2018/11/21/b8003-f1-compressor.jpg'},
-    {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2018/11/21/b8003-b3-compressor.jpg'},
-    {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2018/11/21/b8003-b2-compressor.jpg'},
-  ],
-    name:'Full Coverage Seamless Maternity & Nursing Bra', price: 350000, discPrice: 0,
-    qty: 1, size:1, color:1},
-  {id: '2', images: [
-    {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2019/05/08/main-c7889-1-compressor.jpg'},
-    {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2017/11/20/c7889-4.jpg'},
-    {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2017/11/20/c7889-5.jpg'},
-    {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2017/11/20/c7889-3.jpg'},
-  ],
-    name:'Bamboo Postpartum Belly Band Corset', price: 920000, discPrice: 200000,
-    qty: 1, size:1, color:1
-}]
-var dataAddress = [
-  {name:'James', street:'Graha Boulevard BO5', district:'Kelapa Gading Timur, Kelapa Gading, Jakarta Utara, DKI Jakarta', zipCode:'14240', phone:'081823908879'}
-]
 var dataDelivery = [
   {name:'JNE CTC (1-2 hari)', price:9000},
   {name:'JNE CTC YES (1 hari)', price:18000},
@@ -36,9 +16,6 @@ class DeliveryScreen extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      carts: dataProducts,
-      totalPrice:0,
-      selectedAddress: dataAddress[0],
       deliveryOptions: dataDelivery,
       isShowDelivery: false,
       selectedDelivery: {}
@@ -46,7 +23,13 @@ class DeliveryScreen extends Component {
   }
 
   componentDidMount () {
-    this.calculatePrice()
+    let data = {
+      data_request:{
+        user_id: this.props.auth.payload.user_id,
+        unique_token: this.props.auth.payload.unique_token
+      }
+    }
+    this.props.getAddressProcess(data)
   }
 
   actNavigate (screen) {
@@ -56,19 +39,17 @@ class DeliveryScreen extends Component {
 
   calculatePrice(){
     var price = 0;
-    this.state.carts.map(cart => {
-      price += (cart.qty * (cart.discPrice > 0 ? cart.discPrice : cart.price))
+    this.props.cart.data.map(cart => {
+      price += (cart.qty * (cart.product.product_sale_price > 0 ? cart.product.product_sale_price : cart.product.product_regular_price))
     })
-
-    if(this.state.selectedDelivery.price && this.state.selectedDelivery.price > 0)
-      price += this.state.selectedDelivery.price
-
-    this.setState({
-      totalPrice: price
-    })
+    return price
   }
 
   calculateDelivery(){
+    if(this.props.address.payload === null || this.props.address.payload.addresses.length === 0){
+        Alert.alert('', 'Please input the delivery address first')
+      return;
+    }
     this.setState({
       isShowDelivery:true
     })
@@ -83,6 +64,10 @@ class DeliveryScreen extends Component {
   }
 
   processBuy(){
+    if(this.props.address.payload === null || this.props.address.payload.addresses.length === 0){
+        Alert.alert('', 'Please input the delivery address first')
+      return;
+    }
     if(!this.state.selectedDelivery.name){
       Alert.alert('', 'Please select one of delivery option first')
       return
@@ -90,26 +75,28 @@ class DeliveryScreen extends Component {
   }
 
   _renderProductCart({item, index}){
-    var price = item.discPrice > 0 ? item.discPrice : item.price
+    var price = item.product.product_sale_price > 0 ? item.product.product_sale_price : item.product.product_regular_price
     price = convertToRupiah(price * item.qty)
+    var size = item.product.sizes.find(x => x.slug === item.size).name
+    var color = item.product.colors.find(x => x.slug === item.color).name
     return(
       <View style={styles.productContainer}>
         <View style={styles.productImageWrapper}>
-          <Image source={{uri:item.images[0].url}} style={styles.productImage}/>
+          <Image source={{uri:item.product.img_url}} style={styles.productImage}/>
         </View>
         <View style={styles.productDescriptionWrapper}>
           <View style={styles.nameWrapper}>
-            <Text style={styles.productName}>{item.name}</Text>
+            <Text style={styles.productName}>{item.product.name}</Text>
           </View>
           <View style={styles.propertyWrapper}>
             <View style={styles.sizeWrapper}>
-              <Text style={styles.itemText}>Ukuran - S</Text>
+              <Text style={styles.itemText}>Ukuran - {size}</Text>
             </View>
             <View style={styles.colorWrapper}>
-              <Text style={styles.itemText}>Warna - Blue</Text>
+              <Text style={styles.itemText}>Warna - {color}</Text>
             </View>
             <View style={styles.qtyWrapper}>
-              <Text style={styles.itemText}>Qty - 1</Text>
+              <Text style={styles.itemText}>Qty - {item.qty}</Text>
             </View>
           </View>
           <View style={styles.priceWrapper}>
@@ -121,14 +108,22 @@ class DeliveryScreen extends Component {
   }
 
   renderSelectedAddress(){
-    const {selectedAddress} = this.state
+    console.info(this.props.address)
+    if(this.props.address.payload === null || this.props.address.payload.addresses.length === 0){
+      return <View/>
+    }
+    var selectedAddress = this.props.address.payload.addresses.find(address => address.is_primary === 1)
     return(
-      <View style={styles.deliveryAddressContainer}>
-        <Text style={styles.addressName}>{selectedAddress.name}</Text>
-        <Text style={styles.address}>{selectedAddress.street}</Text>
-        <Text style={styles.address}>{selectedAddress.district}</Text>
-        <Text style={styles.address}>{selectedAddress.zipCode}</Text>
-        <Text style={styles.address}>{selectedAddress.phone}</Text>
+      <View>
+        <Text style={styles.productSubtitle2}>KIRIM KE</Text>
+        <View style={styles.wrapperSeparator}/>
+        <View style={styles.deliveryAddressContainer}>
+          <Text style={styles.addressName}>{selectedAddress.name}</Text>
+          <Text style={styles.address}>{selectedAddress.street}</Text>
+          <Text style={styles.address}>{selectedAddress.district}</Text>
+          <Text style={styles.address}>{selectedAddress.zipCode}</Text>
+          <Text style={styles.address}>{selectedAddress.phone}</Text>
+        </View>
       </View>
     )
   }
@@ -151,38 +146,53 @@ class DeliveryScreen extends Component {
           <Text style={styles.deliveryPriceText}>{convertToRupiah(this.state.selectedDelivery.price)}</Text>
         </View>
       }
-    if(this.state.isShowDelivery){
-      return (
-        <View style={styles.chooseDeliveryWrapper}>
-          {selectedDelivery}
-          <TouchableOpacity style={styles.chooseDeliveryBtn2} onPress={() => this.setState({
+    return (
+      <View style={styles.chooseDeliveryWrapper}>
+        {selectedDelivery}
+        <TouchableOpacity style={styles.chooseDeliveryBtn} onPress={() => this.calculateDelivery()}>
+          <Text style={styles.chooseDeliveryText}>Pilih Opsi Pengiriman</Text>
+        </TouchableOpacity>
+        <Modal
+        animationType="slide"
+        transparent={true}
+        visible={this.state.isShowDelivery}
+        onRequestClose={() => {
+          this.setState({
             isShowDelivery:false
-          })}>
-            <Image source={Images.x} style={styles.imageClose}/>
-            <Text style={styles.chooseDeliveryText2}>Pilih Opsi Pengiriman</Text>
-          </TouchableOpacity>
-          <FlatList
-            data={this.state.deliveryOptions}
-            renderItem={this._renderDeliveriesOption.bind(this)}
-            keyExtractor={(item, index) => index.toString()}
-          />
-        </View>
-      )
-    } else {
-      return (
-        <View style={styles.chooseDeliveryWrapper}>
-          {selectedDelivery}
-          <TouchableOpacity style={styles.chooseDeliveryBtn} onPress={() => this.calculateDelivery()}>
-            <Text style={styles.chooseDeliveryText}>Pilih Opsi Pengiriman</Text>
-          </TouchableOpacity>
-        </View>
-      )
-    }
+          })
+        }}>
+        <TouchableOpacity
+            style={styles.containerModal}
+            activeOpacity={1}
+            onPressOut={() => this.setState({
+              isShowDelivery:false
+            })}
+          >
+            <TouchableWithoutFeedback>
+            <View style={styles.chooseDeliveryWrapper2}>
+              <TouchableOpacity style={styles.chooseDeliveryBtn2} onPress={() => this.setState({
+                isShowDelivery:false
+              })}>
+                <Image source={Images.x} style={styles.imageClose}/>
+                <Text style={styles.chooseDeliveryText2}>Pilih Opsi Pengiriman</Text>
+              </TouchableOpacity>
+              <FlatList
+                data={this.state.deliveryOptions}
+                renderItem={this._renderDeliveriesOption.bind(this)}
+                keyExtractor={(item, index) => index.toString()}
+              />
+              </View>
+            </TouchableWithoutFeedback>
+        </TouchableOpacity>
+      </Modal>
+      </View>
+    )
   }
 
   render () {
-    var totalPrice = convertToRupiah(this.state.totalPrice)
-    var commission = convertToRupiah(this.state.totalPrice / 10)
+    var price = this.calculatePrice()
+    var totalPrice = convertToRupiah(price)
+    var commission = convertToRupiah(price / 10)
     return (
       <View style={styles.container}>
         <View style={styles.headerWrapper}>
@@ -196,8 +206,6 @@ class DeliveryScreen extends Component {
           >
           <Text style={styles.productSubtitle}>Konfirmasi</Text>
           <View style={styles.wrapperSeparator}/>
-          <Text style={styles.productSubtitle2}>KIRIM KE</Text>
-          <View style={styles.wrapperSeparator}/>
             {this.renderSelectedAddress()}
           <View style={styles.wrapperSeparator}/>
           <View style={styles.wrapperSeparator}/>
@@ -205,9 +213,9 @@ class DeliveryScreen extends Component {
             <Text style={styles.chooseAddressText}>Pilih Alamat</Text>
           </TouchableOpacity>
           <FlatList
-            data={this.state.carts}
+            data={this.props.cart.data}
             renderItem={this._renderProductCart.bind(this)}
-            keyExtractor={(item, index) => item.id}
+            keyExtractor={(item, index) => index.toString()}
           />
           <View style={styles.wrapperSeparator}/>
           {this.renderDelivery()}
@@ -230,13 +238,17 @@ class DeliveryScreen extends Component {
 
 const mapStateToProps = state => {
   return {
-
+    cart: state.cart,
+    address: state.address,
+    auth: state.auth
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-
+    getAddressProcess: data => {
+      dispatch(AddressActions.getAddressRequest(data))
+    },
   }
 };
 

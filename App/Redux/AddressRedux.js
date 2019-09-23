@@ -4,15 +4,12 @@ import Immutable from 'seamless-immutable'
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
-  getProductRequest: ['data'],
-  getProductSuccess: ['payload'],
-  getProductFailure: ['error'],
-  getProductVariationRequest: ['data'],
-  getProductVariationSuccess: ['payload'],
-  getProductVariationFailure: ['error'],
+  getAddressRequest: ['data'],
+  getAddressSuccess: ['payload'],
+  getAddressFailure: ['error'],
 })
 
-export const GetProductTypes = Types
+export const AddressTypes = Types
 export default Creators
 
 /* ------------- Initial State ------------- */
@@ -26,7 +23,7 @@ export const INITIAL_STATE = Immutable({
 
 /* ------------- Selectors ------------- */
 
-export const GetProductSelectors = {
+export const AddressSelectors = {
   getData: state => state.data
 }
 
@@ -47,13 +44,11 @@ export const failure = (state, action) => {
   const { error } = action
   return state.merge({ fetching: false, error: error, payload: null })
 }
+
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
-  [Types.GET_PRODUCT_REQUEST]: request,
-  [Types.GET_PRODUCT_VARIATION_REQUEST]: request,
-  [Types.GET_PRODUCT_SUCCESS]: success,
-  [Types.GET_PRODUCT_VARIATION_SUCCESS]: success,
-  [Types.GET_PRODUCT_FAILURE]: failure,
-  [Types.GET_PRODUCT_VARIATION_FAILURE]: failure,
+  [Types.GET_ADDRESS_REQUEST]: request,
+  [Types.GET_ADDRESS_SUCCESS]: success,
+  [Types.GET_ADDRESS_FAILURE]: failure,
 })

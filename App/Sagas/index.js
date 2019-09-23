@@ -13,6 +13,8 @@ import { LoginTypes } from '../Redux/LoginRedux'
 import { AuthTypes } from '../Redux/AuthRedux'
 import { GetHomepageTypes } from '../Redux/GetHomepageRedux'
 import { GetProductTypes } from '../Redux/GetProductRedux'
+import { CartTypes } from '../Redux/CartRedux'
+import { AddressTypes } from '../Redux/AddressRedux'
 
 /* ------------- Sagas ------------- */
 
@@ -24,6 +26,9 @@ import { postLogin } from './LoginSagas'
 import { postAuth } from './AuthSagas'
 import { postGetHomepage } from './GetHomepageSagas'
 import { postGetProduct } from './GetProductSagas'
+import { postGetProductVariation } from './GetProductVariationSagas'
+import { addCart } from './AddCartSagas'
+import { postGetAddress } from './GetAddressSagas'
 
 /* ------------- API ------------- */
 
@@ -38,6 +43,7 @@ export default function * root () {
     // some sagas only receive an action
     takeLatest(StartupTypes.STARTUP, startup),
     takeLatest(SharedProductTypes.SHARED_PRODUCT_REQUEST, saveSharedProduct),
+    takeLatest(CartTypes.ADD_CART_REQUEST, addCart),
 
     // some sagas receive extra parameters in addition to an action
     takeLatest(SignUpTypes.SIGN_UP_REQUEST, postSignUp, api),
@@ -46,5 +52,7 @@ export default function * root () {
     takeLatest(AuthTypes.AUTH_REQUEST, postAuth, api),
     takeLatest(GetHomepageTypes.GET_HOMEPAGE_REQUEST, postGetHomepage, api),
     takeLatest(GetProductTypes.GET_PRODUCT_REQUEST, postGetProduct, api),
+    takeLatest(GetProductTypes.GET_PRODUCT_VARIATION_REQUEST, postGetProductVariation, api),
+    takeLatest(AddressTypes.GET_ADDRESS_REQUEST, postGetAddress, api),
   ])
 }

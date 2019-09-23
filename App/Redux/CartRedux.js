@@ -4,21 +4,19 @@ import Immutable from 'seamless-immutable'
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
-  getProductRequest: ['data'],
-  getProductSuccess: ['payload'],
-  getProductFailure: ['error'],
-  getProductVariationRequest: ['data'],
-  getProductVariationSuccess: ['payload'],
-  getProductVariationFailure: ['error'],
+  addCartRequest: ['data'],
+  addCartSuccess: ['payload'],
+  addCartFailure: ['error'],
+  logout: ['payload']
 })
 
-export const GetProductTypes = Types
+export const CartTypes = Types
 export default Creators
 
 /* ------------- Initial State ------------- */
 
 export const INITIAL_STATE = Immutable({
-  data: null,
+  data: [],
   fetching: null,
   payload: null,
   error: null
@@ -26,15 +24,31 @@ export const INITIAL_STATE = Immutable({
 
 /* ------------- Selectors ------------- */
 
-export const GetProductSelectors = {
+export const CartSelectors = {
   getData: state => state.data
 }
 
 /* ------------- Reducers ------------- */
 
 // request the data from an api
-export const request = (state, { data }) =>
-  state.merge({ fetching: true, data, payload: null })
+export const request = (state, { data }) => {
+    for(var i= 0;i<state.data.length;i++){
+        if(state.data[i].sku === data.sku){
+          var obj = [...state.data]
+          if(data.qty === 0){
+            obj.splice(i, 1)
+          } else {
+            obj[i] = data
+          }
+          data = obj
+          return state.merge({fetching: true, data, payload: null})
+        }
+    }
+    var obj = [...state.data]
+    obj.push(data)
+    data = obj
+    return state.merge({ fetching: true, data, payload: null })
+}
 
 // successful api lookup
 export const success = (state, action) => {
@@ -47,13 +61,15 @@ export const failure = (state, action) => {
   const { error } = action
   return state.merge({ fetching: false, error: error, payload: null })
 }
+
+export const successLogout = (state, action) => {
+  return INITIAL_STATE
+}
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
-  [Types.GET_PRODUCT_REQUEST]: request,
-  [Types.GET_PRODUCT_VARIATION_REQUEST]: request,
-  [Types.GET_PRODUCT_SUCCESS]: success,
-  [Types.GET_PRODUCT_VARIATION_SUCCESS]: success,
-  [Types.GET_PRODUCT_FAILURE]: failure,
-  [Types.GET_PRODUCT_VARIATION_FAILURE]: failure,
+  [Types.ADD_CART_REQUEST]: request,
+  [Types.ADD_CART_SUCCESS]: success,
+  [Types.ADD_CART_FAILURE]: failure,
+  [Types.LOGOUT]: successLogout,
 })

@@ -58,6 +58,12 @@ const images = {
   phone: require('../Images/Icons/phone-icon.png'),
   wa: require('../Images/Icons/wa-icon-(blue).png'),
   wa2: require('../Images/Icons/wa-only.png'),
+  learnpage1: require('../Images/learn/1.png'),
+  learnpage2: require('../Images/learn/2.png'),
+  learnpage3: require('../Images/learn/3.png'),
+  learnpage4: require('../Images/learn/4.png'),
+  learnpage5: require('../Images/learn/5.png'),
+  learnpage6: require('../Images/learn/6.png'),
 
   //// TEMP:
   catMasaKehamilan: require('../Images/Icons/masa-kehamilan.png'),

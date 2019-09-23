@@ -7,17 +7,47 @@ export default StyleSheet.create({
   },
   containerScroll:{
     paddingTop: 0,
-    height: Metrics.screenHeight - 130
+    height: Metrics.screenHeight - 100,
   },
   wrapperSeparator:{
     marginTop: 20,
   },
   headerWrapper:{
     flexDirection: 'row',
+    justifyContent: 'space-around',
     alignItems: 'center',
     paddingHorizontal: 10,
     width: Metrics.screenWidth,
-    marginTop: 20
+    marginTop: 20,
+    height: 40
+  },
+  btnHeader:{
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  imgHeader:{
+    height: 20 * Metrics.screenWidth / 320,
+    width: 20 * Metrics.screenWidth / 320,
+    resizeMode: 'contain'
+  },
+  searchButton:{
+    width: Metrics.screenWidth - 100,
+    height: 40,
+    borderRadius: 25,
+    backgroundColor: Colors.lightGray,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  imageSearch:{
+    height:20,
+    width:20,
+    marginHorizontal: 10,
+    resizeMode: 'contain'
+  },
+  textSearch:{
+    color:Colors.gray,
+    fontFamily: Fonts.type.gotham5,
+    fontSize: 12
   },
   btnHeader:{
     justifyContent: 'center',
@@ -54,7 +84,6 @@ export default StyleSheet.create({
     marginVertical: 3
   },
   containerMenu:{
-
   },
   btnEditProfile:{
     backgroundColor: Colors.mooimom,
@@ -71,14 +100,13 @@ export default StyleSheet.create({
     fontSize: 14
   },
   menu:{
-    borderBottomWidth: 1,
+    borderTopWidth: 0.5,
     borderBottomColor: Colors.gray,
     paddingVertical: 15,
     paddingHorizontal: 20,
   },
-  menuTop:{
+  menuItem:{
     flexDirection: 'row',
-    justifyContent: 'space-between'
   },
   subtitle:{
     color:Colors.black,
@@ -90,20 +118,20 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start'
   },
-  textAmount:{
-    color: Colors.black,
-    fontFamily: Fonts.type.gotham4,
-    fontSize: 15,
-    textAlign: 'right'
-  },
   imgText:{
     color: Colors.black,
     fontFamily: Fonts.type.gotham2,
-    fontSize: 13
+    fontSize: 13,
+    marginBottom: 5,
+    flex:1
   },
   imgTextBold:{
     color: Colors.black,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 13
+    fontSize: 13,
+    textAlign: 'left',
+    alignSelf: 'flex-start',
+    marginBottom: 5,
+    flex:2
   }
 })

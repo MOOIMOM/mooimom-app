@@ -15,7 +15,9 @@ export const reducers = combineReducers({
   sendOtp: require('./SendOtpRedux').reducer,
   auth: require('./AuthRedux').reducer,
   getHomepage: require('./GetHomepageRedux').reducer,
-  product: require('./GetProductRedux').reducer,  
+  product: require('./GetProductRedux').reducer,
+  cart: require('./CartRedux').reducer,
+  address: require('./AddressRedux').reducer,  
 })
 
 export default () => {

@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, FlatList, SectionList, BackHandler, AppState } from 'react-native'
+import { ScrollView, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, FlatList, SectionList, BackHandler, AppState, Clipboard } from 'react-native'
 import { Images, Metrics } from '../Themes'
 import ProductCardSingle from '../Components/ProductCardSingle'
 import SharedProductActions from '../Redux/SharedProductRedux'
 import { connect } from 'react-redux'
+import {shareDescripton} from '../Lib/utils'
 
 // Styles
 import styles from './Styles/CategoryScreenStyles'
@@ -191,7 +192,6 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
       arrTopCategory:[],
       willShareDescription:false,
       finishShareImage: false,
-      socialShare: '',
       products: dataProducts
     }
     this._renderCategories = this._renderCategories.bind(this)
@@ -201,7 +201,8 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
     this._renderTopCategories = this._renderTopCategories.bind(this)
     this._renderProduct = this._renderProduct.bind(this)
     this._onLayout = this._onLayout.bind(this)
-    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
+    this.handleBackButtonClick = this.handleBackButtonClick.bind(this)
+    this.shareWhatsapp = this.shareWhatsapp.bind(this)
   }
 
   componentDidMount() {
@@ -222,16 +223,26 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
           finishShareImage: true
         })
         setTimeout(() => {
-          shareDescripton(this.state.product.description, this.state.socialShare)
+          shareDescripton(this.state.product.description, 'whatsapp')
           this.setState({
             willShareDescription: false,
-            socialShare: ''
           })
         }, 1000);
       }
     }
     this.setState({appState: nextAppState});
   };
+
+  shareWhatsapp(desc){
+    if(this.state.willShareDescription === false){
+      this.setState({
+        willShareDescription: true,
+        finishShareImage : false
+      });
+    } else {
+      Clipboard.setString(desc);
+    }
+  }
 
   componentWillReceiveProps(newProps){
     if(newProps.navigation.state.params.category_id !== this.state.selectedCategoriesIdx){
@@ -361,6 +372,7 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
           <ProductCardSingle
             product={item}
             sharedProductProcess={this.props.sharedProductProcess}
+            shareWhatsapp={this.shareWhatsapp}
           />
         </View>
       </TouchableWithoutFeedback>
@@ -450,6 +462,12 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
             />
           </View>
         </View>
+        {this.state.willShareDescription && <View style={styles.modalShareView}>
+          <View style={styles.modalShareContainer}>
+            <Text style={styles.modalShareText}>Images Downloaded</Text>
+            <Text style={(this.state.finishShareImage ? styles.modalShareText : styles.modalShareText2)}>Product Name Copied</Text>
+          </View>
+        </View>}
       </View>
     )
   }

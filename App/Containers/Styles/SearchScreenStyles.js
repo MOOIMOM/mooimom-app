@@ -7,7 +7,7 @@ export default StyleSheet.create({
   },
   containerScroll:{
     paddingTop: 0,
-    height: Metrics.screenHeight - 160
+    height: Metrics.screenHeight - 100
   },
   wrapperSeparator:{
     marginTop: 20,
@@ -56,4 +56,30 @@ export default StyleSheet.create({
     width: Metrics.screenWidth - 40,
     marginHorizontal: 20,
   },
+  modalShareView:{
+    width: Metrics.screenWidth,
+    height: Metrics.screenHeight,
+    backgroundColor: Colors.modal,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  modalShareContainer:{
+    width: Metrics.screenWidth / 2,
+    height: Metrics.screenHeight / 8,
+    backgroundColor: Colors.white,
+    justifyContent: 'center',
+    borderRadius: 20,
+    alignItems: 'center'
+  },
+  modalShareText:{
+    fontFamily: Fonts.type.gotham4,
+    color: Colors.mooimom
+  },
+  modalShareText2:{
+    fontFamily: Fonts.type.gotham4,
+    color: Colors.gray
+  }
 })

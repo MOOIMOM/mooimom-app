@@ -51,7 +51,7 @@ export default StyleSheet.create({
   },
   menuWrapper:{
     position:'absolute',
-    bottom: 0,
+    bottom: 5,
     left: 0,
     width: Metrics.screenWidth
   },

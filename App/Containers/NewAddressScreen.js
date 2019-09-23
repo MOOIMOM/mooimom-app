@@ -24,6 +24,16 @@ class NewAddressScreen extends Component {
     }
   }
 
+  componentDidMount(){
+    // let data = {
+    //   data_request:{
+    //     user_id: this.props.auth.payload.user_id,
+    //     unique_token: this.props.auth.payload.unique_token
+    //   }
+    // }
+    // this.props.getAddressProcess(data)
+  }
+
   actNavigate (screen) {
     const { navigate } = this.props.navigation
     navigate(screen, {})

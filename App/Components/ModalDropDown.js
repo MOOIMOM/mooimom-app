@@ -182,7 +182,7 @@ export default class ModalDropdown extends Component {
               >
                 {buttonText}
               </Text>)}
-              {isColor && (<View style={{width: 20,height: 20, backgroundColor: buttonText}}/>)}
+              {isColor && (<Image source={{uri:buttonText}} style={{width: 20,height: 20, resizeMode: 'contain'}}/>)}
               <Image source={Images.down} style={{position: 'absolute', right: 5, width: 10, height: 10}}/>
             </View>
           )
@@ -294,7 +294,7 @@ export default class ModalDropdown extends Component {
                 automaticallyAdjustContentInsets={false}
                 showsVerticalScrollIndicator={showsVerticalScrollIndicator}
                 keyboardShouldPersistTaps={keyboardShouldPersistTaps}
-                keyExtractor={(item, index) => item.id.toString()}
+                keyExtractor={(item, index) => index.toString()}
       />
     );
   }
@@ -358,8 +358,8 @@ export default class ModalDropdown extends Component {
   };
 
   _onRowPress(item, index) {
-    const {onSelect, renderButtonText, onDropdownWillHide} = this.props;
-    if (!onSelect || onSelect(index, item) !== false) {
+    const {onSelect, renderButtonText, onDropdownWillHide, index_item} = this.props;
+    if (!onSelect || onSelect(item, index, index_item) !== false) {
       const value = renderButtonText && renderButtonText(item) || item.toString();
       this._nextValue = value;
       this._nextIndex = index;
@@ -402,11 +402,13 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     marginTop:0
   },
+
   dropdown: {
     position: 'absolute',
-    height: (25 + StyleSheet.hairlineWidth) * 5,
+    height: (25 + StyleSheet.hairlineWidth) * 4,
     borderWidth: 0,
     borderColor: Colors.black,
+    paddingTop: 5,
     borderRadius: 1,
     backgroundColor: 'white',
     justifyContent: 'center'

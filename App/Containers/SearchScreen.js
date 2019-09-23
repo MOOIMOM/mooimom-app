@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, TextInput, Alert, FlatList } from 'react-native'
+import { ScrollView, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, TextInput, Alert, FlatList, AppState, Clipboard } from 'react-native'
 import { Images, Metrics } from '../Themes'
 import ProductCardSingle from '../Components/ProductCardSingle'
 import { connect } from 'react-redux'
@@ -101,13 +101,54 @@ class SearchScreen extends Component {
     super(props)
     this.state = {
       search:'',
-      products:[]
+      products:[],
+      willShareDescription:false,
+      finishShareImage: false,
     }
   }
 
   actNavigate (screen , obj = {}) {
     const { navigate } = this.props.navigation
     navigate(screen, obj)
+  }
+
+  componentDidMount() {
+    AppState.addEventListener('change', this._handleAppStateChange);
+  }
+
+  componentWillUnmount() {
+    AppState.removeEventListener('change', this._handleAppStateChange);
+  }
+
+  _handleAppStateChange = (nextAppState) => {
+    if (
+      this.state.appState.match(/inactive|background/) &&
+      nextAppState === 'active'
+    ) {
+      if(this.state.willShareDescription === true){
+        this.setState({
+          finishShareImage: true
+        })
+        setTimeout(() => {
+          shareDescripton(this.state.product.description, 'whatsapp')
+          this.setState({
+            willShareDescription: false,
+          })
+        }, 1000);
+      }
+    }
+    this.setState({appState: nextAppState});
+  };
+
+  shareWhatsapp(desc){
+    if(this.state.willShareDescription === false){
+      this.setState({
+        willShareDescription: true,
+        finishShareImage : false
+      });
+    } else {
+      Clipboard.setString(desc);
+    }
   }
 
   processSearch(){
@@ -128,6 +169,7 @@ class SearchScreen extends Component {
           <ProductCardSingle
             product={item}
             sharedProductProcess={this.props.sharedProductProcess}
+            shareWhatsapp={this.shareWhatsapp}
           />
         </View>
       </TouchableWithoutFeedback>
@@ -169,6 +211,12 @@ class SearchScreen extends Component {
                 keyExtractor={(item, index) => index.toString()}
               />
             </ScrollView>
+            {this.state.willShareDescription && <View style={styles.modalShareView}>
+              <View style={styles.modalShareContainer}>
+                <Text style={styles.modalShareText}>Images Downloaded</Text>
+                <Text style={(this.state.finishShareImage ? styles.modalShareText : styles.modalShareText2)}>shareWhatsapp Copied</Text>
+              </View>
+            </View>}
           </View>
         </View>
       </View>

@@ -140,7 +140,17 @@ export default StyleSheet.create({
   chooseDeliveryWrapper:{
     marginTop: 15,
     borderTopWidth: 1,
-    paddingTop:15
+    paddingTop:15,
+  },
+  containerModal:{
+    width: Metrics.screenWidth,
+    height: Metrics.screenHeight,
+  },
+  chooseDeliveryWrapper2:{
+    backgroundColor: Colors.white,
+    top:Metrics.screenHeight / 2,
+    height: Metrics.screenHeight / 2 - 20,
+    width: Metrics.screenWidth,
   },
   chooseDeliveryBtn:{
     backgroundColor: Colors.mooimom,
@@ -158,7 +168,8 @@ export default StyleSheet.create({
     paddingVertical: 10,
     borderTopWidth: 0.5,
     borderColor: Colors.black,
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
+    flex:1,
   },
   chooseDeliveryBtn2:{
     flexDirection: 'row',

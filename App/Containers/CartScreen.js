@@ -4,58 +4,12 @@ import { Images, Metrics } from '../Themes'
 import { connect } from 'react-redux'
 import {convertToRupiah } from '../Lib/utils'
 import ModalDropDown from '../Components/ModalDropDown'
+import CartActions from '../Redux/CartRedux'
 // Styles
 import styles from './Styles/CartScreenStyles'
-var colors = [
-  {id:1, color:'#FFFFCC'},
-  {id:2, color:'pink'},
-  {id:3, color:'red'},
-  {id:4, color:'green'},
-  {id:5, color:'gray'},
-  {id:6, color:'blue'},
-  {id:7, color:'yellow'},
-  {id:8, color:'orange'},
-  {id:9, color:'purple'},
-]
-var sizes = [
-  {id:1, size:'S'},
-  {id:2, size:'M'},
-  {id:3, size:'L'},
-  {id:4, size:'XL'},
-  {id:5, size:'2XL'},
-  {id:6, size:'3XL'},
-]
-var dataProducts = [
-  {id: '1', images: [
-    {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2018/11/21/b8003-b4-compressor.jpg'},
-    {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2018/11/21/b8003-f1-compressor.jpg'},
-    {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2018/11/21/b8003-b3-compressor.jpg'},
-    {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2018/11/21/b8003-b2-compressor.jpg'},
-  ],
-    name:'Full Coverage Seamless Maternity & Nursing Bra', price: 350000, discPrice: 0,
-    qty: 1, size:1, color:1},
-  {id: '2', images: [
-    {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2019/05/08/main-c7889-1-compressor.jpg'},
-    {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2017/11/20/c7889-4.jpg'},
-    {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2017/11/20/c7889-5.jpg'},
-    {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2017/11/20/c7889-3.jpg'},
-  ],
-    name:'Bamboo Postpartum Belly Band Corset', price: 920000, discPrice: 200000,
-    qty: 1, size:1, color:1
-}]
 class CartScreen extends Component {
   constructor (props) {
     super(props)
-    this.state = {
-      carts: dataProducts,
-      colors:colors,
-      sizes:sizes,
-      totalPrice:0,
-    }
-  }
-
-  componentDidMount () {
-    this.calculatePrice()
   }
 
   actNavigate (screen) {
@@ -68,7 +22,7 @@ class CartScreen extends Component {
         <TouchableOpacity>
           <View style={styles.sizeBtn}>
             <Text style={styles.sizeText}>
-              {item.size}
+              {item.name}
             </Text>
           </View>
         </TouchableOpacity>
@@ -79,52 +33,56 @@ class CartScreen extends Component {
     return (
         <TouchableOpacity>
           <View style={styles.colorBtn}>
-            <View style={[styles.colorPick, {backgroundColor: item.color}]}/>
+            <Image source={{uri:item.image_url}} style={[styles.colorPick]}/>
           </View>
         </TouchableOpacity>
     );
   }
 
   _dropdown_renderSizeButtonText(rowData) {
-    const {size} = rowData;
-    return `${size}`;
+    const {name} = rowData;
+    return `${name}`;
   }
 
   _dropdown_renderColorButtonText(rowData) {
-    const {color} = rowData;
-    return `${color}`;
+    const {image_url} = rowData;
+    return `${image_url}`;
   }
 
   calculatePrice(){
     var price = 0;
-    this.state.carts.map(cart => {
-      price += (cart.qty * (cart.discPrice > 0 ? cart.discPrice : cart.price))
+    this.props.cart.data.map(cart => {
+      price += (cart.qty * (cart.product.product_sale_price > 0 ? cart.product.product_sale_price : cart.product.product_regular_price))
     })
-    this.setState({
-      totalPrice: price
-    })
+    return price
   }
 
   minQty(index){
-    var cart =  Object.assign([], this.state.carts);
+    var cart =  Object.assign([], this.props.cart.data);
     if(cart[index].qty - 1 <= 0){
       this.removeFromCart(index)
     } else {
-      cart[index].qty = Math.max(cart[index].qty - 1, 0)
-      this.setState({
-        carts: cart
-      })
-      this.calculatePrice()
+      let data = {
+        product: cart[index].product,
+        color: cart[index].color,
+        size: cart[index].size,
+        sku: cart[index].sku,
+        qty: cart[index].qty - 1
+      }
+      this.props.addToCartProcess(data)
     }
   }
 
   addQty(index){
-    var cart =  Object.assign([], this.state.carts);
-    cart[index].qty = cart[index].qty + 1
-    this.setState({
-      carts: cart
-      })
-    this.calculatePrice()
+    var cart =  Object.assign([], this.props.cart.data);
+    let data = {
+      product: cart[index].product,
+      color: cart[index].color,
+      size: cart[index].size,
+      sku: cart[index].sku,
+      qty: cart[index].qty + 1
+    }
+    this.props.addToCartProcess(data)
   }
 
   removeFromCart(index){
@@ -137,12 +95,15 @@ class CartScreen extends Component {
         },
         {
           text: 'Yes', onPress: () => {
-            var cart =  Object.assign([], this.state.carts);
-            cart.splice(index, 1)
-            this.setState({
-              carts: cart
-            })
-            this.calculatePrice()
+            var cart =  Object.assign([], this.props.cart.data);
+            let data = {
+              product: cart[index].product,
+              color: cart[index].color,
+              size: cart[index].size,
+              sku: cart[index].sku,
+              qty: 0
+            }
+            this.props.addToCartProcess(data)
           }
         }
       ],
@@ -150,32 +111,106 @@ class CartScreen extends Component {
     )
   }
 
+  selectColor(item, index, index_item){
+    var cart =  Object.assign([], this.props.cart.data);
+    var color = item.slug
+    var size = cart[index_item].size
+    var sku = cart[index_item].product.all_product_variations_with_stock_data.find(variant => variant.color_slug === color && variant.size_slug === size).sku
+    var qty = cart[index_item].qty
+    var product = cart[index_item].product
+    //REMOVE
+    let data = {
+      product: cart[index_item].product,
+      color: cart[index_item].color,
+      size: cart[index_item].size,
+      sku: cart[index_item].sku,
+      qty: 0
+    }
+    this.props.addToCartProcess(data)
+    //ADD
+    let data2 = {
+      product: product,
+      color: color,
+      size: size,
+      sku: sku,
+      qty: qty
+    }
+    this.props.addToCartProcess(data2)
+  }
+
+  selectSize(item, index, index_item){
+    var cart =  Object.assign([], this.props.cart.data);
+    var color = cart[index_item].color
+    var size = item.slug
+    var sku = cart[index_item].product.all_product_variations_with_stock_data.find(variant => variant.color_slug === color && variant.size_slug === size).sku
+    var qty = cart[index_item].qty
+    var product = cart[index_item].product
+    //REMOVE
+    let data = {
+      product: cart[index_item].product,
+      color: cart[index_item].color,
+      size: cart[index_item].size,
+      sku: cart[index_item].sku,
+      qty: 0
+    }
+    this.props.addToCartProcess(data)
+    //ADD
+    let data2 = {
+      product: product,
+      color: color,
+      size: size,
+      sku: sku,
+      qty: qty
+    }
+    this.props.addToCartProcess(data2)
+  }
+
+  actBuy(){
+    if(this.props.cart.data.length < 1){
+      Alert.alert(
+        'Sorry',
+        'Your cart is empty',
+        [
+          {
+            text: 'OK'
+          },
+        ]
+      )
+      return;
+    }
+    this.actNavigate('DeliveryScreen')
+  }
+
   _renderProductCart({item, index}){
-    var price = item.discPrice > 0 ? item.discPrice : item.price
+    var price = item.product.product_sale_price > 0 ? item.product.product_sale_price : item.product.product_regular_price
     price = convertToRupiah(price * item.qty)
+    var size = item.product.sizes.find(x => x.slug === item.size).name
+    var color = item.product.colors.find(x => x.slug === item.color).image_url
     return(
-      <View style={styles.productContainer}>
+      <View style={styles.productContainer} key={index.toString()}>
         <View style={styles.productImageWrapper}>
-          <Image source={{uri:item.images[0].url}} style={styles.productImage}/>
+          <Image source={{uri:item.product.img_url}} style={styles.productImage}/>
           <TouchableOpacity style={styles.removeBtn} onPress={() => {this.removeFromCart(index)}}>
             <Image source={Images.x} style={styles.removeImg}/>
           </TouchableOpacity>
         </View>
         <View style={styles.productDescriptionWrapper}>
           <View style={styles.nameWrapper}>
-            <Text style={styles.productName}>{item.name}</Text>
+            <Text style={styles.productName}>{item.product.name}</Text>
           </View>
           <View style={styles.propertyWrapper}>
             <View style={styles.sizeWrapper}>
               <Text style={styles.itemText}>Ukuran</Text>
               <ModalDropDown
                 renderRow={this._renderSize.bind(this)}
-                options={this.state.sizes}
+                options={item.product.sizes}
                 style={styles.size_dropdown}
                 textStyle={styles.dropdown_text}
                 dropdownStyle={styles.dropdown_dropdown}
-                defaultValue={this.state.sizes[0].size}
+                defaultValue={size}
+                index_item={index}
                 isColor={false}
+                onSelect={(item, index, index_item) => this.selectSize(item, index, index_item)}
                 renderButtonText={(rowData) => this._dropdown_renderSizeButtonText(rowData)}
                />
             </View>
@@ -183,12 +218,14 @@ class CartScreen extends Component {
               <Text style={styles.itemText}>Warna</Text>
               <ModalDropDown
                 renderRow={this._renderColor.bind(this)}
-                options={this.state.colors}
+                options={item.product.colors}
                 style={styles.size_dropdown}
                 textStyle={styles.dropdown_text}
                 dropdownStyle={styles.dropdown_dropdown}
-                defaultValue={this.state.colors[0].color}
+                defaultValue={color}
                 isColor={true}
+                index_item={index}
+                onSelect={(item, index, index_item) => this.selectColor(item, index, index_item)}
                 renderButtonText={(rowData) => this._dropdown_renderColorButtonText(rowData)}
                />
             </View>
@@ -211,8 +248,9 @@ class CartScreen extends Component {
   }
 
   render () {
-    var totalPrice = convertToRupiah(this.state.totalPrice)
-    var commission = convertToRupiah(this.state.totalPrice / 10)
+    var price = this.calculatePrice()
+    var totalPrice = convertToRupiah(price)
+    var commission = convertToRupiah(price / 10)
     return (
       <View style={styles.container}>
         <View style={styles.headerWrapper}>
@@ -224,11 +262,11 @@ class CartScreen extends Component {
           <ScrollView
           showsVerticalScrollIndicator={false}
           >
-          <Text style={styles.productSubtitle}>Cart {(this.state.carts.length > 1 ? '(' + this.state.carts.length + ')' : '')}</Text>
+          <Text style={styles.productSubtitle}>Cart {(this.props.cart.data.length > 1 ? '(' + this.props.cart.data.length + ')' : '')}</Text>
           <FlatList
-            data={this.state.carts}
+            data={this.props.cart.data}
             renderItem={this._renderProductCart.bind(this)}
-            keyExtractor={(item, index) => item.id}
+            keyExtractor={(item, index) => index.toString()}
           />
           </ScrollView>
         </View>
@@ -238,7 +276,7 @@ class CartScreen extends Component {
             <Text style={styles.priceText}>{totalPrice}</Text>
             <Text style={styles.commissionText}>Est. Komisi {commission}</Text>
           </View>
-          <TouchableOpacity style={styles.buyBtn} onPress={() =>this.actNavigate('DeliveryScreen')}>
+          <TouchableOpacity style={styles.buyBtn} onPress={() => this.actBuy()}>
             <Text style={styles.buyText}>Beli</Text>
           </TouchableOpacity>
         </View>
@@ -249,13 +287,15 @@ class CartScreen extends Component {
 
 const mapStateToProps = state => {
   return {
-
+    cart: state.cart
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-
+    addToCartProcess: data => {
+      dispatch(CartActions.addCartRequest(data))
+    },
   }
 };
 

@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import {convertToRupiah} from '../Lib/utils'
 import AuthActions from '../Redux/AuthRedux'
 import SendOtpActions from '../Redux/SendOtpRedux'
+import CartActions from '../Redux/CartRedux'
 
 // Styles
 import styles from './Styles/ProfileScreenStyles'
@@ -144,8 +145,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     logoutProcess: () => {
-      dispatch(AuthActions.logout(null)),
-      dispatch(SendOtpActions.logout(null))
+      // dispatch(AuthActions.logout(null)),
+      // dispatch(SendOtpActions.logout(null))
+      dispatch(CartActions.logout(null))
     },
   }
 };

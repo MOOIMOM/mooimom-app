@@ -65,6 +65,10 @@ const create = (baseURL = 'https://www.mooimom.id/') => {
     api.post('app-homepage', params.data_request)
   const postGetProduct = params =>
     api.post('app-get-product', params.data_request)
+  const postGetProductVariation = params =>
+    api.post('app-get-product-variation', params.data_request)
+  const postGetAddress = params =>
+    api.post('app-get-addresses', params.data_request)
 
 
   // ------
@@ -89,6 +93,8 @@ const create = (baseURL = 'https://www.mooimom.id/') => {
     postAuth,
     postGetHomepage,
     postGetProduct,
+    postGetProductVariation,
+    postGetAddress,
   }
 }
 

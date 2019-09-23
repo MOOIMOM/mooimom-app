@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Alert, FlatList } from 'react-native'
 import { Images, Metrics, Colors } from '../Themes'
 import { connect } from 'react-redux'
+import AddressActions from '../Redux/AddressRedux'
 import {convertToRupiah } from '../Lib/utils'
 import ModalDropDown from '../Components/ModalDropDown'
 // Styles
@@ -18,6 +19,16 @@ class AddressListScreen extends Component {
       addresses: dataAddress,
       primaryAddressId: 1
     }
+  }
+
+  componentDidMount(){
+    let data = {
+      data_request:{
+        user_id: this.props.auth.payload.user_id,
+        unique_token: this.props.auth.payload.unique_token
+      }
+    }
+    this.props.getAddressProcess(data)
   }
 
   actNavigate (screen) {
@@ -48,6 +59,7 @@ class AddressListScreen extends Component {
   }
 
   _renderAddress({item, index}){
+    console.info(item)
     var style = styles.deliveryAddressContainer
     var color = Colors.black
     var imgEdit = Images.edit
@@ -93,12 +105,12 @@ class AddressListScreen extends Component {
           >
           <Text style={styles.productSubtitle}>Alamat Pengiriman</Text>
           <View style={styles.wrapperSeparator}/>
-            <FlatList
-              data={this.state.addresses}
+            {this.props.address.payload && <FlatList
+              data={this.props.address.payload.addresses}
               renderItem={this._renderAddress.bind(this)}
-              keyExtractor={(item, index) => item.id.toString()}
+              keyExtractor={(item, index) => index.toString()}
               extraData={this.state}
-            />
+            />}
           <View style={styles.wrapperSeparator}/>
           <TouchableOpacity style={styles.chooseAddressBtn} onPress={() => {this.actNavigate('NewAddressScreen')}}>
             <Text style={styles.chooseAddressText}>+ Tambah Alamat</Text>
@@ -112,13 +124,16 @@ class AddressListScreen extends Component {
 
 const mapStateToProps = state => {
   return {
-
+    address: state.address,
+    auth: state.auth
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-
+    getAddressProcess: data => {
+      dispatch(AddressActions.getAddressRequest(data))
+    },
   }
 };
 

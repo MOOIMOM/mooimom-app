@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { View, Text, Picker } from 'react-native'
-import { Colors, Metrics, Fonts } from '../Themes';
+import { View, Text, Picker, Image } from 'react-native'
+import { Colors, Metrics, Fonts, Images } from '../Themes';
 import PropTypes from 'prop-types';
 
 import styles from './Styles/TextInputCustomStyles';
@@ -38,6 +38,7 @@ export default class PickerCustom extends Component {
           selectedValue={this.props.selectedValue}
           style={{
             width: widthFix - 20, height: 50,
+            backgroundColor: 'rgba(0,0,0,0)'
           }}
           itemStyle={{fontSize: 18, fontFamily: Fonts.type.gotham2}}
           onValueChange={(itemValue, itemIndex) => {
@@ -45,6 +46,7 @@ export default class PickerCustom extends Component {
           }}>
           {this._renderPicker()}
           </Picker>
+          <Image source={Images.down} style={{position:'absolute', width:10, height:10, resizeMode: 'contain', top:20, right:20}}/>
         </View>
         <View style={styles.inputLabelWrapper}>
           <Text

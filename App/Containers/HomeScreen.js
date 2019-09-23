@@ -74,7 +74,6 @@ class HomeScreen extends Component {
     }
 
   _renderCategories({item, index}){
-    console.info(item)
     return(
       <TouchableOpacity style={styles.catButton} onPress={() => this.navigate_to('Category', {category_id: item.slug})}>
         <Image source={{uri:item.img_url}} style={styles.catImage}/>

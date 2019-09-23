@@ -182,5 +182,31 @@ export default StyleSheet.create({
     fontFamily: Fonts.type.gotham4,
     fontSize: 18 * Metrics.screenWidth / 320,
     marginVertical: 10
+  },
+  modalShareView:{
+    width: Metrics.screenWidth,
+    height: Metrics.screenHeight,
+    backgroundColor: Colors.modal,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  modalShareContainer:{
+    width: Metrics.screenWidth / 2,
+    height: Metrics.screenHeight / 8,
+    backgroundColor: Colors.white,
+    justifyContent: 'center',
+    borderRadius: 20,
+    alignItems: 'center'
+  },
+  modalShareText:{
+    fontFamily: Fonts.type.gotham4,
+    color: Colors.mooimom
+  },
+  modalShareText2:{
+    fontFamily: Fonts.type.gotham4,
+    color: Colors.gray
   }
 })

@@ -44,7 +44,7 @@ export default StyleSheet.create({
   SignInContainer:{
     flexDirection: 'row',
     flex:1,
-    marginTop: -100,
+    marginTop: -80,
     justifyContent: 'center',
     alignItems: 'center'
   },

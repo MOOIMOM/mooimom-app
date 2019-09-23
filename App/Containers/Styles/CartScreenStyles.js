@@ -107,7 +107,7 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   dropdown_text: {
-    fontSize: 16,
+    fontSize: 14,
     color: Colors.black,
     fontFamily: Fonts.type.gotham4,
   },
@@ -122,7 +122,7 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   sizeText:{
-    fontSize: 16,
+    fontSize: 14,
     color: Colors.black,
     fontFamily: Fonts.type.gotham4,
   },
@@ -142,6 +142,7 @@ export default StyleSheet.create({
   colorPick:{
     width: 20,
     height: 20,
+    resizeMode: 'contain'
   },
   qtyWrapper:{
     flex:1,
@@ -158,6 +159,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     borderWidth: 0.5,
     borderRadius: 3,
+    paddingRight: 1,
     borderColor: Colors.black
   },
   btnQty:{

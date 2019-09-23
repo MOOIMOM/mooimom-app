@@ -82,7 +82,6 @@ class NewPaymentRequestScreen extends Component {
             <Text style={styles.textSaldoAmount}>{convertToRupiah(this.state.balance)}</Text>
           </View>
           <View style={styles.wrapperSeparator}/>
-          <Text style={styles.productSubtitle}>Minta Pembayaran</Text>
           <TextInputCustom
             placeholder='Minimal Rp50.000'
             color={Colors.black}
@@ -98,7 +97,7 @@ class NewPaymentRequestScreen extends Component {
         </View>
         <View style={styles.menuWrapper}>
           <TouchableOpacity style={styles.chooseAddressBtn} onPress={() => {this.actNavigate('PaymentScreen')}}>
-            <Text style={styles.chooseAddressText}>Minta Pembayaran</Text>
+            <Text style={styles.chooseAddressText}>Tarik Saldo</Text>
           </TouchableOpacity>
         </View>
       </View>
