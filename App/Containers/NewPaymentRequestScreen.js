@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, TouchableOpacity, TextInput, Image, KeyboardAvoidingView } from 'react-native'
+import { ScrollView, Text, View, TouchableOpacity, TextInput, Image, KeyboardAvoidingView, Alert } from 'react-native'
 import { Images, Metrics, Colors } from '../Themes'
 import { connect } from 'react-redux'
 import {convertToRupiah } from '../Lib/utils'
 import TextInputCustom from '../Components/TextInputCustom'
+import BalanceActions from '../Redux/BalanceRedux'
+import AddWithdrawActions from '../Redux/AddWithdrawRedux'
 import PickerCustom from '../Components/PickerCustom'
 // Styles
 import styles from './Styles/NewPaymentRequestScreenStyles'
@@ -20,6 +22,30 @@ class NewPaymentRequestScreen extends Component {
     this.selectAccount = this.selectAccount.bind(this)
   }
 
+  componentDidMount(){
+    let data ={
+      data_request:{
+        user_id: this.props.auth.payload.user_id,
+        unique_token: this.props.auth.payload.unique_token,
+      }
+    }
+    this.props.getBalanceProcess(data)
+  }
+
+  componentWillReceiveProps(newProps){
+    if(this.props.balance !== newProps.balance){
+      if (
+        newProps.balance.payload !== null &&
+        newProps.balance.error === null &&
+        !newProps.balance.fetching
+      ) {
+        this.setState({
+          balance: newProps.balance.payload.total_saldo_left
+        })
+      }
+    }
+  }
+
   actNavigate (screen, obj = {}) {
     const { navigate } = this.props.navigation
     navigate(screen, obj)
@@ -33,11 +59,11 @@ class NewPaymentRequestScreen extends Component {
 
   renderSelectedAccount(){
     var viewInput = <View style={[styles.deliveryAddressContainer, {height: 50}]}/>
-    if(this.state.selectedAccount.name){
+    if(this.state.selectedAccount.bank_account_name){
       viewInput = <View style={styles.deliveryAddressContainer}>
-        <Text style={styles.addressName}>{this.state.selectedAccount.name}</Text>
-        <Text style={styles.address}>{this.state.selectedAccount.bank}</Text>
-        <Text style={styles.address}>{this.state.selectedAccount.account}</Text>
+        <Text style={styles.addressName}>{this.state.selectedAccount.bank_account_name}</Text>
+        <Text style={styles.address}>{this.state.selectedAccount.the_bank_name}</Text>
+        <Text style={styles.address}>{this.state.selectedAccount.bank_account_number}</Text>
       </View>
     }
     return (
@@ -61,6 +87,41 @@ class NewPaymentRequestScreen extends Component {
     )
   }
 
+  requestNow(){
+    const {amount, balance, selectedAccount} = this.state
+    if(amount === '' || amount < 50000){
+      Alert.alert(
+          '',
+          'Jumlah Penarikan minimal Rp 50.000',
+      )
+      return
+    }
+    if(amount > balance){
+      Alert.alert(
+          '',
+          'Saldo Anda kurang dari jumlah penarikan',
+      )
+      return
+    }
+    if(!selectedAccount.bank_data_id){
+      Alert.alert(
+          '',
+          'Silakan masukkan rekening tujuan',
+      )
+      return
+    }
+    let data ={
+      data_request:{
+        user_id: this.props.auth.payload.user_id,
+        unique_token: this.props.auth.payload.unique_token,
+        the_app_customer_bank_account_id: selectedAccount.bank_data_id,
+        the_amount: amount
+      }
+    }
+    this.props.addWithdrawProcess(data)
+    this.actNavigate('PaymentScreen')
+  }
+
   render () {
     return (
       <View style={styles.container}>
@@ -69,13 +130,14 @@ class NewPaymentRequestScreen extends Component {
             <Image source={Images.back} style={styles.buttonHeader} />
           </TouchableOpacity>
         </View>
-        <View style={styles.cartContainer}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <KeyboardAvoidingView
             behavior='padding'
             keyboardVerticalOffset={50}
             enabled
           >
+        <View style={styles.cartContainer}>
+
           <View style={styles.wrapperSeparator}/>
           <View style={styles.saldoContainer}>
             <Text style={styles.textSaldo}>SALDO</Text>
@@ -92,11 +154,12 @@ class NewPaymentRequestScreen extends Component {
             onChangeText={val => this.setState({ amount: val })}
           />
           {this.renderSelectedAccount()}
-          </KeyboardAvoidingView>
-          </ScrollView>
+
         </View>
+        </KeyboardAvoidingView>
+        </ScrollView>
         <View style={styles.menuWrapper}>
-          <TouchableOpacity style={styles.chooseAddressBtn} onPress={() => {this.actNavigate('PaymentScreen')}}>
+          <TouchableOpacity style={styles.chooseAddressBtn} onPress={() => this.requestNow()}>
             <Text style={styles.chooseAddressText}>Tarik Saldo</Text>
           </TouchableOpacity>
         </View>
@@ -107,13 +170,19 @@ class NewPaymentRequestScreen extends Component {
 
 const mapStateToProps = state => {
   return {
-
+    balance: state.balance,
+    auth: state.auth,
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-
+    getBalanceProcess: data => {
+      dispatch(BalanceActions.getBalanceRequest(data))
+    },
+    addWithdrawProcess: data => {
+      dispatch(AddWithdrawActions.addWithdrawRequest(data))
+    },
   }
 };
 

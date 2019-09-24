@@ -104,7 +104,7 @@ export default StyleSheet.create({
     fontSize: 13,
   },
   menuBottom:{
-    marginTop: 70,
+    marginTop: 50,
     justifyContent: 'center',
     alignItems: 'center'
   }

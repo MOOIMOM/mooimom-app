@@ -24,6 +24,18 @@ export const reducers = combineReducers({
   district: require('./DistrictRedux').reducer,
   shippingOptions: require('./GetShippingOptionsRedux').reducer,
   category: require('./CategoryRedux').reducer,
+  wishlist: require('./WishlistRedux').reducer,
+  editWishlist: require('./EditWishlistRedux').reducer,
+  setting: require('./SettingRedux').reducer,
+  profile: require('./ProfileRedux').reducer,
+  editprofile: require('./EditProfileRedux').reducer,
+  balance: require('./BalanceRedux').reducer,
+  bankAccount: require('./BankAccountRedux').reducer,
+  editBankAccount: require('./EditBankAccountRedux').reducer,
+  withdraw: require('./WithdrawRedux').reducer,
+  addWithdraw: require('./AddWithdrawRedux').reducer,
+  getSearch: require('./GetSearchRedux').reducer,
+  notification: require('./GetNotificationRedux').reducer,
 })
 
 export default () => {

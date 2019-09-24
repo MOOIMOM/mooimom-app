@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, FlatList, SectionList, BackHandler, AppState, Clipboard } from 'react-native'
-import { Images, Metrics } from '../Themes'
+import { ScrollView, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, FlatList, SectionList, BackHandler, ActivityIndicator, AppState, Clipboard } from 'react-native'
+import { Images, Metrics,Colors } from '../Themes'
 import ProductCardSingle from '../Components/ProductCardSingle'
+import CategoryActions from '../Redux/CategoryRedux'
 import SharedProductActions from '../Redux/SharedProductRedux'
+import EditWishlistActions from '../Redux/EditWishlistRedux'
 import { connect } from 'react-redux'
 import {shareDescripton} from '../Lib/utils'
 
@@ -184,7 +186,8 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
     ]
     this.state = {
       appState: AppState.currentState,
-      categories: dataCategories,
+      categories: [],
+      selectedCategoriesId: '',
       selectedCategoriesIdx: 0,
       selectedSubCategoriesId: 0,
       selectedSubCategoriesIdx: 0,
@@ -207,6 +210,13 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
 
   componentDidMount() {
     AppState.addEventListener('change', this._handleAppStateChange);
+    let data = {
+      data_request:{
+        user_id: this.props.auth.payload.user_id,
+        unique_token: this.props.auth.payload.unique_token
+      }
+    }
+    this.props.getCategoryRequest(data)
   }
 
   componentWillUnmount() {
@@ -244,11 +254,68 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
     }
   }
 
+  getCategoryIndex(id){
+    var idx = this.state.categories.indexOf(this.state.categories.find(category => category.slug === id))
+    console.log(idx)
+    return idx
+  }
+
+  fillCategories(arr){
+    console.log('fill array')
+    var categories = []
+    var firstCategorySlug = ''
+    for(var i=0;i<arr.length;i++){
+      var subcategories = []
+      var l = -1
+      for(var j=0;j<arr[i].subcategories.length;j++){
+        if(arr[i].subcategories[j].text_only === true){ //CREATE TITLE
+          title = arr[i].subcategories[j].name
+          subcategories.push({title: title, data: []})
+          l++
+        } else if(l > -1){ //THIS MAY CAUSE BUG!!!
+          subcategories[l].data.push({
+            name: arr[i].subcategories[j].name,
+            slug: arr[i].subcategories[j].slug,
+            img_url: arr[i].subcategories[j].img_url,
+          })
+        }
+      }
+      var category = {
+          img_url: arr[i].img_url,
+          name: arr[i].name,
+          slug: arr[i].slug,
+          subcategories: subcategories
+      }
+      if(firstCategorySlug === ''){
+        firstCategorySlug = category.slug
+      }
+      categories.push(category)
+    }
+    this.setState({
+      categories: categories,
+      selectedCategoriesIdx: 0,
+      selectedCategoriesId: firstCategorySlug
+    })
+  }
+
   componentWillReceiveProps(newProps){
-    if(newProps.navigation.state.params.category_id !== this.state.selectedCategoriesIdx){
+    console.info(newProps)
+    if(newProps.navigation.state.params && newProps.navigation.state.params.category_id !== this.state.selectedCategoriesId){
+      const idx = this.getCategoryIndex(newProps.navigation.state.params.category_id)
       this.setState({
-        selectedCategoriesIdx: newProps.navigation.state.params.category_id
+        selectedCategoriesId: newProps.navigation.state.params.category_id,
+        selectedCategoriesIdx: idx
       })
+    }
+
+    if(newProps.category !== this.props.category){
+      if (
+        newProps.category.payload !== null &&
+        newProps.category.error === null &&
+        !newProps.category.fetching
+      ) {
+        this.fillCategories(newProps.category.payload.categories)
+      }
     }
   }
 
@@ -296,11 +363,12 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
     return (
       <TouchableOpacity
       onPress={() => this.setState({
+        selectedCategoriesId: item.slug,
         selectedCategoriesIdx: index
       })}
       >
         <View style={style}>
-          <Text style={styles.categoryText}>{item.category}</Text>
+          <Text style={styles.categoryText}>{item.name}</Text>
         </View>
       </TouchableOpacity>
     );
@@ -336,11 +404,11 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
       }
 
       items.push(
-        <TouchableWithoutFeedback key={section.data[i].id} onPress={() => {
-          this.moveToSubCategories(section.data[i].id)
+        <TouchableWithoutFeedback key={section.data[i].slug} onPress={() => {
+          this.moveToSubCategories(section.data[i].slug)
         }}>
           <View style={styles.productContainer}>
-            <Image source={{uri:section.data[i].images}} style={styles.productImage}/>
+            <Image source={{uri:section.data[i].img_url}} style={styles.productImage}/>
             <Text style={styles.productText}>{section.data[i].name}</Text>
           </View>
         </TouchableWithoutFeedback>
@@ -372,7 +440,10 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
           <ProductCardSingle
             product={item}
             sharedProductProcess={this.props.sharedProductProcess}
+            addWishlistProductProcess={this.props.addWishlistProductProcess}
+            deleteWishlistProductProcess={this.props.deleteWishlistProductProcess}
             shareWhatsapp={this.shareWhatsapp}
+            auth={this.props.auth}
           />
         </View>
       </TouchableWithoutFeedback>
@@ -396,17 +467,17 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
         <View style={styles.contentContainer}>
           <View style={styles.leftContainer}>
             <FlatList
-              extraData={this.state.selectedCategoriesIdx}
               data={this.state.categories}
               renderItem={this._renderCategories}
               keyExtractor={(item, index) => index.toString()}
+              extraData={this.state.selectedCategoriesIdx}
             />
           </View>
           <View style={styles.rightContainer}>
             <SectionList
               renderItem={this._renderSubCategories}
               renderSectionHeader={this._renderSectionHeader}
-              sections={this.state.categories[this.state.selectedCategoriesIdx].subcategory}
+              sections={this.state.categories[this.state.selectedCategoriesIdx].subcategories}
               showsVerticalScrollIndicator={false}
               keyExtractor={(item, index) => index.toString()}
             />
@@ -473,6 +544,12 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
   }
 
   render () {
+    if(this.state.categories.length < 1)
+      return(
+        <View style={styles.containerLoading}>
+          <ActivityIndicator size="large" color={Colors.mooimom} />
+        </View>
+      )
     return (
       <View style={styles.container}>
         {!this.state.isSelectSubCategory && this._renderCategoryView()}
@@ -483,14 +560,24 @@ Ukuran : Panjang 50.5 cm x Lebar 35 cm x Tinggi 7 cm`
 }
 const mapStateToProps = state => {
   return {
-
+    auth: state.auth,
+    category: state.category
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
+    getCategoryRequest: data => {
+      dispatch(CategoryActions.getCategoryRequest(data))
+    },
     sharedProductProcess: data => {
       dispatch(SharedProductActions.sharedProductRequest(data))
+    },
+    addWishlistProductProcess: data => {
+      dispatch(EditWishlistActions.addWishlistRequest(data))
+    },
+    deleteWishlistProductProcess: data => {
+      dispatch(EditWishlistActions.deleteWishlistRequest(data))
     }
   }
 };

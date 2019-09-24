@@ -15,15 +15,21 @@ export default class PickerCustom extends Component {
   }
 
   _renderPicker(){
-    var arr = [...this.props.data]
-    for(var i = 0;i < arr.length; i++){
-      if(arr[i].id == this.state.selectedValue && this.state.selectedLabel !== ''){
-        arr.splice(i, 1)
+    if(this.props.isBank){
+      return this.props.data.map((item) => {
+        return <Picker.Item key={item.bank_slug} label={item.bank_name} value={item.bank_slug} color={Colors.black}/>
+      })
+    } else {
+      var arr = [...this.props.data]
+      for(var i = 0;i < arr.length; i++){
+        if(arr[i].id == this.state.selectedValue && this.state.selectedLabel !== ''){
+          arr.splice(i, 1)
+        }
       }
+      return arr.map((item) => {
+        return <Picker.Item key={item.id} label={item.name} value={item.id} color={Colors.black}/>
+      })
     }
-    return arr.map((item) => {
-      return <Picker.Item key={item.id} label={item.name} value={item.id} color={Colors.black}/>
-    })
   }
   _renderDefault(){
     if(this.state.selectedLabel !== ''){

@@ -10,7 +10,8 @@ export default class ProductCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      product: this.props.product
+      product: this.props.product,
+      isInWishlist: this.props.product.wishlist === 1
     };
   }
 
@@ -24,12 +25,46 @@ export default class ProductCard extends Component {
     }
   }
 
+  onWishlistPress(){
+    if(!this.state.isInWishlist){
+      if(this.props.addWishlistProductProcess){
+        let data = {
+          data_request:{
+            user_id:this.props.auth.payload.user_id,
+            unique_token: this.props.auth.payload.unique_token,
+            product_slug: this.state.product.slug
+          }
+        }
+        console.info(data)
+        this.props.addWishlistProductProcess(data)
+        this.setState({
+          isInWishlist: !this.state.isInWishlist
+        })
+      }
+    } else {
+      if(this.props.deleteWishlistProductProcess){
+        let data = {
+          data_request:{
+            user_id:this.props.auth.payload.user_id,
+            unique_token: this.props.auth.payload.unique_token,
+            product_slug: this.state.product.slug
+          }
+        }
+        console.info(data)
+        this.props.deleteWishlistProductProcess(data)
+        this.setState({
+          isInWishlist: !this.state.isInWishlist
+        })
+      }
+    }
+  }
+
   renderWishlist(){
     var image = Images.wishlistBlack
-    if(this.state.product.wishlist === 1)
+    if(this.state.isInWishlist)
       image = Images.wishlist1
     return(
-      <TouchableWithoutFeedback>
+      <TouchableWithoutFeedback onPress={() => this.onWishlistPress()}>
         <View style={styles.wishlist}>
           <Image
               source={image}

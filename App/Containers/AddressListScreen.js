@@ -13,6 +13,7 @@ class AddressListScreen extends Component {
   constructor (props) {
     super(props)
     this.state = {
+      addresses:[],
       primaryAddressId: 1
     }
   }
@@ -37,6 +38,17 @@ class AddressListScreen extends Component {
   }
 
   componentWillReceiveProps(newProps){
+    if(this.props.address !== newProps.address){
+      if (
+        newProps.address.payload !== null &&
+        newProps.address.error === null &&
+        !newProps.address.fetching
+      ) {
+        this.setState({
+          addresses: newProps.address.payload.addresses,
+        })
+      }
+    }
     if(newProps.editaddress !== this.props.editaddress){
       if (
         newProps.editaddress.payload !== null &&
@@ -46,7 +58,6 @@ class AddressListScreen extends Component {
           this.reloadAddresses()
         }
       }
-
   }
 
   deleteAddress(index){
@@ -125,12 +136,12 @@ class AddressListScreen extends Component {
           >
           <Text style={styles.productSubtitle}>Alamat Pengiriman</Text>
           <View style={styles.wrapperSeparator}/>
-            {this.props.address.payload && <FlatList
-              data={this.props.address.payload.addresses}
+            <FlatList
+              data={this.state.addresses}
               renderItem={this._renderAddress.bind(this)}
               keyExtractor={(item, index) => index.toString()}
               extraData={this.state}
-            />}
+            />
           <View style={styles.wrapperSeparator}/>
           <TouchableOpacity style={styles.chooseAddressBtn} onPress={() => {this.actNavigate('NewAddressScreen')}}>
             <Text style={styles.chooseAddressText}>+ Tambah Alamat</Text>

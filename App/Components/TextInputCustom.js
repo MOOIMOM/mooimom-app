@@ -67,7 +67,9 @@ export default class TextInputCustom extends Component {
                     textAlignVertical: this.props.textAlignVertical,
                     paddingLeft: this.props.isPhone ? 50 : 20,
                     width: widthFix,
-                    height: heightText
+                    height: heightText,
+                    backgroundColor: this.props.backgroundColor,
+                    color: this.props.color,
                   }
                 ]
               : [

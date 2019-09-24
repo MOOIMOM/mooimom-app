@@ -21,6 +21,18 @@ import { CityTypes } from '../Redux/CityRedux'
 import { DistrictTypes } from '../Redux/DistrictRedux'
 import { GetShippingOptionsTypes } from '../Redux/GetShippingOptionsRedux'
 import { CategoryTypes } from '../Redux/CategoryRedux'
+import { WishlistTypes } from '../Redux/WishlistRedux'
+import { EditWishlistTypes } from '../Redux/EditWishlistRedux'
+import { SettingTypes } from '../Redux/SettingRedux'
+import { ProfileTypes } from '../Redux/ProfileRedux'
+import { EditProfileTypes } from '../Redux/EditProfileRedux'
+import { BalanceTypes } from '../Redux/BalanceRedux'
+import { BankAccountTypes } from '../Redux/BankAccountRedux'
+import { EditBankAccountTypes } from '../Redux/EditBankAccountRedux'
+import { WithdrawTypes } from '../Redux/WithdrawRedux'
+import { AddWithdrawTypes } from '../Redux/AddWithdrawRedux'
+import { GetSearchTypes } from '../Redux/GetSearchRedux'
+import { GetNotificationTypes } from '../Redux/GetNotificationRedux'
 
 /* ------------- Sagas ------------- */
 
@@ -43,6 +55,22 @@ import { postGetCity } from './GetCitySagas'
 import { postGetDistrict } from './GetDistrictSagas'
 import { postGetShippingOptions } from './GetShippingOptionsSagas'
 import { postGetCategory } from './GetCategorySagas'
+import { postAddWishlist } from './AddWishlistSagas'
+import { postDeleteWishlist } from './DeleteWishlistSagas'
+import { postGetWishlist } from './GetWishlistSagas'
+import { postGetSetting } from './GetSettingSagas'
+import { postGetProfile } from './GetProfileSagas'
+import { postEditProfile } from './EditProfileSagas'
+import { postUpdateProfilePicture } from './EditProfilePictureSagas'
+import { postGetBalance } from './GetBalanceSagas'
+import { postGetBankAccounts } from './GetBankAccountSagas'
+import { postAddBankAccount } from './AddBankAccountSagas'
+import { postEditBankAccount } from './EditBankAccountSagas'
+import { postDeleteBankAccount } from './DeleteBankAccountSagas'
+import { postGetWithdraw } from './WithdrawSagas'
+import { postAddWithdraw } from './AddWithdrawSagas'
+import { postGetSearch } from './GetSearchSagas'
+import { postGetNotification } from './GetNotificationSagas'
 
 /* ------------- API ------------- */
 
@@ -76,5 +104,21 @@ export default function * root () {
     takeLatest(DistrictTypes.GET_DISTRICT_REQUEST, postGetDistrict, api),
     takeLatest(GetShippingOptionsTypes.GET_SHIPPING_OPTIONS_REQUEST, postGetShippingOptions, api),
     takeLatest(CategoryTypes.GET_CATEGORY_REQUEST, postGetCategory, api),
+    takeLatest(EditWishlistTypes.ADD_WISHLIST_REQUEST, postAddWishlist, api),
+    takeLatest(EditWishlistTypes.DELETE_WISHLIST_REQUEST, postDeleteWishlist, api),
+    takeLatest(WishlistTypes.GET_WISHLIST_REQUEST, postGetWishlist, api),
+    takeLatest(SettingTypes.GET_SETTING_REQUEST, postGetSetting, api),
+    takeLatest(ProfileTypes.GET_PROFILE_REQUEST, postGetProfile, api),
+    takeLatest(EditProfileTypes.EDIT_PROFILE_REQUEST, postEditProfile, api),
+    takeLatest(EditProfileTypes.EDIT_PROFILE_PICTURE_REQUEST, postUpdateProfilePicture, api),
+    takeLatest(BalanceTypes.GET_BALANCE_REQUEST, postGetBalance, api),
+    takeLatest(BankAccountTypes.GET_BANK_ACCOUNT_REQUEST, postGetBankAccounts, api),
+    takeLatest(EditBankAccountTypes.ADD_BANK_ACCOUNT_REQUEST, postAddBankAccount, api),
+    takeLatest(EditBankAccountTypes.EDIT_BANK_ACCOUNT_REQUEST, postEditBankAccount, api),
+    takeLatest(EditBankAccountTypes.DELETE_BANK_ACCOUNT_REQUEST, postDeleteBankAccount, api),
+    takeLatest(WithdrawTypes.GET_WITHDRAW_REQUEST, postGetWithdraw, api),
+    takeLatest(AddWithdrawTypes.ADD_WITHDRAW_REQUEST, postAddWithdraw, api),
+    takeLatest(GetSearchTypes.GET_SEARCH_REQUEST, postGetSearch, api),
+    takeLatest(GetNotificationTypes.GET_NOTIFICATION_REQUEST, postGetNotification, api),
   ])
 }

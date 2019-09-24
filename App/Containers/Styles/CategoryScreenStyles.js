@@ -208,5 +208,11 @@ export default StyleSheet.create({
   modalShareText2:{
     fontFamily: Fonts.type.gotham4,
     color: Colors.gray
+  },
+  containerLoading:{
+    width: Metrics.screenWidth,
+    height: Metrics.screenHeight,
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 })

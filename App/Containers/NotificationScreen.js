@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { ScrollView, Text, View, Image, TouchableOpacity } from 'react-native'
 import { Images, Metrics } from '../Themes'
+import GetNotificationActions from '../Redux/GetNotificationRedux'
 import { connect } from 'react-redux'
 import {convertToRupiah} from '../Lib/utils'
 
@@ -11,6 +12,31 @@ class NotificationScreen extends Component {
   constructor (props) {
     super(props)
     this.state = {
+      notification: []
+    }
+  }
+
+  componentDidMount(){
+    let data ={
+      data_request:{
+        user_id: this.props.auth.payload.user_id,
+        unique_token: this.props.auth.payload.unique_token
+      }
+    }
+    this.props.getNotificationProcess(data)
+  }
+
+  componentWillReceiveProps(newProps){
+    if(this.props.notification !== newProps.notification){
+      if (
+        newProps.notification.payload !== null &&
+        newProps.notification.error === null &&
+        !newProps.notification.fetching
+      ) {
+        this.setState({
+          notification: newProps.notification.payload,
+        })
+      }
     }
   }
 
@@ -52,13 +78,16 @@ class NotificationScreen extends Component {
 }
 const mapStateToProps = state => {
   return {
-
+    notification: state.notification,
+    auth: state.auth
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-
+    getNotificationProcess: data => {
+      dispatch(GetNotificationActions.getNotificationRequest(data))
+    },
   }
 };
 

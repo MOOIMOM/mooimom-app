@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, TouchableOpacity, TextInput, Image, KeyboardAvoidingView } from 'react-native'
+import { ScrollView, Text, View, TouchableOpacity, TextInput, Image, KeyboardAvoidingView, Alert } from 'react-native'
 import { Images, Metrics, Colors } from '../Themes'
 import { connect } from 'react-redux'
 import {convertToRupiah } from '../Lib/utils'
+import EditBankAccountActions from '../Redux/EditBankAccountRedux'
 import TextInputCustom from '../Components/TextInputCustom'
 import PickerCustom from '../Components/PickerCustom'
 // Styles
@@ -15,19 +16,32 @@ class NewAccountScreen extends Component {
       bank: '',
       name: '',
       account:'',
-      enumBank:[
-        {label:'Bank Central Asia', value:0},
-        {label:'Bank Mandiri', value:1},
-        {label:'Bank Permata', value:2},
-        {label:'Bank Rakyat Indonesia', value:3},
-        {label:'Bank Nasional Indonesia', value:4},
-      ]
+      enumBank:this.props.setting.payload.bank_choices
     }
   }
 
   actNavigate (screen) {
     const { navigate } = this.props.navigation
     navigate(screen, {})
+  }
+
+  saveBank(){
+    const {bank, name, account} = this.state
+    if(bank === '' || name === ''|| account === ''){
+      Alert.alert('Sorry', 'Please fill in all of the form', [{ text: 'OK'}])
+      return;
+    }
+    let data = {
+      data_request:{
+        user_id: this.props.auth.payload.user_id,
+        unique_token: this.props.auth.payload.unique_token,
+        bank_slug: bank,
+        bank_account_name : name,
+        bank_account_number : account,
+      }
+    }
+    this.props.addBankAccountProcess(data)
+    this.actNavigate('AccountListScreen')
   }
 
   render () {
@@ -38,48 +52,50 @@ class NewAccountScreen extends Component {
             <Image source={Images.back} style={styles.buttonHeader} />
           </TouchableOpacity>
         </View>
-        <View style={styles.cartContainer}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <KeyboardAvoidingView
             behavior='padding'
             keyboardVerticalOffset={50}
             enabled
           >
-          <Text style={styles.productSubtitle}>Tambah Nomor Rekening Bank</Text>
-          <View style={styles.wrapperSeparator}/>
-          <PickerCustom
-            placeholder='Pilih Bank'
-            data={this.state.enumBank}
-            selectedValue={this.state.bank}
-            color={Colors.black}
-            label={'Pilih Bank'}
-            value={this.state.bank}
-            onValueChange={val => this.setState({ bank: val })}
-          />
-          <TextInputCustom
-            placeholder='Nama Pemilik Rekening'
-            color={Colors.black}
-            label={'Nama Pemilik Rekening'}
-            textAlign='left'
-            value={this.state.name}
-            onChangeText={val => this.setState({ name: val })}
-            autoCapitalize= 'words'
-          />
-          <TextInputCustom
-            placeholder='Nomor Rekening'
-            color={Colors.black}
-            label={'Nomor Rekening'}
-            textAlign='left'
-            keyboardType='numeric'
-            value={this.state.account}
-            onChangeText={val => this.setState({ account: val })}
-          />
-          <View style={styles.wrapperSeparator}/>
+            <View style={styles.cartContainer}>
+              <Text style={styles.productSubtitle}>Tambah Nomor Rekening Bank</Text>
+              <View style={styles.wrapperSeparator}/>
+              <PickerCustom
+                placeholder='Pilih Bank'
+                data={this.state.enumBank}
+                selectedValue={this.state.bank}
+                color={Colors.black}
+                isBank={true}
+                label={'Pilih Bank'}
+                value={this.state.bank}
+                label0={'Pilih Bank'}
+                onValueChange={val => this.setState({ bank: val })}
+              />
+              <TextInputCustom
+                placeholder='Nama Pemilik Rekening'
+                color={Colors.black}
+                label={'Nama Pemilik Rekening'}
+                textAlign='left'
+                value={this.state.name}
+                onChangeText={val => this.setState({ name: val })}
+                autoCapitalize= 'words'
+              />
+              <TextInputCustom
+                placeholder='Nomor Rekening'
+                color={Colors.black}
+                label={'Nomor Rekening'}
+                textAlign='left'
+                keyboardType='numeric'
+                value={this.state.account}
+                onChangeText={val => this.setState({ account: val })}
+              />
+              <View style={styles.wrapperSeparator}/>
+            </View>
           </KeyboardAvoidingView>
-          </ScrollView>
-        </View>
+        </ScrollView>
         <View style={styles.menuWrapper}>
-          <TouchableOpacity style={styles.chooseAddressBtn} onPress={() => {this.actNavigate('AccountListScreen')}}>
+          <TouchableOpacity style={styles.chooseAddressBtn} onPress={() => {this.saveBank()}}>
             <Text style={styles.chooseAddressText}>Simpan Nomor Rekening</Text>
           </TouchableOpacity>
         </View>
@@ -90,13 +106,16 @@ class NewAccountScreen extends Component {
 
 const mapStateToProps = state => {
   return {
-
+    setting: state.setting,
+    auth: state.auth
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-
+    addBankAccountProcess: data => {
+      dispatch(EditBankAccountActions.addBankAccountRequest(data))
+    },
   }
 };
 

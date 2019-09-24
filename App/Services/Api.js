@@ -17,7 +17,6 @@ const create = (baseURL = 'https://www.mooimom.id/') => {
     headers: {
       Accept: 'application/json',
        'Cache-Control': 'no-cache',
-
     },
     // 10 second timeout...
     timeout: 10000
@@ -31,7 +30,11 @@ const create = (baseURL = 'https://www.mooimom.id/') => {
   };
   api.addMonitor(monitor);
   api.addRequestTransform((request) => {
-    if (R.contains(request.method, ['post'])) {
+    if(request.url === 'app-update-profile-picture'){
+      console.log('ya!')
+      request.headers['Content-Type'] = 'multipart/form-data';
+    }
+    else if (R.contains(request.method, ['post'])) {
       request.data = qs.stringify(request.data);
       request.headers['Content-Type'] = 'application/x-www-form-urlencoded';
     }
@@ -83,8 +86,52 @@ const create = (baseURL = 'https://www.mooimom.id/') => {
     api.post('app-get-districts', params.data_request)
   const postGetShippingOptions = params =>
     api.post('app-get-shipping-options', params.data_request)
+  const postGetCommissionEstimation = params =>
+    api.post('app-get-possible-commission-for-checkout-page', params.data_request)
+  const postCheckout = params =>
+    api.post('app-checkout', params.data_request)
   const postGetCategory = params =>
     api.post('app-get-categories', params.data_request)
+  const postAddWishlist = params =>
+    api.post('app-add-to-wishlist', params.data_request)
+  const postDeleteWishlist = params =>
+    api.post('app-delete-wishlist', params.data_request)
+  const postGetWishlist = params =>
+    api.post('app-get-all-wishlist', params.data_request)
+  const postGetSearch = params =>
+    api.post('app-get-search', params.data_request)
+  const postGetProfile = params =>
+    api.post('app-get-customer-data-and-profile-picture', params.data_request)
+  const postEditProfile = params =>
+    api.post('app-update-profile', params.data_request)
+  const postUpdateProfilePicture = params =>
+    api.post('app-update-profile-picture', params.data_request)
+  const postGetSetting = params =>
+    api.post('app-get-global-setting', params.data_request)
+  const postGetBankAccounts = params =>
+    api.post('app-get-bank-accounts', params.data_request)
+  const postAddBankAccount = params =>
+    api.post('app-add-bank-account', params.data_request)
+  const postEditBankAccount = params =>
+    api.post('app-update-bank-account', params.data_request)
+  const postDeleteBankAccount = params =>
+    api.post('app-delete-bank-account', params.data_request)
+  const postGetNotification = params =>
+    api.post('app-get-notifications', params.data_request)
+  const postGetAllOrders = params =>
+    api.post('app-get-orders', params.data_request)
+  const postGetOrder = params =>
+    api.post('app-get-one-order', params.data_request)
+  const postGetWithdraw = params =>
+    api.post('app-get-customer-commission-withdraw', params.data_request)
+  const postAddWithdraw = params =>
+    api.post('app-create-customer-commission-withdraw', params.data_request)
+  const postGetCommissionSummary = params =>
+    api.post('app-get-commission-summary-this-week', params.data_request)
+  const postGetCommissionByDate = params =>
+    api.post('app-get-commission-summary-from-date-a-to-date-b', params.data_request)
+  const postGetBalance = params =>
+    api.post('app-current-saldo', params.data_request)
 
 
   // ------
@@ -119,6 +166,26 @@ const create = (baseURL = 'https://www.mooimom.id/') => {
     postGetDistrict,
     postGetShippingOptions,
     postGetCategory,
+    postAddWishlist,
+    postDeleteWishlist,
+    postGetWishlist,
+    postGetSearch,
+    postGetProfile,
+    postEditProfile,
+    postUpdateProfilePicture,
+    postGetSetting,
+    postGetBankAccounts,
+    postAddBankAccount,
+    postEditBankAccount,
+    postDeleteBankAccount,
+    postGetNotification,
+    postGetAllOrders,
+    postGetOrder,
+    postGetWithdraw,
+    postAddWithdraw,
+    postGetCommissionSummary,
+    postGetCommissionByDate,
+    postGetBalance,
   }
 }
 

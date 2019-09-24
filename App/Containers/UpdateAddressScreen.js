@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, TouchableOpacity, TextInput, Image, KeyboardAvoidingView } from 'react-native'
+import { ScrollView, Text, View, TouchableOpacity, TextInput, Image, KeyboardAvoidingView, ActivityIndicator } from 'react-native'
 import { Images, Metrics, Colors } from '../Themes'
 import { connect } from 'react-redux'
 import {convertToRupiah } from '../Lib/utils'
@@ -72,22 +72,6 @@ class UpdateAddressScreen extends Component {
     this.props.getDistrictsProcess(data3)
   }
 
-  componentWillReceiveProps (newProps) {
-    if (this.props.editaddress !== newProps.editaddress) {
-      if (
-        newProps.editaddress.payload !== null &&
-        newProps.editaddress.error === null &&
-        !newProps.editaddress.fetching && requestAdd
-      ) {
-          requestAdd = false
-          if(this.props.navigation.state.params.reloadAddresses){
-            this.props.navigation.state.params.reloadAddresses()
-          }
-          this.actNavigate('AddressListScreen')
-        }
-      }
-  }
-
   changeProvince(val){
       this.setState({province: val, province_name: '', city_name: '', city: '', district: '', district_name: ''})
       let data = {
@@ -139,11 +123,16 @@ class UpdateAddressScreen extends Component {
       }
     }
     this.props.editAddressProcess(data)
-    requestAdd = true
+    this.actNavigate('AddressListScreen')
   }
 
   render () {
-    if(!this.props.province.payload || !this.props.city.payload || !this.props.district.payload) return <View/>
+    if(!this.props.province.payload || !this.props.city.payload || !this.props.district.payload){
+      return (
+      <View style={styles.containerLoading}>
+        <ActivityIndicator size="large" color={Colors.mooimom} />
+      </View>
+    )}
     return (
       <View style={styles.container}>
         <View style={styles.headerWrapper}>
@@ -180,7 +169,7 @@ class UpdateAddressScreen extends Component {
           />
           <PickerCustom
             placeholder='Pilih Propinsi'
-            data={this.props.province.payload ? this.props.province.payload.provinces : []}
+            data={this.props.province.payload.provinces}
             selectedValue={this.state.province}
             selectedLabel={this.state.province_name}
             color={Colors.black}
@@ -190,7 +179,7 @@ class UpdateAddressScreen extends Component {
           />
           <PickerCustom
             placeholder='Pilih Kota'
-            data={this.props.city.payload ? this.props.city.payload.cities : []}
+            data={this.props.city.payload.cities}
             selectedValue={this.state.city}
             selectedLabel={this.state.city_name}
             color={Colors.black}
@@ -201,7 +190,7 @@ class UpdateAddressScreen extends Component {
           />
           <PickerCustom
             placeholder='Pilih Kecamatan'
-            data={this.props.district.payload ? this.props.district.payload.districts : []}
+            data={this.props.district.payload.districts}
             selectedValue={this.state.district}
             selectedLabel={this.state.district_name}
             color={Colors.black}
@@ -251,8 +240,7 @@ const mapStateToProps = state => {
     auth: state.auth,
     province: state.province,
     city: state.city,
-    district: state.district,
-    editaddress: state.editaddress
+    district: state.district
   }
 };
 

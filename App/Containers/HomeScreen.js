@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback , Image, FlatList, Alert, AsyncStorage } from 'react-native'
+import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback , Image, FlatList, Alert, AsyncStorage, Linking } from 'react-native'
 import { Images, Metrics } from '../Themes'
 import { connect } from 'react-redux'
 import Carousel, { ParallaxImage, Pagination  } from 'react-native-snap-carousel';
 import ProductCard from '../Components/ProductCard'
 import SharedProductActions from '../Redux/SharedProductRedux'
 import GetHomepageActions from '../Redux/GetHomepageRedux'
-import CategoryActions from '../Redux/CategoryRedux'
+import SettingActions from '../Redux/SettingRedux'
+import EditWishlistActions from '../Redux/EditWishlistRedux'
 import { CachedImage } from 'react-native-cached-image';
 import firebase from 'react-native-firebase'
 
@@ -50,14 +51,7 @@ class HomeScreen extends Component {
         }
       }
       this.props.getHomepageRequest(data)
-      let data2 = {
-        data_request:{
-          user_id: this.props.auth.payload.user_id,
-          unique_token: this.props.auth.payload.unique_token,
-          fcm_token: this.state.fcmToken
-        }
-      }
-      this.props.getCategoryRequest(data2)
+      this.props.getSettingRequest(data)
     }, 200)
   }
 
@@ -173,8 +167,35 @@ class HomeScreen extends Component {
     navigate(page, obj)
   }
 
+  pressBanner(item){
+    switch(item.type){
+      case 'product':
+        this.navigate_to('ProductScreen', {
+          product_slug: item.slug,
+          auth: this.props.auth
+        })
+        break
+      case 'product_category':
+        this.navigate_to('Category', {
+          category_slug: item.slug,
+          auth: this.props.auth
+        })
+        break
+      case 'custom_url':
+        Linking.canOpenURL(item.slug).then(supported => {
+          if (supported) {
+            Linking.openURL(item.slug);
+          }
+        });
+        break
+    }
+  }
+
   _renderHeroBanner ({item, index}, parallaxProps) {
         return (
+          <TouchableWithoutFeedback
+          onPress={()=>this.pressBanner.bind(this)(item)}
+          >
             <View style={styles.itemHeroBanner}>
                 <ParallaxImage
                     source={{uri:item.img_url}}
@@ -184,6 +205,7 @@ class HomeScreen extends Component {
                     {...parallaxProps}
                 />
             </View>
+          </TouchableWithoutFeedback>
         );
     }
 
@@ -201,14 +223,17 @@ class HomeScreen extends Component {
     return (
       <TouchableWithoutFeedback
         onPress={() => navigate('ProductScreen', {
-          product: item,
+          product_slug: item.slug,
           auth: this.props.auth
         })}
       >
         <View>
           <ProductCard
             product={item}
+            auth={this.props.auth}
             sharedProductProcess={this.props.sharedProductProcess}
+            addWishlistProductProcess={this.props.addWishlistProductProcess}
+            deleteWishlistProductProcess={this.props.deleteWishlistProductProcess}
           />
         </View>
       </TouchableWithoutFeedback>
@@ -282,7 +307,7 @@ class HomeScreen extends Component {
               sliderHeight={220}
               itemWidth={Metrics.screenWidth - 60}
               data={this.state.banners}
-              renderItem={this._renderHeroBanner}
+              renderItem={this._renderHeroBanner.bind(this)}
               hasParallaxImages={true}
               autoplay={true}
               lockScrollWhileSnapping={true}
@@ -335,7 +360,8 @@ class HomeScreen extends Component {
 const mapStateToProps = state => {
   return {
     getHomepage: state.getHomepage,
-    auth:state.auth
+    auth:state.auth,
+    setting: state.setting
   }
 };
 
@@ -347,8 +373,14 @@ const mapDispatchToProps = dispatch => {
     getHomepageRequest: data => {
       dispatch(GetHomepageActions.getHomepageRequest(data))
     },
-    getCategoryRequest: data => {
-      dispatch(CategoryActions.getCategoryRequest(data))
+    getSettingRequest: data => {
+      dispatch(SettingActions.getSettingRequest(data))
+    },
+    addWishlistProductProcess: data => {
+      dispatch(EditWishlistActions.addWishlistRequest(data))
+    },
+    deleteWishlistProductProcess: data => {
+      dispatch(EditWishlistActions.deleteWishlistRequest(data))
     }
   }
 };

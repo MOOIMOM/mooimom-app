@@ -209,6 +209,14 @@ export default StyleSheet.create({
     alignItems: 'center',
     borderRadius: 10
   },
+  btnDownload:{
+    width: 150 * Metrics.screenWidth / 320,
+    height: 25 * Metrics.screenWidth / 320,
+    backgroundColor: Colors.mooimom,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 5
+  },
   textCopy:{
     fontSize: 14 * Metrics.screenWidth / 320,
     color: Colors.white,
@@ -527,5 +535,14 @@ export default StyleSheet.create({
   modalShareText2:{
     fontFamily: Fonts.type.gotham4,
     color: Colors.gray
+  },
+  customImagesContainer:{
+    width: Metrics.screenWidth - 40,
+    alignItems: 'flex-end'
+  },
+  customImages:{
+    width: '100%',
+    height:Metrics.screenHeight / 2,
+    resizeMode: 'contain'
   }
 })

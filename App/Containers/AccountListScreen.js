@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Alert, FlatList } from 'react-native'
 import { Images, Metrics, Colors } from '../Themes'
 import { connect } from 'react-redux'
+import BankAccountActions from '../Redux/BankAccountRedux'
+import EditBankAccountActions from '../Redux/EditBankAccountRedux'
 import {convertToRupiah } from '../Lib/utils'
 import ModalDropDown from '../Components/ModalDropDown'
 // Styles
@@ -14,23 +16,61 @@ class AccountListScreen extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      accounts: dataAccounts
+      accounts: []
     }
   }
 
-  actNavigate (screen) {
-    const { navigate } = this.props.navigation
-    navigate(screen, {})
+  componentDidMount(){
+    this.reloadData()
   }
 
-  actSelect(index){
+  componentWillReceiveProps(newProps){
+    if(this.props.bankAccount !== newProps.bankAccount){
+      if (
+        newProps.bankAccount.payload !== null &&
+        newProps.bankAccount.error === null &&
+        !newProps.bankAccount.fetching
+      ) {
+        this.setState({
+          accounts: newProps.bankAccount.payload.banks,
+        })
+      }
+    }
+
+    if(this.props.editBankAccount !== newProps.editBankAccount){
+      if (
+        newProps.editBankAccount.payload !== null &&
+        newProps.editBankAccount.error === null &&
+        !newProps.editBankAccount.fetching
+      ) {
+        this.reloadData()
+      }
+    }
+  }
+
+  reloadData(){
+    let data ={
+      data_request:{
+        user_id: this.props.auth.payload.user_id,
+        unique_token: this.props.auth.payload.unique_token,
+      }
+    }
+    this.props.getBankAccountsProcess(data)
+  }
+
+  actNavigate (screen, obj={}) {
+    const { navigate } = this.props.navigation
+    navigate(screen, obj)
+  }
+
+  actSelect(item){
     if(this.props.navigation.state.params.selectAccount){
-      this.props.navigation.state.params.selectAccount(this.state.accounts[index])
+      this.props.navigation.state.params.selectAccount(item)
       this.props.navigation.goBack()
     }
   }
 
-  deleteAddress(index){
+  deleteAddress(id){
     Alert.alert(
       '',
       'Hapus Rekening Ini?',
@@ -40,11 +80,14 @@ class AccountListScreen extends Component {
         },
         {
           text: 'Yes', onPress: () => {
-            var accounts =  Object.assign([], this.state.accounts);
-            accounts.splice(index, 1)
-            this.setState({
-              accounts: accounts
-            })
+            let data = {
+              data_request:{
+                user_id: this.props.auth.payload.user_id,
+                unique_token: this.props.auth.payload.unique_token,
+                bank_data_id: id
+              }
+            }
+            this.props.deleteBankAccountsProcess(data)
           }
         }
       ],
@@ -58,17 +101,17 @@ class AccountListScreen extends Component {
     var imgEdit = Images.edit
     var imgDelete = Images.delete
     return(
-      <TouchableWithoutFeedback onPress={() => this.actSelect(index)}>
+      <TouchableWithoutFeedback onPress={() => this.actSelect(item)}>
         <View style={style}>
           <View style={styles.btnContainer}>
-            <Text style={[styles.addressName, {color: color}]}>{item.name}</Text>
+            <Text style={[styles.addressName, {color: color}]}>{item.bank_account_name}</Text>
             <View style={styles.btnContainer2}>
-              <TouchableOpacity onPress={() => this.actNavigate('UpdateAccountScreen')}><Image source={imgEdit} style={styles.btnEditAddress}/></TouchableOpacity>
-              <TouchableOpacity onPress={() => this.deleteAddress(index)}><Image source={imgDelete} style={styles.btnEditAddress}/></TouchableOpacity>
+              <TouchableOpacity onPress={() => this.actNavigate('UpdateAccountScreen', {bank: item})}><Image source={imgEdit} style={styles.btnEditAddress}/></TouchableOpacity>
+              <TouchableOpacity onPress={() => this.deleteAddress(item.bank_data_id)}><Image source={imgDelete} style={styles.btnEditAddress}/></TouchableOpacity>
             </View>
           </View>
-          <Text style={[styles.address, {color: color}]}>{item.bank}</Text>
-          <Text style={[styles.address, {color: color}]}>{item.account}</Text>
+          <Text style={[styles.address, {color: color}]}>{item.the_bank_name}</Text>
+          <Text style={[styles.address, {color: color}]}>{item.bank_account_number}</Text>
         </View>
       </TouchableWithoutFeedback>
     )
@@ -91,8 +134,7 @@ class AccountListScreen extends Component {
             <FlatList
               data={this.state.accounts}
               renderItem={this._renderAccount.bind(this)}
-              keyExtractor={(item, index) => item.id.toString()}
-              extraData={this.state}
+              keyExtractor={(item, index) => index.toString()}
             />
           <View style={styles.wrapperSeparator}/>
           <TouchableOpacity style={styles.chooseAddressBtn} onPress={() => {this.actNavigate('NewAccountScreen')}}>
@@ -107,13 +149,20 @@ class AccountListScreen extends Component {
 
 const mapStateToProps = state => {
   return {
-
+    bankAccount: state.bankAccount,
+    editBankAccount: state.editBankAccount,
+    auth: state.auth
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-
+    getBankAccountsProcess: data => {
+      dispatch(BankAccountActions.getBankAccountRequest(data))
+    },
+    deleteBankAccountsProcess: data => {
+      dispatch(EditBankAccountActions.deleteBankAccountRequest(data))
+    },
   }
 };
 

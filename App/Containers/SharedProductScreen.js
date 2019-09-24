@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { ScrollView, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, FlatList } from 'react-native'
 import { Images, Metrics } from '../Themes'
 import ProductCard from '../Components/ProductCard'
+import WishlistActions from '../Redux/WishlistRedux'
+import EditWishlistActions from '../Redux/EditWishlistRedux'
 import { connect } from 'react-redux'
 import {convertToRupiah} from '../Lib/utils'
 
@@ -15,6 +17,34 @@ class SharedProductScreen extends Component {
       menuStatus: ['Wishlist Produk', 'Produk Dibagikan'],
       selectedMenuIdx: this.props.navigation.state.params.selectedMenuIdx ? this.props.navigation.state.params.selectedMenuIdx : 0
     }
+
+    this._renderProduct = this._renderProduct.bind(this)
+  }
+
+  componentDidMount(){
+    this.reloadWishlist()
+  }
+
+  reloadWishlist(){
+    let data ={
+      data_request:{
+        user_id: this.props.auth.payload.user_id,
+        unique_token: this.props.auth.payload.unique_token
+      }
+    }
+    this.props.getWishlistProcess(data)
+  }
+
+  componentWillReceiveProps(newProps){
+    if (this.props.editwishlist !== newProps.editwishlist) {
+      if (
+        newProps.editwishlist.payload !== null &&
+        newProps.editwishlist.error === null &&
+        !newProps.editwishlist.fetching
+      ) {
+          this.reloadWishlist()
+      }
+    }
   }
 
   actNavigate (screen , obj = {}) {
@@ -27,13 +57,17 @@ class SharedProductScreen extends Component {
     return (
       <TouchableWithoutFeedback
         onPress={() => navigate('ProductScreen', {
-          product: item
+          product_slug: item.slug,
+          auth:this.props.auth
         })}
       >
-        <View>
+        <View style={{flex:1}}>
           <ProductCard
             product={item}
+            auth={this.props.auth}
             sharedProductProcess={this.props.sharedProductProcess}
+            addWishlistProductProcess={this.props.addWishlistProductProcess}
+            deleteWishlistProductProcess={this.props.deleteWishlistProductProcess}
           />
         </View>
       </TouchableWithoutFeedback>
@@ -93,13 +127,22 @@ class SharedProductScreen extends Component {
               <ScrollView
               showsVerticalScrollIndicator={false}
               >
-              <FlatList
-                data={this.props.sharedProduct.data}
-                renderItem={this._renderProduct.bind(this)}
-                keyExtractor={(item, index) => item.id}
+              {this.state.selectedMenuIdx === 0 && <FlatList
+                data={this.props.wishlist.payload && this.props.wishlist.payload.products ? this.props.wishlist.payload.products : []}
+                extraData={this.state}
+                renderItem={this._renderProduct}
+                keyExtractor={(item, index) => index.toString()}
                 showsHorizontalScrollIndicator={false}
                 numColumns={2}
-              />
+              />}
+              {this.state.selectedMenuIdx === 1 && <FlatList
+                data={this.props.sharedProduct.data}
+                extraData={this.state}
+                renderItem={this._renderProduct}
+                keyExtractor={(item, index) => index.toString()}
+                showsHorizontalScrollIndicator={false}
+                numColumns={2}
+              />}
               </ScrollView>
             </View>
           </View>
@@ -110,13 +153,24 @@ class SharedProductScreen extends Component {
 }
 const mapStateToProps = state => {
   return {
-    sharedProduct: state.sharedProduct
+    sharedProduct: state.sharedProduct,
+    wishlist: state.wishlist,
+    auth: state.auth,
+    editwishlist: state.editwishlist
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-
+    getWishlistProcess: data => {
+      dispatch(WishlistActions.getWishlistRequest(data))
+    },
+    addWishlistProductProcess: data => {
+      dispatch(EditWishlistActions.addWishlistRequest(data))
+    },
+    deleteWishlistProductProcess: data => {
+      dispatch(EditWishlistActions.deleteWishlistRequest(data))
+    }
   }
 };
 

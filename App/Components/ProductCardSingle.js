@@ -11,7 +11,7 @@ export default class ProductCardSingle extends Component {
     super(props);
     this.state = {
       product: this.props.product,
-      isInWishlist: false,
+      isInWishlist: this.props.product.wishlist === 1,
       modalClipboardVisible: false
     };
   }
@@ -73,14 +73,44 @@ export default class ProductCardSingle extends Component {
     }
   }
 
+  onWishlistPress(){
+    if(!this.state.isInWishlist){
+      if(this.props.addWishlistProductProcess){
+        let data = {
+          data_request:{
+            user_id:this.props.auth.payload.user_id,
+            unique_token: this.props.auth.payload.unique_token,
+            product_slug: this.state.product.slug
+          }
+        }
+        this.props.addWishlistProductProcess(data)
+        this.setState({
+          isInWishlist: !this.state.isInWishlist
+        })
+      }
+    } else {
+      if(this.props.deleteWishlistProductProcess){
+        let data = {
+          data_request:{
+            user_id:this.props.auth.payload.user_id,
+            unique_token: this.props.auth.payload.unique_token,
+            product_slug: this.state.product.slug
+          }
+        }
+        this.props.deleteWishlistProductProcess(data)
+        this.setState({
+          isInWishlist: !this.state.isInWishlist
+        })
+      }
+    }
+  }
+
   renderWishlist(){
     var image = Images.wishlistBlack
     if(this.state.isInWishlist)
       image = Images.wishlist1
     return(
-      <TouchableWithoutFeedback onPress={() => this.setState({
-        isInWishlist: !this.state.isInWishlist
-      })}>
+      <TouchableWithoutFeedback onPress={() => this.onWishlistPress()}>
         <View style={styles.wishlist}>
           <Image
               source={image}
@@ -92,8 +122,8 @@ export default class ProductCardSingle extends Component {
   }
 
   render () {
-    var price = convertToRupiah(this.state.product.price - this.state.product.discPrice)
-    var disc = this.state.product.discPrice > 0 ? convertToRupiah(this.state.product.price) : ''
+    var price = this.state.product.product_sale_price > 0 ? convertToRupiah(this.state.product.product_sale_price) : convertToRupiah(this.state.product.product_regular_price)
+    var disc = this.state.product.product_sale_price > 0 ? convertToRupiah(this.state.product.product_regular_price) : ''
     return (
       <View style={styles.item}>
         <View style={styles.topItem}>

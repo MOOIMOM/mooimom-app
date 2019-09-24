@@ -12,13 +12,11 @@ class ContactScreen extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      activeSlide: 0,
-      whatsapp:'6281288446533',
-      line:'@mooimom',
-      mail:'cs@mooimom.id',
-      instagram:'mooimom.id',
-      phone:'(021) 29375214',
-      balance:0
+      whatsapp:this.props.setting.payload.whatsapp,
+      line:this.props.setting.payload.line,
+      mail:this.props.setting.payload.email,
+      instagram:this.props.setting.payload.instagram,
+      phone:this.props.setting.payload.telephone
     }
   }
 
@@ -188,7 +186,7 @@ class ContactScreen extends Component {
 }
 const mapStateToProps = state => {
   return {
-
+    setting: state.setting
   }
 };
 

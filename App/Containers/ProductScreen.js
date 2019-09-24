@@ -6,8 +6,10 @@ import Carousel, { Pagination  } from 'react-native-snap-carousel';
 import SharedProductActions from '../Redux/SharedProductRedux'
 import GetProductActions from '../Redux/GetProductRedux'
 import CartActions from '../Redux/CartRedux'
+import EditWishlistActions from '../Redux/EditWishlistRedux'
 import { CachedImage } from 'react-native-cached-image';
-import {convertToRupiah, share, shareDescripton} from '../Lib/utils'
+import ScaledImage from '../Components/ScaledImage';
+import {convertToRupiah, share, shareDescripton, download} from '../Lib/utils'
 // Styles
 import styles from './Styles/ProductScreenStyles'
 
@@ -16,12 +18,13 @@ class ProductScreen extends Component {
     super(props)
     this.state = {
       appState: AppState.currentState,
-      product: this.props.navigation.state.params.product,
+      product: {},
+      isInWishlist: false,
       activeSlide: 0,
       colorSelected:'',
       sizeSelected:'',
-      isInWishlist:false,
       modalClipboardVisible: false,
+      modalClipboardVisible2: false,
       willShareDescription:false,
       finishShareImage: false,
       socialShare: '',
@@ -40,7 +43,7 @@ class ProductScreen extends Component {
     this.setState({ fcmToken: await AsyncStorage.getItem('fcmToken') })
     let data = {
       data_request:{
-        product_slug: this.props.navigation.state.params.product.slug,
+        product_slug: this.props.navigation.state.params.product_slug,
         user_id: this.props.navigation.state.params.auth.payload.user_id,
         unique_token: this.props.navigation.state.params.auth.payload.unique_token,
         fcmToken: this.state.fcmToken
@@ -77,7 +80,8 @@ class ProductScreen extends Component {
         this.setState({
           product: newProps.product.payload,
           colorSelected: color,
-          sizeSelected: size
+          sizeSelected: size,
+          isInWishlist: newProps.product.payload.wishlist === 1
         })
       }
     }
@@ -187,6 +191,20 @@ class ProductScreen extends Component {
     }, 1000);
   }
 
+  async downloadImages(){
+    let finish = await download(this.state.product.all_images_mobile_custom)
+    if(finish){
+      this.setState({
+        modalClipboardVisible2: true
+      })
+      setTimeout(() => {
+        this.setState({
+          modalClipboardVisible2: false
+        })
+      }, 1000);
+    }
+  }
+
   selectColor(slug){
     this.setState({
       colorSelected:slug
@@ -204,18 +222,42 @@ class ProductScreen extends Component {
     this.props.loadProductVariationProcess(data)
   }
 
+  onWishlistPress(){
+    if(!this.state.isInWishlist){
+      let data = {
+        data_request:{
+          user_id:this.props.navigation.state.params.auth.payload.user_id,
+          unique_token: this.props.navigation.state.params.auth.payload.unique_token,
+          product_slug: this.state.product.slug
+        }
+      }
+      this.props.addWishlistProductProcess(data)
+
+    } else {
+      let data = {
+        data_request:{
+          user_id:this.props.navigation.state.params.auth.payload.user_id,
+          unique_token: this.props.navigation.state.params.auth.payload.unique_token,
+          product_slug: this.state.product.slug
+        }
+      }
+      this.props.deleteWishlistProductProcess(data)
+    }
+    this.setState({
+      isInWishlist: !this.state.isInWishlist
+    })
+  }
+
   renderWishlistButton(){
     var image = Images.wishlistProduct
-    if(this.state.product.wishlist === 1)
+    if(this.state.isInWishlist)
       image = Images.isWishlistProduct
     return (
-      <View style={styles.wishlistBtn}>
-        <TouchableWithoutFeedback onPress={() => this.setState({
-            isInWishlist: !this.state.isInWishlist
-          })}>
+      <TouchableWithoutFeedback onPress={() => this.onWishlistPress()}>
+        <View style={styles.wishlistBtn}>
             <Image source={image} style={styles.wishlistImage} />
-        </TouchableWithoutFeedback>
-      </View>
+          </View>
+      </TouchableWithoutFeedback>
     )
   }
 
@@ -325,6 +367,8 @@ class ProductScreen extends Component {
   }
 
   renderSizeGuide(){
+    if(!this.state.product.show_size_guide_button)
+      return <View/>
     return (
         <View style={styles.sizeGuideWrapper}>
         <TouchableOpacity onPress={() => this.setState({
@@ -417,6 +461,23 @@ class ProductScreen extends Component {
       )
   }
 
+  renderImagesCustom(){
+    if(this.state.product.all_images_mobile_custom && this.state.product.all_images_mobile_custom.length > 0){
+      return (
+        <View style={styles.customImagesContainer}>
+        <TouchableOpacity style={styles.btnDownload} onPress={() => this.downloadImages()}>
+          <Text style={styles.textCopy}>Download Images</Text>
+        </TouchableOpacity>
+        {this.state.product.all_images_mobile_custom.map((image, index) => {
+          return (
+            <ScaledImage key={index.toString()} uri={image.url} width={Metrics.screenWidth - 40} />
+          )
+        })}
+        </View>
+      )
+    }
+  }
+
   renderReview({item, index}){
     var stars = []
     for(var i = 1;i<=5;i++){
@@ -454,7 +515,6 @@ class ProductScreen extends Component {
   }
 
   addToCart(){
-    console.info(this.props.product)
     var arr = this.props.product.payload.all_product_variations_with_stock_data
     var sku = ''
     for(var i = 0;i<arr.length;i++){
@@ -483,8 +543,8 @@ class ProductScreen extends Component {
   }
 
   render () {
-    var price = 0
-    var disc = 0
+    var price = ''
+    var disc = ''
     if(this.state.product && this.state.product.product_regular_price > 0){
        price = this.state.product.product_sale_price > 0 ? convertToRupiah(this.state.product.product_sale_price) : convertToRupiah(this.state.product.product_regular_price)
        disc = this.state.product.product_sale_price > 0 ? convertToRupiah(this.state.product.product_regular_price) : ''
@@ -511,7 +571,7 @@ class ProductScreen extends Component {
           <ScrollView
           showsVerticalScrollIndicator={false}
           >
-            <View style={styles.productImageWrapper}>
+            {this.state.product.images && <View style={styles.productImageWrapper}>
               <Carousel
                 sliderWidth={Metrics.screenWidth}
                 sliderHeight={Metrics.screenWidth}
@@ -531,7 +591,7 @@ class ProductScreen extends Component {
                 dotContainerStyle={styles.paginationDotContainerStyleImage}
               />
               {this.renderWishlistButton()}
-            </View>
+            </View>}
             <View style={styles.wrapperSeparator}/>
             <View style={styles.productDescriptionWrapper}>
               <Text style={styles.productCode}>PRODUCT CODE - {this.state.product.sku}</Text>
@@ -572,7 +632,8 @@ class ProductScreen extends Component {
               {this.renderSize()}
             <View style={styles.wrapperSeparator}/>
               {this.renderSizeGuide()}
-            <View style={styles.wrapperSeparator}/>
+              {this.renderImagesCustom()}
+              <View style={styles.wrapperSeparator}/>
             <View style={styles.reviewWrapper}>
               <Text style={styles.productSubtitle}>Ulasan Produk</Text>
               <FlatList
@@ -594,6 +655,9 @@ class ProductScreen extends Component {
         </View>
         {this.state.modalClipboardVisible && <View style={styles.modalView}>
           <Text style={styles.modalText}>Text Copied to Clipboard</Text>
+        </View>}
+        {this.state.modalClipboardVisible2 && <View style={styles.modalView}>
+          <Text style={styles.modalText}>Images have been downloaded</Text>
         </View>}
         {this.state.willShareDescription && <View style={styles.modalShareView}>
           <View style={styles.modalShareContainer}>
@@ -627,6 +691,12 @@ const mapDispatchToProps = dispatch => {
     addToCartProcess: data => {
       dispatch(CartActions.addCartRequest(data))
     },
+    addWishlistProductProcess: data => {
+      dispatch(EditWishlistActions.addWishlistRequest(data))
+    },
+    deleteWishlistProductProcess: data => {
+      dispatch(EditWishlistActions.deleteWishlistRequest(data))
+    }
   }
 };
 

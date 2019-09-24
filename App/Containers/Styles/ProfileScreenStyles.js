@@ -67,7 +67,8 @@ export default StyleSheet.create({
   imgProfile:{
     width: 70,
     height: 70,
-    resizeMode: 'contain'
+    resizeMode: 'contain',
+    borderRadius: 70
   },
   textPhone:{
     color:Colors.black,
@@ -132,5 +133,52 @@ export default StyleSheet.create({
     fontFamily: Fonts.type.gotham2,
     fontSize: 13,
     marginLeft: 20
+  },
+  viewOut:{
+    width: Metrics.screenWidth,
+    height: Metrics.screenHeight,
+    backgroundColor: 'rgba(0,0,0,0.5)'
+  },
+  viewIn:{
+    width: Metrics.screenWidth - 40,
+    height: Metrics.screenHeight / 2,
+    top:Metrics.screenHeight / 4,
+    backgroundColor: Colors.white,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 20,
+    borderRadius: 20
+  },
+  viewTextLine:{
+    alignItems: 'center',
+    marginBottom: 30,
+  },
+  textModalLine:{
+    color: Colors.black,
+    fontFamily: Fonts.type.gotham2,
+    fontSize: 14,
+  },
+  viewBtn:{
+    backgroundColor: Colors.mooimom,
+    borderRadius: 5,
+    height: 30,
+    width: Metrics.screenWidth / 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 10
+  },
+  viewBtn2:{
+    backgroundColor: Colors.fire,
+    borderRadius: 5,
+    height: 30,
+    width: Metrics.screenWidth / 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 10
+  },
+  textModal:{
+    color: Colors.white,
+    fontFamily: Fonts.type.gotham4,
+    fontSize: 12,
   }
 })
