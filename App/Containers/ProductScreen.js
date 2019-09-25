@@ -262,8 +262,11 @@ class ProductScreen extends Component {
   }
 
   _renderImage ({item, index}, parallaxProps) {
+    var image = Images.default
+    if(item.url && item.url !== '')
+      image = {uri:item.url}
     return (
-      <CachedImage source={{uri:item.url}} style={styles.productImage} />
+      <CachedImage source={image} style={styles.productImage} />
     );
   }
 
@@ -303,10 +306,13 @@ class ProductScreen extends Component {
           let styleDisabled
           if(isEmpty)
             styleDisabled = styles.buttonColorDisabled
+          var image = Images.default
+          if(data.image_url && data.image_url !== '')
+            image = {uri:data.image_url}
           return(
             <TouchableOpacity key={data.slug} onPress={
               () => this.selectColor(data.slug)} disabled={isEmpty}>
-              <CachedImage source={{uri:data.image_url}} style={[styles.colorButton, this.colorStyling(data.slug, data.color)]}/>
+              <CachedImage source={image} style={[styles.colorButton, this.colorStyling(data.slug, data.color)]}/>
               <View style={styleDisabled}/>
             </TouchableOpacity>
           )})}
@@ -408,7 +414,7 @@ class ProductScreen extends Component {
                 <Text style={styles.textRincian}>Rincian Ukuran</Text>
                 <Text style={styles.textRincian2}>Cara Mengukur</Text>
                 <View style={styles.wrapperSeparator}/>
-                {this.state.product.picture_for_how_to_measure_url && <Image source={{uri:this.state.product.picture_for_how_to_measure_url}} style={styles.imageHowTo}/>}
+                {this.state.product.picture_for_how_to_measure_url && this.state.product.picture_for_how_to_measure_url !== '' && <Image source={{uri:this.state.product.picture_for_how_to_measure_url}} style={styles.imageHowTo}/>}
                 <View style={styles.wrapperSeparator}/>
                 <Text style={styles.textRincian3}>{this.state.product.text_for_how_to_measure}</Text>
                 {this.renderTableFrontend(this.state.product.how_to_measure_table_header_frontend, this.state.product.how_to_measure_table_frontend)}
@@ -505,8 +511,11 @@ class ProductScreen extends Component {
         </View>
         <View style={styles.reviewImageWrapper}>
           {item.images.map((image, index) => {
+            var image = Images.default
+            if(image.url && image.url !== '')
+              image = {uri:image.url}
             return (
-              <Image key={index} source={{uri:image.url}} style={styles.reviewImage}/>
+              <Image key={index} source={image} style={styles.reviewImage}/>
             )
           })}
         </View>

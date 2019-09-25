@@ -16,6 +16,7 @@ export const reducers = combineReducers({
   auth: require('./AuthRedux').reducer,
   getHomepage: require('./GetHomepageRedux').reducer,
   product: require('./GetProductRedux').reducer,
+  productCategory: require('./GetProductCategoryRedux').reducer,
   cart: require('./CartRedux').reducer,
   address: require('./GetAddressRedux').reducer,
   editaddress: require('./EditAddressRedux').reducer,
@@ -36,6 +37,11 @@ export const reducers = combineReducers({
   addWithdraw: require('./AddWithdrawRedux').reducer,
   getSearch: require('./GetSearchRedux').reducer,
   notification: require('./GetNotificationRedux').reducer,
+  allOrder: require('./GetAllOrderRedux').reducer,
+  order: require('./GetOrderRedux').reducer,
+  commissionSummary: require('./GetCommissionSummaryRedux').reducer,
+  checkout: require('./CheckoutRedux').reducer,
+  commissionEstimation: require('./CommissionEstimationRedux').reducer,
 })
 
 export default () => {

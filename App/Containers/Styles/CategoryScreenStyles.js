@@ -214,5 +214,10 @@ export default StyleSheet.create({
     height: Metrics.screenHeight,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  containerLoading2:{
+    marginTop: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 })

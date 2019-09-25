@@ -42,10 +42,13 @@ class DetailOrderScreen extends Component {
   _renderProductCart({item, index}){
     var price = item.discPrice > 0 ? item.discPrice : item.price
     price = convertToRupiah(price * item.qty)
+    var image = Images.default
+    if(item.images[0].url && item.images[0].url !== '')
+      image = {uri:item.images[0].url}
     return(
       <View style={styles.productContainer}>
         <View style={styles.productImageWrapper}>
-          <Image source={{uri:item.images[0].url}} style={styles.productImage}/>
+          <Image source={image} style={styles.productImage}/>
         </View>
         <View style={styles.productDescriptionWrapper}>
           <View style={styles.nameWrapper}>

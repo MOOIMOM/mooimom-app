@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, TouchableOpacity, TextInput, Image, KeyboardAvoidingView, ActivityIndicator } from 'react-native'
+import { ScrollView, Text, View, TouchableOpacity, TextInput, Image, KeyboardAvoidingView, ActivityIndicator, Alert } from 'react-native'
 import { Images, Metrics, Colors } from '../Themes'
 import { connect } from 'react-redux'
 import {convertToRupiah } from '../Lib/utils'
@@ -72,8 +72,9 @@ class UpdateAddressScreen extends Component {
     this.props.getDistrictsProcess(data3)
   }
 
-  changeProvince(val){
-      this.setState({province: val, province_name: '', city_name: '', city: '', district: '', district_name: ''})
+  async changeProvince(val){
+    var province_name = await this.props.province.payload.provinces.find(province => province.id === val).name
+    this.setState({province: val, province_name: province_name, city_name: '', city: '', district: '', district_name: ''})
       let data = {
         data_request:{
           user_id: this.props.auth.payload.user_id,
@@ -84,8 +85,9 @@ class UpdateAddressScreen extends Component {
       this.props.getCitiesProcess(data)
   }
 
-  changeCity(val){
-      this.setState({city: val, city_name: '', district: '', district_name: ''})
+  async changeCity(val){
+      var city_name = await this.props.city.payload.cities.find(city => city.id === val).name
+      this.setState({city: val, city_name: city_name, district: '', district_name: ''})
       let data = {
         data_request:{
           user_id: this.props.auth.payload.user_id,
@@ -127,12 +129,6 @@ class UpdateAddressScreen extends Component {
   }
 
   render () {
-    if(!this.props.province.payload || !this.props.city.payload || !this.props.district.payload){
-      return (
-      <View style={styles.containerLoading}>
-        <ActivityIndicator size="large" color={Colors.mooimom} />
-      </View>
-    )}
     return (
       <View style={styles.container}>
         <View style={styles.headerWrapper}>
@@ -167,7 +163,8 @@ class UpdateAddressScreen extends Component {
             onChangeText={val => this.setState({ street: val })}
             autoCapitalize= 'words'
           />
-          <PickerCustom
+          {this.props.province.payload && this.props.province.payload.provinces
+            && this.props.province.payload.provinces.length > 0 && <PickerCustom
             placeholder='Pilih Propinsi'
             data={this.props.province.payload.provinces}
             selectedValue={this.state.province}
@@ -176,8 +173,9 @@ class UpdateAddressScreen extends Component {
             label={'Propinsi'}
             label0={'Pilih Propinsi'}
             onValueChange={val => this.changeProvince(val)}
-          />
-          <PickerCustom
+          />}
+          {this.props.city.payload && this.props.city.payload.cities
+            && this.props.city.payload.cities.length > 0 && <PickerCustom
             placeholder='Pilih Kota'
             data={this.props.city.payload.cities}
             selectedValue={this.state.city}
@@ -187,10 +185,12 @@ class UpdateAddressScreen extends Component {
             label0={'Pilih Kota'}
             value={this.state.city}
             onValueChange={val => this.changeCity(val)}
-          />
-          <PickerCustom
+          />}
+          {this.props.district.payload && this.props.district.payload.districts
+            && this.props.district.payload.districts.length > 0 &&
+            <PickerCustom
             placeholder='Pilih Kecamatan'
-            data={this.props.district.payload.districts}
+            data={this.state.city !== '' ? this.props.district.payload.districts : []}
             selectedValue={this.state.district}
             selectedLabel={this.state.district_name}
             color={Colors.black}
@@ -198,7 +198,7 @@ class UpdateAddressScreen extends Component {
             label0={'Pilih Kecamatan'}
             value={this.state.district}
             onValueChange={val => this.setState({district: val})}
-          />
+          />}
           <TextInputCustom
             placeholder='Kode Pos'
             color={Colors.black}

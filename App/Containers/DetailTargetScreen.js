@@ -2,22 +2,59 @@ import React, { Component } from 'react'
 import { ScrollView, Text, View, Image, TouchableOpacity, FlatList} from 'react-native'
 import { Images, Metrics } from '../Themes'
 import LinearGradient from 'react-native-linear-gradient';
+import GetCommissionSummaryActions from '../Redux/GetCommissionSummaryRedux';
+import SettingActions from '../Redux/SettingRedux';
 import { connect } from 'react-redux'
 import {convertToRupiah} from '../Lib/utils'
 
 // Styles
 import styles from './Styles/DetailTargetScreenStyles'
+var months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+           "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
 
 class DetailTargetScreen extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      simulations:[
-        {name:'Target 1', min:1000000, bonus:'10%'},
-        {name:'Target 2', min:1750000, bonus:'15%'},
-        {name:'Target 3', min:3000000, bonus:'18%'},
-        {name:'Target 4', min:6000000, bonus:'20%'},
-      ]
+      simulations:[],
+      commissionSummary: {}
+    }
+  }
+
+  componentDidMount(){
+    let data = {
+      data_request:{
+        user_id: this.props.auth.payload.user_id,
+        unique_token: this.props.auth.payload.unique_token,
+      }
+    }
+    this.props.getCommissionSummaryProcess(data)
+    this.props.getSettingRequest(data)
+  }
+
+  componentWillReceiveProps (newProps) {
+    if(this.props.commissionSummary !== newProps.commissionSummary){
+      if (
+        newProps.commissionSummary.payload !== null &&
+        newProps.commissionSummary.error === null &&
+        !newProps.commissionSummary.fetching
+      ) {
+        this.setState({
+          commissionSummary: newProps.commissionSummary.payload,
+        })
+      }
+    }
+
+    if(this.props.setting !== newProps.setting){
+      if (
+        newProps.setting.payload !== null &&
+        newProps.setting.error === null &&
+        !newProps.setting.fetching
+      ) {
+        this.setState({
+          simulations: newProps.setting.payload.sales_target,
+        })
+      }
     }
   }
 
@@ -30,13 +67,42 @@ class DetailTargetScreen extends Component {
     return(
       <View style={styles.itemSimulation}>
         <Text style={styles.textSimulation}>{item.name}</Text>
-        <Text style={styles.textSimulation}>{convertToRupiah(item.min)}</Text>
-        <Text style={styles.textSimulation2}>{item.bonus}</Text>
+        <Text style={styles.textSimulation}>{convertToRupiah(item.minimal)}</Text>
+        <Text style={styles.textSimulation2}>{item.commission}%</Text>
       </View>
     )
   }
 
   render () {
+    var target = 0
+    var achieve = 0
+    var processing = 0
+    var curBonus = 0
+    var nextBonus = 0
+    var bonus_val = 0
+    var date_start = ''
+    var date_end = ''
+    if(this.state.commissionSummary.all_orders_completed_total_spending >= 0)
+      achieve = this.state.commissionSummary.all_orders_completed_total_spending
+    if(this.state.commissionSummary.how_much_commission_user_need_to_get_to_get_next_commission_target_percentage >= 0)
+      target = this.state.commissionSummary.how_much_commission_user_need_to_get_to_get_next_commission_target_percentage
+    if(this.state.commissionSummary.all_orders_processing_total_spending >= 0)
+      processing = this.state.commissionSummary.all_orders_processing_total_spending
+    if(this.state.commissionSummary.what_percentage_commission_user_will_receive_now >= 0)
+      curBonus = this.state.commissionSummary.what_percentage_commission_user_will_receive_now
+    if(this.state.commissionSummary.what_percentage_commission_user_will_receive_next >= 0)
+      nextBonus = this.state.commissionSummary.what_percentage_commission_user_will_receive_next
+    if(this.state.commissionSummary.how_much_commission_user_will_receive_this_week >= 0)
+      bonus_val = this.state.commissionSummary.how_much_commission_user_will_receive_this_week
+    if(this.state.commissionSummary.date_start && this.state.commissionSummary.date_start !== ''){
+      var dt = this.state.commissionSummary.date_start.split('-')
+      date_start = parseInt(dt[2], 10) +' '+ months[parseInt(dt[1], 10) - 1]
+    }
+    if(this.state.commissionSummary.date_end && this.state.commissionSummary.date_end !== ''){
+      var dt = this.state.commissionSummary.date_end.split('-')
+      date_end = parseInt(dt[2], 10) +' '+ months[parseInt(dt[1], 10) - 1]
+    }
+    var need = target - achieve
     return (
       <View style={styles.container}>
         <View style={styles.containerScroll}>
@@ -60,21 +126,21 @@ class DetailTargetScreen extends Component {
             showsVerticalScrollIndicator={false}
             >
               <LinearGradient colors={['#82DED2', '#66CCCC']} style={styles.topContainer}>
-                  <Text style={styles.textTarget}>Target Bonus Minggu Ini (2 Sept 2019)</Text>
-                  <Text style={styles.textBonus}>Bonus Saat ini: 0%</Text>
+                  <Text style={styles.textTarget}>Target Bonus Minggu Ini</Text>
+                  <Text style={styles.textBonus}>Bonus Saat ini: {curBonus}%</Text>
                   <View style={styles.calculateBonusWrapper}>
-                    <Text style={styles.textString}>Target bonus 10%</Text>
+                    <Text style={styles.textString}>Target bonus {nextBonus}%</Text>
                     <Text style={styles.textString}>Penjualan minggu ini</Text>
                   </View>
                   <View style={styles.calculateBonusWrapper}>
-                    <Text style={styles.textAmount}>{convertToRupiah(1000000)}</Text>
+                    <Text style={styles.textAmount}>{convertToRupiah(target)}</Text>
                     <Text style={styles.textMath}>-</Text>
-                    <Text style={styles.textAmount}>{convertToRupiah(500000)}</Text>
+                    <Text style={styles.textAmount}>{convertToRupiah(achieve)}</Text>
                     <Text style={styles.textMath}>=</Text>
                   </View>
                   <View style={styles.amountContainer}>
-                    <Text style={styles.textTargetAmount}>Rp500.000</Text>
-                    <Text style={styles.textTargetMore}>Jumlah yang diperlukan untuk bonus 10%</Text>
+                    <Text style={styles.textTargetAmount}>{convertToRupiah(need)}</Text>
+                    <Text style={styles.textTargetMore}>Jumlah yang diperlukan untuk bonus {nextBonus}%</Text>
                   </View>
               </LinearGradient>
               <View style={styles.wrapperSeparator}/>
@@ -92,23 +158,23 @@ class DetailTargetScreen extends Component {
                   <Text style={styles.textInfo}>Bonus dihitung berdasarkan harga asli barang, dan tidak termasuk keuntungan Anda</Text>
                 </View>
                 <View style={styles.wrapperSeparator}/>
-                <Text style={styles.textBonusWeekly}>Program Bonus Minggu ini (2 Sept - 8 Sept)</Text>
+                <Text style={styles.textBonusWeekly}>Program Bonus Minggu ini ({date_start} - {date_end})</Text>
                 <View style={styles.wrapperSeparator}/>
                 <View style={styles.penjualanCalculator}>
                   <Text style={styles.textInfo2}>Total Penjualan (Semua Pesanan)</Text>
-                  <Text style={styles.textPenjualan1}>{convertToRupiah(0)}</Text>
+                  <Text style={styles.textPenjualan1}>{convertToRupiah(achieve)}</Text>
                 </View>
                 <View style={styles.penjualanCalculator}>
                   <Text style={styles.textInfo2}>Total Penjualan (Belum Selesai)</Text>
-                  <Text style={styles.textPenjualan2}>{convertToRupiah(0)}</Text>
+                  <Text style={styles.textPenjualan2}>{convertToRupiah(processing)}</Text>
                 </View>
                 <View style={styles.penjualanCalculator}>
                   <Text style={styles.textInfo2}>Total Penjualan (Sudah Diverifikasi)</Text>
-                  <Text style={styles.textPenjualan3}>{convertToRupiah(0)}</Text>
+                  <Text style={styles.textPenjualan3}>{convertToRupiah(achieve)}</Text>
                 </View>
                 <View style={styles.penjualanCalculator2}>
                   <Text style={styles.textInfo2}>Estimasi Bonus yang Diterima</Text>
-                  <Text style={styles.textPenjualan3}>{convertToRupiah(0)} (0%)</Text>
+                  <Text style={styles.textPenjualan3}>{convertToRupiah(bonus_val)} ({curBonus}%)</Text>
                 </View>
                 <View style={styles.wrapperSeparator}/>
                 <View style={styles.tableSimulation}>
@@ -133,13 +199,20 @@ class DetailTargetScreen extends Component {
 }
 const mapStateToProps = state => {
   return {
-
+    commissionSummary: state.commissionSummary,
+    auth: state.auth,
+    setting: state.setting
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-
+    getCommissionSummaryProcess: data => {
+      dispatch(GetCommissionSummaryActions.getCommissionSummaryRequest(data))
+    },
+    getSettingRequest: data => {
+      dispatch(SettingActions.getSettingRequest(data))
+    },
   }
 };
 

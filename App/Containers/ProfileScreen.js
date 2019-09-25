@@ -30,21 +30,13 @@ class ProfileScreen extends Component {
       phone_number: '',
       balance: 0,
       modalUpImage: false,
-      avatarSourceUser: null,
     }
     this.selectPhoto = this.selectPhoto.bind(this)
     this.selectGalery = this.selectGalery.bind(this)
   }
 
   componentDidMount(){
-    let data ={
-      data_request:{
-        user_id: this.props.auth.payload.user_id,
-        unique_token: this.props.auth.payload.unique_token,
-      }
-    }
-    this.props.getProfileProcess(data)
-    this.props.getBalanceProcess(data)
+    this.reloadData()
   }
 
   componentWillReceiveProps(newProps){
@@ -61,6 +53,16 @@ class ProfileScreen extends Component {
       }
     }
 
+    if(this.props.editprofile !== newProps.editprofile){
+      if (
+        newProps.editprofile.payload !== null &&
+        newProps.editprofile.error === null &&
+        !newProps.editprofile.fetching
+      ) {
+        this.reloadData()
+      }
+    }
+
     if(this.props.balance !== newProps.balance){
       if (
         newProps.balance.payload !== null &&
@@ -72,6 +74,17 @@ class ProfileScreen extends Component {
         })
       }
     }
+  }
+
+  reloadData(){
+    let data ={
+      data_request:{
+        user_id: this.props.auth.payload.user_id,
+        unique_token: this.props.auth.payload.unique_token,
+      }
+    }
+    this.props.getProfileProcess(data)
+    this.props.getBalanceProcess(data)
   }
 
   async selectPhoto () {
@@ -94,7 +107,6 @@ class ProfileScreen extends Component {
           var convert = img.split('/')
           var nameImg = convert[convert.length - 1]
           this.setState({
-            avatarSourceUser: image.path,
             modalUpImage: false
           })
           const form = new FormData()
@@ -142,7 +154,6 @@ class ProfileScreen extends Component {
           var convert = img.split('/')
           var nameImg = convert[convert.length - 1]
           this.setState({
-            avatarSourceUser: image.path,
             modalUpImage: false
           })
           const form = new FormData()
@@ -202,8 +213,6 @@ class ProfileScreen extends Component {
     var imageprofile = Images.profile
     if(this.state.profile.profile_picture_thumb_url)
       imageprofile = {uri: this.state.profile.profile_picture_thumb_url}
-    if(this.state.avatarSourceUser)
-      imageprofile = {uri: this.state.avatarSourceUser}
     return (
       <View style={styles.container}>
         <View style={styles.containerScroll}>
@@ -327,7 +336,8 @@ const mapStateToProps = state => {
   return {
     auth: state.auth,
     profile: state.profile,
-    balance: state.balance
+    balance: state.balance,
+    editprofile: state.editprofile
   }
 };
 

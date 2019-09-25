@@ -68,7 +68,7 @@ export default StyleSheet.create({
     width: 70,
     height: 70,
     resizeMode: 'contain',
-    borderRadius: 70
+    borderRadius: 35
   },
   textPhone:{
     color:Colors.black,

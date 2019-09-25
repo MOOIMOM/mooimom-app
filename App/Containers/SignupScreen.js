@@ -63,7 +63,6 @@ class SignupScreen extends Component {
     }
 
     if (this.props.sendOtp !== newProps.sendOtp) {
-      console.info(newProps)
       if (
         newProps.sendOtp.payload !== null &&
         newProps.sendOtp.error === null &&
@@ -130,7 +129,6 @@ class SignupScreen extends Component {
         phone_number: myPhoneNumber
       }
     }
-    console.info(data)
     this.props.signUpProcess(data)
   }
 
@@ -156,6 +154,7 @@ class SignupScreen extends Component {
                   underlineColorAndroid='transparent'
                   placeholderTextColor='white'
                   selectionColor='white'
+                  onSubmitEditing={() => this.signUp()}
                 />
               </View>
               <TouchableOpacity

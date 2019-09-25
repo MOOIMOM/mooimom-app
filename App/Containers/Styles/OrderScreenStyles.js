@@ -206,4 +206,9 @@ export default StyleSheet.create({
     fontFamily: Fonts.type.gotham4,
     fontSize: 16,
   },
+  containerLoading:{
+    marginTop: 100,
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 })

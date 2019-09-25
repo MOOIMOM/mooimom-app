@@ -35,7 +35,6 @@ export default class ProductCard extends Component {
             product_slug: this.state.product.slug
           }
         }
-        console.info(data)
         this.props.addWishlistProductProcess(data)
         this.setState({
           isInWishlist: !this.state.isInWishlist
@@ -50,7 +49,6 @@ export default class ProductCard extends Component {
             product_slug: this.state.product.slug
           }
         }
-        console.info(data)
         this.props.deleteWishlistProductProcess(data)
         this.setState({
           isInWishlist: !this.state.isInWishlist
@@ -79,10 +77,13 @@ export default class ProductCard extends Component {
     if(!this.state.product.product_regular_price) return (<View/>)
     var price = this.state.product.product_sale_price > 0 ? convertToRupiah(this.state.product.product_sale_price) : convertToRupiah(this.state.product.product_regular_price)
     var disc = this.state.product.product_sale_price > 0 ? convertToRupiah(this.state.product.product_regular_price) : ''
+    var image = Images.default
+    if(this.state.product.images && this.state.product.images.length > 0 && this.state.product.images[0].url && this.state.product.images[0].url !== '')
+      image = {uri:this.state.product.images[0].url}
     return (
       <View style={styles.item}>
         <CachedImage
-            source={{uri:this.state.product.images[0].url}}
+            source={image}
             style={styles.image}
         />
         {this.renderWishlist()}

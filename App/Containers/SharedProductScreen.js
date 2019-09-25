@@ -36,11 +36,11 @@ class SharedProductScreen extends Component {
   }
 
   componentWillReceiveProps(newProps){
-    if (this.props.editwishlist !== newProps.editwishlist) {
+    if (this.props.editWishlist !== newProps.editWishlist) {
       if (
-        newProps.editwishlist.payload !== null &&
-        newProps.editwishlist.error === null &&
-        !newProps.editwishlist.fetching
+        newProps.editWishlist.payload !== null &&
+        newProps.editWishlist.error === null &&
+        !newProps.editWishlist.fetching
       ) {
           this.reloadWishlist()
       }
@@ -156,7 +156,7 @@ const mapStateToProps = state => {
     sharedProduct: state.sharedProduct,
     wishlist: state.wishlist,
     auth: state.auth,
-    editwishlist: state.editwishlist
+    editWishlist: state.editWishlist
   }
 };
 

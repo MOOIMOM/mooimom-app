@@ -1,11 +1,15 @@
 import React, { Component, PropTypes } from "react";
 import { Image } from "react-native";
 import { CachedImage } from 'react-native-cached-image';
+import { Images } from '../Themes'
 
 export default class ScaledImage extends Component {
   constructor(props) {
       super(props);
-      this.state = { source: { uri: this.props.uri } };
+      var image = Images.default
+      if(this.props.uri && this.props.uri !== '')
+        image = { uri: this.props.uri }
+      this.state = { source: image };
   }
 
   componentWillMount() {

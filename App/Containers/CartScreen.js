@@ -5,16 +5,72 @@ import { connect } from 'react-redux'
 import {convertToRupiah } from '../Lib/utils'
 import ModalDropDown from '../Components/ModalDropDown'
 import CartActions from '../Redux/CartRedux'
+import CommissionEstimationActions from '../Redux/CommissionEstimationRedux'
 // Styles
 import styles from './Styles/CartScreenStyles'
 class CartScreen extends Component {
   constructor (props) {
     super(props)
+    this.state = {
+      commission: 0
+    }
+  }
+
+  componentDidMount(){
+    this.reloadCommission(this.props.cart.data)
   }
 
   actNavigate (screen) {
     const { navigate } = this.props.navigation
     navigate(screen, {})
+  }
+
+  componentWillReceiveProps(newProps){
+    if (this.props.commissionEstimation !== newProps.commissionEstimation) {
+      if (
+        newProps.commissionEstimation.payload !== null &&
+        newProps.commissionEstimation.error === null &&
+        !newProps.commissionEstimation.fetching
+      ) {
+          this.setState({
+            commission: newProps.commissionEstimation.payload.commission_expectation
+          })
+      }
+    }
+
+    if(this.props.cart !== newProps.cart){
+      if (
+        newProps.commissionEstimation.payload !== null &&
+        newProps.commissionEstimation.error === null &&
+        !newProps.commissionEstimation.fetching
+      ) {
+          this.reloadCommission(newProps.cart.data)
+      }
+    }
+  }
+
+  reloadCommission(arr){
+    if(arr.length < 1) {
+      this.setState({
+        commission: 0
+      })
+      return
+    };
+    let dataCart = '['
+    arr.map(cart => {
+      dataCart = dataCart + '{"sku":"' + cart.sku + '","quantity":' + cart.qty + '},'
+    })
+    if(dataCart.length > 1)
+      dataCart = dataCart.substring(0, dataCart.length - 1)
+    dataCart = dataCart + ']'
+    let data = {
+      data_request:{
+        user_id: this.props.auth.payload.user_id,
+        unique_token: this.props.auth.payload.unique_token,
+        product_variations_user_want_to_buy:dataCart
+      }
+    }
+    this.props.getCommissionEstimationProcess(data)
   }
 
   _renderSize({item, index}){
@@ -30,10 +86,14 @@ class CartScreen extends Component {
   }
 
   _renderColor({item, index}){
+    var image = Images.default
+    if(item.image_url && item.image_url !== ''){
+      image = {uri:item.image_url}
+    }
     return (
         <TouchableOpacity>
           <View style={styles.colorBtn}>
-            <Image source={{uri:item.image_url}} style={[styles.colorPick]}/>
+            <Image source={image} style={[styles.colorPick]}/>
           </View>
         </TouchableOpacity>
     );
@@ -186,10 +246,14 @@ class CartScreen extends Component {
     price = convertToRupiah(price * item.qty)
     var size = item.product.sizes.find(x => x.slug === item.size).name
     var color = item.product.colors.find(x => x.slug === item.color).image_url
+    var image = Images.default
+    if(item.product.img_url && item.product.img_url !== ''){
+      image = {uri:item.product.img_url}
+    }
     return(
       <View style={styles.productContainer} key={index.toString()}>
         <View style={styles.productImageWrapper}>
-          <Image source={{uri:item.product.img_url}} style={styles.productImage}/>
+          <Image source={image} style={styles.productImage}/>
           <TouchableOpacity style={styles.removeBtn} onPress={() => {this.removeFromCart(index)}}>
             <Image source={Images.x} style={styles.removeImg}/>
           </TouchableOpacity>
@@ -250,7 +314,7 @@ class CartScreen extends Component {
   render () {
     var price = this.calculatePrice()
     var totalPrice = convertToRupiah(price)
-    var commission = convertToRupiah(price / 10)
+    var commission = convertToRupiah(this.state.commission)
     return (
       <View style={styles.container}>
         <View style={styles.headerWrapper}>
@@ -274,7 +338,7 @@ class CartScreen extends Component {
           <View style={styles.subtotalWrapper}>
             <Text style={styles.subtotalText}>SUBTOTAL</Text>
             <Text style={styles.priceText}>{totalPrice}</Text>
-            <Text style={styles.commissionText}>Est. Komisi {commission}</Text>
+            {!this.props.commissionEstimation.fetching && <Text style={styles.commissionText}>Est. Komisi {commission}</Text>}
           </View>
           <TouchableOpacity style={styles.buyBtn} onPress={() => this.actBuy()}>
             <Text style={styles.buyText}>Beli</Text>
@@ -287,7 +351,9 @@ class CartScreen extends Component {
 
 const mapStateToProps = state => {
   return {
-    cart: state.cart
+    cart: state.cart,
+    auth: state.auth,
+    commissionEstimation: state.commissionEstimation,
   }
 };
 
@@ -295,6 +361,9 @@ const mapDispatchToProps = dispatch => {
   return {
     addToCartProcess: data => {
       dispatch(CartActions.addCartRequest(data))
+    },
+    getCommissionEstimationProcess: data => {
+      dispatch(CommissionEstimationActions.getCommissionEstimationRequest(data))
     },
   }
 };

@@ -13,6 +13,7 @@ import { LoginTypes } from '../Redux/LoginRedux'
 import { AuthTypes } from '../Redux/AuthRedux'
 import { GetHomepageTypes } from '../Redux/GetHomepageRedux'
 import { GetProductTypes } from '../Redux/GetProductRedux'
+import { GetProductCategoryTypes } from '../Redux/GetProductCategoryRedux'
 import { CartTypes } from '../Redux/CartRedux'
 import { GetAddressTypes } from '../Redux/GetAddressRedux'
 import { EditAddressTypes } from '../Redux/EditAddressRedux'
@@ -33,6 +34,11 @@ import { WithdrawTypes } from '../Redux/WithdrawRedux'
 import { AddWithdrawTypes } from '../Redux/AddWithdrawRedux'
 import { GetSearchTypes } from '../Redux/GetSearchRedux'
 import { GetNotificationTypes } from '../Redux/GetNotificationRedux'
+import { GetAllOrderTypes } from '../Redux/GetAllOrderRedux'
+import { GetOrderTypes } from '../Redux/GetOrderRedux'
+import { GetCommissionSummaryTypes } from '../Redux/GetCommissionSummaryRedux'
+import { CheckoutTypes } from '../Redux/CheckoutRedux'
+import { CommissionEstimationTypes } from '../Redux/CommissionEstimationRedux'
 
 /* ------------- Sagas ------------- */
 
@@ -44,6 +50,7 @@ import { postLogin } from './LoginSagas'
 import { postAuth } from './AuthSagas'
 import { postGetHomepage } from './GetHomepageSagas'
 import { postGetProduct } from './GetProductSagas'
+import { postGetProductByCategory } from './GetProductCategorySagas'
 import { postGetProductVariation } from './GetProductVariationSagas'
 import { addCart } from './AddCartSagas'
 import { postGetAddress } from './GetAddressSagas'
@@ -71,6 +78,11 @@ import { postGetWithdraw } from './WithdrawSagas'
 import { postAddWithdraw } from './AddWithdrawSagas'
 import { postGetSearch } from './GetSearchSagas'
 import { postGetNotification } from './GetNotificationSagas'
+import { postGetAllOrders } from './GetAllOrderSagas'
+import { postGetOrder } from './GetOrderSagas'
+import { postGetCommissionSummary } from './GetCommissionSummarySagas'
+import { postCheckout } from './CheckoutSagas'
+import { postGetCommissionEstimation } from './GetCommissionEstimationSagas'
 
 /* ------------- API ------------- */
 
@@ -94,6 +106,7 @@ export default function * root () {
     takeLatest(AuthTypes.AUTH_REQUEST, postAuth, api),
     takeLatest(GetHomepageTypes.GET_HOMEPAGE_REQUEST, postGetHomepage, api),
     takeLatest(GetProductTypes.GET_PRODUCT_REQUEST, postGetProduct, api),
+    takeLatest(GetProductCategoryTypes.GET_PRODUCT_CATEGORY_REQUEST, postGetProductByCategory, api),
     takeLatest(GetProductTypes.GET_PRODUCT_VARIATION_REQUEST, postGetProductVariation, api),
     takeLatest(GetAddressTypes.GET_ADDRESS_REQUEST, postGetAddress, api),
     takeLatest(EditAddressTypes.ADD_ADDRESS_REQUEST, postAddAddress, api),
@@ -120,5 +133,10 @@ export default function * root () {
     takeLatest(AddWithdrawTypes.ADD_WITHDRAW_REQUEST, postAddWithdraw, api),
     takeLatest(GetSearchTypes.GET_SEARCH_REQUEST, postGetSearch, api),
     takeLatest(GetNotificationTypes.GET_NOTIFICATION_REQUEST, postGetNotification, api),
+    takeLatest(GetAllOrderTypes.GET_ALL_ORDER_REQUEST, postGetAllOrders, api),
+    takeLatest(GetOrderTypes.GET_ORDER_REQUEST, postGetOrder, api),
+    takeLatest(GetCommissionSummaryTypes.GET_COMMISSION_SUMMARY_REQUEST, postGetCommissionSummary, api),
+    takeLatest(CommissionEstimationTypes.GET_COMMISSION_ESTIMATION_REQUEST, postGetCommissionEstimation, api),
+    takeLatest(CheckoutTypes.GET_CHECKOUT_REQUEST, postCheckout, api),
   ])
 }

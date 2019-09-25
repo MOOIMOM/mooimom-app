@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, TouchableOpacity, TextInput, Image, KeyboardAvoidingView, Alert } from 'react-native'
+import { ScrollView, Text, View, TouchableOpacity, TextInput, Image, KeyboardAvoidingView, Alert, ActivityIndicator } from 'react-native'
 import { Images, Metrics, Colors } from '../Themes'
 import { connect } from 'react-redux'
 import {convertToRupiah } from '../Lib/utils'
@@ -104,24 +104,25 @@ class EditProfileScreen extends Component {
         unique_token: this.props.auth.payload.unique_token,
         name: name,
         address: address,
-        province_slug: province,
-        city_slug: city,
-        district_slug: district,
+        province_id: province,
+        city_id: city,
+        district_id: district,
         zip_code: zipCode,
         birthday: birthday,
         gender_slug: gender,
         status: status,
         children: children,
         email:email,
-        phone_number: phone
+        phone_number: phone.substring(3)
       }
     }
     this.props.editProfileProcess(data)
     this.props.navigation.goBack()
   }
 
-  changeProvince(val){
-      this.setState({province: val, province_name: '', city_name: '', city: '', district: '', district_name: ''})
+  async changeProvince(val){
+      var province_name = await this.props.province.payload.provinces.find(province => province.id === val).name
+      this.setState({province: val, province_name: province_name, city_name: '', city: '', district: '', district_name: ''})
       let data = {
         data_request:{
           user_id: this.props.auth.payload.user_id,
@@ -132,8 +133,9 @@ class EditProfileScreen extends Component {
       this.props.getCitiesProcess(data)
   }
 
-  changeCity(val){
-      this.setState({city: val, city_name: '', district: '', district_name: ''})
+  async changeCity(val){
+      var city_name = await this.props.city.payload.cities.find(city => city.id === val).name
+      this.setState({city: val, city_name: city_name, district: '', district_name: ''})
       let data = {
         data_request:{
           user_id: this.props.auth.payload.user_id,
@@ -237,19 +239,21 @@ class EditProfileScreen extends Component {
             onChangeText={val => this.setState({ address: val })}
             autoCapitalize= 'words'
           />
-          <PickerCustom
+          {this.props.province.payload && this.props.province.payload.provinces
+            && this.props.province.payload.provinces.length > 0 && <PickerCustom
             placeholder='Pilih Propinsi'
-            data={this.props.province.payload ? this.props.province.payload.provinces : []}
+            data={this.props.province.payload.provinces}
             selectedValue={this.state.province}
             selectedLabel={this.state.province_name}
             color={Colors.black}
             label={'Propinsi'}
             label0={'Pilih Propinsi'}
             onValueChange={val => this.changeProvince(val)}
-          />
-          <PickerCustom
+          />}
+          {this.props.city.payload && this.props.city.payload.cities
+            && this.props.city.payload.cities.length > 0 && <PickerCustom
             placeholder='Pilih Kota'
-            data={this.props.city.payload ? this.props.city.payload.cities : []}
+            data={this.props.city.payload.cities}
             selectedValue={this.state.city}
             selectedLabel={this.state.city_name}
             color={Colors.black}
@@ -257,10 +261,12 @@ class EditProfileScreen extends Component {
             label0={'Pilih Kota'}
             value={this.state.city}
             onValueChange={val => this.changeCity(val)}
-          />
-          <PickerCustom
+          />}
+          {this.props.district.payload && this.props.district.payload.districts
+            && this.props.district.payload.districts.length > 0 &&
+            <PickerCustom
             placeholder='Pilih Kecamatan'
-            data={this.props.district.payload ? this.props.district.payload.districts : []}
+            data={this.state.city !== '' ? this.props.district.payload.districts : []}
             selectedValue={this.state.district}
             selectedLabel={this.state.district_name}
             color={Colors.black}
@@ -268,7 +274,7 @@ class EditProfileScreen extends Component {
             label0={'Pilih Kecamatan'}
             value={this.state.district}
             onValueChange={val => this.setState({district: val})}
-          />
+          />}
           <TextInputCustom
             placeholder='Kode Pos'
             color={Colors.black}

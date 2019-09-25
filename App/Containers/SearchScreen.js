@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, TextInput, Alert, FlatList, AppState, Clipboard } from 'react-native'
-import { Images, Metrics } from '../Themes'
+import { ScrollView, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, TextInput, Alert, FlatList, AppState, Clipboard, ActivityIndicator } from 'react-native'
+import { Images, Metrics, Colors } from '../Themes'
 import ProductCardSingle from '../Components/ProductCardSingle'
 import GetSearchActions from '../Redux/GetSearchRedux'
 import EditWishlistActions from '../Redux/EditWishlistRedux'
@@ -80,6 +80,9 @@ class SearchScreen extends Component {
 
   processSearch(){
     if(this.state.search.length >= 3){
+      this.setState({
+        products: []
+      })
       let data ={
         data_request:{
           user_id: this.props.auth.payload.user_id,
@@ -92,7 +95,6 @@ class SearchScreen extends Component {
   }
 
   _renderProduct ({item, index}) {
-    console.info(item)
     const { navigate } = this.props.navigation
     return (
       <TouchableWithoutFeedback
@@ -143,6 +145,9 @@ class SearchScreen extends Component {
             <ScrollView
             showsVerticalScrollIndicator={false}
             >
+            {this.props.getSearch.fetching && <View style={styles.containerLoading}>
+              <ActivityIndicator size="large" color={Colors.mooimom} />
+            </View>}
               <FlatList
                 showsVerticalScrollIndicator={false}
                 data={this.state.products}

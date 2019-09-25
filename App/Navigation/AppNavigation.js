@@ -47,7 +47,9 @@ const MainNav = createBottomTabNavigator({
     labelStyle: {
       fontSize: 12,
       fontFamily: Fonts.type.gotham2,
-      marginBottom:4
+    },
+    style: {
+      paddingVertical:4
     },
   }
 })

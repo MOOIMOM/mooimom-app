@@ -6,6 +6,7 @@ import {
 } from 'react-native'
 
 export function convertToRupiah (price) {
+  if(!price) return 'Rp 0'
   var rupiah = ''
   var price = price
     .toString()

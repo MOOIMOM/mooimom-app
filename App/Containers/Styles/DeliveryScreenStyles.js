@@ -252,4 +252,18 @@ export default StyleSheet.create({
     fontFamily: Fonts.type.gotham4,
     fontSize: 10 * Metrics.screenWidth / 320,
   },
+  containerLoading:{
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  fullScreenModal:{
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    width: Metrics.screenWidth,
+    height: Metrics.screenHeight,
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 })

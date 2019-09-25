@@ -69,4 +69,10 @@ export default StyleSheet.create({
     fontFamily: Fonts.type.gotham4,
     color:Colors.white
   },
+  containerLoading:{
+    width: Metrics.screenWidth,
+    height: Metrics.screenHeight,
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
 })

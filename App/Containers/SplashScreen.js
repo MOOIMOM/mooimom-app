@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, TouchableOpacity, Image, KeyboardAvoidingView, TextInput } from 'react-native'
+import { ScrollView, Text, View, TouchableOpacity, Image, KeyboardAvoidingView, TextInput, Alert, AsyncStorage } from 'react-native'
 import { Images } from '../Themes'
 import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux'
@@ -11,8 +11,17 @@ class SplashScreen extends Component {
     super(props)
   }
 
+  componentDidMount(){
+    AsyncStorage.getItem('reducerVersion').then((localVersion) => {
+      if(!localVersion){
+        setTimeout(() => {
+          this.actNavigate('Auth')
+        }, 1000);
+      }
+    })
+  }
+
   componentWillReceiveProps (newProps) {
-    console.info(newProps)
     if (this.props.auth !== newProps.auth) {
       if (
         newProps.auth.payload !== null &&

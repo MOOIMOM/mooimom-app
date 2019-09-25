@@ -177,7 +177,7 @@ class HomeScreen extends Component {
         break
       case 'product_category':
         this.navigate_to('Category', {
-          category_slug: item.slug,
+          category_id: item.slug,
           auth: this.props.auth
         })
         break
@@ -192,27 +192,33 @@ class HomeScreen extends Component {
   }
 
   _renderHeroBanner ({item, index}, parallaxProps) {
-        return (
-          <TouchableWithoutFeedback
-          onPress={()=>this.pressBanner.bind(this)(item)}
-          >
-            <View style={styles.itemHeroBanner}>
-                <ParallaxImage
-                    source={{uri:item.img_url}}
-                    containerStyle={styles.imageContainerHeroBanner}
-                    style={styles.imageHeroBanner}
-                    parallaxFactor={0.6}
-                    {...parallaxProps}
-                />
-            </View>
-          </TouchableWithoutFeedback>
-        );
+      var image = Images.default
+      if(item.img_url && item.img_url !== '')
+        image = {uri:item.img_url}
+      return (
+        <TouchableWithoutFeedback
+        onPress={()=>this.pressBanner.bind(this)(item)}
+        >
+          <View style={styles.itemHeroBanner}>
+              <ParallaxImage
+                  source={image}
+                  containerStyle={styles.imageContainerHeroBanner}
+                  style={styles.imageHeroBanner}
+                  parallaxFactor={0.6}
+                  {...parallaxProps}
+              />
+          </View>
+        </TouchableWithoutFeedback>
+      );
     }
 
   _renderCategories({item, index}){
+    var image = Images.default
+    if(item.img_url && item.img_url !== '')
+      image = {uri:item.img_url}
     return(
       <TouchableOpacity style={styles.catButton} onPress={() => this.navigate_to('Category', {category_id: item.slug})}>
-        <CachedImage source={{uri:item.img_url}} style={styles.catImage}/>
+        <CachedImage source={image} style={styles.catImage}/>
         <Text style={styles.catText}>{item.name}</Text>
       </TouchableOpacity>
     )

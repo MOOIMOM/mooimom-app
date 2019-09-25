@@ -30,7 +30,6 @@ class AuthScreen extends Component {
   }
 
   componentWillReceiveProps (newProps) {
-    console.info(newProps)
     if (this.props.auth !== newProps.auth) {
       if (
         newProps.auth.payload !== null &&
@@ -119,6 +118,9 @@ class AuthScreen extends Component {
 
     if (index == codeLength - 1) {
       this._blur(this.state.currentIndex);
+      setTimeout(() => {
+        this.onFulfill()
+      }, 200);
     } else {
       this._setFocus(this.state.currentIndex + 1);
     }
@@ -148,7 +150,6 @@ class AuthScreen extends Component {
   onFulfill(){
     Keyboard.dismiss()
     const code = this.state.codeArr.join('');
-    console.log(code)
     if(code.length < 4){
       Alert.alert(
         '',

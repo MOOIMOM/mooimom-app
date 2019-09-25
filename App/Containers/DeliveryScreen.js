@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Alert, FlatList, Modal } from 'react-native'
-import { Images, Metrics } from '../Themes'
+import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Alert, FlatList, Modal, ActivityIndicator } from 'react-native'
+import { Images, Metrics, Colors } from '../Themes'
 import { connect } from 'react-redux'
 import GetAddressActions from '../Redux/GetAddressRedux'
 import GetShippingOptionsActions from '../Redux/GetShippingOptionsRedux'
+import CheckoutActions from '../Redux/CheckoutRedux'
+import CommissionEstimationActions from '../Redux/CommissionEstimationRedux'
 import {convertToRupiah } from '../Lib/utils'
 import ModalDropDown from '../Components/ModalDropDown'
 // Styles
@@ -14,7 +16,8 @@ class DeliveryScreen extends Component {
     this.state = {
       isShowDelivery: false,
       selectedDelivery: {},
-      selectedAddressID: ''
+      selectedAddressID: '',
+      commission: 0
     }
   }
 
@@ -26,6 +29,39 @@ class DeliveryScreen extends Component {
       }
     }
     this.props.getAddressProcess(data)
+    this.reloadCommission()
+  }
+
+  componentWillReceiveProps(newProps){
+    if (this.props.commissionEstimation !== newProps.commissionEstimation) {
+      if (
+        newProps.commissionEstimation.payload !== null &&
+        newProps.commissionEstimation.error === null &&
+        !newProps.commissionEstimation.fetching
+      ) {
+          this.setState({
+            commission: newProps.commissionEstimation.payload.commission_expectation
+          })
+      }
+    }
+  }
+
+  reloadCommission(){
+    let dataCart = '['
+    this.props.cart.data.map(cart => {
+      dataCart = dataCart + '{"sku":"' + cart.sku + '","quantity":' + cart.qty + '},'
+    })
+    if(dataCart.length > 1)
+      dataCart = dataCart.substring(0, dataCart.length - 1)
+    dataCart = dataCart + ']'
+    let data = {
+      data_request:{
+        user_id: this.props.auth.payload.user_id,
+        unique_token: this.props.auth.payload.unique_token,
+        product_variations_user_want_to_buy:dataCart
+      }
+    }
+    this.props.getCommissionEstimationProcess(data)
   }
 
   actNavigate (screen, data = {}) {
@@ -90,6 +126,24 @@ class DeliveryScreen extends Component {
       Alert.alert('', 'Please select one of delivery option first')
       return
     }
+    let dataCart = '['
+    this.props.cart.data.map(cart => {
+      dataCart = dataCart + '{"sku":"' + cart.sku + '","quantity":' + cart.qty + '},'
+    })
+    if(dataCart.length > 1)
+      dataCart = dataCart.substring(0, dataCart.length - 1)
+    dataCart = dataCart + ']'
+    let data = {
+      data_request:{
+        user_id: this.props.auth.payload.user_id,
+        unique_token: this.props.auth.payload.unique_token,
+        product_variations_user_want_to_buy:dataCart,
+        shipping_cost_user_choose: this.state.selectedDelivery.jne_or_jnt+'_'+this.state.selectedDelivery.service,
+        shipping_cost_total: this.state.selectedDelivery.price,
+        chosen_app_customer_address_id: this.state.selectedAddressID,
+      }
+    }
+    this.props.getCheckoutProcess(data)
   }
 
   _renderProductCart({item, index}){
@@ -97,10 +151,13 @@ class DeliveryScreen extends Component {
     price = convertToRupiah(price * item.qty)
     var size = item.product.sizes.find(x => x.slug === item.size).name
     var color = item.product.colors.find(x => x.slug === item.color).name
+    var image = Images.default
+    if(item.product.img_url && item.product.img_url !== '')
+      image = {uri:item.product.img_url}
     return(
       <View style={styles.productContainer}>
         <View style={styles.productImageWrapper}>
-          <Image source={{uri:item.product.img_url}} style={styles.productImage}/>
+          <Image source={image} style={styles.productImage}/>
         </View>
         <View style={styles.productDescriptionWrapper}>
           <View style={styles.nameWrapper}>
@@ -132,7 +189,12 @@ class DeliveryScreen extends Component {
     var selectedAddress = this.props.address.payload.addresses.find(address => address.id === this.state.selectedAddressID)
     if(!selectedAddress)
       selectedAddress = this.props.address.payload.addresses.find(address => address.is_primary === 1)
-    if(selectedAddress)
+    if(selectedAddress){
+      if(this.state.selectedAddressID === ''){
+        this.setState({
+          selectedAddressID: selectedAddress.id
+        })
+      }
       return(
         <View>
           <Text style={styles.productSubtitle2}>KIRIM KE</Text>
@@ -146,6 +208,7 @@ class DeliveryScreen extends Component {
           </View>
         </View>
       )
+    }
   }
 
   _renderDeliveriesOption({item, index}){
@@ -196,6 +259,9 @@ class DeliveryScreen extends Component {
                 <Image source={Images.x} style={styles.imageClose}/>
                 <Text style={styles.chooseDeliveryText2}>Pilih Opsi Pengiriman</Text>
               </TouchableOpacity>
+              {this.props.shippingOptions.fetching && <View style={styles.containerLoading}>
+                <ActivityIndicator size="large" color={Colors.mooimom} />
+              </View>}
               <FlatList
                 data={this.props.shippingOptions.payload ? this.props.shippingOptions.payload.shipping_options : []}
                 renderItem={this._renderDeliveriesOption.bind(this)}
@@ -220,7 +286,7 @@ class DeliveryScreen extends Component {
     var price = this.calculatePrice()
     var deliveryPrice = this.state.selectedDelivery.price ? this.state.selectedDelivery.price : 0
     var totalPrice = convertToRupiah(price + deliveryPrice)
-    var commission = convertToRupiah(price / 10)
+    var commission = convertToRupiah(this.state.commission)
     return (
       <View style={styles.container}>
         <View style={styles.headerWrapper}>
@@ -255,12 +321,15 @@ class DeliveryScreen extends Component {
           <View style={styles.subtotalWrapper}>
             <Text style={styles.subtotalText}>SUBTOTAL</Text>
             <Text style={styles.priceText}>{totalPrice}</Text>
-            <Text style={styles.commissionText}>Est. Komisi {commission}</Text>
+            {!this.props.commissionEstimation.fetching && <Text style={styles.commissionText}>Est. Komisi {commission}</Text>}
           </View>
           <TouchableOpacity style={styles.buyBtn} onPress={() => this.processBuy()}>
             <Text style={styles.buyText}>Beli</Text>
           </TouchableOpacity>
         </View>
+        {this.props.checkout.fetching && <View style={styles.fullScreenModal}>
+          <ActivityIndicator size="large" color={Colors.mooimom} />
+        </View>}
       </View>
     )
   }
@@ -271,7 +340,9 @@ const mapStateToProps = state => {
     cart: state.cart,
     address: state.address,
     auth: state.auth,
-    shippingOptions: state.shippingOptions
+    shippingOptions: state.shippingOptions,
+    checkout: state.checkout,
+    commissionEstimation: state.commissionEstimation,
   }
 };
 
@@ -282,6 +353,12 @@ const mapDispatchToProps = dispatch => {
     },
     getShippingOptionsProcess: data => {
       dispatch(GetShippingOptionsActions.getShippingOptionsRequest(data))
+    },
+    getCheckoutProcess: data => {
+      dispatch(CheckoutActions.getCheckoutRequest(data))
+    },
+    getCommissionEstimationProcess: data => {
+      dispatch(CommissionEstimationActions.getCommissionEstimationRequest(data))
     },
   }
 };

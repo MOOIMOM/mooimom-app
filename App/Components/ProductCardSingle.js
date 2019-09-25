@@ -124,12 +124,15 @@ export default class ProductCardSingle extends Component {
   render () {
     var price = this.state.product.product_sale_price > 0 ? convertToRupiah(this.state.product.product_sale_price) : convertToRupiah(this.state.product.product_regular_price)
     var disc = this.state.product.product_sale_price > 0 ? convertToRupiah(this.state.product.product_regular_price) : ''
+    var image = Images.default
+    if(this.state.product.images.length > 0 && this.state.product.images[0].url && this.state.product.images[0].url !== '')
+      image = {uri:this.state.product.images[0].url}
     return (
       <View style={styles.item}>
         <View style={styles.topItem}>
           <View style={styles.topLeftItem}>
           <CachedImage
-              source={{uri:this.state.product.images[0].url}}
+              source={image}
               style={styles.image}
           />
           {this.renderWishlist()}

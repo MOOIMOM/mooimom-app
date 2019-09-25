@@ -19,7 +19,6 @@ class ReduxNavigation extends React.Component {
     if (Platform.OS === 'ios') return
     BackHandler.addEventListener('hardwareBackPress', () => {
       const { dispatch, nav } = this.props
-      console.info(nav)
       // change to whatever is your first screen, otherwise unpredictable results may occur
       if (nav.routes.length > 0 && (nav.index === 1 && nav.routes[1].routes.length === 1 && nav.routes[1].routeName === 'App' && nav.routes[1].routes[0].index === 0)) {
         return false

@@ -68,7 +68,6 @@ class LoginScreen extends Component {
     }
 
     if (this.props.sendOtp !== newProps.sendOtp) {
-      console.info(newProps)
       if (
         newProps.sendOtp.payload !== null &&
         newProps.sendOtp.error === null &&
@@ -129,7 +128,6 @@ class LoginScreen extends Component {
         phone_number: myPhoneNumber
       }
     }
-    console.info(data)
     this.props.loginProcess(data)
   }
 
@@ -155,6 +153,7 @@ class LoginScreen extends Component {
                 underlineColorAndroid='transparent'
                 placeholderTextColor='white'
                 selectionColor='white'
+                onSubmitEditing={() => this.login()}
               />
             </View>
             <TouchableOpacity

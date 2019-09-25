@@ -167,6 +167,10 @@ export default class ModalDropdown extends Component {
   _renderButton() {
     const {disabled, accessible, children, textStyle} = this.props;
     const {buttonText, isColor} = this.state;
+    var image = Images.default
+    if(buttonText && buttonText !== ''){
+      image = {uri:buttonText}
+    }
     return (
       <TouchableOpacity ref={button => this._button = button}
                         disabled={disabled}
@@ -182,7 +186,7 @@ export default class ModalDropdown extends Component {
               >
                 {buttonText}
               </Text>)}
-              {isColor && (<Image source={{uri:buttonText}} style={{width: 20,height: 20, resizeMode: 'contain'}}/>)}
+              {isColor && (<Image source={image} style={{width: 20,height: 20, resizeMode: 'contain'}}/>)}
               <Image source={Images.down} style={{position: 'absolute', right: 5, width: 10, height: 10}}/>
             </View>
           )

@@ -1,6 +1,7 @@
 // leave off @2x/@3x
 const images = {
   opening: require('../Images/opening.jpg'),
+  default: require('../Images/default.jpg'),
   mooimomLogo: require('../Images/mooimom-logo.png'),
   mooimomLogoWhite: require('../Images/mooimom-logo-white.png'),
   account: require('../Images/Icons/account.png'),

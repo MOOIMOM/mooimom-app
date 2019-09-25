@@ -1,67 +1,15 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, Image, TouchableOpacity, FlatList} from 'react-native'
-import { Images, Metrics } from '../Themes'
+import { ScrollView, Text, View, Image, TouchableOpacity, FlatList, AsyncStorage, ActivityIndicator} from 'react-native'
+import { Images, Metrics, Colors } from '../Themes'
 import LinearGradient from 'react-native-linear-gradient';
+import GetAllOrderActions from '../Redux/GetAllOrderRedux';
+import GetCommissionSummaryActions from '../Redux/GetCommissionSummaryRedux';
 import { connect } from 'react-redux'
 import {convertToRupiah} from '../Lib/utils'
 
 // Styles
 import styles from './Styles/OrderScreenStyles'
 import menuStyles from './Styles/MenuComponentStyles'
-
-var dataOrder = [
-  {status:'Pembayaran', statusname:'Menunggu Pembayaran',orderID:'#12345345', orderDate:'2019-09-03', products:[
-    {
-      name:'Full Coverage Seamless Maternity & Nursing Bra', price: 350000, discPrice:0, qty:1, images: [
-        {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2018/11/21/b8003-b4-compressor.jpg'},
-        {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2018/11/21/b8003-f1-compressor.jpg'},
-        {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2018/11/21/b8003-b3-compressor.jpg'},
-        {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2018/11/21/b8003-b2-compressor.jpg'},
-      ]
-    }
-    ]
-  },
-  {status:'Selesai', statusname: 'Pesanan Selesai', orderID:'#3328127638', orderDate:'2019-09-03', products:[
-    {
-      name:'Bamboo Postpartum Belly Band Corset', price: 920000, discPrice:0, qty:1, images: [
-        {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2019/05/08/main-c7889-1-compressor.jpg'},
-        {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2017/11/20/c7889-4.jpg'},
-        {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2017/11/20/c7889-5.jpg'},
-        {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2017/11/20/c7889-3.jpg'},
-      ]
-    }
-    ]
-  },
-  {status:'Dibatalkan', statusname: 'Pesanan Dibatalkan', orderID:'#127839876', orderDate:'2019-09-07', products:[
-    {
-      name:'Mooimom Casual Hipseat Carrier', price: 399000, discPrice:0, qty:1, images: [
-        {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2019/04/30/h9502-1-compressor.jpg'},
-        {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2019/05/01/1556697513950-compressor.jpg'},
-        {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2019/04/30/h9502-2-compressor.jpg'},
-      ]
-    }
-    ]
-  },
-  {status:'Selesai', statusname: 'Pesanan Selesai', orderID:'#77282821', orderDate:'2019-08-11', products:[
-    {
-      name:'Sloped Pillow Bantal Bayi', price: 449000, discPrice:0, qty:1, images: [
-        {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2019/06/24/q90301-2.jpg'},
-        {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2019/07/01/q90801_1.jpg'},
-        {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2019/08/30/pillow-for-baby-4-4.jpg'},
-      ]
-    }
-    ]
-  },
-  {status:'Diproses', statusname: 'Pesanan Diproses', orderID:'#3331232', orderDate:'2019-09-09', products:[
-    {
-      name:'Seamless Slimming Suit / Baju Pelangsing', price: 279000, discPrice:0, qty:3, images: [
-        {url:'https://dkpzhs366ovzp.cloudfront.net/media_root/filer_public/2017/06/20/s7001x-1.jpg'},
-      ]
-    }
-    ]
-  }
-]
-
 class OrderScreen extends Component {
   static navigationOptions = {
       tabBarIcon: ({ focused, tintColor }) => {
@@ -72,15 +20,71 @@ class OrderScreen extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      menuStatus: ['Semua', 'Pembayaran', 'Diproses', 'Selesai', 'Dibatalkan'],
+      menuStatus: ['all', 'pending', 'processing', 'completed', 'cancelled'],
+      menuStatusName: ['Semua', 'Pembayaran', 'Diproses', 'Selesai', 'Dibatalkan'],
       selectedMenuIdx: 0,
-      orders:dataOrder
+      orders:[],
+      fcmToken: ''
+    }
+  }
+
+  async componentDidMount(){
+    this.setState({ fcmToken: await AsyncStorage.getItem('fcmToken') })
+    this.reloadData()
+  }
+
+  reloadData(){
+    let data = {
+      data_request:{
+        user_id: this.props.auth.payload.user_id,
+        unique_token: this.props.auth.payload.unique_token,
+        fcmToken: this.state.fcmToken,
+        selected_status : this.state.menuStatus[this.state.selectedMenuIdx]
+      }
+    }
+    this.props.getAllOrderProcess(data)
+    let data2 = {
+      data_request:{
+        user_id: this.props.auth.payload.user_id,
+        unique_token: this.props.auth.payload.unique_token,
+      }
+    }
+    this.props.getCommissionSummaryProcess(data2)
+  }
+
+  componentWillReceiveProps (newProps) {
+    if(this.props.allOrder !== newProps.allOrder){
+      if (
+        newProps.allOrder.payload !== null &&
+        newProps.allOrder.error === null &&
+        !newProps.allOrder.fetching
+      ) {
+        this.setState({
+          orders: newProps.allOrder.payload.all_orders,
+        })
+      }
     }
   }
 
   actNavigate (screen , obj = {}) {
     const { navigate } = this.props.navigation
     navigate(screen, obj)
+  }
+
+  pressStatus(index){
+    this.setState({
+      selectedMenuIdx: index,
+      orders: []
+    })
+    let data = {
+      data_request:{
+        user_id: this.props.auth.payload.user_id,
+        unique_token: this.props.auth.payload.unique_token,
+        fcmToken: this.state.fcmToken,
+        selected_status : this.state.menuStatus[index]
+      }
+    }
+    this.props.getAllOrderProcess(data)
   }
 
   _renderMenuStatus({item, index}){
@@ -91,9 +95,7 @@ class OrderScreen extends Component {
       styleText = styles.menuText2
     }
     return(
-      <TouchableOpacity onPress={() => this.setState({
-        selectedMenuIdx: index
-      })}>
+      <TouchableOpacity onPress={() => this.pressStatus(index)}>
         <View style={style}>
             <Text style={styleText}>{item}</Text>
         </View>
@@ -103,6 +105,9 @@ class OrderScreen extends Component {
 
   _renderOrders({item, index}){
     if(item.status === this.state.menuStatus[this.state.selectedMenuIdx] || this.state.selectedMenuIdx === 0){
+      var image = Images.default
+      if(item.products[0].images[0].url && item.products[0].images[0].url !== '')
+        image = {uri:item.products[0].images[0].url}
       return (
         <TouchableOpacity onPress={() => this.actNavigate('DetailOrderScreen', {order:item})}>
           <View style={styles.orderContainer}>
@@ -116,7 +121,7 @@ class OrderScreen extends Component {
             <View style={styles.orderContainerBottom}>
               <View style={styles.orderContainerProductWrapper}>
                 <View style={styles.orderContainerLeft}>
-                  <Image source={{uri:item.products[0].images[0].url}} style={styles.productImage}/>
+                  <Image source={image} style={styles.productImage}/>
                 </View>
                 <View style={styles.orderContainerRight}>
                   <Text style={styles.productName}>{item.products[0].name}</Text>
@@ -133,6 +138,9 @@ class OrderScreen extends Component {
   }
 
   render () {
+    var target = 0
+    if(this.props.commissionSummary.payload && this.props.commissionSummary.payload.how_much_commission_user_need_to_get_to_get_next_commission_target_percentage)
+      target = this.props.commissionSummary.payload.how_much_commission_user_need_to_get_to_get_next_commission_target_percentage
     return (
       <View style={styles.container}>
         <View style={styles.containerScroll}>
@@ -153,7 +161,7 @@ class OrderScreen extends Component {
               <LinearGradient colors={['#82DED2', '#66CCCC']} style={styles.topContainer}>
                 <TouchableOpacity onPress={() => this.actNavigate('DetailTargetScreen')}>
                   <Text style={styles.textTarget}>Target Bonus Minggu Ini</Text>
-                  <Text style={styles.textTargetAmount}>Rp500.000</Text>
+                  <Text style={styles.textTargetAmount}>{convertToRupiah(target)}</Text>
                   <Text style={styles.textTargetMore}>Raih Target dan dapatkan bonus lebih banyak</Text>
                   <Image source={Images.rightArrow} style={styles.iconRight}/>
                 </TouchableOpacity>
@@ -163,22 +171,24 @@ class OrderScreen extends Component {
                 <Text style={styles.textMenuStatus}>Pesanan Saya</Text>
                 <View style={styles.menuStatus}>
                   <FlatList
-                    data={this.state.menuStatus}
+                    data={this.state.menuStatusName}
                     renderItem={this._renderMenuStatus.bind(this)}
                     keyExtractor={(item, index) => index.toString()}
                     showsHorizontalScrollIndicator={false}
                     horizontal={true}
-                    extraData={this.state}
+                    extraData={this.state.selectedMenuIdx}
                   />
                 </View>
                 <View style={styles.wrapperSeparator}/>
                 <View style={styles.listOrders}>
+                  {this.props.allOrder.fetching && <View style={styles.containerLoading}>
+                    <ActivityIndicator size="large" color={Colors.mooimom} />
+                  </View>}
                   <FlatList
                     data={this.state.orders}
                     renderItem={this._renderOrders.bind(this)}
                     keyExtractor={(item, index) => index.toString()}
                     showsVerticalScrollIndicator={false}
-                    extraData={this.state}
                   />
                 </View>
               </View>
@@ -191,13 +201,20 @@ class OrderScreen extends Component {
 }
 const mapStateToProps = state => {
   return {
-
+    allOrder: state.allOrder,
+    auth: state.auth,
+    commissionSummary: state.commissionSummary
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-
+    getAllOrderProcess: data => {
+      dispatch(GetAllOrderActions.getAllOrderRequest(data))
+    },
+    getCommissionSummaryProcess: data => {
+      dispatch(GetCommissionSummaryActions.getCommissionSummaryRequest(data))
+    },
   }
 };
 

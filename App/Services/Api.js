@@ -31,7 +31,6 @@ const create = (baseURL = 'https://www.mooimom.id/') => {
   api.addMonitor(monitor);
   api.addRequestTransform((request) => {
     if(request.url === 'app-update-profile-picture'){
-      console.log('ya!')
       request.headers['Content-Type'] = 'multipart/form-data';
     }
     else if (R.contains(request.method, ['post'])) {
@@ -68,6 +67,8 @@ const create = (baseURL = 'https://www.mooimom.id/') => {
     api.post('app-homepage', params.data_request)
   const postGetProduct = params =>
     api.post('app-get-product', params.data_request)
+  const postGetProductByCategory = params =>
+    api.post('app-get-products', params.data_request)
   const postGetProductVariation = params =>
     api.post('app-get-product-variation', params.data_request)
   const postGetAddress = params =>
@@ -156,6 +157,7 @@ const create = (baseURL = 'https://www.mooimom.id/') => {
     postAuth,
     postGetHomepage,
     postGetProduct,
+    postGetProductByCategory,
     postGetProductVariation,
     postGetAddress,
     postAddAddress,
@@ -165,6 +167,8 @@ const create = (baseURL = 'https://www.mooimom.id/') => {
     postGetCity,
     postGetDistrict,
     postGetShippingOptions,
+    postGetCommissionEstimation,
+    postCheckout,
     postGetCategory,
     postAddWishlist,
     postDeleteWishlist,
