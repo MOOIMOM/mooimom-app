@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, TextInput, Alert, FlatList, AppState, Clipboard, ActivityIndicator } from 'react-native'
+import { ScrollView, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, TextInput, Alert, AppState, Clipboard, ActivityIndicator } from 'react-native'
 import { Images, Metrics, Colors } from '../Themes'
 import ProductCardSingle from '../Components/ProductCardSingle'
 import GetSearchActions from '../Redux/GetSearchRedux'
 import EditWishlistActions from '../Redux/EditWishlistRedux'
 import { connect } from 'react-redux'
-import {convertToRupiah} from '../Lib/utils'
+import {convertToRupiah, shareDescripton} from '../Lib/utils'
 
 // Styles
 import styles from './Styles/SearchScreenStyles'
@@ -13,11 +13,14 @@ class SearchScreen extends Component {
   constructor (props) {
     super(props)
     this.state = {
+      appState: AppState.currentState,
       search:'',
       products:[],
       willShareDescription:false,
       finishShareImage: false,
+      willShareDescriptionString:''
     }
+    this.shareWhatsapp = this.shareWhatsapp.bind(this)
   }
 
   actNavigate (screen , obj = {}) {
@@ -57,7 +60,7 @@ class SearchScreen extends Component {
           finishShareImage: true
         })
         setTimeout(() => {
-          shareDescripton(this.state.product.description, 'whatsapp')
+          shareDescripton(this.state.willShareDescriptionString, 'whatsapp')
           this.setState({
             willShareDescription: false,
           })
@@ -70,6 +73,7 @@ class SearchScreen extends Component {
   shareWhatsapp(desc){
     if(this.state.willShareDescription === false){
       this.setState({
+        willShareDescriptionString: desc,
         willShareDescription: true,
         finishShareImage : false
       });
@@ -94,27 +98,32 @@ class SearchScreen extends Component {
     }
   }
 
-  _renderProduct ({item, index}) {
-    const { navigate } = this.props.navigation
+  _renderProduct () {
+    if(this.state.products.length > 0)
     return (
-      <TouchableWithoutFeedback
-        onPress={() => navigate('ProductScreen', {
-          product_slug: item.slug,
-          auth: this.props.auth
-        })}
-      >
-        <View>
-          <ProductCardSingle
-            product={item}
-            sharedProductProcess={this.props.sharedProductProcess}
-            addWishlistProductProcess={this.props.addWishlistProductProcess}
-            deleteWishlistProductProcess={this.props.deleteWishlistProductProcess}
-            shareWhatsapp={this.shareWhatsapp}
-            auth={this.props.auth}
-          />
-        </View>
-      </TouchableWithoutFeedback>
-    );
+      this.state.products.map((item, index) => {
+        return (
+          <TouchableWithoutFeedback
+            onPress={() => this.actNavigate('ProductScreen', {
+              product_slug: item.slug,
+              auth: this.props.auth
+            })}
+            key={index.toString()}
+          >
+            <View>
+              <ProductCardSingle
+                product={item}
+                sharedProductProcess={this.props.sharedProductProcess}
+                addWishlistProductProcess={this.props.addWishlistProductProcess}
+                deleteWishlistProductProcess={this.props.deleteWishlistProductProcess}
+                shareWhatsapp={this.shareWhatsapp}
+                auth={this.props.auth}
+              />
+            </View>
+          </TouchableWithoutFeedback>
+        );
+      })
+    )
   }
 
   render () {
@@ -148,21 +157,16 @@ class SearchScreen extends Component {
             {this.props.getSearch.fetching && <View style={styles.containerLoading}>
               <ActivityIndicator size="large" color={Colors.mooimom} />
             </View>}
-              <FlatList
-                showsVerticalScrollIndicator={false}
-                data={this.state.products}
-                renderItem={this._renderProduct.bind(this)}
-                keyExtractor={(item, index) => index.toString()}
-              />
+            {this._renderProduct()}
             </ScrollView>
-            {this.state.willShareDescription && <View style={styles.modalShareView}>
-              <View style={styles.modalShareContainer}>
-                <Text style={styles.modalShareText}>Images Downloaded</Text>
-                <Text style={(this.state.finishShareImage ? styles.modalShareText : styles.modalShareText2)}>shareWhatsapp Copied</Text>
-              </View>
-            </View>}
           </View>
         </View>
+        {this.state.willShareDescription && <View style={styles.modalShareView}>
+          <View style={styles.modalShareContainer}>
+            <Text style={styles.modalShareText}>Images Downloaded</Text>
+            <Text style={(this.state.finishShareImage ? styles.modalShareText : styles.modalShareText2)}>shareWhatsapp Copied</Text>
+          </View>
+        </View>}
       </View>
     )
   }

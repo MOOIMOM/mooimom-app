@@ -53,8 +53,14 @@ export default StyleSheet.create({
     width: Metrics.screenWidth - 40,
     marginHorizontal: 20,
   },
+  productContainer:{
+    flex:1,
+    flexWrap: 'wrap',
+    flexDirection: 'row'
+  },
   menuStatus:{
-    marginTop:10
+    marginTop:10,
+    flexDirection: 'row'
   },
   menuBtn:{
     marginRight: 10,

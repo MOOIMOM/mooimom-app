@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, FlatList } from 'react-native'
+import { ScrollView, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback } from 'react-native'
 import { Images, Metrics } from '../Themes'
 import ProductCard from '../Components/ProductCard'
 import WishlistActions from '../Redux/WishlistRedux'
@@ -19,6 +19,7 @@ class SharedProductScreen extends Component {
     }
 
     this._renderProduct = this._renderProduct.bind(this)
+    this._renderMenuStatus = this._renderMenuStatus.bind(this)
   }
 
   componentDidMount(){
@@ -52,44 +53,68 @@ class SharedProductScreen extends Component {
     navigate(screen, obj)
   }
 
-  _renderProduct ({item, index}) {
-    const { navigate } = this.props.navigation
-    return (
-      <TouchableWithoutFeedback
-        onPress={() => navigate('ProductScreen', {
-          product_slug: item.slug,
-          auth:this.props.auth
+  _renderProduct () {
+    var data = []
+    if(this.state.selectedMenuIdx === 0){
+      if(this.props.wishlist.payload && this.props.wishlist.payload.products.length > 0)
+        data = this.props.wishlist.payload.products
+    } else {
+      data = this.props.sharedProduct.data
+    }
+    if(data.length > 0)
+      return (
+        <View style={styles.productContainer}>
+        {data.map((item, index) => {
+          return (
+            <TouchableWithoutFeedback
+              onPress={() => this.actNavigate('ProductScreen', {
+                product_slug: item.slug,
+                auth:this.props.auth
+              })}
+              key={index.toString()}
+            >
+              <View>
+                <ProductCard
+                  product={item}
+                  auth={this.props.auth}
+                  sharedProductProcess={this.props.sharedProductProcess}
+                  addWishlistProductProcess={this.props.addWishlistProductProcess}
+                  deleteWishlistProductProcess={this.props.deleteWishlistProductProcess}
+                />
+              </View>
+            </TouchableWithoutFeedback>
+          )
         })}
-      >
-        <View style={{flex:1}}>
-          <ProductCard
-            product={item}
-            auth={this.props.auth}
-            sharedProductProcess={this.props.sharedProductProcess}
-            addWishlistProductProcess={this.props.addWishlistProductProcess}
-            deleteWishlistProductProcess={this.props.deleteWishlistProductProcess}
-          />
-        </View>
-      </TouchableWithoutFeedback>
-    );
+      </View>
+    )
   }
 
-  _renderMenuStatus({item, index}){
-    var style = styles.menuBtn
-    var styleText = styles.menuText
-    if(index === this.state.selectedMenuIdx){
-      style = styles.menuBtn2
-      styleText = styles.menuText2
+  _renderMenuStatus(){
+    if(this.state.menuStatus.length > 0){
+      return (
+        <View style={styles.menuStatus}>
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+        {this.state.menuStatus.map((item, index) => {
+        var style = styles.menuBtn
+        var styleText = styles.menuText
+        if(index === this.state.selectedMenuIdx){
+          style = styles.menuBtn2
+          styleText = styles.menuText2
+        }
+        return(
+          <TouchableOpacity key={index.toString()} onPress={() => this.setState({
+            selectedMenuIdx: index
+          })}>
+            <View style={style}>
+                <Text style={styleText}>{item}</Text>
+            </View>
+          </TouchableOpacity>
+        )
+      })}
+      </ScrollView>
+      </View>
+      )
     }
-    return(
-      <TouchableOpacity onPress={() => this.setState({
-        selectedMenuIdx: index
-      })}>
-        <View style={style}>
-            <Text style={styleText}>{item}</Text>
-        </View>
-      </TouchableOpacity>
-    )
   }
 
   render () {
@@ -112,42 +137,16 @@ class SharedProductScreen extends Component {
           </View>
           <View style={styles.wrapperSeparator}/>
           <View style={styles.contentContainer}>
-            <View style={styles.menuStatus}>
-              <FlatList
-                data={this.state.menuStatus}
-                renderItem={this._renderMenuStatus.bind(this)}
-                keyExtractor={(item, index) => index.toString()}
-                showsHorizontalScrollIndicator={false}
-                horizontal={true}
-                extraData={this.state}
-              />
-            </View>
+            {this._renderMenuStatus()}
             <View style={styles.wrapperSeparator}/>
-            <View style={styles.productContainer}>
-              <ScrollView
-              showsVerticalScrollIndicator={false}
-              >
-              {this.state.selectedMenuIdx === 0 && <FlatList
-                data={this.props.wishlist.payload && this.props.wishlist.payload.products ? this.props.wishlist.payload.products : []}
-                extraData={this.state}
-                renderItem={this._renderProduct}
-                keyExtractor={(item, index) => index.toString()}
-                showsHorizontalScrollIndicator={false}
-                numColumns={2}
-              />}
-              {this.state.selectedMenuIdx === 1 && <FlatList
-                data={this.props.sharedProduct.data}
-                extraData={this.state}
-                renderItem={this._renderProduct}
-                keyExtractor={(item, index) => index.toString()}
-                showsHorizontalScrollIndicator={false}
-                numColumns={2}
-              />}
-              </ScrollView>
-            </View>
-          </View>
+            <ScrollView
+            showsVerticalScrollIndicator={false}
+            >
+            {this._renderProduct()}
+            </ScrollView>
         </View>
       </View>
+    </View>
     )
   }
 }

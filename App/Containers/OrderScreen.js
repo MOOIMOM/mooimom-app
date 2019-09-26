@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, Image, TouchableOpacity, FlatList, AsyncStorage, ActivityIndicator} from 'react-native'
+import { ScrollView, Text, View, Image, TouchableOpacity, AsyncStorage, ActivityIndicator} from 'react-native'
 import { Images, Metrics, Colors } from '../Themes'
 import LinearGradient from 'react-native-linear-gradient';
 import GetAllOrderActions from '../Redux/GetAllOrderRedux';
@@ -20,12 +20,19 @@ class OrderScreen extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      menuStatus: ['all', 'pending', 'processing', 'completed', 'cancelled'],
-      menuStatusName: ['Semua', 'Pembayaran', 'Diproses', 'Selesai', 'Dibatalkan'],
+      menuStatus: [
+        {status:'all', status_name:'Semua', status_name_proses: ''},
+        {status:'pending', status_name:'Pembayaran', status_name_proses: 'Menunggu Pembayaran'},
+        {status:'processing', status_name:'Diproses', status_name_proses: 'Sedang Diproses'},
+        {status:'completed', status_name:'Selesai', status_name_proses: 'Selesai'},
+        {status:'cancelled', status_name:'Dibatalkan', status_name_proses: 'Dibatalkan'}
+      ],
       selectedMenuIdx: 0,
       orders:[],
       fcmToken: ''
     }
+
+    this._renderProductCart = this._renderProductCart.bind(this)
   }
 
   async componentDidMount(){
@@ -39,7 +46,7 @@ class OrderScreen extends Component {
         user_id: this.props.auth.payload.user_id,
         unique_token: this.props.auth.payload.unique_token,
         fcmToken: this.state.fcmToken,
-        selected_status : this.state.menuStatus[this.state.selectedMenuIdx]
+        selected_status : this.state.menuStatus[this.state.selectedMenuIdx].status
       }
     }
     this.props.getAllOrderProcess(data)
@@ -60,7 +67,7 @@ class OrderScreen extends Component {
         !newProps.allOrder.fetching
       ) {
         this.setState({
-          orders: newProps.allOrder.payload.all_orders,
+          orders: newProps.allOrder.payload.all_orders_data,
         })
       }
     }
@@ -81,60 +88,81 @@ class OrderScreen extends Component {
         user_id: this.props.auth.payload.user_id,
         unique_token: this.props.auth.payload.unique_token,
         fcmToken: this.state.fcmToken,
-        selected_status : this.state.menuStatus[index]
+        selected_status : this.state.menuStatus[index].status
       }
     }
     this.props.getAllOrderProcess(data)
   }
 
-  _renderMenuStatus({item, index}){
-    var style = styles.menuBtn
-    var styleText = styles.menuText
-    if(index === this.state.selectedMenuIdx){
-      style = styles.menuBtn2
-      styleText = styles.menuText2
-    }
-    return(
-      <TouchableOpacity onPress={() => this.pressStatus(index)}>
-        <View style={style}>
-            <Text style={styleText}>{item}</Text>
-        </View>
-      </TouchableOpacity>
+  _renderMenuStatus(){
+    if(this.state.menuStatus.length > 0)
+    return (
+      this.state.menuStatus.map((item, index) => {
+        var style = styles.menuBtn
+        var styleText = styles.menuText
+        if(index === this.state.selectedMenuIdx){
+          style = styles.menuBtn2
+          styleText = styles.menuText2
+        }
+        return(
+          <TouchableOpacity onPress={() => this.pressStatus(index)} key={index.toString()}>
+            <View style={style}>
+                <Text style={styleText}>{item.status_name}</Text>
+            </View>
+          </TouchableOpacity>
+        )
+      })
     )
   }
 
-  _renderOrders({item, index}){
-    if(item.status === this.state.menuStatus[this.state.selectedMenuIdx] || this.state.selectedMenuIdx === 0){
-      var image = Images.default
-      if(item.products[0].images[0].url && item.products[0].images[0].url !== '')
-        image = {uri:item.products[0].images[0].url}
-      return (
-        <TouchableOpacity onPress={() => this.actNavigate('DetailOrderScreen', {order:item})}>
-          <View style={styles.orderContainer}>
-            <View style={styles.orderContainerTop}>
-              <Text style={styles.orderStatusText}>{item.statusname}</Text>
+  _renderProductCart(items){
+    if(items.length > 0){
+      return items.map((item, index) => {
+        var image = Images.default
+        if(item.main_image && item.main_image !== '')
+          image = {uri:item.main_image}
+        return (
+          <View style={styles.orderContainerProductWrapper} key={index.toString()}>
+            <View style={styles.orderContainerLeft}>
+              <Image source={image} style={styles.productImage}/>
             </View>
-            <View style={styles.orderContainerMid}>
-              <Text style={styles.orderDateText}>{item.orderDate}</Text>
-              <Text style={styles.orderIDText}>No Order {item.orderID}</Text>
-            </View>
-            <View style={styles.orderContainerBottom}>
-              <View style={styles.orderContainerProductWrapper}>
-                <View style={styles.orderContainerLeft}>
-                  <Image source={image} style={styles.productImage}/>
-                </View>
-                <View style={styles.orderContainerRight}>
-                  <Text style={styles.productName}>{item.products[0].name}</Text>
-                  <Text style={styles.productPrice}>{convertToRupiah(item.products[0].price)}</Text>
-                </View>
-              </View>
+            <View style={styles.orderContainerRight}>
+              <Text style={styles.productName}>{item.product_name}</Text>
+              <Text style={styles.productPrice}>{convertToRupiah(item.price)}</Text>
             </View>
           </View>
-        </TouchableOpacity>
-      )
-    } else {
-      return <View/>
+        )
+      })
     }
+  }
+
+  _renderOrders(){
+    if(this.state.orders.length > 0)
+      return (
+        this.state.orders.map((item, index) => {
+          const {menuStatus} = this.state
+          var status = ''
+          var idx = menuStatus.findIndex(status => status.status === item.order_status)
+          if(idx >= 0)
+            status = menuStatus[idx].status_name_proses
+          return (
+            <TouchableOpacity onPress={() => this.actNavigate('DetailOrderScreen', {order_id:item.order_id})} key={index.toString()}>
+              <View style={styles.orderContainer}>
+                <View style={styles.orderContainerTop}>
+                  <Text style={styles.orderStatusText}>{status}</Text>
+                </View>
+                <View style={styles.orderContainerMid}>
+                  <Text style={styles.orderDateText}>{item.order_date}</Text>
+                  <Text style={styles.orderIDText}>No Order #{item.order_id}</Text>
+                </View>
+                <View style={styles.orderContainerBottom}>
+                  {this._renderProductCart(item.order_items)}
+                </View>
+              </View>
+            </TouchableOpacity>
+          )
+        })
+      )
   }
 
   render () {
@@ -170,26 +198,16 @@ class OrderScreen extends Component {
               <View style={styles.bottomContainer}>
                 <Text style={styles.textMenuStatus}>Pesanan Saya</Text>
                 <View style={styles.menuStatus}>
-                  <FlatList
-                    data={this.state.menuStatusName}
-                    renderItem={this._renderMenuStatus.bind(this)}
-                    keyExtractor={(item, index) => index.toString()}
-                    showsHorizontalScrollIndicator={false}
-                    horizontal={true}
-                    extraData={this.state.selectedMenuIdx}
-                  />
+                <ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
+                  {this._renderMenuStatus()}
+                </ScrollView>
                 </View>
                 <View style={styles.wrapperSeparator}/>
                 <View style={styles.listOrders}>
                   {this.props.allOrder.fetching && <View style={styles.containerLoading}>
                     <ActivityIndicator size="large" color={Colors.mooimom} />
                   </View>}
-                  <FlatList
-                    data={this.state.orders}
-                    renderItem={this._renderOrders.bind(this)}
-                    keyExtractor={(item, index) => index.toString()}
-                    showsVerticalScrollIndicator={false}
-                  />
+                  {this._renderOrders()}
                 </View>
               </View>
             </ScrollView>

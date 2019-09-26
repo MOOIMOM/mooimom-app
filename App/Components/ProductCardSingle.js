@@ -29,7 +29,7 @@ export default class ProductCardSingle extends Component {
               this.props.sharedProductProcess(data)
             }
             if(this.props.shareWhatsapp){
-              this.props.shareWhatsapp(this.state.product.name)
+              this.props.shareWhatsapp(this.state.product.product_name)
             }
           } else {
               Alert.alert(
@@ -56,6 +56,14 @@ export default class ProductCardSingle extends Component {
               )
           }
       })
+    } else {
+      share(this.state.product.images, social)
+      if(this.props.sharedProductProcess){
+        let data = {
+          product: this.state.product
+        }
+        this.props.sharedProductProcess(data)
+      }
     }
   }
 
@@ -69,7 +77,7 @@ export default class ProductCardSingle extends Component {
         this.setState({
           modalClipboardVisible: false
         })
-      }, 1000);
+      }, 2000);
     }
   }
 
@@ -138,7 +146,7 @@ export default class ProductCardSingle extends Component {
           {this.renderWishlist()}
           </View>
           <View style={styles.topRightItem}>
-            <Text style={styles.name}>{this.state.product.name}</Text>
+            <Text style={styles.name}>{this.state.product.product_name}</Text>
             <View style={styles.priceGroup}>
               <Text style={styles.priceDiscount}>{disc}</Text>
               <Text style={styles.price}>{price}</Text>

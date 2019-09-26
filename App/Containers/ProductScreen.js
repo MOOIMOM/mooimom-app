@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Clipboard, Alert, AsyncStorage, FlatList, AppState, Linking, Modal } from 'react-native'
+import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Clipboard, Alert, AsyncStorage, AppState, Linking, Modal } from 'react-native'
 import { Images, Metrics } from '../Themes'
 import { connect } from 'react-redux'
 import Carousel, { Pagination  } from 'react-native-snap-carousel';
@@ -156,7 +156,7 @@ class ProductScreen extends Component {
       const url = `instagram://user?username=mooimom.id`;
       Linking.canOpenURL(url).then(supported => {
           if (supported) {
-            Clipboard.setString(this.state.product.description);
+            Clipboard.setString(this.state.product.product_description);
             share(this.state.product.images, social)
           } else {
               Alert.alert(
@@ -170,7 +170,7 @@ class ProductScreen extends Component {
           this.props.sharedProductProcess(data)
       })
     } else {
-      Clipboard.setString(this.state.product.description);
+      Clipboard.setString(this.state.product.product_description);
       share(this.state.product.images, social)
       let data = {
         product: this.state.product
@@ -183,7 +183,7 @@ class ProductScreen extends Component {
     this.setState({
       modalClipboardVisible: true
     })
-    await Clipboard.setString(this.state.product.description);
+    await Clipboard.setString(this.state.product.product_description);
     setTimeout(() => {
       this.setState({
         modalClipboardVisible: false
@@ -211,7 +211,7 @@ class ProductScreen extends Component {
     })
     let data = {
       data_request:{
-        product_slug: this.props.navigation.state.params.product.slug,
+        product_slug: this.state.product.slug,
         user_id: this.props.navigation.state.params.auth.payload.user_id,
         unique_token: this.props.navigation.state.params.auth.payload.unique_token,
         color_slug: slug,
@@ -312,7 +312,7 @@ class ProductScreen extends Component {
           return(
             <TouchableOpacity key={data.slug} onPress={
               () => this.selectColor(data.slug)} disabled={isEmpty}>
-              <CachedImage source={image} style={[styles.colorButton, this.colorStyling(data.slug, data.color)]}/>
+              <Image source={image} style={[styles.colorButton, this.colorStyling(data.slug, data.color)]}/>
               <View style={styleDisabled}/>
             </TouchableOpacity>
           )})}
@@ -484,46 +484,56 @@ class ProductScreen extends Component {
     }
   }
 
-  renderReview({item, index}){
-    var stars = []
-    for(var i = 1;i<=5;i++){
-      if(i <= item.star){
-        stars.push({img: Images.star, id:i})
-      } else {
-        stars.push({img: Images.starEmpty, id:i})
-      }
-    }
+  renderReview(){
+    if(this.state.product.reviews && this.state.product.reviews.length > 0)
     return(
-      <View style={styles.reviewContainer}>
-        <View style={styles.nameWrapper}>
-          <Text style={styles.reviewName1}>Oleh </Text><Text style={styles.reviewName2}> {item.name}</Text>
-        </View>
-        <View style={styles.reviewStarWrapper}>
-          {stars.map((star) => {
-            return (
-              <Image key={star.id} source={star.img} style={styles.reviewStar}/>
-            )
-          })}
-        </View>
-        <View style={styles.reviewDescriptionWrapper}>
-          <Text style={styles.reviewTitle}>{item.review_title}</Text>
-          <Text style={styles.textReview}>{item.review_content}</Text>
-        </View>
-        <View style={styles.reviewImageWrapper}>
-          {item.images.map((image, index) => {
-            var image = Images.default
-            if(image.url && image.url !== '')
-              image = {uri:image.url}
-            return (
-              <Image key={index} source={image} style={styles.reviewImage}/>
-            )
-          })}
-        </View>
+      <View style={styles.reviewWrapper}>
+        <Text style={styles.productSubtitle}>Ulasan Produk</Text>
+        {this.state.product.reviews.map((item, index) => {
+          var stars = []
+          for(var i = 1;i<=5;i++){
+            if(i <= item.star){
+              stars.push({img: Images.star, id:i})
+            } else {
+              stars.push({img: Images.starEmpty, id:i})
+            }
+          }
+          return(
+            <View style={styles.reviewContainer} key={index.toString()}>
+              <View style={styles.nameWrapper}>
+                <Text style={styles.reviewName1}>Oleh </Text><Text style={styles.reviewName2}> {item.name}</Text>
+              </View>
+              <View style={styles.reviewStarWrapper}>
+                {stars.map((star) => {
+                  return (
+                    <Image key={star.id} source={star.img} style={styles.reviewStar}/>
+                  )
+                })}
+              </View>
+              <View style={styles.reviewDescriptionWrapper}>
+                <Text style={styles.reviewTitle}>{item.review_title}</Text>
+                <Text style={styles.textReview}>{item.review_content}</Text>
+              </View>
+              <View style={styles.reviewImageWrapper}>
+                {item.images.map((image, index) => {
+                  var image_review = Images.default
+                  if(image.url && image.url !== '')
+                    image_review = {uri:image.url}
+                  return (
+                    <CachedImage key={index} source={image_review} style={styles.reviewImage}/>
+                  )
+                })}
+              </View>
+            </View>
+          )
+        })}
       </View>
     )
   }
 
   addToCart(){
+    if(!this.props.product.payload || !this.props.product.payload.all_product_variations_with_stock_data)
+      return;
     var arr = this.props.product.payload.all_product_variations_with_stock_data
     var sku = ''
     for(var i = 0;i<arr.length;i++){
@@ -604,7 +614,7 @@ class ProductScreen extends Component {
             <View style={styles.wrapperSeparator}/>
             <View style={styles.productDescriptionWrapper}>
               <Text style={styles.productCode}>PRODUCT CODE - {this.state.product.sku}</Text>
-              <Text style={styles.productName}>{this.state.product.name}</Text>
+              <Text style={styles.productName}>{this.state.product.product_name}</Text>
               <View style={styles.priceGroup}>
                 <Text style={styles.productPrice}>{price}</Text>
                 <Text style={styles.productPriceDiscount}>{disc}</Text>
@@ -642,16 +652,8 @@ class ProductScreen extends Component {
             <View style={styles.wrapperSeparator}/>
               {this.renderSizeGuide()}
               {this.renderImagesCustom()}
-              <View style={styles.wrapperSeparator}/>
-            <View style={styles.reviewWrapper}>
-              <Text style={styles.productSubtitle}>Ulasan Produk</Text>
-              <FlatList
-                data={this.state.product.reviews}
-                renderItem={this.renderReview}
-                keyExtractor={(item, index) => index.toString()}
-                showsHorizontalScrollIndicator={false}
-              />
-            </View>
+            <View style={styles.wrapperSeparator}/>
+              {this.renderReview()}
           </ScrollView>
         </View>
         <View style={styles.menuWrapper}>

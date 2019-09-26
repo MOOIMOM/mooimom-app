@@ -160,4 +160,9 @@ export default StyleSheet.create({
     flexGrow: 1,
     marginHorizontal: 20
   },
+  productContainer:{
+    flex:1,
+    flexWrap: 'wrap',
+    flexDirection: 'row'
+  }
 })

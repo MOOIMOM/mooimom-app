@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, Image, TouchableOpacity, FlatList } from 'react-native'
+import { ScrollView, Text, View, Image, TouchableOpacity } from 'react-native'
 import { Images, Metrics } from '../Themes'
 import { connect } from 'react-redux'
 import {convertToRupiah} from '../Lib/utils'
@@ -74,34 +74,39 @@ class PaymentScreen extends Component {
     navigate(screen, obj)
   }
 
-  renderPayment({index, item}){
-    return(
-      <View style={styles.menu}>
-        <View style={styles.menuItem}>
-          <Text style={styles.imgText}>Tgl</Text>
-          <Text style={styles.imgTextBold}>{item.date}</Text>
-        </View>
-        <View style={styles.menuItem}>
-          <Text style={styles.imgText}>Nama</Text>
-          <Text style={styles.imgTextBold}>{item.bank_account_name}</Text>
-        </View>
-        <View style={styles.menuItem}>
-          <Text style={styles.imgText}>Bank Tujuan</Text>
-          <Text style={styles.imgTextBold}>{item.the_bank}</Text>
-        </View>
-        <View style={styles.menuItem}>
-          <Text style={styles.imgText}>Rek Tujuan</Text>
-          <Text style={styles.imgTextBold}>{item.bank_account_number}</Text>
-        </View>
-        <View style={styles.menuItem}>
-          <Text style={styles.imgText}>Jumlah</Text>
-          <Text style={styles.imgTextBold}>{convertToRupiah(item.the_amount)}</Text>
-        </View>
-        <View style={styles.menuItem}>
-          <Text style={styles.imgText}>Status</Text>
-          <Text style={styles.imgTextBold}>{item.status}</Text>
-        </View>
-      </View>
+  renderPayment(){
+    if(this.state.payments.length > 0)
+    return (
+      this.state.payments.map((item, index) => {
+        return(
+          <View style={styles.menu} key={index.toString()}>
+            <View style={styles.menuItem}>
+              <Text style={styles.imgText}>Tgl</Text>
+              <Text style={styles.imgTextBold}>{item.date}</Text>
+            </View>
+            <View style={styles.menuItem}>
+              <Text style={styles.imgText}>Nama</Text>
+              <Text style={styles.imgTextBold}>{item.bank_account_name}</Text>
+            </View>
+            <View style={styles.menuItem}>
+              <Text style={styles.imgText}>Bank Tujuan</Text>
+              <Text style={styles.imgTextBold}>{item.the_bank}</Text>
+            </View>
+            <View style={styles.menuItem}>
+              <Text style={styles.imgText}>Rek Tujuan</Text>
+              <Text style={styles.imgTextBold}>{item.bank_account_number}</Text>
+            </View>
+            <View style={styles.menuItem}>
+              <Text style={styles.imgText}>Jumlah</Text>
+              <Text style={styles.imgTextBold}>{convertToRupiah(item.the_amount)}</Text>
+            </View>
+            <View style={styles.menuItem}>
+              <Text style={styles.imgText}>Status</Text>
+              <Text style={styles.imgTextBold}>{item.status}</Text>
+            </View>
+          </View>
+        )
+      })
     )
   }
 
@@ -137,12 +142,7 @@ class PaymentScreen extends Component {
             <View style={styles.containerMenu}>
               {this.state.payments.length > 0 && <Text style={styles.subtitle}>Riwayat</Text>}
               <View style={styles.wrapperSeparator}/>
-              <FlatList
-                data={this.state.payments}
-                renderItem={this.renderPayment.bind(this)}
-                keyExtractor={(item, index) => index.toString()}
-                extraData={this.state}
-              />
+              {this.renderPayment()}
             </View>
             </ScrollView>
           </View>

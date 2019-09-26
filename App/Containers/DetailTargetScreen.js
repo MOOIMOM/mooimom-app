@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, Image, TouchableOpacity, FlatList} from 'react-native'
+import { ScrollView, Text, View, Image, TouchableOpacity} from 'react-native'
 import { Images, Metrics } from '../Themes'
 import LinearGradient from 'react-native-linear-gradient';
 import GetCommissionSummaryActions from '../Redux/GetCommissionSummaryRedux';
@@ -63,13 +63,18 @@ class DetailTargetScreen extends Component {
     navigate(screen, obj)
   }
 
-  _renderSimulation({item, index}){
-    return(
-      <View style={styles.itemSimulation}>
-        <Text style={styles.textSimulation}>{item.name}</Text>
-        <Text style={styles.textSimulation}>{convertToRupiah(item.minimal)}</Text>
-        <Text style={styles.textSimulation2}>{item.commission}%</Text>
-      </View>
+  _renderSimulation(){
+    if(this.state.simulations.length > 0)
+    return (
+      this.state.simulations.map((item, index) => {
+        return(
+          <View style={styles.itemSimulation} key={index.toString()}>
+            <Text style={styles.textSimulation}>{item.name}</Text>
+            <Text style={styles.textSimulation}>{convertToRupiah(item.minimal)}</Text>
+            <Text style={styles.textSimulation2}>{item.commission}%</Text>
+          </View>
+        )
+      })
     )
   }
 
@@ -183,11 +188,7 @@ class DetailTargetScreen extends Component {
                     <Text style={styles.tableHeaderText}>Min. Pesanan</Text>
                     <Text style={styles.tableHeaderText2}>Bonus</Text>
                   </View>
-                  <FlatList
-                    data={this.state.simulations}
-                    renderItem={this._renderSimulation.bind(this)}
-                    keyExtractor={(item, index) => index.toString()}
-                  />
+                  {this._renderSimulation()}
                 </View>
               </View>
             </ScrollView>

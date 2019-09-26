@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Alert, FlatList } from 'react-native'
+import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Alert } from 'react-native'
 import { Images, Metrics } from '../Themes'
 import { connect } from 'react-redux'
 import {convertToRupiah } from '../Lib/utils'
@@ -241,74 +241,77 @@ class CartScreen extends Component {
     this.actNavigate('DeliveryScreen')
   }
 
-  _renderProductCart({item, index}){
-    var price = item.product.product_sale_price > 0 ? item.product.product_sale_price : item.product.product_regular_price
-    price = convertToRupiah(price * item.qty)
-    var size = item.product.sizes.find(x => x.slug === item.size).name
-    var color = item.product.colors.find(x => x.slug === item.color).image_url
-    var image = Images.default
-    if(item.product.img_url && item.product.img_url !== ''){
-      image = {uri:item.product.img_url}
-    }
-    return(
-      <View style={styles.productContainer} key={index.toString()}>
-        <View style={styles.productImageWrapper}>
-          <Image source={image} style={styles.productImage}/>
-          <TouchableOpacity style={styles.removeBtn} onPress={() => {this.removeFromCart(index)}}>
-            <Image source={Images.x} style={styles.removeImg}/>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.productDescriptionWrapper}>
-          <View style={styles.nameWrapper}>
-            <Text style={styles.productName}>{item.product.name}</Text>
+  _renderProductCart(){
+    if(this.props.cart.data.length > 0)
+    return this.props.cart.data.map((item, index) => {
+      var price = item.product.product_sale_price > 0 ? item.product.product_sale_price : item.product.product_regular_price
+      price = convertToRupiah(price * item.qty)
+      var size = item.product.sizes.find(x => x.slug === item.size).name
+      var color = item.product.colors.find(x => x.slug === item.color).image_url
+      var image = Images.default
+      if(item.product.img_url && item.product.img_url !== ''){
+        image = {uri:item.product.img_url}
+      }
+      return(
+        <View style={styles.productContainer} key={index.toString()}>
+          <View style={styles.productImageWrapper}>
+            <Image source={image} style={styles.productImage}/>
+            <TouchableOpacity style={styles.removeBtn} onPress={() => {this.removeFromCart(index)}}>
+              <Image source={Images.x} style={styles.removeImg}/>
+            </TouchableOpacity>
           </View>
-          <View style={styles.propertyWrapper}>
-            <View style={styles.sizeWrapper}>
-              <Text style={styles.itemText}>Ukuran</Text>
-              <ModalDropDown
-                renderRow={this._renderSize.bind(this)}
-                options={item.product.sizes}
-                style={styles.size_dropdown}
-                textStyle={styles.dropdown_text}
-                dropdownStyle={styles.dropdown_dropdown}
-                defaultValue={size}
-                index_item={index}
-                isColor={false}
-                onSelect={(item, index, index_item) => this.selectSize(item, index, index_item)}
-                renderButtonText={(rowData) => this._dropdown_renderSizeButtonText(rowData)}
-               />
+          <View style={styles.productDescriptionWrapper}>
+            <View style={styles.nameWrapper}>
+              <Text style={styles.productName}>{item.product.name}</Text>
             </View>
-            <View style={styles.colorWrapper}>
-              <Text style={styles.itemText}>Warna</Text>
-              <ModalDropDown
-                renderRow={this._renderColor.bind(this)}
-                options={item.product.colors}
-                style={styles.size_dropdown}
-                textStyle={styles.dropdown_text}
-                dropdownStyle={styles.dropdown_dropdown}
-                defaultValue={color}
-                isColor={true}
-                index_item={index}
-                onSelect={(item, index, index_item) => this.selectColor(item, index, index_item)}
-                renderButtonText={(rowData) => this._dropdown_renderColorButtonText(rowData)}
-               />
-            </View>
-            <View style={styles.qtyWrapper}>
-              <Text style={styles.itemText}>Qty</Text>
-              <View style={styles.qtyContainer}>
-                <TouchableOpacity onPress={() => this.minQty(index)}><View style={styles.btnQty}>
-                  <Text style={styles.dropdown_text}>-</Text></View></TouchableOpacity>
-                <View style={styles.qtyText}><Text style={styles.dropdown_text}>{item.qty}</Text></View>
-                <TouchableOpacity onPress={() => {this.addQty(index)}}><View style={styles.btnQty}><Text style={styles.dropdown_text}>+</Text></View></TouchableOpacity>
+            <View style={styles.propertyWrapper}>
+              <View style={styles.sizeWrapper}>
+                <Text style={styles.itemText}>Ukuran</Text>
+                <ModalDropDown
+                  renderRow={this._renderSize.bind(this)}
+                  options={item.product.sizes}
+                  style={styles.size_dropdown}
+                  textStyle={styles.dropdown_text}
+                  dropdownStyle={styles.dropdown_dropdown}
+                  defaultValue={size}
+                  index_item={index}
+                  isColor={false}
+                  onSelect={(item, index, index_item) => this.selectSize(item, index, index_item)}
+                  renderButtonText={(rowData) => this._dropdown_renderSizeButtonText(rowData)}
+                 />
+              </View>
+              <View style={styles.colorWrapper}>
+                <Text style={styles.itemText}>Warna</Text>
+                <ModalDropDown
+                  renderRow={this._renderColor.bind(this)}
+                  options={item.product.colors}
+                  style={styles.size_dropdown}
+                  textStyle={styles.dropdown_text}
+                  dropdownStyle={styles.dropdown_dropdown}
+                  defaultValue={color}
+                  isColor={true}
+                  index_item={index}
+                  onSelect={(item, index, index_item) => this.selectColor(item, index, index_item)}
+                  renderButtonText={(rowData) => this._dropdown_renderColorButtonText(rowData)}
+                 />
+              </View>
+              <View style={styles.qtyWrapper}>
+                <Text style={styles.itemText}>Qty</Text>
+                <View style={styles.qtyContainer}>
+                  <TouchableOpacity onPress={() => this.minQty(index)}><View style={styles.btnQty}>
+                    <Text style={styles.dropdown_text}>-</Text></View></TouchableOpacity>
+                  <View style={styles.qtyText}><Text style={styles.dropdown_text}>{item.qty}</Text></View>
+                  <TouchableOpacity onPress={() => {this.addQty(index)}}><View style={styles.btnQty}><Text style={styles.dropdown_text}>+</Text></View></TouchableOpacity>
+                </View>
               </View>
             </View>
-          </View>
-          <View style={styles.priceWrapper}>
-            <Text style={styles.itemText2}>{price}</Text>
+            <View style={styles.priceWrapper}>
+              <Text style={styles.itemText2}>{price}</Text>
+            </View>
           </View>
         </View>
-      </View>
-    );
+      );
+    })
   }
 
   render () {
@@ -327,11 +330,7 @@ class CartScreen extends Component {
           showsVerticalScrollIndicator={false}
           >
           <Text style={styles.productSubtitle}>Cart {(this.props.cart.data.length > 1 ? '(' + this.props.cart.data.length + ')' : '')}</Text>
-          <FlatList
-            data={this.props.cart.data}
-            renderItem={this._renderProductCart.bind(this)}
-            keyExtractor={(item, index) => index.toString()}
-          />
+          {this._renderProductCart()}
           </ScrollView>
         </View>
         <View style={styles.menuWrapper}>

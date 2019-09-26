@@ -106,7 +106,8 @@ export default StyleSheet.create({
     fontWeight: 'bold'
   },
   menuStatus:{
-    marginTop:10
+    marginTop:10,
+    flexDirection: 'row'
   },
   menuBtn:{
     marginRight: 10,

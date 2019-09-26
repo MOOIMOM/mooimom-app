@@ -206,6 +206,7 @@ export default StyleSheet.create({
     fontSize: 15 * Metrics.screenWidth / 320,
   },
   subtotalWrapper:{
+    backgroundColor: Colors.white,
     borderWidth: 1,
     paddingLeft: 20,
     paddingVertical: 10,

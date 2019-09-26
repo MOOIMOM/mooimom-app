@@ -97,6 +97,7 @@ export async function download(images){
 export async function share(images, social = '') {
   var files = []
   var urls = []
+  if(!images) return null
   images.map((image) => {
     var file = {}
     file.url = image.url

@@ -60,7 +60,7 @@ class AuthScreen extends Component {
         } catch (err) {
           // Alert.alert('Can not connect server now')
           Alert.alert(
-            AppConfig.appName,
+            '',
             'Can not connect to the server now',
             [
               {

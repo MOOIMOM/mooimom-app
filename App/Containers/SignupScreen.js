@@ -49,7 +49,7 @@ class SignupScreen extends Component {
         } catch (err) {
           // Alert.alert('Can not connect server now')
           Alert.alert(
-            AppConfig.appName,
+            '',
             'Can not connect to the server now',
             [
               {
@@ -70,35 +70,6 @@ class SignupScreen extends Component {
       ) {
           this.actNavigate('AuthScreen')
         }
-      else if (
-        newProps.sendOtp.payload === null &&
-        !newProps.sendOtp.fetching
-      ) {
-        try {
-          Alert.alert(
-            '',
-            newProps.sendOtp.error.human_message,
-            [
-              {
-                text: 'OK'
-              }
-            ],
-            { cancelable: false }
-          )
-        } catch (err) {
-          // Alert.alert('Can not connect server now')
-          Alert.alert(
-            AppConfig.appName,
-            'Can not connect to the server now',
-            [
-              {
-                text: 'OK'
-              }
-            ],
-            { cancelable: false }
-          )
-        }
-      }
     }
   }
 

@@ -7,7 +7,8 @@ const { Types, Creators } = createActions({
   addCartRequest: ['data'],
   addCartSuccess: ['payload'],
   addCartFailure: ['error'],
-  logout: ['payload']
+  logout: ['payload'],
+  emptyCartRequest: ['data']
 })
 
 export const CartTypes = Types
@@ -62,14 +63,15 @@ export const failure = (state, action) => {
   return state.merge({ fetching: false, error: error, payload: null })
 }
 
-export const successLogout = (state, action) => {
+export const empty = (state, action) => {
   return INITIAL_STATE
 }
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.ADD_CART_REQUEST]: request,
+  [Types.EMPTY_CART_REQUEST]: empty,
   [Types.ADD_CART_SUCCESS]: success,
   [Types.ADD_CART_FAILURE]: failure,
-  [Types.LOGOUT]: successLogout,
+  [Types.LOGOUT]: empty,
 })

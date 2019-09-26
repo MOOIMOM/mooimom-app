@@ -29,7 +29,7 @@ export default StyleSheet.create({
   },
   cartContainer:{
     width: Metrics.screenWidth - 40,
-    height: Metrics.screenHeight - 160,
+    height: Metrics.screenHeight - 130,
     marginHorizontal: 20,
     marginTop: 5
   },
@@ -186,6 +186,7 @@ export default StyleSheet.create({
     paddingLeft: 20,
     paddingVertical: 10,
     borderColor: Colors.black,
+    backgroundColor: Colors.white,
     width: Metrics.screenWidth / 2,
     justifyContent: 'center',
     alignItems: 'flex-start'

@@ -70,8 +70,8 @@ export default StyleSheet.create({
   leftContainer:{
     flex:1,
     flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
     backgroundColor: Colors.lightGray,
     height: Metrics.screenHeight - 150,
     borderRadius: 10

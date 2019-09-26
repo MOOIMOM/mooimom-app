@@ -54,7 +54,7 @@ class LoginScreen extends Component {
         } catch (err) {
           // Alert.alert('Can not connect server now')
           Alert.alert(
-            AppConfig.appName,
+            '',
             'Can not connect to the server now',
             [
               {
@@ -75,35 +75,6 @@ class LoginScreen extends Component {
       ) {
           this.actNavigate('AuthScreen')
         }
-      else if (
-        newProps.sendOtp.payload === null &&
-        !newProps.sendOtp.fetching
-      ) {
-        try {
-          Alert.alert(
-            '',
-            newProps.sendOtp.error.human_message,
-            [
-              {
-                text: 'OK'
-              }
-            ],
-            { cancelable: false }
-          )
-        } catch (err) {
-          // Alert.alert('Can not connect server now')
-          Alert.alert(
-            AppConfig.appName,
-            'Can not connect to the server now',
-            [
-              {
-                text: 'OK'
-              }
-            ],
-            { cancelable: false }
-          )
-        }
-      }
     }
   }
 
@@ -137,6 +108,9 @@ class LoginScreen extends Component {
         <LinearGradient colors={['#7CE0D3', '#28C9B9']} style={styles.linergradient}>
         <Image source={Images.mooimomLogoWhite} style={styles.title}/>
         <View style={styles.loginContainer}>
+          <ScrollView
+          showsVerticalScrollIndicator={false}
+          >
           <KeyboardAvoidingView>
             <Text style={styles.caption1}>Sign In Sekarang</Text>
             <View style={styles.textInput}>
@@ -171,6 +145,7 @@ class LoginScreen extends Component {
               </TouchableOpacity>
             </View>
           </KeyboardAvoidingView>
+          </ScrollView>
         </View>
         </LinearGradient>
       </View>

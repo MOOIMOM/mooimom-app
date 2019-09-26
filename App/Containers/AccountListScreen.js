@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Alert, FlatList } from 'react-native'
+import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Alert } from 'react-native'
 import { Images, Metrics, Colors } from '../Themes'
 import { connect } from 'react-redux'
 import BankAccountActions from '../Redux/BankAccountRedux'
@@ -95,26 +95,29 @@ class AccountListScreen extends Component {
     )
   }
 
-  _renderAccount({item, index}){
-    var style = styles.deliveryAddressContainer
-    var color = Colors.black
-    var imgEdit = Images.edit
-    var imgDelete = Images.delete
-    return(
-      <TouchableWithoutFeedback onPress={() => this.actSelect(item)}>
-        <View style={style}>
-          <View style={styles.btnContainer}>
-            <Text style={[styles.addressName, {color: color}]}>{item.bank_account_name}</Text>
-            <View style={styles.btnContainer2}>
-              <TouchableOpacity onPress={() => this.actNavigate('UpdateAccountScreen', {bank: item})}><Image source={imgEdit} style={styles.btnEditAddress}/></TouchableOpacity>
-              <TouchableOpacity onPress={() => this.deleteAddress(item.bank_data_id)}><Image source={imgDelete} style={styles.btnEditAddress}/></TouchableOpacity>
+  _renderAccount(){
+    if(this.state.accounts.length > 0)
+    return this.state.accounts.map((item, index) => {
+      var style = styles.deliveryAddressContainer
+      var color = Colors.black
+      var imgEdit = Images.edit
+      var imgDelete = Images.delete
+      return(
+        <TouchableWithoutFeedback onPress={() => this.actSelect(item)} key={index.toString()}>
+          <View style={style}>
+            <View style={styles.btnContainer}>
+              <Text style={[styles.addressName, {color: color}]}>{item.bank_account_name}</Text>
+              <View style={styles.btnContainer2}>
+                <TouchableOpacity onPress={() => this.actNavigate('UpdateAccountScreen', {bank: item})}><Image source={imgEdit} style={styles.btnEditAddress}/></TouchableOpacity>
+                <TouchableOpacity onPress={() => this.deleteAddress(item.bank_data_id)}><Image source={imgDelete} style={styles.btnEditAddress}/></TouchableOpacity>
+              </View>
             </View>
+            <Text style={[styles.address, {color: color}]}>{item.the_bank_name}</Text>
+            <Text style={[styles.address, {color: color}]}>{item.bank_account_number}</Text>
           </View>
-          <Text style={[styles.address, {color: color}]}>{item.the_bank_name}</Text>
-          <Text style={[styles.address, {color: color}]}>{item.bank_account_number}</Text>
-        </View>
-      </TouchableWithoutFeedback>
-    )
+        </TouchableWithoutFeedback>
+      )
+    })
   }
 
   render () {
@@ -131,11 +134,7 @@ class AccountListScreen extends Component {
           >
           <Text style={styles.productSubtitle}>Rekening Bank Anda</Text>
           <View style={styles.wrapperSeparator}/>
-            <FlatList
-              data={this.state.accounts}
-              renderItem={this._renderAccount.bind(this)}
-              keyExtractor={(item, index) => index.toString()}
-            />
+            {this._renderAccount()}
           <View style={styles.wrapperSeparator}/>
           <TouchableOpacity style={styles.chooseAddressBtn} onPress={() => {this.actNavigate('NewAccountScreen')}}>
             <Text style={styles.chooseAddressText}>+ Tambah Nomor Rekening Bank</Text>

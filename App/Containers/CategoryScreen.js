@@ -51,7 +51,8 @@ class CategoryScreen extends Component {
     let data = {
       data_request:{
         user_id: this.props.auth.payload.user_id,
-        unique_token: this.props.auth.payload.unique_token
+        unique_token: this.props.auth.payload.unique_token,
+        willShareDescriptionString: ''
       }
     }
     this.props.getCategoryRequest(data)
@@ -62,7 +63,8 @@ class CategoryScreen extends Component {
       const idx = this.getCategoryIndex(newProps.navigation.state.params.category_id)
       this.setState({
         selectedCategoriesId: newProps.navigation.state.params.category_id,
-        selectedCategoriesIdx: idx
+        selectedCategoriesIdx: idx,
+        isSelectSubCategory: false
       })
     }
 
@@ -103,7 +105,7 @@ class CategoryScreen extends Component {
           finishShareImage: true
         })
         setTimeout(() => {
-          shareDescripton(this.state.product.description, 'whatsapp')
+          shareDescripton(this.state.willShareDescriptionString, 'whatsapp')
           this.setState({
             willShareDescription: false,
           })
@@ -117,7 +119,8 @@ class CategoryScreen extends Component {
     if(this.state.willShareDescription === false){
       this.setState({
         willShareDescription: true,
-        finishShareImage : false
+        finishShareImage : false,
+        willShareDescriptionString: desc
       });
     } else {
       Clipboard.setString(desc);
@@ -219,23 +222,31 @@ class CategoryScreen extends Component {
     this.pressSubCategory(id, index)
   }
 
-  _renderCategories({item, index}){
-    let style = styles.categoryView
-    if(this.state.selectedCategoriesIdx === index){
-      style = styles.categoryView2
-    }
+  _renderCategories(){
+    if(this.state.categories.length > 0)
     return (
-      <TouchableOpacity
-      onPress={() => this.setState({
-        selectedCategoriesId: item.slug,
-        selectedCategoriesIdx: index
+      <ScrollView showsVerticalScrollIndicator={false}>
+      {this.state.categories.map((item, index) => {
+        let style = styles.categoryView
+        if(this.state.selectedCategoriesIdx === index){
+          style = styles.categoryView2
+        }
+        return (
+          <TouchableOpacity
+          onPress={() => this.setState({
+            selectedCategoriesId: item.slug,
+            selectedCategoriesIdx: index
+          })}
+          key={index.toString()}
+          >
+            <View style={style}>
+              <Text style={styles.categoryText}>{item.name}</Text>
+            </View>
+          </TouchableOpacity>
+        );
       })}
-      >
-        <View style={style}>
-          <Text style={styles.categoryText}>{item.name}</Text>
-        </View>
-      </TouchableOpacity>
-    );
+      </ScrollView>
+    )
   }
 
   _renderTopCategories({item, index}){
@@ -291,27 +302,35 @@ class CategoryScreen extends Component {
     )
   }
 
-  _renderProduct ({item, index}) {
-    const { navigate } = this.props.navigation
-    return (
-      <TouchableWithoutFeedback
-        onPress={() => navigate('ProductScreen', {
-          product_slug: item.slug,
-          auth: this.props.auth
+  _renderProduct () {
+    if(this.state.products.length > 0){
+      return (
+        <ScrollView showsVerticalScrollIndicator={false}>
+        {this.state.products.map((item, index) => {
+          return (
+            <TouchableWithoutFeedback
+              onPress={() => this.navigate_to('ProductScreen', {
+                product_slug: item.slug,
+                auth: this.props.auth
+              })}
+              key={index.toString()}
+            >
+              <View>
+                <ProductCardSingle
+                  product={item}
+                  sharedProductProcess={this.props.sharedProductProcess}
+                  addWishlistProductProcess={this.props.addWishlistProductProcess}
+                  deleteWishlistProductProcess={this.props.deleteWishlistProductProcess}
+                  shareWhatsapp={this.shareWhatsapp}
+                  auth={this.props.auth}
+                />
+              </View>
+            </TouchableWithoutFeedback>
+          );
         })}
-      >
-        <View>
-          <ProductCardSingle
-            product={item}
-            sharedProductProcess={this.props.sharedProductProcess}
-            addWishlistProductProcess={this.props.addWishlistProductProcess}
-            deleteWishlistProductProcess={this.props.deleteWishlistProductProcess}
-            shareWhatsapp={this.shareWhatsapp}
-            auth={this.props.auth}
-          />
-        </View>
-      </TouchableWithoutFeedback>
-    );
+        </ScrollView>
+      )
+    }
   }
 
   _renderCategoryView(){
@@ -330,12 +349,7 @@ class CategoryScreen extends Component {
         <View style={styles.wrapperSeparator}/>
         <View style={styles.contentContainer}>
           <View style={styles.leftContainer}>
-            <FlatList
-              data={this.state.categories}
-              renderItem={this._renderCategories}
-              keyExtractor={(item, index) => index.toString()}
-              extraData={this.state.selectedCategoriesIdx}
-            />
+            {this._renderCategories()}
           </View>
           <View style={styles.rightContainer}>
             <SectionList
@@ -392,12 +406,7 @@ class CategoryScreen extends Component {
             {this.props.productCategory.fetching && <View style={styles.containerLoading2}>
               <ActivityIndicator size="large" color={Colors.mooimom} />
             </View>}
-            <FlatList
-              showsVerticalScrollIndicator={false}
-              data={this.state.products}
-              renderItem={this._renderProduct}
-              keyExtractor={(item, index) => index.toString()}
-            />
+            {this._renderProduct()}
           </View>
         </View>
         {this.state.willShareDescription && <View style={styles.modalShareView}>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback , Image, FlatList, Alert, AsyncStorage, Linking } from 'react-native'
+import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback , Image, Alert, AsyncStorage, Linking } from 'react-native'
 import { Images, Metrics } from '../Themes'
 import { connect } from 'react-redux'
 import Carousel, { ParallaxImage, Pagination  } from 'react-native-snap-carousel';
@@ -212,38 +212,53 @@ class HomeScreen extends Component {
       );
     }
 
-  _renderCategories({item, index}){
-    var image = Images.default
-    if(item.img_url && item.img_url !== '')
-      image = {uri:item.img_url}
-    return(
-      <TouchableOpacity style={styles.catButton} onPress={() => this.navigate_to('Category', {category_id: item.slug})}>
-        <CachedImage source={image} style={styles.catImage}/>
-        <Text style={styles.catText}>{item.name}</Text>
-      </TouchableOpacity>
+  renderCategories(){
+    if(this.state.categories.length > 0)
+    return (
+      this.state.categories.map((item, index) => {
+        var image = Images.default
+        if(item.img_url && item.img_url !== '')
+          image = {uri:item.img_url}
+        return(
+          <TouchableOpacity key={index.toString()} style={styles.catButton} onPress={() => this.navigate_to('Category', {category_id: item.slug})}>
+            <CachedImage source={image} style={styles.catImage}/>
+            <Text style={styles.catText}>{item.name}</Text>
+          </TouchableOpacity>
+        )
+      })
     )
   }
 
-  _renderProduct ({item, index}) {
-    const { navigate } = this.props.navigation
-    return (
-      <TouchableWithoutFeedback
-        onPress={() => navigate('ProductScreen', {
-          product_slug: item.slug,
-          auth: this.props.auth
-        })}
-      >
-        <View>
-          <ProductCard
-            product={item}
-            auth={this.props.auth}
-            sharedProductProcess={this.props.sharedProductProcess}
-            addWishlistProductProcess={this.props.addWishlistProductProcess}
-            deleteWishlistProductProcess={this.props.deleteWishlistProductProcess}
-          />
+  _renderProduct () {
+    if (this.state.products.length > 0)
+      return (
+        <View style={styles.productWrapper}>
+          <Text style={styles.subTitleWrapper}>Produk Terlaris</Text>
+          <View style={styles.productContainer}>
+          {this.state.products.map((item, index) => {
+            return (
+              <TouchableWithoutFeedback
+                onPress={() => this.navigate_to('ProductScreen', {
+                  product_slug: item.slug,
+                  auth: this.props.auth
+                })}
+                key={index.toString()}
+              >
+                <View>
+                  <ProductCard
+                    product={item}
+                    auth={this.props.auth}
+                    sharedProductProcess={this.props.sharedProductProcess}
+                    addWishlistProductProcess={this.props.addWishlistProductProcess}
+                    deleteWishlistProductProcess={this.props.deleteWishlistProductProcess}
+                  />
+                </View>
+              </TouchableWithoutFeedback>
+            )
+          })}
         </View>
-      </TouchableWithoutFeedback>
-    );
+      </View>
+    )
   }
 
   loadMoreData(){
@@ -331,32 +346,13 @@ class HomeScreen extends Component {
           </View>
           <View style={styles.wrapperSeparator}/>
           <View style={styles.categoryWrapper}>
-            <FlatList
-              data={this.state.categories}
-              renderItem={this._renderCategories.bind(this)}
-              keyExtractor={(item, index) => index.toString()}
-              showsHorizontalScrollIndicator={false}
-              horizontal={true}
-            />
+            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+            {this.renderCategories()}
+            </ScrollView>
           </View>
           <View style={styles.wrapperSeparator}/>
           <View style={styles.wrapperSeparator}/>
-          <View style={styles.productWrapper}>
-          <View>
-            {this.state.products.length > 0 && <Text style={styles.subTitleWrapper}>Produk Terlaris</Text>}
-            <FlatList
-              ref={(flatlist) => { this._flatlist = flatlist; }}
-              data={this.state.products}
-              renderItem={this._renderProduct}
-              keyExtractor={(item, index) => index.toString()}
-              showsVerticalScrollIndicator={false}
-              numColumns={2}
-              getItemLayout={(data, index) => (
-                {length: Metrics.screenHeight / 2, offset: Metrics.screenHeight / 2 * index, index}
-              )}
-            />
-          </View>
-          </View>
+            {this._renderProduct()}
           </ScrollView>
         </View>
       </View>

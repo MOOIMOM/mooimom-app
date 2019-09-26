@@ -168,8 +168,7 @@ export default StyleSheet.create({
     paddingVertical: 10,
     borderTopWidth: 0.5,
     borderColor: Colors.black,
-    paddingHorizontal: 20,
-    flex:1,
+    paddingHorizontal: 20
   },
   chooseDeliveryBtn2:{
     flexDirection: 'row',

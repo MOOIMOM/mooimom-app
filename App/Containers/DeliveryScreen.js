@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Alert, FlatList, Modal, ActivityIndicator } from 'react-native'
+import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Alert, Modal, ActivityIndicator } from 'react-native'
 import { Images, Metrics, Colors } from '../Themes'
 import { connect } from 'react-redux'
 import GetAddressActions from '../Redux/GetAddressRedux'
 import GetShippingOptionsActions from '../Redux/GetShippingOptionsRedux'
 import CheckoutActions from '../Redux/CheckoutRedux'
+import CartActions from '../Redux/CartRedux'
 import CommissionEstimationActions from '../Redux/CommissionEstimationRedux'
 import {convertToRupiah } from '../Lib/utils'
 import ModalDropDown from '../Components/ModalDropDown'
@@ -17,6 +18,7 @@ class DeliveryScreen extends Component {
       isShowDelivery: false,
       selectedDelivery: {},
       selectedAddressID: '',
+      selectedAddress: null,
       commission: 0
     }
   }
@@ -42,6 +44,41 @@ class DeliveryScreen extends Component {
           this.setState({
             commission: newProps.commissionEstimation.payload.commission_expectation
           })
+      }
+    }
+
+    if (this.props.address !== newProps.address) {
+      if (
+        newProps.address.payload !== null &&
+        newProps.address.error === null &&
+        !newProps.address.fetching
+      ) {
+          if(this.state.selectedAddressID === '' || this.state.selectedAddress === null){
+            var selectedAddress = newProps.address.payload.addresses.find(address => address.is_primary === 1)
+            if(selectedAddress){
+              this.setState({
+                selectedAddressID: selectedAddress.id,
+                selectedAddress: selectedAddress
+              })
+            }
+          }
+      }
+    }
+
+    if (this.props.checkout !== newProps.checkout) {
+      if (
+        newProps.checkout.payload !== null &&
+        newProps.checkout.error === null &&
+        !newProps.checkout.fetching
+      ) {
+          this.props.emptyCartProcess()
+          this.props.navigation.popToTop()
+          this.actNavigate('DetailOrderScreen', {order_id:newProps.checkout.payload.ga_data.order_id})
+      } else if(
+        newProps.checkout.payload === null &&
+        !newProps.checkout.fetching
+      ){
+        console.info(newProps.checkout)
       }
     }
   }
@@ -78,17 +115,11 @@ class DeliveryScreen extends Component {
   }
 
   calculateDelivery(){
-    if(this.props.address.payload === null || this.props.address.payload.addresses.length === 0){
+    if(this.state.selectedAddress === null){
         Alert.alert('', 'Please input the delivery address first')
       return;
     }
-    var selectedAddress = this.props.address.payload.addresses.find(address => address.id === this.state.selectedAddressID)
-    if(!selectedAddress)
-      selectedAddress = this.props.address.payload.addresses.find(address => address.is_primary === 1)
-    if(!selectedAddress){
-      Alert.alert('', 'Please input the delivery address first')
-      return;
-    }
+    var selectedAddress = this.state.selectedAddress
     let dataCart = '['
     this.props.cart.data.map(cart => {
       dataCart = dataCart + '{"sku":"' + cart.sku + '","quantity":' + cart.qty + '},'
@@ -138,86 +169,90 @@ class DeliveryScreen extends Component {
         user_id: this.props.auth.payload.user_id,
         unique_token: this.props.auth.payload.unique_token,
         product_variations_user_want_to_buy:dataCart,
-        shipping_cost_user_choose: this.state.selectedDelivery.jne_or_jnt+'_'+this.state.selectedDelivery.service,
-        shipping_cost_total: this.state.selectedDelivery.price,
+        chosen_shipping_mode: this.state.selectedDelivery.jne_or_jnt+'_'+this.state.selectedDelivery.service,
+        chosen_shipping_price: this.state.selectedDelivery.price,
         chosen_app_customer_address_id: this.state.selectedAddressID,
+        chosen_method: 'credit_card' // DEFAULT
       }
     }
     this.props.getCheckoutProcess(data)
   }
 
-  _renderProductCart({item, index}){
-    var price = item.product.product_sale_price > 0 ? item.product.product_sale_price : item.product.product_regular_price
-    price = convertToRupiah(price * item.qty)
-    var size = item.product.sizes.find(x => x.slug === item.size).name
-    var color = item.product.colors.find(x => x.slug === item.color).name
-    var image = Images.default
-    if(item.product.img_url && item.product.img_url !== '')
-      image = {uri:item.product.img_url}
-    return(
-      <View style={styles.productContainer}>
-        <View style={styles.productImageWrapper}>
-          <Image source={image} style={styles.productImage}/>
-        </View>
-        <View style={styles.productDescriptionWrapper}>
-          <View style={styles.nameWrapper}>
-            <Text style={styles.productName}>{item.product.name}</Text>
-          </View>
-          <View style={styles.propertyWrapper}>
-            <View style={styles.sizeWrapper}>
-              <Text style={styles.itemText}>Ukuran - {size}</Text>
+  _renderProductCart(){
+    if(this.props.cart.data && this.props.cart.data.length > 0)
+    return (
+      this.props.cart.data.map((item, index) => {
+        var price = item.product.product_sale_price > 0 ? item.product.product_sale_price : item.product.product_regular_price
+        price = convertToRupiah(price * item.qty)
+        var size = item.product.sizes.find(x => x.slug === item.size).name
+        var color = item.product.colors.find(x => x.slug === item.color).name
+        var image = Images.default
+        if(item.product.img_url && item.product.img_url !== '')
+          image = {uri:item.product.img_url}
+        return(
+          <View style={styles.productContainer} key={index.toString()}>
+            <View style={styles.productImageWrapper}>
+              <Image source={image} style={styles.productImage}/>
             </View>
-            <View style={styles.colorWrapper}>
-              <Text style={styles.itemText}>Warna - {color}</Text>
-            </View>
-            <View style={styles.qtyWrapper}>
-              <Text style={styles.itemText}>Qty - {item.qty}</Text>
+            <View style={styles.productDescriptionWrapper}>
+              <View style={styles.nameWrapper}>
+                <Text style={styles.productName}>{item.product.name}</Text>
+              </View>
+              <View style={styles.propertyWrapper}>
+                <View style={styles.sizeWrapper}>
+                  <Text style={styles.itemText}>Ukuran - {size}</Text>
+                </View>
+                <View style={styles.colorWrapper}>
+                  <Text style={styles.itemText}>Warna - {color}</Text>
+                </View>
+                <View style={styles.qtyWrapper}>
+                  <Text style={styles.itemText}>Qty - {item.qty}</Text>
+                </View>
+              </View>
+              <View style={styles.priceWrapper}>
+                <Text style={styles.itemText}>{price}</Text>
+              </View>
             </View>
           </View>
-          <View style={styles.priceWrapper}>
-            <Text style={styles.itemText}>{price}</Text>
-          </View>
-        </View>
-      </View>
-    );
+        );
+      })
+    )
   }
 
   renderSelectedAddress(){
-    if(this.props.address.payload === null || this.props.address.payload.addresses.length === 0){
+    if(this.state.selectedAddress === null){
       return <View/>
     }
-    var selectedAddress = this.props.address.payload.addresses.find(address => address.id === this.state.selectedAddressID)
-    if(!selectedAddress)
-      selectedAddress = this.props.address.payload.addresses.find(address => address.is_primary === 1)
-    if(selectedAddress){
-      if(this.state.selectedAddressID === ''){
-        this.setState({
-          selectedAddressID: selectedAddress.id
-        })
-      }
-      return(
-        <View>
-          <Text style={styles.productSubtitle2}>KIRIM KE</Text>
-          <View style={styles.wrapperSeparator}/>
-          <View style={styles.deliveryAddressContainer}>
-            <Text style={styles.addressName}>{selectedAddress.receiver_name}</Text>
-            <Text style={styles.address}>{selectedAddress.address}</Text>
-            <Text style={styles.address}>{selectedAddress.district_name}, {selectedAddress.city_name}</Text>
-            <Text style={styles.address}>{selectedAddress.province_name} - {selectedAddress.zip_code}</Text>
-            <Text style={styles.address}>{selectedAddress.receiver_phone}</Text>
-          </View>
+    const {selectedAddress} = this.state
+    return(
+      <View>
+        <Text style={styles.productSubtitle2}>KIRIM KE</Text>
+        <View style={styles.wrapperSeparator}/>
+        <View style={styles.deliveryAddressContainer}>
+          <Text style={styles.addressName}>{selectedAddress.receiver_name}</Text>
+          <Text style={styles.address}>{selectedAddress.address}</Text>
+          <Text style={styles.address}>{selectedAddress.district_name}, {selectedAddress.city_name}</Text>
+          <Text style={styles.address}>{selectedAddress.province_name} - {selectedAddress.zip_code}</Text>
+          <Text style={styles.address}>{selectedAddress.receiver_phone}</Text>
         </View>
-      )
-    }
+      </View>
+    )
   }
 
-  _renderDeliveriesOption({item, index}){
-    return (
-      <TouchableOpacity style={styles.deliveryOptionWrapper} onPress={() => this.selectDelivery(index)}>
-        <Text style={styles.deliveryNameText}>{item.jne_or_jnt} {item.service} ({item.delivery_time}) hari</Text>
-        <Text style={styles.deliveryPriceText}>{convertToRupiah(item.price)}</Text>
-      </TouchableOpacity>
-    )
+  _renderDeliveriesOption(){
+    if(this.props.shippingOptions.payload && this.props.shippingOptions.payload.shipping_options.length > 0)
+      return (
+        <ScrollView showsVerticalScrollIndicator={false}>
+        {this.props.shippingOptions.payload.shipping_options.map((item, index) => {
+          return (
+            <TouchableOpacity style={styles.deliveryOptionWrapper} onPress={() => this.selectDelivery(index)} key={index.toString()}>
+              <Text style={styles.deliveryNameText}>{item.jne_or_jnt} {item.service} ({item.delivery_time}) hari</Text>
+              <Text style={styles.deliveryPriceText}>{convertToRupiah(item.price)}</Text>
+            </TouchableOpacity>
+          )
+        })}
+        </ScrollView>
+      )
   }
 
   renderDelivery(){
@@ -252,21 +287,17 @@ class DeliveryScreen extends Component {
             })}
           >
             <TouchableWithoutFeedback>
-            <View style={styles.chooseDeliveryWrapper2}>
-              <TouchableOpacity style={styles.chooseDeliveryBtn2} onPress={() => this.setState({
-                isShowDelivery:false
-              })}>
-                <Image source={Images.x} style={styles.imageClose}/>
-                <Text style={styles.chooseDeliveryText2}>Pilih Opsi Pengiriman</Text>
-              </TouchableOpacity>
-              {this.props.shippingOptions.fetching && <View style={styles.containerLoading}>
-                <ActivityIndicator size="large" color={Colors.mooimom} />
-              </View>}
-              <FlatList
-                data={this.props.shippingOptions.payload ? this.props.shippingOptions.payload.shipping_options : []}
-                renderItem={this._renderDeliveriesOption.bind(this)}
-                keyExtractor={(item, index) => index.toString()}
-              />
+              <View style={styles.chooseDeliveryWrapper2}>
+                <TouchableOpacity style={styles.chooseDeliveryBtn2} onPress={() => this.setState({
+                  isShowDelivery:false
+                })}>
+                  <Image source={Images.x} style={styles.imageClose}/>
+                  <Text style={styles.chooseDeliveryText2}>Pilih Opsi Pengiriman</Text>
+                </TouchableOpacity>
+                {this.props.shippingOptions.fetching && <View style={styles.containerLoading}>
+                  <ActivityIndicator size="large" color={Colors.mooimom} />
+                </View>}
+                {this._renderDeliveriesOption()}
               </View>
             </TouchableWithoutFeedback>
         </TouchableOpacity>
@@ -275,9 +306,10 @@ class DeliveryScreen extends Component {
     )
   }
 
-  setSelectAddress(param){
+  setSelectAddress(item){
     this.setState({
-      selectedAddressID: param,
+      selectedAddressID: item.id,
+      selectedAddress: item,
       selectedDelivery: {}
     })
   }
@@ -298,7 +330,7 @@ class DeliveryScreen extends Component {
           <ScrollView
           showsVerticalScrollIndicator={false}
           >
-          <Text style={styles.productSubtitle}>Konfirmasi</Text>
+          <Text style={styles.productSubtitle}>Konfirmasi Pengiriman</Text>
           <View style={styles.wrapperSeparator}/>
             {this.renderSelectedAddress()}
           <View style={styles.wrapperSeparator}/>
@@ -308,11 +340,7 @@ class DeliveryScreen extends Component {
           })}}>
             <Text style={styles.chooseAddressText}>Pilih Alamat</Text>
           </TouchableOpacity>
-          <FlatList
-            data={this.props.cart.data}
-            renderItem={this._renderProductCart.bind(this)}
-            keyExtractor={(item, index) => index.toString()}
-          />
+          {this._renderProductCart()}
           <View style={styles.wrapperSeparator}/>
           {this.renderDelivery()}
           </ScrollView>
@@ -348,6 +376,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    emptyCartProcess: () => {
+      dispatch(CartActions.emptyCartRequest())
+    },
     getAddressProcess: data => {
       dispatch(GetAddressActions.getAddressRequest(data))
     },
