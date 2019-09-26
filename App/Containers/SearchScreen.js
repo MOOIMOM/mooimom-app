@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, TextInput, Alert, AppState, Clipboard, ActivityIndicator } from 'react-native'
+import { ScrollView, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, TextInput, FlatList, Alert, AppState, Clipboard, ActivityIndicator } from 'react-native'
 import { Images, Metrics, Colors } from '../Themes'
 import ProductCardSingle from '../Components/ProductCardSingle'
 import GetSearchActions from '../Redux/GetSearchRedux'
@@ -98,31 +98,25 @@ class SearchScreen extends Component {
     }
   }
 
-  _renderProduct () {
-    if(this.state.products.length > 0)
+  _renderProduct ({item, index}) {
     return (
-      this.state.products.map((item, index) => {
-        return (
-          <TouchableWithoutFeedback
-            onPress={() => this.actNavigate('ProductScreen', {
-              product_slug: item.slug,
-              auth: this.props.auth
-            })}
-            key={index.toString()}
-          >
-            <View>
-              <ProductCardSingle
-                product={item}
-                sharedProductProcess={this.props.sharedProductProcess}
-                addWishlistProductProcess={this.props.addWishlistProductProcess}
-                deleteWishlistProductProcess={this.props.deleteWishlistProductProcess}
-                shareWhatsapp={this.shareWhatsapp}
-                auth={this.props.auth}
-              />
-            </View>
-          </TouchableWithoutFeedback>
-        );
-      })
+      <TouchableWithoutFeedback
+        onPress={() => this.actNavigate('ProductScreen', {
+          product_slug: item.slug,
+          auth: this.props.auth
+        })}
+      >
+        <View>
+          <ProductCardSingle
+            product={item}
+            sharedProductProcess={this.props.sharedProductProcess}
+            addWishlistProductProcess={this.props.addWishlistProductProcess}
+            deleteWishlistProductProcess={this.props.deleteWishlistProductProcess}
+            shareWhatsapp={this.shareWhatsapp}
+            auth={this.props.auth}
+          />
+        </View>
+      </TouchableWithoutFeedback>
     )
   }
 
@@ -157,7 +151,12 @@ class SearchScreen extends Component {
             {this.props.getSearch.fetching && <View style={styles.containerLoading}>
               <ActivityIndicator size="large" color={Colors.mooimom} />
             </View>}
-            {this._renderProduct()}
+              <FlatList
+                showsVerticalScrollIndicator={false}
+                data={this.state.products}
+                renderItem={this._renderProduct.bind(this)}
+                keyExtractor={(item, index) => index.toString()}
+              />
             </ScrollView>
           </View>
         </View>

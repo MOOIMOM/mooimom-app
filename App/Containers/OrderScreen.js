@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, Image, TouchableOpacity, AsyncStorage, ActivityIndicator} from 'react-native'
+import { ScrollView, Text, View, Image, TouchableOpacity, FlatList, AsyncStorage, ActivityIndicator} from 'react-native'
 import { Images, Metrics, Colors } from '../Themes'
 import LinearGradient from 'react-native-linear-gradient';
 import GetAllOrderActions from '../Redux/GetAllOrderRedux';
@@ -136,33 +136,28 @@ class OrderScreen extends Component {
     }
   }
 
-  _renderOrders(){
-    if(this.state.orders.length > 0)
-      return (
-        this.state.orders.map((item, index) => {
-          const {menuStatus} = this.state
-          var status = ''
-          var idx = menuStatus.findIndex(status => status.status === item.order_status)
-          if(idx >= 0)
-            status = menuStatus[idx].status_name_proses
-          return (
-            <TouchableOpacity onPress={() => this.actNavigate('DetailOrderScreen', {order_id:item.order_id})} key={index.toString()}>
-              <View style={styles.orderContainer}>
-                <View style={styles.orderContainerTop}>
-                  <Text style={styles.orderStatusText}>{status}</Text>
-                </View>
-                <View style={styles.orderContainerMid}>
-                  <Text style={styles.orderDateText}>{item.order_date}</Text>
-                  <Text style={styles.orderIDText}>No Order #{item.order_id}</Text>
-                </View>
-                <View style={styles.orderContainerBottom}>
-                  {this._renderProductCart(item.order_items)}
-                </View>
-              </View>
-            </TouchableOpacity>
-          )
-        })
-      )
+  _renderOrders({item, index}){
+  const {menuStatus} = this.state
+  var status = ''
+  var idx = menuStatus.findIndex(status => status.status === item.order_status)
+  if(idx >= 0)
+    status = menuStatus[idx].status_name_proses
+  return (
+     <TouchableOpacity onPress={() => this.actNavigate('DetailOrderScreen', {order_id:item.order_id})} key={index.toString()}>
+       <View style={styles.orderContainer}>
+         <View style={styles.orderContainerTop}>
+           <Text style={styles.orderStatusText}>{status}</Text>
+         </View>
+         <View style={styles.orderContainerMid}>
+           <Text style={styles.orderDateText}>{item.order_date}</Text>
+           <Text style={styles.orderIDText}>No Order #{item.order_id}</Text>
+         </View>
+         <View style={styles.orderContainerBottom}>
+           {this._renderProductCart(item.order_items)}
+         </View>
+       </View>
+     </TouchableOpacity>
+   )
   }
 
   render () {
@@ -207,7 +202,12 @@ class OrderScreen extends Component {
                   {this.props.allOrder.fetching && <View style={styles.containerLoading}>
                     <ActivityIndicator size="large" color={Colors.mooimom} />
                   </View>}
-                  {this._renderOrders()}
+                  <FlatList
+                    data={this.state.orders}
+                    renderItem={this._renderOrders.bind(this)}
+                    keyExtractor={(item, index) => index.toString()}
+                    showsVerticalScrollIndicator={false}
+                  />
                 </View>
               </View>
             </ScrollView>

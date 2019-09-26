@@ -302,35 +302,27 @@ class CategoryScreen extends Component {
     )
   }
 
-  _renderProduct () {
-    if(this.state.products.length > 0){
-      return (
-        <ScrollView showsVerticalScrollIndicator={false}>
-        {this.state.products.map((item, index) => {
-          return (
-            <TouchableWithoutFeedback
-              onPress={() => this.navigate_to('ProductScreen', {
-                product_slug: item.slug,
-                auth: this.props.auth
-              })}
-              key={index.toString()}
-            >
-              <View>
-                <ProductCardSingle
-                  product={item}
-                  sharedProductProcess={this.props.sharedProductProcess}
-                  addWishlistProductProcess={this.props.addWishlistProductProcess}
-                  deleteWishlistProductProcess={this.props.deleteWishlistProductProcess}
-                  shareWhatsapp={this.shareWhatsapp}
-                  auth={this.props.auth}
-                />
-              </View>
-            </TouchableWithoutFeedback>
-          );
-        })}
-        </ScrollView>
-      )
-    }
+  _renderProduct ({item, index}) {
+    const { navigate } = this.props.navigation
+    return (
+      <TouchableWithoutFeedback
+        onPress={() => this.navigate_to('ProductScreen', {
+          product_slug: item.slug,
+          auth: this.props.auth
+          })}
+          >
+        <View>
+          <ProductCardSingle
+            product={item}
+            sharedProductProcess={this.props.sharedProductProcess}
+            addWishlistProductProcess={this.props.addWishlistProductProcess}
+            deleteWishlistProductProcess={this.props.deleteWishlistProductProcess}
+            shareWhatsapp={this.shareWhatsapp}
+            auth={this.props.auth}
+          />
+        </View>
+      </TouchableWithoutFeedback>
+    );
   }
 
   _renderCategoryView(){
@@ -406,7 +398,12 @@ class CategoryScreen extends Component {
             {this.props.productCategory.fetching && <View style={styles.containerLoading2}>
               <ActivityIndicator size="large" color={Colors.mooimom} />
             </View>}
-            {this._renderProduct()}
+            <FlatList
+              showsVerticalScrollIndicator={false}
+              data={this.state.products}
+              renderItem={this._renderProduct}
+              keyExtractor={(item, index) => index.toString()}
+            />
           </View>
         </View>
         {this.state.willShareDescription && <View style={styles.modalShareView}>

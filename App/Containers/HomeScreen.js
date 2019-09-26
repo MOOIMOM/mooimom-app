@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback , Image, Alert, AsyncStorage, Linking } from 'react-native'
+import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback , Image, Alert, FlatList, AsyncStorage, Linking } from 'react-native'
 import { Images, Metrics } from '../Themes'
 import { connect } from 'react-redux'
 import Carousel, { ParallaxImage, Pagination  } from 'react-native-snap-carousel';
@@ -229,35 +229,24 @@ class HomeScreen extends Component {
     )
   }
 
-  _renderProduct () {
-    if (this.state.products.length > 0)
-      return (
-        <View style={styles.productWrapper}>
-          <Text style={styles.subTitleWrapper}>Produk Terlaris</Text>
-          <View style={styles.productContainer}>
-          {this.state.products.map((item, index) => {
-            return (
-              <TouchableWithoutFeedback
-                onPress={() => this.navigate_to('ProductScreen', {
-                  product_slug: item.slug,
-                  auth: this.props.auth
-                })}
-                key={index.toString()}
-              >
-                <View>
-                  <ProductCard
-                    product={item}
-                    auth={this.props.auth}
-                    sharedProductProcess={this.props.sharedProductProcess}
-                    addWishlistProductProcess={this.props.addWishlistProductProcess}
-                    deleteWishlistProductProcess={this.props.deleteWishlistProductProcess}
-                  />
-                </View>
-              </TouchableWithoutFeedback>
-            )
-          })}
+  _renderProduct ({item, index}) {
+    return (
+      <TouchableWithoutFeedback
+        onPress={() => this.navigate_to('ProductScreen', {
+          product_slug: item.slug,
+          auth: this.props.auth
+        })}
+      >
+        <View>
+          <ProductCard
+            product={item}
+            auth={this.props.auth}
+            sharedProductProcess={this.props.sharedProductProcess}
+            addWishlistProductProcess={this.props.addWishlistProductProcess}
+            deleteWishlistProductProcess={this.props.deleteWishlistProductProcess}
+          />
         </View>
-      </View>
+      </TouchableWithoutFeedback>
     )
   }
 
@@ -352,7 +341,21 @@ class HomeScreen extends Component {
           </View>
           <View style={styles.wrapperSeparator}/>
           <View style={styles.wrapperSeparator}/>
-            {this._renderProduct()}
+          <View style={styles.productWrapper}>
+            <View>
+              {this.state.products.length > 0 && <Text style={styles.subTitleWrapper}>Produk Terlaris</Text>}
+              <FlatList
+                data={this.state.products}
+                renderItem={this._renderProduct}
+                keyExtractor={(item, index) => index.toString()}
+                showsVerticalScrollIndicator={false}
+                numColumns={2}
+                getItemLayout={(data, index) => (
+                  {length: Metrics.screenHeight / 2, offset: Metrics.screenHeight / 2 * index, index}
+                )}
+              />
+            </View>
+          </View>
           </ScrollView>
         </View>
       </View>
