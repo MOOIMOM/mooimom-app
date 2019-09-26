@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { ScrollView, Text, View, Image, TouchableOpacity } from 'react-native'
 import { Images, Metrics } from '../Themes'
 import { connect } from 'react-redux'
-import {convertToRupiah} from '../Lib/utils'
+import {convertToRupiah, getDateFromString} from '../Lib/utils'
 import BalanceActions from '../Redux/BalanceRedux'
 import WithdrawActions from '../Redux/WithdrawRedux'
 import { NavigationActions, StackActions } from 'react-navigation'
@@ -82,7 +82,7 @@ class PaymentScreen extends Component {
           <View style={styles.menu} key={index.toString()}>
             <View style={styles.menuItem}>
               <Text style={styles.imgText}>Tgl</Text>
-              <Text style={styles.imgTextBold}>{item.date}</Text>
+              <Text style={styles.imgTextBold}>{getDateFromString(item.created_at, true, false, true, false)}</Text>
             </View>
             <View style={styles.menuItem}>
               <Text style={styles.imgText}>Nama</Text>

@@ -174,27 +174,27 @@ export default StyleSheet.create({
   textInfo2:{
     textAlign: 'justify',
     fontFamily: Fonts.type.gotham2,
-    fontSize: 12,
+    fontSize: 11,
     flex:2
   },
   textPenjualan1:{
     textAlign: 'left',
     fontFamily: Fonts.type.gotham2,
-    fontSize: 12,
+    fontSize: 11,
     flex:1,
     color:Colors.mooimom
   },
   textPenjualan2:{
     textAlign: 'left',
     fontFamily: Fonts.type.gotham2,
-    fontSize: 12,
+    fontSize: 11,
     flex:1,
     color:Colors.fire
   },
   textPenjualan3:{
     textAlign: 'left',
     fontFamily: Fonts.type.gotham2,
-    fontSize: 12,
+    fontSize: 11,
     flex:1
   },
   tablesimulationHeader:{

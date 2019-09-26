@@ -171,3 +171,30 @@ async function getFileToShare(file){
     return data
   }
 }
+
+export function getDateFromString(str, full = true, fullMonth = false, useTime = false, useSecond = false){
+  var res = ''
+  if(!str || (str.length !== 10 && str.length !== 19 && str.length !== 16)) return res
+  const months = [ "Jan", "Feb", "Mar", "Apr", "Mei", "Jun",
+       "Jul", "Agu", "Sep", "Okt", "Nov", "Des" ];
+  const fullmonths = [ "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+      "Juli", "Agustus", "September", "Oktober", "November", "Desember" ];
+  let idx = parseInt(str[6] + str[7]) - 1
+  if(idx < 0) return res
+  //day
+  res = parseInt(str[8] + str[9]).toString()
+  //month
+  res = res + ' ' + (fullMonth ? fullmonths[idx] : months[idx])
+  if(!full)
+    return res
+  //year
+  res = res + ' ' + str.substring(0,4)
+  if(!useTime)
+    return res
+  //hh:mm:ss
+  res = res + ' ' + str.substr(11, 5)
+  if(!useSecond)
+    return res
+  res = res + ' ' + str.substr(17, 2)
+  return res
+}

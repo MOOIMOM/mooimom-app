@@ -107,6 +107,7 @@ export default StyleSheet.create({
   },
   menuItem:{
     flexDirection: 'row',
+    justifyContent: 'space-between'
   },
   subtitle:{
     color:Colors.black,
@@ -123,7 +124,6 @@ export default StyleSheet.create({
     fontFamily: Fonts.type.gotham2,
     fontSize: 13,
     marginBottom: 5,
-    flex:1
   },
   imgTextBold:{
     color: Colors.black,
@@ -132,6 +132,5 @@ export default StyleSheet.create({
     textAlign: 'left',
     alignSelf: 'flex-start',
     marginBottom: 5,
-    flex:2
   }
 })

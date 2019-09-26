@@ -83,6 +83,7 @@ class NewPaymentRequestScreen extends Component {
             </Text>
           </View>
         </View>
+        <Image source={Images.down} style={{position:'absolute', width:12, height:12, resizeMode: 'contain', top:'50%', right:20}}/>
       </TouchableOpacity>
     )
   }

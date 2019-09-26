@@ -4,8 +4,10 @@ import { Images, Metrics, Colors } from '../Themes'
 import GetOrderActions from '../Redux/GetOrderRedux'
 import CommissionEstimationActions from '../Redux/CommissionEstimationRedux'
 import { connect } from 'react-redux'
-import {convertToRupiah } from '../Lib/utils'
+import {convertToRupiah, getDateFromString } from '../Lib/utils'
 import ModalDropDown from '../Components/ModalDropDown'
+import MidtransModule from '../Lib/Midtrans'
+
 // Styles
 import styles from './Styles/DetailOrderScreenStyles'
 class DetailOrderScreen extends Component {
@@ -47,9 +49,10 @@ class DetailOrderScreen extends Component {
         this.setState({
           order: newProps.order.payload,
           totalPrice: newProps.order.payload.order_total,
+          commission: newProps.order.payload.total_commission_for_this_order
         })
 
-        this.reloadCommission(newProps.order.payload.order_items)
+        // this.reloadCommission(newProps.order.payload.order_items)
       }
     }
 
@@ -88,6 +91,68 @@ class DetailOrderScreen extends Component {
   actNavigate (screen) {
     const { navigate } = this.props.navigation
     navigate(screen, {})
+  }
+
+  async payNow(){
+    const optionConect = {
+        clientKey: "VT-client-35STW7Jm-F0bTh1x",
+        urlMerchant: "http://www.mooimom.id"
+    }
+
+    const transRequest = {
+        transactionId: "0001",
+        totalAmount: 4000,
+        token: this.state.order.midtrans_token
+    }
+
+    const itemDetails = [
+        {id: "001", price: 1000, qty: 4, name: "peanuts"}
+    ];
+
+    const creditCardOptions = {
+        saveCard: false,
+        saveToken: false,
+        paymentMode: "Normal",
+        secure: false
+    };
+
+    const userDetail = {
+        fullName: "jhon",
+        email: "jhon@payment.com",
+        phoneNumber: "0850000000",
+        userId: "U01",
+        address: "street coffee",
+        city: "yogyakarta",
+        country: "IDN",
+        zipCode: "59382"
+    };
+
+    const optionColorTheme = {
+        primary: '#c51f1f',
+        primaryDark: '#1a4794',
+        secondary: '#1fce38'
+    }
+
+    const optionFont = {
+        defaultText: "open_sans_regular.ttf",
+        semiBoldText: "open_sans_semibold.ttf",
+        boldText: "open_sans_bold.ttf"
+    }
+
+    const callback = (res) => {
+        console.log(res)
+    };
+
+    MidtransModule.checkOut(
+        optionConect,
+        transRequest,
+        itemDetails,
+        creditCardOptions,
+        userDetail,
+        optionColorTheme,
+        optionFont,
+        callback
+    );
   }
 
   _renderProductCart(data){
@@ -152,7 +217,7 @@ class DetailOrderScreen extends Component {
             <Text style={styles.priceText}>{totalPrice}</Text>
             <Text style={styles.commissionText}>Est. Komisi {commission}</Text>
           </View>
-          <TouchableOpacity style={styles.buyBtn}>
+          <TouchableOpacity style={styles.buyBtn} onPress={() => this.payNow()}>
             <Text style={styles.buyText}>Bayar</Text>
           </TouchableOpacity>
         </View>
@@ -228,10 +293,17 @@ class DetailOrderScreen extends Component {
           <Text style={styles.productSubtitle}>Detail Order #{order.order_id}</Text>
           <View style={styles.wrapperSeparator}/>
           <Text style={styles.productSubtitle2}>Status: {status}</Text>
-          <Text style={styles.productSubtitle2}>{order.order_date}</Text>
+          <Text style={styles.productSubtitle2}>{getDateFromString(order.order_date, true, false, true, false)}</Text>
           <View style={styles.wrapperSeparator}/>
             {this.renderSelectedAddress()}
           <View style={styles.wrapperSeparator}/>
+          <View style={styles.selectedDeliveryWrapper}>
+            <Text style={styles.deliveryText2}>Pengiriman:</Text>
+            <View style={styles.selectedDeliveryTextWrapper}>
+            <Text style={styles.deliveryText}>{order.shipping_method}</Text>
+            <Text style={styles.deliveryText}>{convertToRupiah(order.shipping_total)}</Text>
+            </View>
+          </View>
           <View style={styles.wrapperSeparator}/>
           {this._renderProductCart(order.order_items)}
           <View style={styles.wrapperSeparator}/>

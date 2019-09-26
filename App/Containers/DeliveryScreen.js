@@ -73,7 +73,7 @@ class DeliveryScreen extends Component {
       ) {
           this.props.emptyCartProcess()
           this.props.navigation.popToTop()
-          this.actNavigate('DetailOrderScreen', {order_id:newProps.checkout.payload.ga_data.order_id})
+          this.actNavigate('DetailOrderScreen', {order_id:newProps.checkout.payload.order_id})
       } else if(
         newProps.checkout.payload === null &&
         !newProps.checkout.fetching

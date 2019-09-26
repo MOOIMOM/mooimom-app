@@ -5,7 +5,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import GetAllOrderActions from '../Redux/GetAllOrderRedux';
 import GetCommissionSummaryActions from '../Redux/GetCommissionSummaryRedux';
 import { connect } from 'react-redux'
-import {convertToRupiah} from '../Lib/utils'
+import {convertToRupiah, getDateFromString} from '../Lib/utils'
 
 // Styles
 import styles from './Styles/OrderScreenStyles'
@@ -149,11 +149,17 @@ class OrderScreen extends Component {
            <Text style={styles.orderStatusText}>{status}</Text>
          </View>
          <View style={styles.orderContainerMid}>
-           <Text style={styles.orderDateText}>{item.order_date}</Text>
-           <Text style={styles.orderIDText}>No Order #{item.order_id}</Text>
+           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Text style={styles.orderIDText}>Order #{item.order_id}</Text>
+            <Text style={styles.orderDateText}>{getDateFromString(item.order_date, true, false, true, false)}</Text>
+            </View>
          </View>
          <View style={styles.orderContainerBottom}>
            {this._renderProductCart(item.order_items)}
+         </View>
+         <View style={styles.orderContainerTotal}>
+           <Text style={styles.orderAmount}>Total</Text>
+           <Text style={styles.orderAmount}>{convertToRupiah(item.order_total)}</Text>
          </View>
        </View>
      </TouchableOpacity>

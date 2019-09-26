@@ -38,7 +38,8 @@ public class MainApplication extends Application implements ReactApplication {
             new RNFetchBlobPackage(),
             new RNSharePackage(),
             new RNGestureHandlerPackage(),
-            new LinearGradientPackage()
+            new LinearGradientPackage(),
+            new MidtransPackage()
       );
     }
 

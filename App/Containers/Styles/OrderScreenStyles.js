@@ -162,7 +162,7 @@ export default StyleSheet.create({
   },
   orderContainerMid:{
     paddingHorizontal: 20,
-    borderBottomWidth: 1,
+    borderBottomWidth: 0.5,
     borderBottomColor: Colors.gray,
     paddingVertical: 5
   },
@@ -175,6 +175,22 @@ export default StyleSheet.create({
     color:Colors.black,
     fontFamily: Fonts.type.gotham2,
     fontSize: 12,
+  },
+  orderAmount:{
+    color:Colors.mooimom,
+    fontFamily: Fonts.type.gotham4,
+    fontSize: 16,
+    textAlign: 'center'
+  },
+  orderContainerTotal:{
+    width: Metrics.screenWidth - 40,
+    paddingHorizontal: 20,
+    borderColor: Colors.gray,
+    marginTop:10,
+    paddingVertical: 10,
+    borderTopWidth: 0.5,
+    justifyContent: 'space-between',
+    flexDirection: 'row'
   },
   orderContainerBottom:{
     marginHorizontal: 20,

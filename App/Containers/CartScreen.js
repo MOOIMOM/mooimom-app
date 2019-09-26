@@ -333,7 +333,7 @@ class CartScreen extends Component {
           {this._renderProductCart()}
           </ScrollView>
         </View>
-        <View style={styles.menuWrapper}>
+        {this.props.cart.data.length > 1 && <View style={styles.menuWrapper}>
           <View style={styles.subtotalWrapper}>
             <Text style={styles.subtotalText}>SUBTOTAL</Text>
             <Text style={styles.priceText}>{totalPrice}</Text>
@@ -342,7 +342,7 @@ class CartScreen extends Component {
           <TouchableOpacity style={styles.buyBtn} onPress={() => this.actBuy()}>
             <Text style={styles.buyText}>Beli</Text>
           </TouchableOpacity>
-        </View>
+        </View>}
       </View>
     )
   }

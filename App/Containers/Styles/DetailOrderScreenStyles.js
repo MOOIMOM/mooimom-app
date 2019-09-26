@@ -227,5 +227,31 @@ export default StyleSheet.create({
     color:Colors.blueMooimom,
     fontFamily: Fonts.type.gotham4,
     fontSize: 14 * Metrics.screenWidth / 320,
+  },
+  selectedDeliveryWrapper:{
+    borderWidth: 1,
+    borderRadius: 10,
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    paddingVertical: 5,
+    marginVertical: 10,
+    flex: 1
+  },
+  selectedDeliveryTextWrapper:{
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexDirection: 'row',
+    flex: 1
+  },
+  deliveryText:{
+    color:Colors.black,
+    fontFamily: Fonts.type.gotham2,
+    fontSize: 12 * Metrics.screenWidth / 320,
+  },
+  deliveryText2:{
+    color:Colors.black,
+    fontFamily: Fonts.type.gotham4,
+    fontSize: 14 * Metrics.screenWidth / 320,
+    textAlign: 'center'
   }
 })

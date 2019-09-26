@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { ScrollView, Text, View, Image, TouchableOpacity, Alert, PermissionsAndroid, Modal, TouchableWithoutFeedback } from 'react-native'
 import { Images, Metrics } from '../Themes'
+import {NavigationEvents} from 'react-navigation';
 import { connect } from 'react-redux'
 import {convertToRupiah} from '../Lib/utils'
 import ImagePicker from 'react-native-image-crop-picker'
@@ -215,6 +216,10 @@ class ProfileScreen extends Component {
       imageprofile = {uri: this.state.profile.profile_picture_thumb_url}
     return (
       <View style={styles.container}>
+        <NavigationEvents onDidBlur={() => console.log('onDidBlur I am triggered')} />
+        <NavigationEvents onWillBlur={() => console.log('onWillBlur I am triggered')} />
+        <NavigationEvents onWillFocus={() => console.log('onWillFocus I am triggered')} />
+        <NavigationEvents onDidFocus={() => console.log('onDidFocus I am triggered')} />
         <View style={styles.containerScroll}>
           <View style={styles.headerWrapper}>
             <TouchableOpacity style={styles.searchButton} onPress={() => this.actNavigate('SearchScreen')}>

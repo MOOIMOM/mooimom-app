@@ -29,7 +29,7 @@ export default StyleSheet.create({
   },
   cartContainer:{
     width: Metrics.screenWidth - 40,
-    height: Metrics.screenHeight - 160,
+    height: Metrics.screenHeight - 130,
     marginHorizontal: 20,
     marginTop: 5
   },

@@ -5,13 +5,10 @@ import LinearGradient from 'react-native-linear-gradient';
 import GetCommissionSummaryActions from '../Redux/GetCommissionSummaryRedux';
 import SettingActions from '../Redux/SettingRedux';
 import { connect } from 'react-redux'
-import {convertToRupiah} from '../Lib/utils'
+import {convertToRupiah, getDateFromString} from '../Lib/utils'
 
 // Styles
 import styles from './Styles/DetailTargetScreenStyles'
-var months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-           "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
-
 class DetailTargetScreen extends Component {
   constructor (props) {
     super(props)
@@ -79,18 +76,20 @@ class DetailTargetScreen extends Component {
   }
 
   render () {
+    var left = 0
     var target = 0
     var achieve = 0
     var processing = 0
     var curBonus = 0
     var nextBonus = 0
     var bonus_val = 0
+    var total = 0
     var date_start = ''
     var date_end = ''
+    if(this.state.commissionSummary.how_much_commission_user_need_to_get_to_get_next_commission_target_percentage >= 0)
+      left = this.state.commissionSummary.how_much_commission_user_need_to_get_to_get_next_commission_target_percentage
     if(this.state.commissionSummary.all_orders_completed_total_spending >= 0)
       achieve = this.state.commissionSummary.all_orders_completed_total_spending
-    if(this.state.commissionSummary.how_much_commission_user_need_to_get_to_get_next_commission_target_percentage >= 0)
-      target = this.state.commissionSummary.how_much_commission_user_need_to_get_to_get_next_commission_target_percentage
     if(this.state.commissionSummary.all_orders_processing_total_spending >= 0)
       processing = this.state.commissionSummary.all_orders_processing_total_spending
     if(this.state.commissionSummary.what_percentage_commission_user_will_receive_now >= 0)
@@ -100,14 +99,13 @@ class DetailTargetScreen extends Component {
     if(this.state.commissionSummary.how_much_commission_user_will_receive_this_week >= 0)
       bonus_val = this.state.commissionSummary.how_much_commission_user_will_receive_this_week
     if(this.state.commissionSummary.date_start && this.state.commissionSummary.date_start !== ''){
-      var dt = this.state.commissionSummary.date_start.split('-')
-      date_start = parseInt(dt[2], 10) +' '+ months[parseInt(dt[1], 10) - 1]
+      date_start = getDateFromString(this.state.commissionSummary.date_start, false)
     }
     if(this.state.commissionSummary.date_end && this.state.commissionSummary.date_end !== ''){
-      var dt = this.state.commissionSummary.date_end.split('-')
-      date_end = parseInt(dt[2], 10) +' '+ months[parseInt(dt[1], 10) - 1]
+      date_end = getDateFromString(this.state.commissionSummary.date_end, false)
     }
-    var need = target - achieve
+    var target = left + achieve
+    var total = processing + achieve
     return (
       <View style={styles.container}>
         <View style={styles.containerScroll}>
@@ -144,7 +142,7 @@ class DetailTargetScreen extends Component {
                     <Text style={styles.textMath}>=</Text>
                   </View>
                   <View style={styles.amountContainer}>
-                    <Text style={styles.textTargetAmount}>{convertToRupiah(need)}</Text>
+                    <Text style={styles.textTargetAmount}>{convertToRupiah(left)}</Text>
                     <Text style={styles.textTargetMore}>Jumlah yang diperlukan untuk bonus {nextBonus}%</Text>
                   </View>
               </LinearGradient>
@@ -167,7 +165,7 @@ class DetailTargetScreen extends Component {
                 <View style={styles.wrapperSeparator}/>
                 <View style={styles.penjualanCalculator}>
                   <Text style={styles.textInfo2}>Total Penjualan (Semua Pesanan)</Text>
-                  <Text style={styles.textPenjualan1}>{convertToRupiah(achieve)}</Text>
+                  <Text style={styles.textPenjualan1}>{convertToRupiah(total)}</Text>
                 </View>
                 <View style={styles.penjualanCalculator}>
                   <Text style={styles.textInfo2}>Total Penjualan (Belum Selesai)</Text>
