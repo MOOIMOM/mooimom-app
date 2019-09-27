@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback } from 'react-native'
+import { ScrollView, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, FlatList } from 'react-native'
 import { Images, Metrics } from '../Themes'
 import ProductCard from '../Components/ProductCard'
 import WishlistActions from '../Redux/WishlistRedux'
 import EditWishlistActions from '../Redux/EditWishlistRedux'
+import SharedProductActions from '../Redux/SharedProductRedux'
 import { connect } from 'react-redux'
 import {convertToRupiah} from '../Lib/utils'
 
@@ -15,7 +16,8 @@ class SharedProductScreen extends Component {
     super(props)
     this.state = {
       menuStatus: ['Wishlist Produk', 'Produk Dibagikan'],
-      selectedMenuIdx: this.props.navigation.state.params.selectedMenuIdx ? this.props.navigation.state.params.selectedMenuIdx : 0
+      selectedMenuIdx: this.props.navigation.state.params.selectedMenuIdx ? this.props.navigation.state.params.selectedMenuIdx : 0,
+      products: []
     }
 
     this._renderProduct = this._renderProduct.bind(this)
@@ -24,6 +26,11 @@ class SharedProductScreen extends Component {
 
   componentDidMount(){
     this.reloadWishlist()
+    if(this.state.selectedMenuIdx === 1){
+      this.setState({
+        products: this.props.sharedProduct.data
+      })
+    }
   }
 
   reloadWishlist(){
@@ -46,6 +53,34 @@ class SharedProductScreen extends Component {
           this.reloadWishlist()
       }
     }
+
+    if (this.props.sharedProduct !== newProps.sharedProduct) {
+      if (
+        newProps.sharedProduct.payload !== null &&
+        newProps.sharedProduct.error === null &&
+        !newProps.sharedProduct.fetching
+      ) {
+          if(this.state.selectedMenuIdx === 1){
+            this.setState({
+              products: newProps.sharedProduct.data
+            })
+          }
+      }
+    }
+
+    if (this.props.wishlist !== newProps.wishlist) {
+      if (
+        newProps.wishlist.payload !== null &&
+        newProps.wishlist.error === null &&
+        !newProps.wishlist.fetching
+      ) {
+          if(this.state.selectedMenuIdx === 0){
+            this.setState({
+              products: newProps.wishlist.payload.products
+            })
+          }
+      }
+    }
   }
 
   actNavigate (screen , obj = {}) {
@@ -53,39 +88,43 @@ class SharedProductScreen extends Component {
     navigate(screen, obj)
   }
 
-  _renderProduct () {
+  pressSelectedMenu(index){
+    this.setState({
+      products: [],
+      selectedMenuIdx: index,
+    })
     var data = []
-    if(this.state.selectedMenuIdx === 0){
+    if(index === 0){
       if(this.props.wishlist.payload && this.props.wishlist.payload.products.length > 0)
         data = this.props.wishlist.payload.products
     } else {
       data = this.props.sharedProduct.data
     }
-    if(data.length > 0)
-      return (
-        <View style={styles.productContainer}>
-        {data.map((item, index) => {
-          return (
-            <TouchableWithoutFeedback
-              onPress={() => this.actNavigate('ProductScreen', {
-                product_slug: item.slug,
-                auth:this.props.auth
-              })}
-              key={index.toString()}
-            >
-              <View>
-                <ProductCard
-                  product={item}
-                  auth={this.props.auth}
-                  sharedProductProcess={this.props.sharedProductProcess}
-                  addWishlistProductProcess={this.props.addWishlistProductProcess}
-                  deleteWishlistProductProcess={this.props.deleteWishlistProductProcess}
-                />
-              </View>
-            </TouchableWithoutFeedback>
-          )
+    const timeout = setTimeout(() => {
+      this.setState({
+        products: data
+      })
+    }, 100);
+  }
+
+  _renderProduct ({item, index}) {
+    return (
+      <TouchableWithoutFeedback
+        onPress={() => this.actNavigate('ProductScreen', {
+          product_slug: item.slug,
+          auth:this.props.auth
         })}
-      </View>
+      >
+        <View>
+          <ProductCard
+            product={item}
+            auth={this.props.auth}
+            sharedProductProcess={this.props.sharedProductProcess}
+            addWishlistProductProcess={this.props.addWishlistProductProcess}
+            deleteWishlistProductProcess={this.props.deleteWishlistProductProcess}
+          />
+        </View>
+      </TouchableWithoutFeedback>
     )
   }
 
@@ -102,9 +141,7 @@ class SharedProductScreen extends Component {
           styleText = styles.menuText2
         }
         return(
-          <TouchableOpacity key={index.toString()} onPress={() => this.setState({
-            selectedMenuIdx: index
-          })}>
+          <TouchableOpacity key={index.toString()} onPress={() => this.pressSelectedMenu(index)}>
             <View style={style}>
                 <Text style={styleText}>{item}</Text>
             </View>
@@ -139,11 +176,16 @@ class SharedProductScreen extends Component {
           <View style={styles.contentContainer}>
             {this._renderMenuStatus()}
             <View style={styles.wrapperSeparator}/>
-            <ScrollView
-            showsVerticalScrollIndicator={false}
-            >
-            {this._renderProduct()}
-            </ScrollView>
+            <FlatList
+              data={this.state.products}
+              renderItem={this._renderProduct}
+              keyExtractor={(item, index) => index.toString()}
+              showsVerticalScrollIndicator={false}
+              numColumns={2}
+              getItemLayout={(data, index) => (
+                {length: Metrics.screenHeight / 2, offset: Metrics.screenHeight / 2 * index, index}
+              )}
+            />
         </View>
       </View>
     </View>
@@ -169,7 +211,10 @@ const mapDispatchToProps = dispatch => {
     },
     deleteWishlistProductProcess: data => {
       dispatch(EditWishlistActions.deleteWishlistRequest(data))
-    }
+    },
+    sharedProductProcess: data => {
+      dispatch(SharedProductActions.sharedProductRequest(data))
+    },
   }
 };
 

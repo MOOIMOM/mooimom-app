@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 // Styles
 import styles from './Styles/SignupScreenStyles'
 
+var isProcessing = false
 class SignupScreen extends Component {
   constructor (props) {
     super(props)
@@ -69,6 +70,7 @@ class SignupScreen extends Component {
         !newProps.sendOtp.fetching
       ) {
           this.actNavigate('AuthScreen')
+          isProcessing = false
         }
     }
   }
@@ -80,6 +82,8 @@ class SignupScreen extends Component {
   }
 
   signUp(){
+    if(isProcessing) return;
+    isProcessing = true
     const {phone} = this.state
     var myPhoneNumber = phone.indexOf('0') == 0 ? phone.substring(1) : phone;
     if(myPhoneNumber === "" || myPhoneNumber.length <= 9) {

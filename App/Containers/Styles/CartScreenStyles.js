@@ -35,7 +35,6 @@ export default StyleSheet.create({
   },
   productContainer:{
     width: (Metrics.screenWidth - 40),
-    height: Metrics.screenHeight / 3,
     flex:1,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -46,7 +45,6 @@ export default StyleSheet.create({
   productImageWrapper:{
     flex:1,
     width: (Metrics.screenWidth - 40) / 2,
-    height: Metrics.screenHeight / 3,
   },
   productImage:{
     width: (Metrics.screenWidth - 40) / 2 - 5,
@@ -69,27 +67,28 @@ export default StyleSheet.create({
     flex: 1
   },
   itemText:{
-    fontSize: 12 * Metrics.screenWidth / 320,
+    fontSize: 10 * Metrics.screenWidth / 320,
     color: Colors.black,
     fontFamily: Fonts.type.gotham4,
   },
   itemText2:{
-    fontSize: 14 * Metrics.screenWidth / 320,
+    fontSize: 12 * Metrics.screenWidth / 320,
     color: Colors.black,
     fontFamily: Fonts.type.gotham4,
   },
   nameWrapper:{
-    flex:1,
+    marginBottom: 5
   },
   productName:{
-    fontSize: 12 * Metrics.screenWidth / 320,
+    fontSize: 10 * Metrics.screenWidth / 320,
     color: Colors.gray,
     fontFamily: Fonts.type.gotham2,
   },
   propertyWrapper:{
-    flex:2,
+    flex:1,
     justifyContent: 'center',
-    alignItems: 'flex-start'
+    alignItems: 'center',
+    marginBottom: 5
   },
   sizeWrapper:{
     flex:1,
@@ -153,7 +152,7 @@ export default StyleSheet.create({
   },
   qtyContainer:{
     width: Metrics.screenWidth / 5 + 1,
-    height: 30,
+    height: 27,
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
@@ -175,7 +174,6 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   priceWrapper:{
-    flex:1,
     alignItems: 'flex-start',
     justifyContent: 'flex-end'
   },

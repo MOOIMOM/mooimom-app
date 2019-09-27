@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, Image, TouchableOpacity } from 'react-native'
-import { Images, Metrics } from '../Themes'
+import { ScrollView, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, FlatList, ActivityIndicator } from 'react-native'
+import { Images, Metrics, Colors } from '../Themes'
 import GetNotificationActions from '../Redux/GetNotificationRedux'
 import { connect } from 'react-redux'
 import {convertToRupiah} from '../Lib/utils'
@@ -34,7 +34,7 @@ class NotificationScreen extends Component {
         !newProps.notification.fetching
       ) {
         this.setState({
-          notification: newProps.notification.payload,
+          notification: newProps.notification.payload.all_notifications,
         })
       }
     }
@@ -43,6 +43,17 @@ class NotificationScreen extends Component {
   actNavigate (screen , obj = {}) {
     const { navigate } = this.props.navigation
     navigate(screen, obj)
+  }
+
+  _renderNotification({item, index}){
+    console.info(item)
+    return (
+      <TouchableWithoutFeedback>
+        <View>
+          <Text>{item.the_message}</Text>
+        </View>
+      </TouchableWithoutFeedback>
+    )
   }
 
   render () {
@@ -64,12 +75,17 @@ class NotificationScreen extends Component {
             </TouchableOpacity>
           </View>
           <View style={styles.wrapperSeparator}/>
+          {this.props.notification.fetching &&
+          <View style={{justifyContent: 'center', alignItems: 'center', marginTop: 100, margin: 'auto'}}>
+            <ActivityIndicator size="large" color={Colors.mooimom} />
+          </View>}
           <View style={styles.contentContainer}>
-            <ScrollView
-            showsVerticalScrollIndicator={false}
-            >
-
-            </ScrollView>
+            <FlatList
+              data={this.state.notification}
+              renderItem={this._renderNotification}
+              keyExtractor={(item, index) => index.toString()}
+              showsVerticalScrollIndicator={false}
+            />
           </View>
         </View>
       </View>

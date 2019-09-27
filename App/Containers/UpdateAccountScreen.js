@@ -73,15 +73,6 @@ class UpdateAccountScreen extends Component {
               onValueChange={val => this.setState({ bank: val })}
             />
             <TextInputCustom
-              placeholder='Nama Pemilik Rekening'
-              color={Colors.black}
-              label={'Nama Pemilik Rekening'}
-              textAlign='left'
-              value={this.state.name}
-              onChangeText={val => this.setState({ name: val })}
-              autoCapitalize= 'words'
-            />
-            <TextInputCustom
               placeholder='Nomor Rekening'
               color={Colors.black}
               label={'Nomor Rekening'}
@@ -89,6 +80,15 @@ class UpdateAccountScreen extends Component {
               keyboardType='numeric'
               value={this.state.account}
               onChangeText={val => this.setState({ account: val })}
+            />
+            <TextInputCustom
+              placeholder='Nama Pemilik Rekening'
+              color={Colors.black}
+              label={'Nama Pemilik Rekening'}
+              textAlign='left'
+              value={this.state.name}
+              onChangeText={val => this.setState({ name: val })}
+              autoCapitalize= 'words'
             />
             <View style={styles.wrapperSeparator}/>
             </View>

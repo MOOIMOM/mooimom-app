@@ -7,7 +7,8 @@ import GetShippingOptionsActions from '../Redux/GetShippingOptionsRedux'
 import CheckoutActions from '../Redux/CheckoutRedux'
 import CartActions from '../Redux/CartRedux'
 import CommissionEstimationActions from '../Redux/CommissionEstimationRedux'
-import {convertToRupiah } from '../Lib/utils'
+import GetAllOrderActions from '../Redux/GetAllOrderRedux'
+import {convertToRupiah, titleCase } from '../Lib/utils'
 import ModalDropDown from '../Components/ModalDropDown'
 // Styles
 import styles from './Styles/DeliveryScreenStyles'
@@ -73,12 +74,20 @@ class DeliveryScreen extends Component {
       ) {
           this.props.emptyCartProcess()
           this.props.navigation.popToTop()
+          let data = {
+            data_request:{
+              user_id: this.props.auth.payload.user_id,
+              unique_token: this.props.auth.payload.unique_token,
+              selected_status : 'all'
+            }
+          }
+          this.props.getAllOrderProcess(data)
           this.actNavigate('DetailOrderScreen', {order_id:newProps.checkout.payload.order_id})
       } else if(
         newProps.checkout.payload === null &&
         !newProps.checkout.fetching
       ){
-        console.info(newProps.checkout)
+        Alert.alert('Sorry', 'Checkout failed, please try again later')
       }
     }
   }
@@ -172,7 +181,7 @@ class DeliveryScreen extends Component {
         chosen_shipping_mode: this.state.selectedDelivery.jne_or_jnt+'_'+this.state.selectedDelivery.service,
         chosen_shipping_price: this.state.selectedDelivery.price,
         chosen_app_customer_address_id: this.state.selectedAddressID,
-        chosen_method: 'credit_card' // DEFAULT
+        chosen_method: 'midtrans' // DEFAULT
       }
     }
     this.props.getCheckoutProcess(data)
@@ -182,10 +191,21 @@ class DeliveryScreen extends Component {
     if(this.props.cart.data && this.props.cart.data.length > 0)
     return (
       this.props.cart.data.map((item, index) => {
+        console.info(item.product)
         var price = item.product.product_sale_price > 0 ? item.product.product_sale_price : item.product.product_regular_price
         price = convertToRupiah(price * item.qty)
-        var size = item.product.sizes.find(x => x.slug === item.size).name
-        var color = item.product.colors.find(x => x.slug === item.color).name
+        var isFound, size, color, title, custom = ''
+        isFound = item.product.sizes.find(x => x.slug === item.size)
+        if(isFound)
+          size = isFound.name
+        isFound = item.product.colors.find(x => x.slug === item.color)
+        if(isFound)
+          color = isFound.name
+        isFound = item.product.custom_attributes.find(x => x.slug === item.custom)
+        if(isFound){
+          custom = isFound.name
+          title = titleCase(item.product.custom_attribute_text)
+        }
         var image = Images.default
         if(item.product.img_url && item.product.img_url !== '')
           image = {uri:item.product.img_url}
@@ -199,12 +219,15 @@ class DeliveryScreen extends Component {
                 <Text style={styles.productName}>{item.product.name}</Text>
               </View>
               <View style={styles.propertyWrapper}>
-                <View style={styles.sizeWrapper}>
+                {size !== '' && <View style={styles.sizeWrapper}>
                   <Text style={styles.itemText}>Ukuran - {size}</Text>
-                </View>
-                <View style={styles.colorWrapper}>
+                </View>}
+                {color !== '' && <View style={styles.colorWrapper}>
                   <Text style={styles.itemText}>Warna - {color}</Text>
-                </View>
+                </View>}
+                {custom !== '' && <View style={styles.colorWrapper}>
+                  <Text style={styles.itemText}>{title} - {custom}</Text>
+                </View>}
                 <View style={styles.qtyWrapper}>
                   <Text style={styles.itemText}>Qty - {item.qty}</Text>
                 </View>
@@ -352,7 +375,7 @@ class DeliveryScreen extends Component {
             {!this.props.commissionEstimation.fetching && <Text style={styles.commissionText}>Est. Komisi {commission}</Text>}
           </View>
           <TouchableOpacity style={styles.buyBtn} onPress={() => this.processBuy()}>
-            <Text style={styles.buyText}>Beli</Text>
+            <Text style={styles.buyText}>Konfirmasi</Text>
           </TouchableOpacity>
         </View>
         {this.props.checkout.fetching && <View style={styles.fullScreenModal}>
@@ -390,6 +413,9 @@ const mapDispatchToProps = dispatch => {
     },
     getCommissionEstimationProcess: data => {
       dispatch(CommissionEstimationActions.getCommissionEstimationRequest(data))
+    },
+    getAllOrderProcess: data => {
+      dispatch(GetAllOrderActions.getAllOrderRequest(data))
     },
   }
 };

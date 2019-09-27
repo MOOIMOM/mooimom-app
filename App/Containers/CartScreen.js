@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Alert } from 'react-native'
 import { Images, Metrics } from '../Themes'
 import { connect } from 'react-redux'
-import {convertToRupiah } from '../Lib/utils'
+import {convertToRupiah, titleCase } from '../Lib/utils'
 import ModalDropDown from '../Components/ModalDropDown'
 import CartActions from '../Redux/CartRedux'
 import CommissionEstimationActions from '../Redux/CommissionEstimationRedux'
@@ -126,6 +126,7 @@ class CartScreen extends Component {
         product: cart[index].product,
         color: cart[index].color,
         size: cart[index].size,
+        custom: cart[index].custom,
         sku: cart[index].sku,
         qty: cart[index].qty - 1
       }
@@ -139,6 +140,7 @@ class CartScreen extends Component {
       product: cart[index].product,
       color: cart[index].color,
       size: cart[index].size,
+      custom: cart[index].custom,
       sku: cart[index].sku,
       qty: cart[index].qty + 1
     }
@@ -160,6 +162,7 @@ class CartScreen extends Component {
               product: cart[index].product,
               color: cart[index].color,
               size: cart[index].size,
+              custom: cart[index].custom,
               sku: cart[index].sku,
               qty: 0
             }
@@ -175,15 +178,20 @@ class CartScreen extends Component {
     var cart =  Object.assign([], this.props.cart.data);
     var color = item.slug
     var size = cart[index_item].size
-    var sku = cart[index_item].product.all_product_variations_with_stock_data.find(variant => variant.color_slug === color && variant.size_slug === size).sku
+    var custom = cart[index_item].custom
+    var newProduct = cart[index_item].product.all_product_variations_with_stock_data.find(variant => variant.color_slug === color && variant.size_slug === size && variant.custom_attribute_1_slug === custom)
+    var sku = newProduct.sku
     var qty = cart[index_item].qty
-    var product = cart[index_item].product
+    var product = {...cart[index_item].product}
+    product.product_regular_price = newProduct.regular_price
+    product.product_sale_price = newProduct.sale_price
     //REMOVE
     let data = {
       product: cart[index_item].product,
       color: cart[index_item].color,
-      size: cart[index_item].size,
+      size: size,
       sku: cart[index_item].sku,
+      custom: custom,
       qty: 0
     }
     this.props.addToCartProcess(data)
@@ -192,6 +200,7 @@ class CartScreen extends Component {
       product: product,
       color: color,
       size: size,
+      custom: custom,
       sku: sku,
       qty: qty
     }
@@ -202,15 +211,20 @@ class CartScreen extends Component {
     var cart =  Object.assign([], this.props.cart.data);
     var color = cart[index_item].color
     var size = item.slug
-    var sku = cart[index_item].product.all_product_variations_with_stock_data.find(variant => variant.color_slug === color && variant.size_slug === size).sku
+    var custom = cart[index_item].custom
+    var newProduct = cart[index_item].product.all_product_variations_with_stock_data.find(variant => variant.color_slug === color && variant.size_slug === size && variant.custom_attribute_1_slug === custom)
+    var sku = newProduct.sku
     var qty = cart[index_item].qty
-    var product = cart[index_item].product
+    var product = {...cart[index_item].product}
+    product.product_regular_price = newProduct.regular_price
+    product.product_sale_price = newProduct.sale_price
     //REMOVE
     let data = {
       product: cart[index_item].product,
       color: cart[index_item].color,
-      size: cart[index_item].size,
+      size: size,
       sku: cart[index_item].sku,
+      custom: custom,
       qty: 0
     }
     this.props.addToCartProcess(data)
@@ -220,6 +234,40 @@ class CartScreen extends Component {
       color: color,
       size: size,
       sku: sku,
+      custom: custom,
+      qty: qty
+    }
+    this.props.addToCartProcess(data2)
+  }
+
+  selectCustom(item, index, index_item){
+    var cart =  Object.assign([], this.props.cart.data);
+    var color = cart[index_item].color
+    var size = cart[index_item].size
+    var custom = item.slug
+    var newProduct = cart[index_item].product.all_product_variations_with_stock_data.find(variant => variant.color_slug === color && variant.size_slug === size && variant.custom_attribute_1_slug === custom)
+    var sku = newProduct.sku
+    var qty = cart[index_item].qty
+    var product = {...cart[index_item].product}
+    product.product_regular_price = newProduct.regular_price
+    product.product_sale_price = newProduct.sale_price
+    //REMOVE
+    let data = {
+      product: cart[index_item].product,
+      color: color,
+      size: size,
+      sku: cart[index_item].sku,
+      custom: cart[index_item].custom,
+      qty: 0
+    }
+    this.props.addToCartProcess(data)
+    //ADD
+    let data2 = {
+      product: product,
+      color: color,
+      size: size,
+      sku: sku,
+      custom: custom,
       qty: qty
     }
     this.props.addToCartProcess(data2)
@@ -241,16 +289,76 @@ class CartScreen extends Component {
     this.actNavigate('DeliveryScreen')
   }
 
+  checkEmpty(data, slug, type, size, color, custom) {
+    for(var i = 0;i<data.length;i++){
+      switch(type){
+        case 1:
+          if(data[i].color_slug === slug
+            && data[i].size_slug === size
+            && data[i].custom_attribute_1_slug === custom
+          ){
+              return data[i].stock_quantity === 0
+          }
+        break;
+        case 2:
+          if(data[i].size_slug === slug
+            && data[i].color_slug === color
+            && data[i].custom_attribute_1_slug === custom
+          ){
+            return data[i].stock_quantity === 0
+          }
+        break;
+        case 3:
+          if(data[i].custom_attribute_1_slug === slug
+            && data[i].color_slug === color
+            && data[i].size_slug === size
+          ){
+            return data[i].stock_quantity === 0
+          }
+        break;
+      }
+    }
+    return true
+  }
+
   _renderProductCart(){
     if(this.props.cart.data.length > 0)
     return this.props.cart.data.map((item, index) => {
       var price = item.product.product_sale_price > 0 ? item.product.product_sale_price : item.product.product_regular_price
       price = convertToRupiah(price * item.qty)
-      var size = item.product.sizes.find(x => x.slug === item.size).name
-      var color = item.product.colors.find(x => x.slug === item.color).image_url
+      var isFound, size, color, title, custom = ''
+      isFound = item.product.sizes.find(x => x.slug === item.size)
+      if(isFound)
+        size = isFound.name
+      isFound = item.product.colors.find(x => x.slug === item.color)
+      if(isFound)
+        color = isFound.image_url
+      isFound = item.product.custom_attributes.find(x => x.slug === item.custom)
+      if(isFound){
+        custom = isFound.name
+        title = titleCase(item.product.custom_attribute_text)
+      }
       var image = Images.default
       if(item.product.img_url && item.product.img_url !== ''){
         image = {uri:item.product.img_url}
+      }
+      var sizes = []
+      for(var i=0;i<item.product.sizes.length;i++){
+        if(!this.checkEmpty(item.product.all_product_variations_with_stock_data, item.product.sizes[i].slug, 2, item.size, item.color, item.custom)){
+          sizes.push(item.product.sizes[i])
+        }
+      }
+      var colors = []
+      for(var i=0;i<item.product.colors.length;i++){
+        if(!this.checkEmpty(item.product.all_product_variations_with_stock_data, item.product.colors[i].slug, 1, item.size, item.color, item.custom)){
+          colors.push(item.product.colors[i])
+        }
+      }
+      var customs = []
+      for(var i=0;i<item.product.custom_attributes.length;i++){
+        if(!this.checkEmpty(item.product.all_product_variations_with_stock_data, item.product.custom_attributes[i].slug, 3, item.size, item.color, item.custom)){
+          customs.push(item.product.custom_attributes[i])
+        }
       }
       return(
         <View style={styles.productContainer} key={index.toString()}>
@@ -262,29 +370,15 @@ class CartScreen extends Component {
           </View>
           <View style={styles.productDescriptionWrapper}>
             <View style={styles.nameWrapper}>
-              <Text style={styles.productName}>{item.product.name}</Text>
+              <Text style={styles.productName}>{item.product.product_name}</Text>
             </View>
             <View style={styles.propertyWrapper}>
-              <View style={styles.sizeWrapper}>
-                <Text style={styles.itemText}>Ukuran</Text>
-                <ModalDropDown
-                  renderRow={this._renderSize.bind(this)}
-                  options={item.product.sizes}
-                  style={styles.size_dropdown}
-                  textStyle={styles.dropdown_text}
-                  dropdownStyle={styles.dropdown_dropdown}
-                  defaultValue={size}
-                  index_item={index}
-                  isColor={false}
-                  onSelect={(item, index, index_item) => this.selectSize(item, index, index_item)}
-                  renderButtonText={(rowData) => this._dropdown_renderSizeButtonText(rowData)}
-                 />
-              </View>
+              {colors.length > 0 &&
               <View style={styles.colorWrapper}>
                 <Text style={styles.itemText}>Warna</Text>
                 <ModalDropDown
                   renderRow={this._renderColor.bind(this)}
-                  options={item.product.colors}
+                  options={colors}
                   style={styles.size_dropdown}
                   textStyle={styles.dropdown_text}
                   dropdownStyle={styles.dropdown_dropdown}
@@ -295,6 +389,41 @@ class CartScreen extends Component {
                   renderButtonText={(rowData) => this._dropdown_renderColorButtonText(rowData)}
                  />
               </View>
+              }
+              {sizes.length > 0 &&
+              <View style={styles.sizeWrapper}>
+                <Text style={styles.itemText}>Ukuran</Text>
+                <ModalDropDown
+                  renderRow={this._renderSize.bind(this)}
+                  options={sizes}
+                  style={styles.size_dropdown}
+                  textStyle={styles.dropdown_text}
+                  dropdownStyle={styles.dropdown_dropdown}
+                  defaultValue={size}
+                  index_item={index}
+                  isColor={false}
+                  onSelect={(item, index, index_item) => this.selectSize(item, index, index_item)}
+                  renderButtonText={(rowData) => this._dropdown_renderSizeButtonText(rowData)}
+                 />
+              </View>
+              }
+              {customs.length > 0 &&
+              <View style={styles.sizeWrapper}>
+                <Text style={styles.itemText}>{title}</Text>
+                <ModalDropDown
+                  renderRow={this._renderSize.bind(this)}
+                  options={customs}
+                  style={styles.size_dropdown}
+                  textStyle={styles.dropdown_text}
+                  dropdownStyle={styles.dropdown_dropdown}
+                  defaultValue={custom}
+                  index_item={index}
+                  isColor={false}
+                  onSelect={(item, index, index_item) => this.selectCustom(item, index, index_item)}
+                  renderButtonText={(rowData) => this._dropdown_renderSizeButtonText(rowData)}
+                 />
+              </View>
+              }
               <View style={styles.qtyWrapper}>
                 <Text style={styles.itemText}>Qty</Text>
                 <View style={styles.qtyContainer}>
@@ -333,7 +462,7 @@ class CartScreen extends Component {
           {this._renderProductCart()}
           </ScrollView>
         </View>
-        {this.props.cart.data.length > 1 && <View style={styles.menuWrapper}>
+        {this.props.cart.data.length > 0 && <View style={styles.menuWrapper}>
           <View style={styles.subtotalWrapper}>
             <Text style={styles.subtotalText}>SUBTOTAL</Text>
             <Text style={styles.priceText}>{totalPrice}</Text>

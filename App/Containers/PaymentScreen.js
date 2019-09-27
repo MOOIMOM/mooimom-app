@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { ScrollView, Text, View, Image, TouchableOpacity } from 'react-native'
-import { Images, Metrics } from '../Themes'
+import { Images, Metrics, Colors } from '../Themes'
 import { connect } from 'react-redux'
 import {convertToRupiah, getDateFromString} from '../Lib/utils'
 import BalanceActions from '../Redux/BalanceRedux'
@@ -78,6 +78,21 @@ class PaymentScreen extends Component {
     if(this.state.payments.length > 0)
     return (
       this.state.payments.map((item, index) => {
+        var status = ''
+        var style
+        switch(item.status){
+          case 'rejected':
+            status = 'Ditolak'
+            style = {color: Colors.fire}
+          break;
+          case 'accepted':
+            status = 'Selesai'
+            style = {color: Colors.mooimom}
+          break;
+          default:
+            status = 'Sedang Diproses'
+          break;
+        }
         return(
           <View style={styles.menu} key={index.toString()}>
             <View style={styles.menuItem}>
@@ -102,7 +117,11 @@ class PaymentScreen extends Component {
             </View>
             <View style={styles.menuItem}>
               <Text style={styles.imgText}>Status</Text>
-              <Text style={styles.imgTextBold}>{item.status}</Text>
+              <Text style={[styles.imgTextBold, style]}>{status}</Text>
+            </View>
+            <View style={styles.menuItem}>
+              <Text style={styles.imgText}>Last Update</Text>
+              <Text style={styles.imgTextBold}>{getDateFromString(item.last_updated, true, false, true, false)}</Text>
             </View>
           </View>
         )

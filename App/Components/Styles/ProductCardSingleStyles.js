@@ -4,6 +4,7 @@ import { Fonts, Colors, Metrics } from '../../Themes/'
 export default StyleSheet.create({
   item: {
     width: Metrics.screenWidth - 40,
+    height:Metrics.screenHeight / 2,
     flex:1,
     justifyContent: 'flex-start',
     alignItems: 'center',

@@ -196,6 +196,26 @@ export default StyleSheet.create({
     alignItems: 'center',
     marginBottom: 20,
   },
+  descriptionWrapper2:{
+    width: Metrics.screenWidth - 40,
+    paddingTop: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  descriptionHeader2:{
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderColor: Colors.mooimom,
+    borderWidth: 1,
+    padding: 10,
+    borderRadius: 15,
+    margin: 'auto'
+  },
+  productSubtitle2:{
+    fontSize: 14 * Metrics.screenWidth / 320,
+    fontFamily: Fonts.type.gotham4,
+    color: Colors.mooimom
+  },
   productSubtitle:{
     fontSize: 14 * Metrics.screenWidth / 320,
     fontFamily: Fonts.type.gotham4,
@@ -245,6 +265,7 @@ export default StyleSheet.create({
     height:30 * Metrics.screenWidth / 320,
     marginRight: 10,
     marginVertical: 5,
+    borderWidth: 0.5
   },
   colorButtonSelected:{
     borderWidth: 3,
@@ -283,9 +304,13 @@ export default StyleSheet.create({
   },
   buttonDisabled:{
     backgroundColor: 'rgba(1,1,1,0.2)',
+    borderWidth: 1,
+    borderColor: Colors.fire,
   },
   buttonColorDisabled:{
     backgroundColor: 'rgba(1,1,1,0.5)',
+    borderWidth: 2,
+    borderColor: Colors.fire,
     width:30 * Metrics.screenWidth / 320,
     height:30 * Metrics.screenWidth / 320,
     marginRight: 10,
@@ -544,5 +569,15 @@ export default StyleSheet.create({
     width: '100%',
     height:Metrics.screenHeight / 2,
     resizeMode: 'contain'
+  },
+  containerLoading2:{
+    backgroundColor: Colors.white,
+    position: 'absolute',
+    width: Metrics.screenWidth,
+    height: Metrics.screenHeight,
+    top: 0,
+    left:0,
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 })

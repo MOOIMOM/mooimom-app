@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Clipboard, Alert, AsyncStorage, AppState, Linking, Modal } from 'react-native'
-import { Images, Metrics } from '../Themes'
+import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Clipboard, Alert, AsyncStorage, ActivityIndicator, AppState, Linking, Modal } from 'react-native'
+import { Images, Metrics, Colors } from '../Themes'
 import { connect } from 'react-redux'
 import Carousel, { Pagination  } from 'react-native-snap-carousel';
 import SharedProductActions from '../Redux/SharedProductRedux'
@@ -9,7 +9,7 @@ import CartActions from '../Redux/CartRedux'
 import EditWishlistActions from '../Redux/EditWishlistRedux'
 import { CachedImage } from 'react-native-cached-image';
 import ScaledImage from '../Components/ScaledImage';
-import {convertToRupiah, share, shareDescripton, download} from '../Lib/utils'
+import {convertToRupiah, share, shareDescripton, download, titleCase} from '../Lib/utils'
 // Styles
 import styles from './Styles/ProductScreenStyles'
 
@@ -23,13 +23,15 @@ class ProductScreen extends Component {
       activeSlide: 0,
       colorSelected:'',
       sizeSelected:'',
+      customSelected:'',
       modalClipboardVisible: false,
       modalClipboardVisible2: false,
       willShareDescription:false,
       finishShareImage: false,
       socialShare: '',
       isShowSizeGuide: false,
-      fcmToken: ''
+      fcmToken: '',
+      isShowError: false
     }
   }
 
@@ -57,6 +59,18 @@ class ProductScreen extends Component {
   }
 
   componentWillReceiveProps (newProps) {
+    if(newProps.navigation.state.params && newProps.navigation.state.params.product_slug
+      && newProps.navigation.state.params.product_slug !== this.props.navigation.state.params.product_slug){
+      let data = {
+        data_request:{
+          product_slug: newProps.navigation.state.params.product_slug,
+          user_id: this.props.navigation.state.params.auth.payload.user_id,
+          unique_token: this.props.navigation.state.params.auth.payload.unique_token,
+          fcmToken: this.state.fcmToken
+        }
+      }
+      this.props.loadProductProcess(data)
+    }
     if(this.props.product !== newProps.product){
       if (
         newProps.product.payload !== null &&
@@ -65,13 +79,15 @@ class ProductScreen extends Component {
       ) {
         var color = this.state.colorSelected
         var size = this.state.sizeSelected
-        if(color === '' && size === ''){
+        var custom = this.state.customSelected
+        if(color === '' && size === '' && custom === ''){
           var i = 0, data;
           while(i < newProps.product.payload.all_product_variations_with_stock_data.length){
-            data = newProps.product.payload.all_product_variations_with_stock_data[0]
+            data = newProps.product.payload.all_product_variations_with_stock_data[i]
             if(data.stock_quantity > 0){
               color = data.color_slug
               size = data.size_slug
+              custom = data.custom_attribute_1_slug
               break;
             }
             i++
@@ -81,7 +97,15 @@ class ProductScreen extends Component {
           product: newProps.product.payload,
           colorSelected: color,
           sizeSelected: size,
-          isInWishlist: newProps.product.payload.wishlist === 1
+          customSelected: custom,
+          isInWishlist: newProps.product.payload.wishlist === 1,
+          isShowError: false
+        })
+      } else if(newProps.product.payload === null
+        && !newProps.product.fetching
+      ){
+        this.setState({
+          isShowError: true
         })
       }
     }
@@ -97,7 +121,7 @@ class ProductScreen extends Component {
           finishShareImage: true
         })
         setTimeout(() => {
-          shareDescripton(this.state.product.description, this.state.socialShare)
+          shareDescripton(this.state.product.product_content, this.state.socialShare)
           this.setState({
             willShareDescription: false,
             socialShare: ''
@@ -121,7 +145,7 @@ class ProductScreen extends Component {
               });
               share(this.state.product.images, social)
             } else {
-              Clipboard.setString(this.state.product.description);
+              Clipboard.setString(this.state.product.product_content);
               share(this.state.product.images, social)
             }
             let data = {
@@ -139,7 +163,7 @@ class ProductScreen extends Component {
       const url = `fb://profile/mooimom.id`;
       Linking.canOpenURL(url).then(supported => {
           if (supported) {
-            Clipboard.setString(this.state.product.description);
+            Clipboard.setString(this.state.product.product_content);
             share(this.state.product.images, social)
           } else {
               Alert.alert(
@@ -156,7 +180,7 @@ class ProductScreen extends Component {
       const url = `instagram://user?username=mooimom.id`;
       Linking.canOpenURL(url).then(supported => {
           if (supported) {
-            Clipboard.setString(this.state.product.product_description);
+            Clipboard.setString(this.state.product.product_content);
             share(this.state.product.images, social)
           } else {
               Alert.alert(
@@ -170,7 +194,7 @@ class ProductScreen extends Component {
           this.props.sharedProductProcess(data)
       })
     } else {
-      Clipboard.setString(this.state.product.product_description);
+      Clipboard.setString(this.state.product.product_content);
       share(this.state.product.images, social)
       let data = {
         product: this.state.product
@@ -183,7 +207,7 @@ class ProductScreen extends Component {
     this.setState({
       modalClipboardVisible: true
     })
-    await Clipboard.setString(this.state.product.product_description);
+    await Clipboard.setString(this.state.product.product_content);
     setTimeout(() => {
       this.setState({
         modalClipboardVisible: false
@@ -216,7 +240,7 @@ class ProductScreen extends Component {
         unique_token: this.props.navigation.state.params.auth.payload.unique_token,
         color_slug: slug,
         size_slug: this.state.sizeSelected,
-        custom_attribute_slug: ''
+        custom_attribute_slug: this.state.customSelected,
       }
     }
     this.props.loadProductVariationProcess(data)
@@ -302,7 +326,7 @@ class ProductScreen extends Component {
         <Text style={styles.productSubtitle}>Warna</Text>
         <View style={styles.colorContainer}>
         {this.state.product.colors.map((data) => {
-          let isEmpty = this.checkEmpty(data.slug, true)
+          let isEmpty = this.checkEmpty(data.slug, 1)
           let styleDisabled
           if(isEmpty)
             styleDisabled = styles.buttonColorDisabled
@@ -327,15 +351,35 @@ class ProductScreen extends Component {
     }
   }
 
-  checkEmpty(id, isColor) {
-    for(var i = 0;i<this.state.product.all_product_variations_with_stock_data.length;i++){
-      if(isColor && this.state.product.all_product_variations_with_stock_data[i].color_slug === id
-        && this.state.product.all_product_variations_with_stock_data[i].size_slug === this.state.sizeSelected){
-        return this.state.product.all_product_variations_with_stock_data[i].stock_quantity === 0
-      }
-      if(!isColor && this.state.product.all_product_variations_with_stock_data[i].size_slug === id
-        && this.state.product.all_product_variations_with_stock_data[i].color_slug === this.state.colorSelected){
-        return this.state.product.all_product_variations_with_stock_data[i].stock_quantity === 0
+  checkEmpty(id, type) {
+    var data = this.state.product.all_product_variations_with_stock_data
+    if(data.length < 1) return true
+    for(var i = 0;i<data.length;i++){
+      switch(type){
+        case 1:
+          if(data[i].color_slug === id
+            && data[i].size_slug === this.state.sizeSelected
+            && data[i].custom_attribute_1_slug === this.state.customSelected
+          ){
+            return data[i].stock_quantity === 0
+          }
+        break;
+        case 2:
+          if(data[i].size_slug === id
+            && data[i].color_slug === this.state.colorSelected
+            && data[i].custom_attribute_1_slug === this.state.customSelected
+          ){
+            return data[i].stock_quantity === 0
+          }
+        break;
+        case 3:
+          if(data[i].custom_attribute_1_slug === id
+            && data[i].size_slug === this.state.sizeSelected
+            && data[i].color_slug === this.state.colorSelected
+          ){
+            return data[i].stock_quantity === 0
+          }
+        break;
       }
     }
     return true
@@ -348,7 +392,7 @@ class ProductScreen extends Component {
         <Text style={styles.productSubtitle}>Ukuran</Text>
         <View style={styles.sizeContainer}>
         {this.state.product.sizes.map((data) => {
-          let isEmpty = this.checkEmpty(data.slug, false)
+          let isEmpty = this.checkEmpty(data.slug, 2)
           let styleDisabled
           if(isEmpty)
             styleDisabled = styles.buttonDisabled
@@ -368,6 +412,39 @@ class ProductScreen extends Component {
 
   sizeStyling(id) {
     if (id === this.state.sizeSelected){
+      return styles.sizeButtonSelected
+    }
+  }
+
+  renderCustomAttribute(){
+    if(this.state.product.custom_attributes && this.state.product.custom_attributes.length > 0){
+      var title = titleCase(this.state.product.custom_attribute_text)
+      return(
+        <View style={styles.sizeWrapper}>
+          <Text style={styles.productSubtitle}>{title}</Text>
+          <View style={styles.sizeContainer}>
+          {this.state.product.custom_attributes.map((data) => {
+            let isEmpty = this.checkEmpty(data.slug, 3)
+            let styleDisabled
+            if(isEmpty)
+              styleDisabled = styles.buttonDisabled
+            return(
+              <TouchableOpacity style={[styles.sizeButton, this.customStyling(data.slug), styleDisabled]} key={data.slug} onPress={
+                () => this.setState({
+                  customSelected:data.slug
+                })
+              } disabled={isEmpty}>
+                <Text style={styles.sizeText}>{data.name}</Text>
+              </TouchableOpacity>
+            )})}
+          </View>
+        </View>
+      )
+    }
+  }
+
+  customStyling(id) {
+    if (id === this.state.customSelected){
       return styles.sizeButtonSelected
     }
   }
@@ -537,7 +614,9 @@ class ProductScreen extends Component {
     var arr = this.props.product.payload.all_product_variations_with_stock_data
     var sku = ''
     for(var i = 0;i<arr.length;i++){
-      if(arr[i].color_slug === this.state.colorSelected && arr[i].size_slug === this.state.sizeSelected){
+      if(arr[i].color_slug === this.state.colorSelected
+         && arr[i].size_slug === this.state.sizeSelected
+         && arr[i].custom_attribute_1_slug === this.state.customSelected){
         if(arr[i].stock_quantity > 0)
           sku = arr[i].sku
         break;
@@ -554,6 +633,7 @@ class ProductScreen extends Component {
       product: this.props.product.payload,
       color: this.state.colorSelected,
       size: this.state.sizeSelected,
+      custom: this.state.customSelected,
       sku: sku,
       qty: 1
     }
@@ -562,6 +642,43 @@ class ProductScreen extends Component {
   }
 
   render () {
+    if(this.props.product.fetching){
+      return (
+        <View style={styles.containerLoading2}>
+          <ActivityIndicator size="large" color={Colors.mooimom} />
+        </View>
+      )
+    }
+    if(this.state.isShowError){
+      return (
+        <View style={styles.container}>
+          <View style={styles.headerWrapper}>
+            <TouchableOpacity style={styles.headerButtonLeft} onPress={() => this.props.navigation.goBack()}>
+              <Image source={Images.back} style={styles.buttonHeader} />
+            </TouchableOpacity>
+            <View style={styles.headerButtonCenter}>
+              <TouchableOpacity style={styles.searchButton} onPress={() => this.actNavigate('SearchScreen')}>
+                <Image source={Images.search} style={styles.imageSearch}/>
+                <Text style={styles.textSearch}>Cari Baju Hamil, Bra, Korset, dll</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.headerButtonRight}>
+              <TouchableOpacity onPress={() => this.actNavigate('SharedProductScreen')}><Image source={Images.wishlistBlack} style={styles.buttonHeader} /></TouchableOpacity>
+              <TouchableOpacity onPress={() => this.actNavigate('CartScreen')}><Image source={Images.shoppingCartBlack} style={styles.buttonHeader} /></TouchableOpacity>
+              <TouchableOpacity onPress={() => this.actNavigate('NotificationScreen')}><Image source={Images.notif} style={styles.buttonHeader2} /></TouchableOpacity>
+            </View>
+          </View>
+          <View style={styles.productContainer}>
+            <View style={styles.descriptionWrapper2}>
+              <View style={styles.descriptionHeader2}>
+                <Text style={styles.productSubtitle2}>Maaf</Text>
+                <Text style={styles.productSubtitle2}>Produk Tidak Ditemukan</Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      )
+    }
     var price = ''
     var disc = ''
     if(this.state.product && this.state.product.product_regular_price > 0){
@@ -644,11 +761,13 @@ class ProductScreen extends Component {
                   <Text style={styles.textCopy}>Copy</Text>
                 </TouchableOpacity>
               </View>
-              <Text style={styles.productDescriptionText}>{this.state.product.product_description}</Text>
+              <Text style={styles.productDescriptionText}>{this.state.product.product_content}</Text>
             </View>
               {this.renderColor()}
             <View style={styles.wrapperSeparator}/>
               {this.renderSize()}
+            <View style={styles.wrapperSeparator}/>
+              {this.renderCustomAttribute()}
             <View style={styles.wrapperSeparator}/>
               {this.renderSizeGuide()}
               {this.renderImagesCustom()}

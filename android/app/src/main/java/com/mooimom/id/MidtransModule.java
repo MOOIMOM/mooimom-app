@@ -118,20 +118,20 @@ public class MidtransModule extends ReactContextBaseJavaModule {
         Object self;
 
         //setUser Detail
-        // UserDetail userDetail = new UserDetail();
-        // userDetail.setUserFullName(mapUserDetail.getString("fullName"));
-        // userDetail.setEmail(mapUserDetail.getString("email"));
-        // userDetail.setPhoneNumber(mapUserDetail.getString("phoneNumber"));
-        // userDetail.setUserId(mapUserDetail.getString("userId"));
+        UserDetail userDetail = new UserDetail();
+        userDetail.setUserFullName(mapUserDetail.getString("fullName"));
+        userDetail.setEmail(mapUserDetail.getString("email"));
+        userDetail.setPhoneNumber(mapUserDetail.getString("phoneNumber"));
+        userDetail.setUserId(mapUserDetail.getString("userId"));
 
-        // ArrayList<UserAddress> userAddresses = new ArrayList<>();
-        // UserAddress userAddress = new UserAddress();
+        ArrayList<UserAddress> userAddresses = new ArrayList<>();
+        UserAddress userAddress = new UserAddress();
         // userAddress.setAddress(mapUserDetail.getString("address"));
         // userAddress.setCity(mapUserDetail.getString("city"));
         // userAddress.setCountry(mapUserDetail.getString("country"));
         // userAddress.setZipcode(mapUserDetail.getString("zipCode"));
         // userAddress.setAddressType(Constants.ADDRESS_TYPE_BOTH);
-        // userAddresses.add(userAddress);
+        userAddresses.add(userAddress);
 
         //Custom color Theme
         CustomColorTheme colorTheme = new CustomColorTheme(
@@ -155,21 +155,21 @@ public class MidtransModule extends ReactContextBaseJavaModule {
                 .setColorTheme(colorTheme)
                 .buildSDK();
 
-        // userDetail.setUserAddresses(userAddresses);
-        // LocalDataHandler.saveObject("user_details", userDetail);
+        userDetail.setUserAddresses(userAddresses);
+        LocalDataHandler.saveObject("user_details", userDetail);
 
         TransactionRequest transactionRequest = new TransactionRequest(
                 transRequest.getString("transactionId"),
                 transRequest.getInt("totalAmount"));
 
-        // setItemDetail(itemDetails, transactionRequest);
+        setItemDetail(itemDetails, transactionRequest);
 
         CreditCard ccOptions = new CreditCard();
         ccOptions.setSaveCard(creditCardOptions.getBoolean("saveCard"));
         ccOptions.setAuthentication(Authentication.AUTH_RBA);
         //ccOptions.setChannel(CreditCard.MIGS);
         transactionRequest.setCreditCard(ccOptions);
-        // transactionRequest.setCardPaymentInfo(creditCardOptions.getString("paymentMode"), creditCardOptions.getBoolean("secure"));
+        transactionRequest.setCardPaymentInfo(creditCardOptions.getString("paymentMode"), creditCardOptions.getBoolean("secure"));
 
         MidtransSDK.getInstance().setTransactionRequest(transactionRequest);
 

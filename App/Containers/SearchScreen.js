@@ -4,6 +4,7 @@ import { Images, Metrics, Colors } from '../Themes'
 import ProductCardSingle from '../Components/ProductCardSingle'
 import GetSearchActions from '../Redux/GetSearchRedux'
 import EditWishlistActions from '../Redux/EditWishlistRedux'
+import SharedProductActions from '../Redux/SharedProductRedux'
 import { connect } from 'react-redux'
 import {convertToRupiah, shareDescripton} from '../Lib/utils'
 
@@ -187,7 +188,10 @@ const mapDispatchToProps = dispatch => {
     },
     deleteWishlistProductProcess: data => {
       dispatch(EditWishlistActions.deleteWishlistRequest(data))
-    }
+    },
+    sharedProductProcess: data => {
+      dispatch(SharedProductActions.sharedProductRequest(data))
+    },
   }
 };
 

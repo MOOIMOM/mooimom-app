@@ -32,7 +32,7 @@ export const SharedProductSelectors = {
 // request the data from an api
 export const request = (state, { data }) => {
     for(var i= 0;i<state.data.length;i++){
-        if(state.data[i].id === data.product.id){
+        if(state.data[i].slug === data.product.slug){
           return state.merge({fetching: true, payload: null})
         }
     }

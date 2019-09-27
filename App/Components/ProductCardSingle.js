@@ -29,7 +29,7 @@ export default class ProductCardSingle extends Component {
               this.props.sharedProductProcess(data)
             }
             if(this.props.shareWhatsapp){
-              this.props.shareWhatsapp(this.state.product.product_name)
+              this.props.shareWhatsapp(this.state.product.product_content)
             }
           } else {
               Alert.alert(

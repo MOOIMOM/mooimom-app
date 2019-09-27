@@ -94,12 +94,12 @@ export default StyleSheet.create({
     flex: 2
   },
   itemText:{
-    fontSize: 12 * Metrics.screenWidth / 320,
+    fontSize: 10 * Metrics.screenWidth / 320,
     color: Colors.black,
     fontFamily: Fonts.type.gotham4,
   },
   itemText2:{
-    fontSize: 14 * Metrics.screenWidth / 320,
+    fontSize: 12 * Metrics.screenWidth / 320,
     color: Colors.black,
     fontFamily: Fonts.type.gotham4,
   },
@@ -107,7 +107,7 @@ export default StyleSheet.create({
     flex:1,
   },
   productName:{
-    fontSize: 12 * Metrics.screenWidth / 320,
+    fontSize: 10 * Metrics.screenWidth / 320,
     color: Colors.gray,
     fontFamily: Fonts.type.gotham2,
   },
@@ -118,21 +118,18 @@ export default StyleSheet.create({
     paddingVertical:21
   },
   sizeWrapper:{
-    flex:1,
     width: (Metrics.screenWidth - 40) / 2,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center'
   },
   colorWrapper:{
-    flex:1,
     width: (Metrics.screenWidth - 40) / 2,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center'
   },
   qtyWrapper:{
-    flex:1,
     width: (Metrics.screenWidth - 40) / 2,
     flexDirection: 'row',
     justifyContent: 'space-between',

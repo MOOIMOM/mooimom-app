@@ -216,10 +216,6 @@ class ProfileScreen extends Component {
       imageprofile = {uri: this.state.profile.profile_picture_thumb_url}
     return (
       <View style={styles.container}>
-        <NavigationEvents onDidBlur={() => console.log('onDidBlur I am triggered')} />
-        <NavigationEvents onWillBlur={() => console.log('onWillBlur I am triggered')} />
-        <NavigationEvents onWillFocus={() => console.log('onWillFocus I am triggered')} />
-        <NavigationEvents onDidFocus={() => console.log('onDidFocus I am triggered')} />
         <View style={styles.containerScroll}>
           <View style={styles.headerWrapper}>
             <TouchableOpacity style={styles.searchButton} onPress={() => this.actNavigate('SearchScreen')}>

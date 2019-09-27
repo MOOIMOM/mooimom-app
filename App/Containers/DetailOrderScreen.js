@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Alert, ActivityIndicator } from 'react-native'
-import { Images, Metrics, Colors } from '../Themes'
+import { Images, Metrics, Colors, Fonts } from '../Themes'
 import GetOrderActions from '../Redux/GetOrderRedux'
 import CommissionEstimationActions from '../Redux/CommissionEstimationRedux'
 import { connect } from 'react-redux'
@@ -128,15 +128,15 @@ class DetailOrderScreen extends Component {
     };
 
     const optionColorTheme = {
-        primary: '#c51f1f',
-        primaryDark: '#1a4794',
-        secondary: '#1fce38'
+        primary: Colors.mooimom,
+        primaryDark: Colors.mooimom,
+        secondary: Colors.mooimom,
     }
 
     const optionFont = {
-        defaultText: "open_sans_regular.ttf",
-        semiBoldText: "open_sans_semibold.ttf",
-        boldText: "open_sans_bold.ttf"
+        defaultText: Fonts.type.gotham2,
+        semiBoldText: Fonts.type.gotham2,
+        boldText: Fonts.type.gotham2,
     }
 
     const callback = (res) => {
@@ -179,6 +179,9 @@ class DetailOrderScreen extends Component {
                 <View style={styles.colorWrapper}>
                   <Text style={styles.itemText}>Warna - {item.color_name}</Text>
                 </View>
+                {item.custom_attribute_name !== '' && <View style={styles.colorWrapper}>
+                  <Text style={styles.itemText}>Jenis - {item.custom_attribute_name}</Text>
+                </View>}
                 <View style={styles.qtyWrapper}>
                   <Text style={styles.itemText}>Qty - {item.quantity}</Text>
                 </View>

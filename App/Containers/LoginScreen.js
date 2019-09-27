@@ -8,11 +8,12 @@ import { connect } from 'react-redux'
 // Styles
 import styles from './Styles/LoginScreenStyles'
 
+var isProcessing = false
 class LoginScreen extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      phone: ''
+      phone: '',
     }
   }
 
@@ -74,11 +75,14 @@ class LoginScreen extends Component {
         !newProps.sendOtp.fetching
       ) {
           this.actNavigate('AuthScreen')
+          isProcessing = false
         }
     }
   }
 
   login(){
+    if(isProcessing) return;
+    isProcessing = true
     const {phone} = this.state
     var myPhoneNumber = phone.indexOf('0') == 0 ? phone.substring(1) : phone;
     if(myPhoneNumber === "" || myPhoneNumber.length <= 9) {
@@ -108,9 +112,6 @@ class LoginScreen extends Component {
         <LinearGradient colors={['#7CE0D3', '#28C9B9']} style={styles.linergradient}>
         <Image source={Images.mooimomLogoWhite} style={styles.title}/>
         <View style={styles.loginContainer}>
-          <ScrollView
-          showsVerticalScrollIndicator={false}
-          >
           <KeyboardAvoidingView>
             <Text style={styles.caption1}>Sign In Sekarang</Text>
             <View style={styles.textInput}>
@@ -145,7 +146,6 @@ class LoginScreen extends Component {
               </TouchableOpacity>
             </View>
           </KeyboardAvoidingView>
-          </ScrollView>
         </View>
         </LinearGradient>
       </View>

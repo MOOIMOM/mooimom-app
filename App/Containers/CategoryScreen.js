@@ -12,7 +12,7 @@ import {shareDescripton} from '../Lib/utils'
 // Styles
 import styles from './Styles/CategoryScreenStyles'
 import menuStyles from './Styles/MenuComponentStyles'
-
+var isReloadPage = false
 class CategoryScreen extends Component {
   static navigationOptions = {
       tabBarIcon: ({ focused, tintColor }) => {
@@ -33,6 +33,7 @@ class CategoryScreen extends Component {
       arrTopCategory:[],
       willShareDescription:false,
       finishShareImage: false,
+      currentPage: 1,
       products: []
     }
     this._renderCategories = this._renderCategories.bind(this)
@@ -64,6 +65,7 @@ class CategoryScreen extends Component {
       this.setState({
         selectedCategoriesId: newProps.navigation.state.params.category_id,
         selectedCategoriesIdx: idx,
+        currentPage:1,
         isSelectSubCategory: false
       })
     }
@@ -82,11 +84,23 @@ class CategoryScreen extends Component {
       if (
         newProps.productCategory.payload !== null &&
         newProps.productCategory.error === null &&
-        !newProps.productCategory.fetching
+        !newProps.productCategory.fetching && !isReloadPage
       ) {
         this.setState({
           products: newProps.productCategory.payload.products
         })
+      } else if(
+        newProps.productCategory.payload !== null &&
+        newProps.productCategory.error === null &&
+        !newProps.productCategory.fetching && isReloadPage
+      ){
+        var arr = [...this.state.products]
+        arr = arr.concat(newProps.productCategory.payload.products)
+        this.setState({
+          currentPage: this.state.currentPage + 1,
+          products: arr
+        })
+        isReloadPage = false
       }
     }
   }
@@ -165,7 +179,8 @@ class CategoryScreen extends Component {
     this.setState({
       categories: categories,
       selectedCategoriesIdx: 0,
-      selectedCategoriesId: firstCategorySlug
+      selectedCategoriesId: firstCategorySlug,
+      currentPage:1,
     })
   }
 
@@ -188,6 +203,7 @@ class CategoryScreen extends Component {
     this.setState({
       selectedSubCategoriesId: slug,
       selectedSubCategoriesIdx: index,
+      currentPage: 1,
       products: []
     })
     let data = {
@@ -216,8 +232,6 @@ class CategoryScreen extends Component {
     this.setState({
       isSelectSubCategory: true,
       arrTopCategory:arrTopCategory,
-      selectedSubCategoriesId: id,
-      selectedSubCategoriesIdx: index
     })
     this.pressSubCategory(id, index)
   }
@@ -361,6 +375,23 @@ class CategoryScreen extends Component {
     this.list.scrollToIndex({index: this.state.selectedSubCategoriesIdx})
   }
 
+  onEndReached(){
+    if (!isReloadPage) {
+      if (this.state.currentPage + 1 <= this.props.productCategory.payload.how_many_pages) {
+        isReloadPage = true
+        let data = {
+          data_request:{
+            user_id: this.props.auth.payload.user_id,
+            unique_token: this.props.auth.payload.unique_token,
+            category_slug: this.state.selectedSubCategoriesId,
+            current_page: this.state.currentPage + 1
+          }
+        }
+        this.props.getProductCategoryRequest(data)
+      }
+    }
+  }
+
   _renderSubCategoryView(){
     return (
       <View style={styles.containerScroll}>
@@ -395,7 +426,7 @@ class CategoryScreen extends Component {
           </View>
           <View style={styles.bottomContainer}>
             <Text style={styles.subtitleCategory}>{this.state.arrTopCategory[this.state.selectedSubCategoriesIdx].name}</Text>
-            {this.props.productCategory.fetching && <View style={styles.containerLoading2}>
+            {this.props.productCategory.fetching && !isReloadPage && <View style={styles.containerLoading2}>
               <ActivityIndicator size="large" color={Colors.mooimom} />
             </View>}
             <FlatList
@@ -403,6 +434,8 @@ class CategoryScreen extends Component {
               data={this.state.products}
               renderItem={this._renderProduct}
               keyExtractor={(item, index) => index.toString()}
+              onEndReached={this.onEndReached.bind(this)}
+              onEndReachedThreshold={5}
             />
           </View>
         </View>

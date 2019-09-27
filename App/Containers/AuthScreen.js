@@ -19,13 +19,21 @@ class AuthScreen extends Component {
     this.state = {
       codeArr: new Array(codeLength).fill(''),
       currentIndex: 0,
-      isRequestOtp: false
+      isRequestOtp: true
     };
 
     this.codeInputRefs = [];
   }
 
-  componentWillUnMount(){
+  componentDidMount(){
+    timeoutOtp = setTimeout(() => {
+      this.setState({
+        isRequestOtp: false
+      })
+    }, 60000);
+  }
+
+  componentWillUnmount(){
     timeoutOtp.clear()
   }
 
@@ -222,7 +230,7 @@ class AuthScreen extends Component {
           <Image source={Images.mooimomLogoWhite} style={styles.title}/>
           <View style={styles.loginContainer}>
             <KeyboardAvoidingView>
-              <Text style={styles.caption1}>Masukkan kode verifikasi</Text>
+              <Text style={styles.caption1}>Masukkan kode SMS verifikasi</Text>
               <View style={styles.textInput}>
                 {codeInputs}
               </View>

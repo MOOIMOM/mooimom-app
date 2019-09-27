@@ -100,7 +100,7 @@ class NewPaymentRequestScreen extends Component {
     if(amount > balance){
       Alert.alert(
           '',
-          'Saldo Anda kurang dari jumlah penarikan',
+          'Saldo Anda kurang dari Jumlah penarikan',
       )
       return
     }
@@ -148,7 +148,7 @@ class NewPaymentRequestScreen extends Component {
           <TextInputCustom
             placeholder='Minimal Rp50.000'
             color={Colors.black}
-            label={'Jumlah'}
+            label={'Jumlah Penarikan'}
             textAlign='left'
             keyboardType='numeric'
             value={this.state.amount}
