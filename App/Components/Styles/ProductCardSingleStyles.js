@@ -41,7 +41,6 @@ export default StyleSheet.create({
     resizeMode: 'contain'
   },
   image:{
-    resizeMode: 'contain',
     flex:1
   },
   name:{

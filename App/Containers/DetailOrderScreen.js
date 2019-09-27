@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Alert, ActivityIndicator } from 'react-native'
 import { Images, Metrics, Colors, Fonts } from '../Themes'
+import FastImage from 'react-native-fast-image'
 import GetOrderActions from '../Redux/GetOrderRedux'
 import CommissionEstimationActions from '../Redux/CommissionEstimationRedux'
 import { connect } from 'react-redux'
@@ -166,7 +167,7 @@ class DetailOrderScreen extends Component {
         return(
           <View style={styles.productContainer} key={index.toString()}>
             <View style={styles.productImageWrapper}>
-              <Image source={image} style={styles.productImage}/>
+              <FastImage source={image} style={styles.productImage} resizeMode={FastImage.resizeMode.contain}/>
             </View>
             <View style={styles.productDescriptionWrapper}>
               <View style={styles.nameWrapper}>

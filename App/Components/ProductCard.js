@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableWithoutFeedback, Image } from 'react-native'
 import { Images } from '../Themes'
-import { CachedImage } from 'react-native-cached-image';
+import FastImage from 'react-native-fast-image'
 import {convertToRupiah, share} from '../Lib/utils'
 
 import styles from './Styles/ProductCardStyles'
@@ -82,9 +82,10 @@ export default class ProductCard extends Component {
       image = {uri:this.state.product.images[0].url}
     return (
       <View style={styles.item}>
-        <CachedImage
+        <FastImage
             source={image}
             style={styles.image}
+            resizeMode={FastImage.resizeMode.contain}
         />
         {this.renderWishlist()}
         <Text style={styles.name}>{this.state.product.product_name}</Text>

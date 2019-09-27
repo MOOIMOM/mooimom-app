@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Alert } from 'react-native'
 import { Images, Metrics } from '../Themes'
+import FastImage from 'react-native-fast-image'
 import { connect } from 'react-redux'
 import {convertToRupiah, titleCase } from '../Lib/utils'
 import ModalDropDown from '../Components/ModalDropDown'
@@ -93,7 +94,7 @@ class CartScreen extends Component {
     return (
         <TouchableOpacity>
           <View style={styles.colorBtn}>
-            <Image source={image} style={[styles.colorPick]}/>
+            <FastImage source={image} style={[styles.colorPick]} resizeMode={FastImage.resizeMode.contain}/>
           </View>
         </TouchableOpacity>
     );
@@ -363,7 +364,7 @@ class CartScreen extends Component {
       return(
         <View style={styles.productContainer} key={index.toString()}>
           <View style={styles.productImageWrapper}>
-            <Image source={image} style={styles.productImage}/>
+            <FastImage source={image} style={styles.productImage} resizeMode={FastImage.resizeMode.contain}/>
             <TouchableOpacity style={styles.removeBtn} onPress={() => {this.removeFromCart(index)}}>
               <Image source={Images.x} style={styles.removeImg}/>
             </TouchableOpacity>

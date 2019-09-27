@@ -118,7 +118,6 @@ export default StyleSheet.create({
     width: Metrics.screenWidth / 5,
   },
   productImage:{
-    resizeMode: 'contain',
     width: Metrics.screenWidth / 5,
     height: Metrics.screenWidth / 5,
     marginBottom:10

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableWithoutFeedback, Image, Linking, Alert } from 'react-native'
 import { Images } from '../Themes'
-import { CachedImage } from 'react-native-cached-image';
+import FastImage from 'react-native-fast-image'
 import {convertToRupiah, share, download} from '../Lib/utils'
 
 import styles from './Styles/ProductCardSingleStyles'
@@ -139,9 +139,10 @@ export default class ProductCardSingle extends Component {
       <View style={styles.item}>
         <View style={styles.topItem}>
           <View style={styles.topLeftItem}>
-          <CachedImage
+          <FastImage
               source={image}
               style={styles.image}
+              resizeMode={FastImage.resizeMode.contain}
           />
           {this.renderWishlist()}
           </View>

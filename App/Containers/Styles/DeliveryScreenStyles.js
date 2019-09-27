@@ -86,7 +86,6 @@ export default StyleSheet.create({
   productImage:{
     width: (Metrics.screenWidth - 40) / 3 - 5,
     height: Metrics.screenHeight / 4 - 5,
-    resizeMode: 'contain'
   },
   productDescriptionWrapper:{
     width: (Metrics.screenWidth - 40) / 2,

@@ -2,8 +2,10 @@ import Share from 'react-native-share';
 import RNFetchBlob from 'react-native-fetch-blob';
 import {
   PermissionsAndroid,
-  Alert
+  Alert,
+  AsyncStorage
 } from 'react-native'
+import {isAfter, max, format} from 'date-fns'
 
 export function convertToRupiah (price) {
   if(!price) return 'Rp 0'
@@ -209,4 +211,12 @@ export function titleCase(str) {
    }
    // Directly return the joined string
    return splitStr.join(' ');
+}
+
+export function getNewNotificationsCount(notifications, time) {
+  const times = notifications
+    .map(notification => notification.created)
+    .filter(notificationTime => isAfter(notificationTime, time))
+  // console.log('aaaa', times.length)
+  return times.length
 }

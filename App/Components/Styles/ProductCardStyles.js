@@ -25,7 +25,6 @@ export default StyleSheet.create({
   image:{
     width: Metrics.screenWidth / 2,
     maxHeight: 200,
-    resizeMode: 'contain',
     flex: 5,
     marginBottom:5
   },

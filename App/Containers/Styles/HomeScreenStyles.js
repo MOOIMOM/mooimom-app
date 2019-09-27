@@ -71,6 +71,24 @@ export default StyleSheet.create({
     marginLeft: 15,
     resizeMode: 'contain'
   },
+  notifContainer:{
+    width: 16,
+    height: 16,
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    right: -7,
+    top: -7,
+    borderRadius: 8,
+    backgroundColor: Colors.fire,
+    flex: 1,
+    flexWrap: 'nowrap'
+  },
+  textNotif:{
+    fontSize: 9,
+    fontFamily: Fonts.type.gotham2,
+    color: Colors.white,
+  },
   headerWrapper2:{
     alignItems: 'center',
     backgroundColor: Colors.mooimom,
@@ -142,7 +160,6 @@ export default StyleSheet.create({
   catImage:{
     height: 50,
     width:50,
-    resizeMode: 'contain'
   },
   catText:{
     color:Colors.gray,

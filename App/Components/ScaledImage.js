@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from "react";
 import { Image } from "react-native";
-import { CachedImage } from 'react-native-cached-image';
+import FastImage from 'react-native-fast-image'
 import { Images } from '../Themes'
 
 export default class ScaledImage extends Component {
@@ -32,8 +32,9 @@ export default class ScaledImage extends Component {
 
   render() {
       return (
-          <CachedImage
+          <FastImage
               source={this.state.source}
+              resizeMode={FastImage.resizeMode.contain}
               style={{ height: this.state.height, width: this.state.width }}
           />
       );

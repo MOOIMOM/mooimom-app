@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { ScrollView, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, FlatList, SectionList, BackHandler, ActivityIndicator, AppState, Clipboard } from 'react-native'
 import { Images, Metrics,Colors } from '../Themes'
+import FastImage from 'react-native-fast-image'
 import ProductCardSingle from '../Components/ProductCardSingle'
 import CategoryActions from '../Redux/CategoryRedux'
 import SharedProductActions from '../Redux/SharedProductRedux'
@@ -296,7 +297,7 @@ class CategoryScreen extends Component {
           this.moveToSubCategories(section.data[i].slug)
         }}>
           <View style={styles.productContainer}>
-            <Image source={image} style={styles.productImage}/>
+            <FastImage source={image} style={styles.productImage} resizeMode={FastImage.resizeMode.contain}/>
             <Text style={styles.productText}>{section.data[i].name}</Text>
           </View>
         </TouchableWithoutFeedback>

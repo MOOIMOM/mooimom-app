@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { ScrollView, Text, View, Image, TouchableOpacity, Alert, PermissionsAndroid, Modal, TouchableWithoutFeedback } from 'react-native'
 import { Images, Metrics } from '../Themes'
+import FastImage from 'react-native-fast-image'
 import {NavigationEvents} from 'react-navigation';
 import { connect } from 'react-redux'
 import {convertToRupiah} from '../Lib/utils'
@@ -8,6 +9,7 @@ import ImagePicker from 'react-native-image-crop-picker'
 import AuthActions from '../Redux/AuthRedux'
 import SendOtpActions from '../Redux/SendOtpRedux'
 import CartActions from '../Redux/CartRedux'
+import LastNotificationTimeActions from '../Redux/LastNotificationTimeRedux'
 import ProfileActions from '../Redux/ProfileRedux'
 import BalanceActions from '../Redux/BalanceRedux'
 import EditProfileActions from '../Redux/EditProfileRedux'
@@ -240,7 +242,7 @@ class ProfileScreen extends Component {
               </View>
               <View style={styles.topRightView}>
                 <TouchableOpacity onPress={() => this.setState({ modalUpImage: true })}>
-                  <Image source={imageprofile} style={styles.imgProfile}/>
+                  <FastImage source={imageprofile} style={styles.imgProfile} resizeMode={FastImage.resizeMode.contain}/>
                 </TouchableOpacity>
               </View>
             </View>
@@ -348,6 +350,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(AuthActions.logout(null)),
       dispatch(SendOtpActions.logout(null))
       dispatch(CartActions.logout(null))
+      dispatch(LastNotificationTimeActions.logout(null))
     },
     getProfileProcess: data => {
       dispatch(ProfileActions.getProfileRequest(data))

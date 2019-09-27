@@ -8,8 +8,10 @@ import SharedProductActions from '../Redux/SharedProductRedux'
 import GetHomepageActions from '../Redux/GetHomepageRedux'
 import SettingActions from '../Redux/SettingRedux'
 import EditWishlistActions from '../Redux/EditWishlistRedux'
-import { CachedImage } from 'react-native-cached-image';
+import GetNotificationActions from '../Redux/GetNotificationRedux'
+import FastImage from 'react-native-fast-image'
 import firebase from 'react-native-firebase'
+import {getNewNotificationsCount} from '../Lib/utils'
 
 // Styles
 import styles from './Styles/HomeScreenStyles'
@@ -52,6 +54,7 @@ class HomeScreen extends Component {
       }
       this.props.getHomepageRequest(data)
       this.props.getSettingRequest(data)
+      this.refreshNotification()
     }, 200)
   }
 
@@ -59,6 +62,17 @@ class HomeScreen extends Component {
     this.notificationListener()
     this.notificationOpenedListener()
     this.messageListener()
+  }
+
+  refreshNotification(){
+    let data = {
+      data_request:{
+        user_id: this.props.auth.payload.user_id,
+        unique_token: this.props.auth.payload.unique_token,
+        fcm_token: this.state.fcmToken
+      }
+    }
+    this.props.getNotificationProcess(data)
   }
 
   async checkPermission () {
@@ -134,7 +148,7 @@ class HomeScreen extends Component {
     })
   }
 
-  componentWillReceiveProps (newProps) {
+  async componentWillReceiveProps (newProps) {
     if (this.props.getHomepage !== newProps.getHomepage) {
       if (
         newProps.getHomepage.payload !== null &&
@@ -147,18 +161,18 @@ class HomeScreen extends Component {
             categories: newProps.getHomepage.payload.categories,
           })
       } else if (
-          newProps.getHomepage.payload !== null &&
-          newProps.getHomepage.error === null &&
-          !newProps.getHomepage.fetching && isReloadPage
-        ) {
-            var arr = [...this.state.products]
-            arr = arr.concat(newProps.getHomepage.payload.best_seller)
-            this.setState({
-              currentPage: this.state.currentPage + 1,
-              products: arr
-            })
-            isReloadPage = false
-        }
+        newProps.getHomepage.payload !== null &&
+        newProps.getHomepage.error === null &&
+        !newProps.getHomepage.fetching && isReloadPage
+      ) {
+          var arr = [...this.state.products]
+          arr = arr.concat(newProps.getHomepage.payload.best_seller)
+          this.setState({
+            currentPage: this.state.currentPage + 1,
+            products: arr
+          })
+          isReloadPage = false
+      }
     }
   }
 
@@ -221,7 +235,7 @@ class HomeScreen extends Component {
           image = {uri:item.img_url}
         return(
           <TouchableOpacity key={index.toString()} style={styles.catButton} onPress={() => this.navigate_to('Category', {category_id: item.slug})}>
-            <CachedImage source={image} style={styles.catImage}/>
+            <FastImage source={image} style={styles.catImage} resizeMode={FastImage.resizeMode.contain}/>
             <Text style={styles.catText}>{item.name}</Text>
           </TouchableOpacity>
         )
@@ -276,6 +290,10 @@ class HomeScreen extends Component {
 
   render () {
     const { navigate } = this.props.navigation
+    var notifCount = 0
+    if(this.props.notification.payload && this.props.notification.payload.all_notifications.length > 0){
+      notifCount = getNewNotificationsCount(this.props.notification.payload.all_notifications, this.props.lastNotification.payload)
+    }
     return (
     <View style={styles.container}>
       <View style={styles.containerScroll}>
@@ -298,7 +316,12 @@ class HomeScreen extends Component {
               <View style={styles.headerButtonRight}>
                 <TouchableOpacity onPress={() => this.navigate_to('SharedProductScreen')}><Image source={Images.wishlist} style={styles.buttonHeader} /></TouchableOpacity>
                 <TouchableOpacity onPress={() => this.navigate_to('CartScreen')}><Image source={Images.shoppingCart} style={styles.buttonHeader} /></TouchableOpacity>
-                <TouchableOpacity onPress={() => this.navigate_to('NotificationScreen')}><Image source={Images.notifWhite} style={styles.buttonHeader2} /></TouchableOpacity>
+                <TouchableOpacity onPress={() => this.navigate_to('NotificationScreen')}>
+                  <Image source={Images.notifWhite} style={styles.buttonHeader2} />
+                  {notifCount > 0 && <View style={styles.notifContainer}>
+                    <Text style={styles.textNotif}>{notifCount}</Text>
+                  </View>}
+                </TouchableOpacity>
               </View>
             </View>
           </View>
@@ -366,7 +389,9 @@ const mapStateToProps = state => {
   return {
     getHomepage: state.getHomepage,
     auth:state.auth,
-    setting: state.setting
+    notification: state.notification,
+    setting: state.setting,
+    lastNotification: state.lastNotification
   }
 };
 
@@ -386,7 +411,10 @@ const mapDispatchToProps = dispatch => {
     },
     deleteWishlistProductProcess: data => {
       dispatch(EditWishlistActions.deleteWishlistRequest(data))
-    }
+    },
+    getNotificationProcess: data => {
+      dispatch(GetNotificationActions.getNotificationRequest(data))
+    },
   }
 };
 

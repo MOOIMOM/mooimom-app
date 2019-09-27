@@ -49,7 +49,6 @@ export default StyleSheet.create({
   productImage:{
     width: (Metrics.screenWidth - 40) / 2 - 5,
     height: Metrics.screenHeight / 3 - 5,
-    resizeMode: 'contain'
   },
   removeBtn:{
     position: 'absolute',
@@ -141,7 +140,6 @@ export default StyleSheet.create({
   colorPick:{
     width: 20,
     height: 20,
-    resizeMode: 'contain'
   },
   qtyWrapper:{
     flex:1,

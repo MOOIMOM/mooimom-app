@@ -7,7 +7,7 @@ import SharedProductActions from '../Redux/SharedProductRedux'
 import GetProductActions from '../Redux/GetProductRedux'
 import CartActions from '../Redux/CartRedux'
 import EditWishlistActions from '../Redux/EditWishlistRedux'
-import { CachedImage } from 'react-native-cached-image';
+import FastImage from 'react-native-fast-image'
 import ScaledImage from '../Components/ScaledImage';
 import {convertToRupiah, share, shareDescripton, download, titleCase} from '../Lib/utils'
 // Styles
@@ -230,6 +230,7 @@ class ProductScreen extends Component {
   }
 
   selectColor(slug){
+    if(this.state.colorSelected === slug) return;
     this.setState({
       colorSelected:slug
     })
@@ -290,7 +291,7 @@ class ProductScreen extends Component {
     if(item.url && item.url !== '')
       image = {uri:item.url}
     return (
-      <CachedImage source={image} style={styles.productImage} />
+      <FastImage source={image} style={styles.productImage} resizeMode={FastImage.resizeMode.contain}/>
     );
   }
 
@@ -336,7 +337,7 @@ class ProductScreen extends Component {
           return(
             <TouchableOpacity key={data.slug} onPress={
               () => this.selectColor(data.slug)} disabled={isEmpty}>
-              <Image source={image} style={[styles.colorButton, this.colorStyling(data.slug, data.color)]}/>
+              <FastImage source={image} style={[styles.colorButton, this.colorStyling(data.slug, data.color)]}/>
               <View style={styleDisabled}/>
             </TouchableOpacity>
           )})}
@@ -491,7 +492,7 @@ class ProductScreen extends Component {
                 <Text style={styles.textRincian}>Rincian Ukuran</Text>
                 <Text style={styles.textRincian2}>Cara Mengukur</Text>
                 <View style={styles.wrapperSeparator}/>
-                {this.state.product.picture_for_how_to_measure_url && this.state.product.picture_for_how_to_measure_url !== '' && <Image source={{uri:this.state.product.picture_for_how_to_measure_url}} style={styles.imageHowTo}/>}
+                {this.state.product.picture_for_how_to_measure_url && this.state.product.picture_for_how_to_measure_url !== '' && <FastImage source={{uri:this.state.product.picture_for_how_to_measure_url}} style={styles.imageHowTo} resizeMode={FastImage.resizeMode.contain}/>}
                 <View style={styles.wrapperSeparator}/>
                 <Text style={styles.textRincian3}>{this.state.product.text_for_how_to_measure}</Text>
                 {this.renderTableFrontend(this.state.product.how_to_measure_table_header_frontend, this.state.product.how_to_measure_table_frontend)}
@@ -597,7 +598,7 @@ class ProductScreen extends Component {
                   if(image.url && image.url !== '')
                     image_review = {uri:image.url}
                   return (
-                    <CachedImage key={index} source={image_review} style={styles.reviewImage}/>
+                    <FastImage key={index} source={image_review} style={styles.reviewImage} resizeMode={FastImage.resizeMode.contain}/>
                   )
                 })}
               </View>

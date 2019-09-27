@@ -206,7 +206,6 @@ export default StyleSheet.create({
   },
   productImage:{
     flex:1,
-    resizeMode: 'contain'
   },
   orderContainerRight:{
     flex:2,

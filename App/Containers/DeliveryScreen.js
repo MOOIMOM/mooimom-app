@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Alert, Modal, ActivityIndicator } from 'react-native'
 import { Images, Metrics, Colors } from '../Themes'
+import FastImage from 'react-native-fast-image'
 import { connect } from 'react-redux'
 import GetAddressActions from '../Redux/GetAddressRedux'
 import GetShippingOptionsActions from '../Redux/GetShippingOptionsRedux'
@@ -212,7 +213,7 @@ class DeliveryScreen extends Component {
         return(
           <View style={styles.productContainer} key={index.toString()}>
             <View style={styles.productImageWrapper}>
-              <Image source={image} style={styles.productImage}/>
+              <FastImage source={image} style={styles.productImage} resizeMode={FastImage.resizeMode.contain}/>
             </View>
             <View style={styles.productDescriptionWrapper}>
               <View style={styles.nameWrapper}>

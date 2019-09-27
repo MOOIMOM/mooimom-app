@@ -26,15 +26,12 @@ class AuthScreen extends Component {
   }
 
   componentDidMount(){
-    timeoutOtp = setTimeout(() => {
-      this.setState({
-        isRequestOtp: false
-      })
-    }, 60000);
+    let that = this
+    timeoutOtp = setTimeout(function(){that.setState({isRequestOtp: false})}, 5000)
   }
 
   componentWillUnmount(){
-    timeoutOtp.clear()
+    clearTimeout(timeoutOtp)
   }
 
   componentWillReceiveProps (newProps) {

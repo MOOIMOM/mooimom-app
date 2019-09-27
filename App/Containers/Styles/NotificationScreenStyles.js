@@ -54,4 +54,27 @@ export default StyleSheet.create({
     width: Metrics.screenWidth - 40,
     marginHorizontal: 20,
   },
+  notificationContainer:{
+    width: Metrics.screenWidth - 40,
+    justifyContent: 'space-between',
+    paddingVertical: 2,
+    borderLeftWidth: 10,
+    borderRightWidth: 10,
+    paddingHorizontal: 10,
+    marginBottom: 5,
+    borderTopWidth: 0.5,
+    borderBottomWidth: 0.5,
+    borderRadius: 10,
+  },
+  textDateNotif:{
+    color:Colors.gray,
+    fontFamily: Fonts.type.gotham5,
+    fontSize: 10,
+    textAlign: 'right'
+  },
+  textNotif:{
+    color:Colors.black,
+    fontFamily: Fonts.type.gotham2,
+    fontSize: 12,
+  }
 })

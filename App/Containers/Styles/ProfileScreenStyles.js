@@ -67,7 +67,6 @@ export default StyleSheet.create({
   imgProfile:{
     width: 70,
     height: 70,
-    resizeMode: 'contain',
     borderRadius: 35
   },
   textPhone:{

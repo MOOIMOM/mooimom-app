@@ -100,7 +100,7 @@ class SharedProductScreen extends Component {
     } else {
       data = this.props.sharedProduct.data
     }
-    const timeout = setTimeout(() => {
+    setTimeout(() => {
       this.setState({
         products: data
       })

@@ -39,6 +39,7 @@ import { GetOrderTypes } from '../Redux/GetOrderRedux'
 import { GetCommissionSummaryTypes } from '../Redux/GetCommissionSummaryRedux'
 import { CheckoutTypes } from '../Redux/CheckoutRedux'
 import { CommissionEstimationTypes } from '../Redux/CommissionEstimationRedux'
+import { LastNotificationTimeTypes } from '../Redux/LastNotificationTimeRedux'
 
 /* ------------- Sagas ------------- */
 
@@ -83,6 +84,7 @@ import { postGetOrder } from './GetOrderSagas'
 import { postGetCommissionSummary } from './GetCommissionSummarySagas'
 import { postCheckout } from './CheckoutSagas'
 import { postGetCommissionEstimation } from './GetCommissionEstimationSagas'
+import { saveLastNotificationTime } from './SaveLastNotificationTimeSagas'
 
 /* ------------- API ------------- */
 
@@ -98,6 +100,7 @@ export default function * root () {
     takeLatest(StartupTypes.STARTUP, startup),
     takeLatest(SharedProductTypes.SHARED_PRODUCT_REQUEST, saveSharedProduct),
     takeLatest(CartTypes.ADD_CART_REQUEST, addCart),
+    takeLatest(LastNotificationTimeTypes.LAST_NOTIFICATION_TIME_REQUEST, saveLastNotificationTime),
 
     // some sagas receive extra parameters in addition to an action
     takeLatest(SignUpTypes.SIGN_UP_REQUEST, postSignUp, api),

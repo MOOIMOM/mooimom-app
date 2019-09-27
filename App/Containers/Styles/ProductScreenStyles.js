@@ -78,7 +78,6 @@ export default StyleSheet.create({
   productImage:{
     width: Metrics.screenWidth - 40,
     height: Metrics.screenWidth - 40,
-    resizeMode: 'contain'
   },
   paginationDotStyleImage: {
       width: 8,
@@ -392,7 +391,6 @@ export default StyleSheet.create({
     marginLeft: Metrics.screenWidth/4,
     width: Metrics.screenWidth/2,
     height: Metrics.screenWidth/2,
-    resizeMode: 'contain'
   },
   headerTable:{
     flexDirection: 'row',
@@ -485,7 +483,6 @@ export default StyleSheet.create({
   reviewImage:{
     width: 50 * Metrics.screenWidth / 320,
     height: 50 * Metrics.screenWidth / 320,
-    resizeMode: 'contain'
   },
   menuWrapper:{
     position:'absolute',

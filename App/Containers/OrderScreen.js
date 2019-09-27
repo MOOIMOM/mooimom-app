@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { ScrollView, Text, View, Image, TouchableOpacity, FlatList, AsyncStorage, ActivityIndicator} from 'react-native'
+import FastImage from 'react-native-fast-image'
 import { Images, Metrics, Colors } from '../Themes'
 import LinearGradient from 'react-native-linear-gradient';
 import GetAllOrderActions from '../Redux/GetAllOrderRedux';
@@ -124,7 +125,7 @@ class OrderScreen extends Component {
         return (
           <View style={styles.orderContainerProductWrapper} key={index.toString()}>
             <View style={styles.orderContainerLeft}>
-              <Image source={image} style={styles.productImage}/>
+              <FastImage source={image} style={styles.productImage} resizeMode={FastImage.resizeMode.contain}/>
             </View>
             <View style={styles.orderContainerRight}>
               <Text style={styles.productName}>{item.product_name}</Text>
