@@ -7,10 +7,10 @@ export default StyleSheet.create({
   },
   containerScroll:{
     paddingTop: 0,
-    height: Metrics.screenHeight - (Metrics.screenHeight / 3)
+    height: Metrics.screenHeight - 140
   },
   wrapperSeparator:{
-    marginTop: 20,
+    marginTop: 10,
   },
   headerWrapper:{
     flexDirection: 'row',
@@ -38,7 +38,7 @@ export default StyleSheet.create({
   textSearch:{
     color:Colors.gray,
     fontFamily: Fonts.type.gotham5,
-    fontSize:12
+    fontSize:Metrics.fontSize1
   },
   btnHeader:{
     justifyContent: 'center',
@@ -65,7 +65,7 @@ export default StyleSheet.create({
   menuBtn:{
     marginRight: 10,
     paddingVertical: 5,
-    paddingHorizontal: 20,
+    paddingHorizontal: 15,
     borderWidth: 2,
     borderColor: Colors.mooimom,
     borderRadius: 5
@@ -73,12 +73,12 @@ export default StyleSheet.create({
   menuText:{
     color:Colors.black,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 14,
+    fontSize: Metrics.fontSize2,
   },
   menuBtn2:{
     marginRight: 10,
     paddingVertical: 5,
-    paddingHorizontal: 20,
+    paddingHorizontal: 15,
     borderWidth: 2,
     borderColor: Colors.mooimom,
     backgroundColor: Colors.mooimom,
@@ -87,6 +87,6 @@ export default StyleSheet.create({
   menuText2:{
     color:Colors.white,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 14,
+    fontSize: Metrics.fontSize2,
   },
 })

@@ -15,7 +15,7 @@ export default StyleSheet.create({
     position:'absolute',
     alignSelf: "center",
     alignContent: "center",
-    top: Metrics.screenHeight * -0.17,
+    top: Metrics.screenHeight * -0.22,
     backgroundColor: Colors.mooimom,
     borderRadius: Metrics.screenWidth / 2,
     transform: [{ scaleX: 2 }, { scaleY: 0.5 }],
@@ -26,7 +26,7 @@ export default StyleSheet.create({
     flex: 1
   },
   subTitleWrapper:{
-    fontSize: 16 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize4,
     fontFamily: Fonts.type.gotham4,
     color: Colors.mooimom,
     marginBottom: 10
@@ -72,20 +72,20 @@ export default StyleSheet.create({
     resizeMode: 'contain'
   },
   notifContainer:{
-    width: 16,
-    height: 16,
+    width: 16 * Metrics.screenWidth / 320,
+    height: 16 * Metrics.screenWidth / 320,
     position: 'absolute',
     justifyContent: 'center',
     alignItems: 'center',
     right: -7,
     top: -7,
-    borderRadius: 8,
+    borderRadius: 8 * Metrics.screenWidth / 320,
     backgroundColor: Colors.fire,
     flex: 1,
     flexWrap: 'nowrap'
   },
   textNotif:{
-    fontSize: 9,
+    fontSize: Metrics.fontSize1,
     fontFamily: Fonts.type.gotham2,
     color: Colors.white,
   },
@@ -96,7 +96,7 @@ export default StyleSheet.create({
   },
   searchButton:{
     width: Metrics.screenWidth - 40,
-    height: 40,
+    height: 30 * Metrics.screenWidth / 320,
     marginTop: 10,
     borderRadius: 25,
     backgroundColor: Colors.white,
@@ -104,42 +104,42 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   imageSearch:{
-    height:20,
-    width:20,
+    height:15* Metrics.screenWidth / 320,
+    width:15* Metrics.screenWidth / 320,
     marginHorizontal: 10,
     resizeMode: 'contain'
   },
   textSearch:{
     color:Colors.gray,
     fontFamily: Fonts.type.gotham5,
-    fontSize:12
+    fontSize:Metrics.fontSize1
   },
   heroBannerWrapper:{
     flex:1
   },
   itemHeroBanner: {
     width: Metrics.screenWidth - 60,
-    height: 180,
+    height: 180 * (Metrics.screenWidth / 320),
   },
   imageContainerHeroBanner: {
     flex: 1,
     marginBottom: Platform.select({ ios: 0, android: 1 }), // Prevent a random Android rendering issue
     backgroundColor: Colors.white,
-    borderRadius: 10,
+    borderRadius: 10 * (Metrics.screenWidth / 320),
   },
   imageHeroBanner: {
     resizeMode: 'contain',
   },
   paginationDotStyleHeroBanner: {
-      width: 8,
-      height: 8,
-      borderRadius: 5,
+      width: 8 * (Metrics.screenWidth / 320),
+      height: 8 * (Metrics.screenWidth / 320),
+      borderRadius: 5 * (Metrics.screenWidth / 320),
       backgroundColor: Colors.black
   },
   paginationContainerStyleHeroBanner: {
     paddingVertical: 0,
     paddingHorizontal: 0,
-    top: -15
+    top: -15 * (Metrics.screenWidth / 320),
   },
   paginationDotContainerStyleHeroBanner: {
     marginHorizontal:2
@@ -158,16 +158,16 @@ export default StyleSheet.create({
     width: (Metrics.screenWidth - 40) / 4
   },
   catImage:{
-    height: 50,
-    width:50,
+    height: 40 * (Metrics.screenWidth / 320),
+    width:40 * (Metrics.screenWidth / 320),
   },
   catText:{
     color:Colors.gray,
     flexWrap: 'wrap',
     textAlign: 'center',
     maxWidth: (Metrics.screenWidth - 40) / 4,
-    paddingHorizontal: 9,
-    fontSize: 10,
+    paddingHorizontal: 5 * (Metrics.screenWidth / 320),
+    fontSize: Metrics.fontSize1,
     marginTop: 10,
     fontFamily: Fonts.type.gotham2,
   },

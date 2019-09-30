@@ -10,7 +10,7 @@ export default StyleSheet.create({
     height: Metrics.screenHeight - 100,
   },
   wrapperSeparator:{
-    marginTop: 20,
+    marginTop: 10,
   },
   headerWrapper:{
     flexDirection: 'row',
@@ -47,7 +47,7 @@ export default StyleSheet.create({
   textSearch:{
     color:Colors.gray,
     fontFamily: Fonts.type.gotham5,
-    fontSize: 12
+    fontSize: Metrics.fontSize1
   },
   btnHeader:{
     justifyContent: 'center',
@@ -67,19 +67,19 @@ export default StyleSheet.create({
     borderRadius: 10,
     backgroundColor: Colors.lightGray,
     width: Metrics.screenWidth - 40,
-    height: 100,
+    paddingVertical: 10,
     justifyContent: 'center',
     paddingLeft: 20
   },
   textSaldo:{
     color: Colors.black,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 16,
+    fontSize: Metrics.fontSize3,
     marginVertical: 3
   },
   textSaldoAmount:{
     color:Colors.mooimom,
-    fontSize: 24,
+    fontSize: Metrics.fontSize5,
     fontFamily: Fonts.type.gotham4,
     marginVertical: 3
   },
@@ -88,7 +88,7 @@ export default StyleSheet.create({
   btnEditProfile:{
     backgroundColor: Colors.mooimom,
     width: Metrics.screenWidth - 40,
-    height:40,
+    height: 30* Metrics.screenWidth / 320,
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
@@ -97,7 +97,7 @@ export default StyleSheet.create({
   textEditProfile:{
     color: Colors.white,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 14
+    fontSize: Metrics.fontSize2
   },
   menu:{
     borderTopWidth: 0.5,
@@ -112,7 +112,7 @@ export default StyleSheet.create({
   subtitle:{
     color:Colors.black,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 20
+    fontSize: Metrics.fontSize3
   },
   btnMenu:{
     flexDirection: 'row',
@@ -122,13 +122,13 @@ export default StyleSheet.create({
   imgText:{
     color: Colors.black,
     fontFamily: Fonts.type.gotham2,
-    fontSize: 13,
+    fontSize: Metrics.fontSize1,
     marginBottom: 5,
   },
   imgTextBold:{
     color: Colors.black,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 13,
+    fontSize: Metrics.fontSize1,
     textAlign: 'left',
     alignSelf: 'flex-start',
     marginBottom: 5,

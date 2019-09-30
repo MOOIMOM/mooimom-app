@@ -7,7 +7,7 @@ export default StyleSheet.create({
   },
   containerScroll:{
     paddingTop: 0,
-    height: Metrics.screenHeight - 100
+    height: Metrics.screenHeight - 110
   },
   headerWrapper:{
     flexDirection: 'row',
@@ -15,7 +15,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 10,
     width: Metrics.screenWidth,
-    marginTop: 20,
+    marginTop: 10,
     height: 40
   },
   searchButton:{
@@ -35,7 +35,7 @@ export default StyleSheet.create({
   textSearch:{
     color:Colors.gray,
     fontFamily: Fonts.type.gotham5,
-    fontSize:12
+    fontSize:Metrics.fontSize1
   },
   btnHeader:{
     height: 20 * Metrics.screenWidth / 320,
@@ -49,37 +49,39 @@ export default StyleSheet.create({
     resizeMode: 'contain'
   },
   itemHeroBanner: {
+    marginTop:20 *Metrics.screenWidth / 320,
     width: Metrics.screenWidth,
+    height: Metrics.screenHeight / 2,
     paddingHorizontal: 20,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   imageHeroBanner: {
     resizeMode: 'contain',
     width: Metrics.screenWidth,
-    height: Metrics.screenWidth - 60,
+    height: Metrics.screenHeight / 2,
   },
   title:{
     color:Colors.mooimom,
     fontFamily: Fonts.type.gotham4,
-    fontSize:18,
+    fontSize:Metrics.fontSize4,
     textAlign: 'center',
     marginBottom: 20
   },
   desc:{
     color:Colors.black,
     fontFamily: Fonts.type.gotham2,
-    fontSize:14,
+    fontSize: Metrics.fontSize2,
     textAlign: 'center'
   },
   paginationDotStyleHeroBanner: {
-      width: 8,
-      height: 8,
-      borderRadius: 5,
+      width: 8 * Metrics.screenWidth / 320,
+      height: 8 * Metrics.screenWidth / 320,
+      borderRadius: 4 * Metrics.screenWidth / 320,
       backgroundColor: Colors.mooimom
   },
   paginationContainerStyleHeroBanner: {
-    marginTop: 40,
+    marginTop: 0,
     paddingHorizontal: 0,
   },
   paginationDotContainerStyleHeroBanner: {

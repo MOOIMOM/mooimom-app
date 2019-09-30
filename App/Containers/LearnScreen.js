@@ -62,9 +62,6 @@ class LearnScreen extends Component {
         </View>
         <View style={styles.wrapperSeparator}/>
         <View style={styles.containerScroll}>
-          <ScrollView
-          showsVerticalScrollIndicator={false}
-          >
           <Carousel
             ref={(carousel) => { this._carousel = carousel; }}
             sliderWidth={Metrics.screenWidth}
@@ -85,7 +82,6 @@ class LearnScreen extends Component {
             containerStyle={styles.paginationContainerStyleHeroBanner}
             dotContainerStyle={styles.paginationDotContainerStyleHeroBanner}
           />
-          </ScrollView>
         </View>
       </View>
     )

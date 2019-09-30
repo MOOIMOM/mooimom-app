@@ -59,6 +59,6 @@ export default StyleSheet.create({
     marginLeft:40,
     letterSpacing: -1,
     marginTop:35,
-    fontSize: 21,
+    fontSize: 21 * Metrics.screenWidth / 320,
   },
 })

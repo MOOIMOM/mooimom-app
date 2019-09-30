@@ -398,7 +398,7 @@ const styles = StyleSheet.create({
     height: 30,
   },
   buttonText: {
-    fontSize: 12,
+    fontSize: 14,
     textAlign: 'center',
     textAlignVertical: 'center'
   },
@@ -426,7 +426,7 @@ const styles = StyleSheet.create({
   rowText: {
     paddingHorizontal: 6,
     paddingVertical: 10,
-    fontSize: 11,
+    fontSize: 14,
     color: 'gray',
     backgroundColor: 'white',
     textAlignVertical: 'center'

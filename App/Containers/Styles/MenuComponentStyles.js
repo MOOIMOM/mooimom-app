@@ -22,10 +22,10 @@ export default StyleSheet.create({
   },
   menuText:{
     color:Colors.gray,
-    fontSize: 10 * Metrics.screenWidth / 320
+    fontSize: Metrics.fontSize1
   },
   menuImage:{
-    height: 20 * Metrics.screenWidth / 320,
+    height: 20,
     resizeMode: 'contain'
   }
 })

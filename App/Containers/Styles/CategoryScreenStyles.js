@@ -15,13 +15,14 @@ export default StyleSheet.create({
     position:'absolute',
     alignSelf: "center",
     alignContent: "center",
-    top: Metrics.screenHeight * -0.25,
+    top: Metrics.screenHeight * -0.27,
     backgroundColor: Colors.mooimom,
     borderRadius: Metrics.screenWidth / 2,
-    transform: [{ scaleX: 2 }, { scaleY: 0.25}]
+    transform: [{ scaleX: 2 }, { scaleY: 0.25}],
+    flex: 1
   },
   wrapperSeparator:{
-    marginTop: 20,
+    marginTop: 10,
   },
   headerWrapper:{
     flexDirection: 'row',
@@ -29,7 +30,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 10,
     width: Metrics.screenWidth,
-    marginTop: 20,
+    marginTop: 10,
     height: 40
   },
   searchButton:{
@@ -49,7 +50,7 @@ export default StyleSheet.create({
   textSearch:{
     color:Colors.gray,
     fontFamily: Fonts.type.gotham5,
-    fontSize:12
+    fontSize:Metrics.fontSize1
   },
   btnHeader:{
     height: 20 * Metrics.screenWidth / 320,
@@ -90,9 +91,9 @@ export default StyleSheet.create({
     backgroundColor: Colors.white
   },
   categoryText:{
-    fontSize: 11 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize2,
     fontFamily: Fonts.type.gotham2,
-    paddingRight: 5
+    paddingRight: 1
   },
   rightContainer:{
     flex:2,
@@ -107,7 +108,7 @@ export default StyleSheet.create({
   subCategoryHeaderText:{
     fontFamily: Fonts.type.gotham4,
     color: Colors.mooimom,
-    fontSize: 12 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize2,
     marginBottom: 10
   },
   productRow:{
@@ -123,7 +124,7 @@ export default StyleSheet.create({
     marginBottom:10
   },
   productText:{
-    fontSize: 9 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize1,
     lineHeight: 11 * Metrics.screenWidth / 320,
     textAlign: 'center',
     flexWrap: 'wrap',
@@ -154,7 +155,7 @@ export default StyleSheet.create({
     textAlign: 'center',
     color: Colors.black,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 9 * Metrics.screenWidth / 320
+    fontSize: Metrics.fontSize1
   },
   btnTopCategoriesSelected:{
     justifyContent: 'center',
@@ -169,7 +170,7 @@ export default StyleSheet.create({
     textAlign: 'center',
     color: Colors.white,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 9 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize1,
     textShadowRadius:0,
   },
   bottomContainer:{
@@ -179,7 +180,7 @@ export default StyleSheet.create({
   subtitleCategory:{
     color: Colors.black,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 18 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize3,
     marginVertical: 10
   },
   modalShareView:{

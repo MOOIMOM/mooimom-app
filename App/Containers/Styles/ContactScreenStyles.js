@@ -38,7 +38,7 @@ export default StyleSheet.create({
   textSearch:{
     color:Colors.gray,
     fontFamily: Fonts.type.gotham5,
-    fontSize:12
+    fontSize:Metrics.fontSize1
   },
   btnHeader:{
     height: 20 * Metrics.screenWidth / 320,
@@ -79,29 +79,29 @@ export default StyleSheet.create({
     justifyContent: 'space-between'
   },
   imgMenu:{
-    width: 25,
-    height:25,
+    width: 25 * Metrics.screenWidth / 320,
+    height:25 * Metrics.screenWidth / 320,
     resizeMode: 'contain'
   },
   imgMenu2:{
-    width: 10,
-    height:10,
+    width: 10 * Metrics.screenWidth / 320,
+    height:10 * Metrics.screenWidth / 320,
     resizeMode: 'contain'
   },
   imgText:{
     color: Colors.gray,
     fontFamily: Fonts.type.gotham2,
-    fontSize: 13,
+    fontSize: Metrics.fontSize2,
   },
   imgText2:{
     color: Colors.gray,
     fontFamily: Fonts.type.gotham2,
-    fontSize: 13,
+    fontSize: Metrics.fontSize2,
   },
   imgText3:{
     color: Colors.black,
     fontFamily: Fonts.type.gotham2,
-    fontSize: 13,
+    fontSize: Metrics.fontSize2,
   },
   menuBottom:{
     marginTop: 50,

@@ -44,7 +44,7 @@ export default StyleSheet.create({
   labelPhone: {
     // zIndex: 2,
     // height: 30,
-    fontSize: 14,
+    fontSize: Metrics.fontSize3,
     fontFamily: Fonts.type.gotham2,
     color: Colors.white,
     width: 30,

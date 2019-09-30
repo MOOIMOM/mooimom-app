@@ -38,7 +38,7 @@ export default StyleSheet.create({
   textSearch:{
     color:Colors.gray,
     fontFamily: Fonts.type.gotham5,
-    fontSize:12
+    fontSize:Metrics.fontSize1
   },
   btnHeader:{
     height: 20 * Metrics.screenWidth / 320,
@@ -65,13 +65,13 @@ export default StyleSheet.create({
   textTarget:{
     color:Colors.white,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 16,
+    fontSize: Metrics.fontSize3,
     textAlign: 'center'
   },
   textBonus:{
     color:Colors.white,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 16,
+    fontSize: Metrics.fontSize2,
     textAlign: 'left',
     width: (Metrics.screenWidth - 40),
     paddingTop: 20,
@@ -91,14 +91,15 @@ export default StyleSheet.create({
   textTargetAmount:{
     color:Colors.white,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 25,
+    fontSize: Metrics.fontSize4,
     textAlign: 'center',
     alignSelf: 'center',
   },
   textTargetMore:{
     color:Colors.white,
     fontFamily: Fonts.type.gotham2,
-    fontSize: 14,
+    fontSize: Metrics.fontSize2,
+    paddingHorizontal: 5,
     textAlign: 'center'
   },
   calculateBonusWrapper:{
@@ -110,20 +111,20 @@ export default StyleSheet.create({
     flex:1,
     color:Colors.white,
     fontFamily: Fonts.type.gotham2,
-    fontSize: 14,
+    fontSize: Metrics.fontSize2,
     marginVertical: 10
   },
   textAmount:{
     flex:2,
     color:Colors.white,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 14,
+    fontSize: Metrics.fontSize2,
   },
   textMath:{
     flex:1,
     color:Colors.white,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 14,
+    fontSize: Metrics.fontSize2,
     textAlign: 'center'
   },
   bottomContainer:{
@@ -143,20 +144,20 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   imgInfo:{
-    height: 40,
-    width: 40,
+    height: 30 * Metrics.screenWidth / 320,
+    width: 30 * Metrics.screenWidth / 320,
     resizeMode: 'contain'
   },
   textInfo:{
     marginLeft: 20,
     textAlign: 'justify',
     fontFamily: Fonts.type.gotham2,
-    fontSize: 12,
+    fontSize: Metrics.fontSize1,
     flex:1
   },
   textBonusWeekly:{
     fontFamily: Fonts.type.gotham2,
-    fontSize: 14,
+    fontSize: Metrics.fontSize2,
     fontWeight: 'bold'
   },
   penjualanCalculator:{
@@ -174,27 +175,27 @@ export default StyleSheet.create({
   textInfo2:{
     textAlign: 'justify',
     fontFamily: Fonts.type.gotham2,
-    fontSize: 11,
+    fontSize: Metrics.fontSize1,
     flex:2
   },
   textPenjualan1:{
     textAlign: 'left',
     fontFamily: Fonts.type.gotham2,
-    fontSize: 11,
+    fontSize: Metrics.fontSize1,
     flex:1,
     color:Colors.mooimom
   },
   textPenjualan2:{
     textAlign: 'left',
     fontFamily: Fonts.type.gotham2,
-    fontSize: 11,
+    fontSize: Metrics.fontSize1,
     flex:1,
     color:Colors.fire
   },
   textPenjualan3:{
     textAlign: 'left',
     fontFamily: Fonts.type.gotham2,
-    fontSize: 11,
+    fontSize: Metrics.fontSize1,
     flex:1
   },
   tablesimulationHeader:{
@@ -206,14 +207,14 @@ export default StyleSheet.create({
     flex:3,
     textAlign: 'center',
     fontFamily: Fonts.type.gotham4,
-    fontSize: 13,
+    fontSize: Metrics.fontSize2,
     color: Colors.white
   },
   tableHeaderText2:{
     flex:2,
     textAlign: 'center',
     fontFamily: Fonts.type.gotham4,
-    fontSize: 13,
+    fontSize: Metrics.fontSize2,
     color: Colors.white
   },
   itemSimulation:{
@@ -227,14 +228,14 @@ export default StyleSheet.create({
     flex:3,
     textAlign: 'center',
     fontFamily: Fonts.type.gotham4,
-    fontSize: 12,
+    fontSize: Metrics.fontSize1,
     color: Colors.gray
   },
   textSimulation2:{
     flex:2,
     textAlign: 'center',
     fontFamily: Fonts.type.gotham4,
-    fontSize: 14,
+    fontSize: Metrics.fontSize1,
     color: Colors.gray
   }
 })

@@ -18,8 +18,8 @@ export default StyleSheet.create({
     top: 0,
   },
   wishlistImage:{
-    width: 25,
-    height: 25,
+    width: 20 * Metrics.screenWidth / 320,
+    height: 20 * Metrics.screenWidth / 320,
     resizeMode: 'contain'
   },
   image:{
@@ -31,7 +31,7 @@ export default StyleSheet.create({
   name:{
     flexWrap: 'wrap',
     flex: 1,
-    fontSize: 9 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize1,
     fontFamily: Fonts.type.gotham2,
   },
   priceGroup:{
@@ -41,13 +41,13 @@ export default StyleSheet.create({
   },
   price:{
     color:Colors.black,
-    fontSize: 12 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize2,
     fontFamily: Fonts.type.gotham4,
     flex:1
   },
   priceDiscount:{
     color:Colors.fire,
-    fontSize: 10 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize1,
     textDecorationLine:'line-through',
     fontFamily: Fonts.type.gotham2,
     flex:1
@@ -57,7 +57,7 @@ export default StyleSheet.create({
   },
   btn:{
     backgroundColor: Colors.mooimom,
-    height: 30,
+    height: 30 * Metrics.screenWidth / 320,
     width: Metrics.screenWidth / 3,
     justifyContent: 'center',
     alignItems: 'center',

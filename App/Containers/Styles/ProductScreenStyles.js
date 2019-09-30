@@ -53,7 +53,7 @@ export default StyleSheet.create({
     backgroundColor: Colors.lightGray,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-around',
+    paddingHorizontal: 5
   },
   imageSearch:{
     height:15 * Metrics.screenWidth / 320,
@@ -63,8 +63,8 @@ export default StyleSheet.create({
   textSearch:{
     color:Colors.gray,
     fontFamily: Fonts.type.gotham5,
-    fontSize:10,
-    marginLeft: -5
+    fontSize:Metrics.fontSize0,
+    marginLeft: 5
   },
   productContainer:{
     width: Metrics.screenWidth - 40,
@@ -99,8 +99,8 @@ export default StyleSheet.create({
     right: 0
   },
   wishlistImage:{
-    width: 45 * Metrics.screenWidth / 320,
-    height: 45 * Metrics.screenWidth / 320,
+    width: 40 * Metrics.screenWidth / 320,
+    height: 40 * Metrics.screenWidth / 320,
     resizeMode: 'contain'
   },
   ratingWrapper:{
@@ -116,7 +116,7 @@ export default StyleSheet.create({
   },
   ratingText:{
     fontFamily: Fonts.type.gotham3,
-    fontSize: 10 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize1,
     fontWeight: 'bold',
     marginLeft: 10
   },
@@ -124,12 +124,12 @@ export default StyleSheet.create({
 
   },
   productCode:{
-    fontSize: 10 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize1,
     color: Colors.lightGray,
     fontFamily: Fonts.type.gotham2,
   },
   productName:{
-    fontSize: 14 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize3,
     color: Colors.black,
     marginTop: 5,
     fontFamily: Fonts.type.gotham4,
@@ -141,12 +141,12 @@ export default StyleSheet.create({
     justifyContent: 'flex-start'
   },
   productPrice:{
-    fontSize: 14 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize3,
     color: Colors.mooimom,
     fontFamily: Fonts.type.gotham4,
   },
   productPriceDiscount:{
-    fontSize: 12 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize2,
     fontFamily: Fonts.type.gotham4,
     textDecorationLine: 'line-through',
     color: Colors.fire,
@@ -175,7 +175,7 @@ export default StyleSheet.create({
     flex:1
   },
   shareSocialText:{
-    fontSize: 10 * Metrics.screenWidth / 400,
+    fontSize: Metrics.fontSize1,
     fontFamily: Fonts.type.gotham2,
     alignItems: 'center',
     justifyContent: 'center',
@@ -211,12 +211,12 @@ export default StyleSheet.create({
     margin: 'auto'
   },
   productSubtitle2:{
-    fontSize: 14 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize3,
     fontFamily: Fonts.type.gotham4,
     color: Colors.mooimom
   },
   productSubtitle:{
-    fontSize: 14 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize3,
     fontFamily: Fonts.type.gotham4,
     color: Colors.black
   },
@@ -237,13 +237,13 @@ export default StyleSheet.create({
     borderRadius: 5
   },
   textCopy:{
-    fontSize: 14 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize3,
     color: Colors.white,
     fontFamily: Fonts.type.gotham4,
   },
   productDescriptionText:{
     flexWrap: 'wrap',
-    fontSize: 12 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize2,
     color: Colors.black,
     lineHeight:17 * Metrics.screenWidth / 320,
     fontFamily: Fonts.type.gotham3,
@@ -298,7 +298,7 @@ export default StyleSheet.create({
   },
   sizeText:{
     color: Colors.gray,
-    fontSize: 14 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize3,
     fontFamily: Fonts.type.gotham1,
   },
   buttonDisabled:{
@@ -365,13 +365,13 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   textRincian:{
-    fontSize: 14 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize3,
     fontFamily: Fonts.type.gotham4,
     color: Colors.black,
     textAlign: 'center'
   },
   textRincian2:{
-    fontSize: 12 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize2,
     fontFamily: Fonts.type.gotham2,
     color: Colors.black,
     textAlign: 'center',
@@ -380,7 +380,7 @@ export default StyleSheet.create({
   },
   textRincian3:{
     paddingHorizontal: 20,
-    fontSize: 10 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize1,
     fontFamily: Fonts.type.gotham3,
     color: Colors.black,
     lineHeight: 15 * Metrics.screenWidth / 320,
@@ -404,7 +404,7 @@ export default StyleSheet.create({
   },
   headerTableText:{
     flex:1,
-    fontSize: 10,
+    fontSize: Metrics.fontSize1,
     textAlign: 'center',
     color:Colors.white,
     fontFamily: Fonts.type.gotham4,
@@ -422,7 +422,7 @@ export default StyleSheet.create({
   },
   tableText:{
     flex:1,
-    fontSize: 10,
+    fontSize: Metrics.fontSize1,
     textAlign: 'center',
     color:Colors.black,
     fontFamily: Fonts.type.gotham4,
@@ -441,11 +441,11 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   reviewName1:{
-    fontSize: 12 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize2,
     fontFamily: Fonts.type.gotham2,
   },
   reviewName2:{
-    fontSize: 12 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize2,
     fontFamily: Fonts.type.gotham4,
   },
   reviewStarWrapper:{
@@ -460,14 +460,14 @@ export default StyleSheet.create({
     marginRight: 5 * Metrics.screenWidth / 320
   },
   reviewTitle:{
-    fontSize: 12 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize2,
     fontFamily: Fonts.type.gotham4,
   },
   reviewDescriptionWrapper:{
     flexWrap: 'wrap'
   },
   textReview:{
-    fontSize: 10 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize1,
     color: Colors.gray,
     textAlign:  'left',
     fontFamily: Fonts.type.gotham3,
@@ -503,7 +503,7 @@ export default StyleSheet.create({
   textAddToCart:{
     color:Colors.white,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 15 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize3,
   },
   btnShare:{
     width: Metrics.screenWidth / 2,
@@ -514,7 +514,7 @@ export default StyleSheet.create({
   textShare:{
     color:Colors.black,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 15 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize3,
   },
   modalView:{
     width: Metrics.screenWidth - 80,
@@ -528,7 +528,7 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   modalText:{
-    fontSize: 14,
+    fontSize: Metrics.fontSize3,
     color: Colors.white,
     fontFamily: Fonts.type.gotham2,
   },

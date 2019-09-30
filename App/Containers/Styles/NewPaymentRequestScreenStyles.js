@@ -34,7 +34,7 @@ export default StyleSheet.create({
     marginTop: 5
   },
   productSubtitle:{
-    fontSize: 14 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize3,
     fontFamily: Fonts.type.gotham4,
     color: Colors.black
   },
@@ -53,31 +53,31 @@ export default StyleSheet.create({
     borderColor: Colors.mooimom
   },
   addressName:{
-    fontSize: 12 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize2,
     fontFamily: Fonts.type.gotham4,
     color: Colors.black
   },
   address:{
-    fontSize: 12 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize2,
     fontFamily: Fonts.type.gotham2,
   },
   saldoContainer:{
     borderRadius: 10,
     backgroundColor: Colors.lightGray,
     width: Metrics.screenWidth - 40,
-    height: 100,
+    paddingVertical: 10,
     justifyContent: 'center',
     paddingLeft: 20
   },
   textSaldo:{
     color: Colors.black,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 16,
+    fontSize: Metrics.fontSize3,
     marginVertical: 3
   },
   textSaldoAmount:{
     color:Colors.mooimom,
-    fontSize: 24,
+    fontSize: Metrics.fontSize5,
     fontFamily: Fonts.type.gotham4,
     marginVertical: 3
   },
@@ -101,13 +101,13 @@ export default StyleSheet.create({
     backgroundColor: Colors.mooimom,
     width: Metrics.screenWidth - 40,
     marginLeft: 20,
-    height: 50,
+    height: 40* Metrics.screenWidth / 320,
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center'
   },
   chooseAddressText:{
-    fontSize: 14 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize2,
     fontFamily: Fonts.type.gotham4,
     color:Colors.white
   },

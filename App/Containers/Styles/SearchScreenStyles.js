@@ -83,6 +83,7 @@ export default StyleSheet.create({
     color: Colors.gray
   },
   containerLoading:{
+    width: Metrics.screenWidth - 40,
     marginTop: 100,
     justifyContent: 'center',
     alignItems: 'center'

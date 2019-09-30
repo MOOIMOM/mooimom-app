@@ -27,7 +27,7 @@ import NewAccountScreen from '../Containers/NewAccountScreen'
 import UpdateAccountScreen from '../Containers/UpdateAccountScreen'
 import PaymentScreen from '../Containers/PaymentScreen'
 import NewPaymentRequestScreen from '../Containers/NewPaymentRequestScreen'
-import { Images, Colors, Fonts } from '../Themes'
+import { Images, Colors, Fonts, Metrics } from '../Themes'
 
 import styles from './Styles/NavigationStyles'
 
@@ -45,11 +45,8 @@ const MainNav = createBottomTabNavigator({
   tabBarOptions: {
     activeTintColor: Colors.mooimom,
     labelStyle: {
-      fontSize: 12,
+      fontSize: Metrics.fontSize1,
       fontFamily: Fonts.type.gotham2,
-    },
-    style: {
-      paddingVertical:4
     },
   }
 })

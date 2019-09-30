@@ -60,12 +60,12 @@ export default class DatePickerCustom extends Component {
               borderColor: 'rgba(0,0,0,0)'
             },
             placeholderText:{
-              color: 'gray',
+              color: Colors.black,
               fontSize: 14,
               fontFamily: Fonts.type.gotham2
             },
             dateText:{
-              color:'gray',
+              color:Colors.black,
               fontSize: 14,
               fontFamily: Fonts.type.gotham2
             }

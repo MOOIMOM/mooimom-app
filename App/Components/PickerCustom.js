@@ -59,9 +59,11 @@ export default class PickerCustom extends Component {
           selectedValue={this.props.selectedValue}
           style={{
             width: widthFix - 20, height: 50,
-            backgroundColor: 'rgba(0,0,0,0)'
+            backgroundColor: 'rgba(0,0,0,0)',
+            alignItems: 'center',
+            justifyContent:'center',
           }}
-          itemStyle={{fontSize: 18, fontFamily: Fonts.type.gotham4}}
+          itemStyle={{fontSize: 14, fontFamily: Fonts.type.gotham3}}
           onValueChange={(itemValue, itemIndex) => {
             this.setState({
               selectedValue: '',
@@ -72,7 +74,7 @@ export default class PickerCustom extends Component {
           {this._renderDefault()}
           {this._renderPicker()}
           </Picker>
-          <Image source={Images.down} style={{position:'absolute', width:10, height:10, resizeMode: 'contain', top:20, right:20}}/>
+          <Image source={Images.down} style={{position:'absolute', width:10 * Metrics.screenWidth / 320, height:10 * Metrics.screenWidth / 320, resizeMode: 'contain', top:20, right:20}}/>
         </View>
         <View style={styles.inputLabelWrapper}>
           <Text

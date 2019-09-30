@@ -66,12 +66,12 @@ export default StyleSheet.create({
     flex: 1
   },
   itemText:{
-    fontSize: 10 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize1,
     color: Colors.black,
     fontFamily: Fonts.type.gotham4,
   },
   itemText2:{
-    fontSize: 12 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize2,
     color: Colors.black,
     fontFamily: Fonts.type.gotham4,
   },
@@ -79,7 +79,7 @@ export default StyleSheet.create({
     marginBottom: 5
   },
   productName:{
-    fontSize: 10 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize1,
     color: Colors.gray,
     fontFamily: Fonts.type.gotham2,
   },
@@ -105,7 +105,7 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   dropdown_text: {
-    fontSize: 14,
+    fontSize: Metrics.fontSize3,
     color: Colors.black,
     fontFamily: Fonts.type.gotham4,
   },
@@ -120,7 +120,7 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   sizeText:{
-    fontSize: 14,
+    fontSize: Metrics.fontSize3,
     color: Colors.black,
     fontFamily: Fonts.type.gotham4,
   },
@@ -176,7 +176,7 @@ export default StyleSheet.create({
     justifyContent: 'flex-end'
   },
   productSubtitle:{
-    fontSize: 14 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize3,
     fontFamily: Fonts.type.gotham4,
     color: Colors.black
   },
@@ -199,7 +199,7 @@ export default StyleSheet.create({
   buyText:{
     color:Colors.white,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 15 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize3,
   },
   subtotalWrapper:{
     backgroundColor: Colors.white,
@@ -214,19 +214,19 @@ export default StyleSheet.create({
   subtotalText:{
     color:Colors.gray,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 12 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize2,
     marginVertical: -3,
   },
   priceText:{
     color:Colors.black,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 16 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize3,
     marginVertical: -3,
   },
   commissionText:{
     color:Colors.blueMooimom,
     fontFamily: Fonts.type.gotham2,
-    fontSize: 10 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize1,
     marginVertical: 0,
   },
 })

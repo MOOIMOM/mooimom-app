@@ -4,6 +4,7 @@ import { Metrics, ApplicationStyles, Colors, Fonts } from '../../Themes/'
 export default StyleSheet.create({
   container: {
     flex:6,
+    backgroundColor: '#28C9B9',
     alignItems: 'center',
     color:Colors.white
   },
@@ -43,8 +44,6 @@ export default StyleSheet.create({
   },
   SignInContainer:{
     flexDirection: 'row',
-    flex:1,
-    marginTop: -80,
     justifyContent: 'center',
     alignItems: 'center'
   },

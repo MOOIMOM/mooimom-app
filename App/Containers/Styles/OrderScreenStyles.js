@@ -10,7 +10,7 @@ export default StyleSheet.create({
     height: Metrics.screenHeight - 160
   },
   wrapperSeparator:{
-    marginTop: 20,
+    marginTop: 10,
   },
   headerWrapper:{
     flexDirection: 'row',
@@ -38,7 +38,7 @@ export default StyleSheet.create({
   textSearch:{
     color:Colors.gray,
     fontFamily: Fonts.type.gotham5,
-    fontSize:12
+    fontSize:Metrics.fontSize1
   },
   btnHeader:{
     height: 20 * Metrics.screenWidth / 320,
@@ -60,19 +60,18 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     width: Metrics.screenWidth,
-    height: Metrics.screenHeight / 5,
     paddingVertical: 10
   },
   textTarget:{
     color:Colors.white,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 16,
+    fontSize: Metrics.fontSize2,
     textAlign: 'center'
   },
   textTargetAmount:{
     color:Colors.white,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 20,
+    fontSize: Metrics.fontSize4,
     paddingVertical: 5,
     textAlign: 'center',
     alignSelf: 'center',
@@ -84,16 +83,16 @@ export default StyleSheet.create({
   textTargetMore:{
     color:Colors.white,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 14,
+    fontSize: Metrics.fontSize2,
     textAlign: 'center',
   },
   iconRight:{
-    width: 20,
-    height: 20,
+    width: 15* Metrics.screenWidth / 320,
+    height: 15* Metrics.screenWidth / 320,
     resizeMode: 'contain',
     position: 'absolute',
     right: 0,
-    top:(Metrics.screenHeight / 10) - 20
+    top:'38%'
   },
   bottomContainer:{
     width: Metrics.screenWidth - 40,
@@ -102,7 +101,7 @@ export default StyleSheet.create({
   textMenuStatus:{
     color:Colors.black,
     fontFamily: Fonts.type.gotham3,
-    fontSize: 20,
+    fontSize: Metrics.fontSize3,
     fontWeight: 'bold'
   },
   menuStatus:{
@@ -120,7 +119,7 @@ export default StyleSheet.create({
   menuText:{
     color:Colors.black,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 14,
+    fontSize: Metrics.fontSize2,
   },
   menuBtn2:{
     marginRight: 10,
@@ -134,7 +133,7 @@ export default StyleSheet.create({
   menuText2:{
     color:Colors.white,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 14,
+    fontSize: Metrics.fontSize2,
   },
   listOrders:{
 
@@ -157,7 +156,7 @@ export default StyleSheet.create({
   orderStatusText:{
     color:Colors.white,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 14,
+    fontSize: Metrics.fontSize3,
     paddingVertical: 5
   },
   orderContainerMid:{
@@ -169,17 +168,17 @@ export default StyleSheet.create({
   orderDateText:{
     color:Colors.gray,
     fontFamily: Fonts.type.gotham2,
-    fontSize: 12,
+    fontSize: Metrics.fontSize2,
   },
   orderIDText:{
     color:Colors.black,
     fontFamily: Fonts.type.gotham2,
-    fontSize: 12,
+    fontSize: Metrics.fontSize2,
   },
   orderAmount:{
     color:Colors.mooimom,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 16,
+    fontSize: Metrics.fontSize4,
     textAlign: 'center'
   },
   orderContainerTotal:{
@@ -214,13 +213,13 @@ export default StyleSheet.create({
   productName:{
     color:Colors.black,
     fontFamily: Fonts.type.gotham2,
-    fontSize: 12,
+    fontSize: Metrics.fontSize2,
     lineHeight:18
   },
   productPrice:{
     color:Colors.mooimom,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 16,
+    fontSize: Metrics.fontSize4,
   },
   containerLoading:{
     marginTop: 100,

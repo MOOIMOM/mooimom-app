@@ -42,7 +42,7 @@ const ApplicationStyles = {
     },
     titleText: {
       ...Fonts.style.h2,
-      fontSize: 14,
+      fontSize: Metrics.fontSize3,
       color: Colors.text
     }
   },

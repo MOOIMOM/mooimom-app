@@ -7,10 +7,10 @@ export default StyleSheet.create({
   },
   containerScroll:{
     paddingTop: 0,
-    height: Metrics.screenHeight - 130
+    height: Metrics.screenHeight - 100
   },
   wrapperSeparator:{
-    marginTop: 20,
+    marginTop: 10,
   },
   headerWrapper:{
     flexDirection: 'row',
@@ -38,7 +38,7 @@ export default StyleSheet.create({
   textSearch:{
     color:Colors.gray,
     fontFamily: Fonts.type.gotham5,
-    fontSize: 12
+    fontSize: Metrics.fontSize1
   },
   btnHeader:{
     justifyContent: 'center',
@@ -69,12 +69,12 @@ export default StyleSheet.create({
   textDateNotif:{
     color:Colors.gray,
     fontFamily: Fonts.type.gotham5,
-    fontSize: 10,
+    fontSize: Metrics.fontSize0,
     textAlign: 'right'
   },
   textNotif:{
     color:Colors.black,
     fontFamily: Fonts.type.gotham2,
-    fontSize: 12,
+    fontSize: Metrics.fontSize1,
   }
 })

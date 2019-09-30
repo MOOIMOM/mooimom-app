@@ -38,7 +38,7 @@ export default StyleSheet.create({
   textSearch:{
     color:Colors.gray,
     fontFamily: Fonts.type.gotham5,
-    fontSize:12
+    fontSize:Metrics.fontSize1
   },
   btnHeader:{
     justifyContent: 'center',
@@ -65,19 +65,19 @@ export default StyleSheet.create({
     justifyContent: 'center'
   },
   imgProfile:{
-    width: 70,
-    height: 70,
-    borderRadius: 35
+    width: 60 * Metrics.screenWidth / 320,
+    height: 60 * Metrics.screenWidth / 320,
+    borderRadius: 30 * Metrics.screenWidth / 320
   },
   textPhone:{
     color:Colors.black,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 20
+    fontSize: Metrics.fontSize3
   },
   btnEditProfile:{
     backgroundColor: Colors.mooimom,
     width: Metrics.screenWidth / 3,
-    height:35,
+    height:30 * Metrics.screenWidth / 320,
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
@@ -86,25 +86,25 @@ export default StyleSheet.create({
   textEditProfile:{
     color: Colors.white,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 14
+    fontSize: Metrics.fontSize2
   },
   saldoContainer:{
     borderRadius: 10,
     backgroundColor: Colors.lightGray,
     width: Metrics.screenWidth - 40,
-    height: 100,
+    paddingVertical: 10,
     justifyContent: 'center',
     paddingLeft: 20
   },
   textSaldo:{
     color: Colors.black,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 16,
+    fontSize: Metrics.fontSize4,
     marginVertical: 3
   },
   textSaldoAmount:{
     color:Colors.mooimom,
-    fontSize: 24,
+    fontSize: Metrics.fontSize5,
     fontFamily: Fonts.type.gotham4,
     marginVertical: 3
   },
@@ -123,14 +123,14 @@ export default StyleSheet.create({
     justifyContent: 'flex-start'
   },
   imgMenu:{
-    width: 25,
-    height:25,
+    width: 20* Metrics.screenWidth / 320,
+    height:20* Metrics.screenWidth / 320,
     resizeMode: 'contain'
   },
   imgText:{
     color: Colors.gray,
     fontFamily: Fonts.type.gotham2,
-    fontSize: 13,
+    fontSize: Metrics.fontSize2,
     marginLeft: 20
   },
   viewOut:{
@@ -155,12 +155,12 @@ export default StyleSheet.create({
   textModalLine:{
     color: Colors.black,
     fontFamily: Fonts.type.gotham2,
-    fontSize: 14,
+    fontSize: Metrics.fontSize3,
   },
   viewBtn:{
     backgroundColor: Colors.mooimom,
     borderRadius: 5,
-    height: 30,
+    height: 30* Metrics.screenWidth / 320,
     width: Metrics.screenWidth / 2,
     justifyContent: 'center',
     alignItems: 'center',
@@ -169,7 +169,7 @@ export default StyleSheet.create({
   viewBtn2:{
     backgroundColor: Colors.fire,
     borderRadius: 5,
-    height: 30,
+    height: 30* Metrics.screenWidth / 320,
     width: Metrics.screenWidth / 2,
     justifyContent: 'center',
     alignItems: 'center',
@@ -178,6 +178,6 @@ export default StyleSheet.create({
   textModal:{
     color: Colors.white,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 12,
+    fontSize: Metrics.fontSize2,
   }
 })

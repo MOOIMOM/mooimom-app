@@ -34,7 +34,7 @@ export default StyleSheet.create({
     marginTop: 5
   },
   productSubtitle:{
-    fontSize: 14 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize3,
     fontFamily: Fonts.type.gotham4,
     color: Colors.black
   },
@@ -54,7 +54,7 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   chooseAddressText:{
-    fontSize: 14 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize3,
     fontFamily: Fonts.type.gotham4,
     color:Colors.white
   },

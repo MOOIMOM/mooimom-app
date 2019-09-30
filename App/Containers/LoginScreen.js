@@ -39,9 +39,10 @@ class LoginScreen extends Component {
         }
       else if (
         newProps.login.payload === null &&
+        newProps.login.error !== null &&
         !newProps.login.fetching
       ) {
-        try {
+        isProcessing = false
           Alert.alert(
             '',
             newProps.login.error.human_message,
@@ -52,19 +53,6 @@ class LoginScreen extends Component {
             ],
             { cancelable: false }
           )
-        } catch (err) {
-          // Alert.alert('Can not connect server now')
-          Alert.alert(
-            '',
-            'Can not connect to the server now',
-            [
-              {
-                text: 'OK'
-              }
-            ],
-            { cancelable: false }
-          )
-        }
       }
     }
 
@@ -77,6 +65,18 @@ class LoginScreen extends Component {
           this.actNavigate('AuthScreen')
           isProcessing = false
         }
+    } else if(!newProps.sendOtp.fetching && newProps.sendOtp.error !== null){
+      isProcessing = false
+      Alert.alert(
+        '',
+        newProps.sendOtp.error.human_message,
+        [
+          {
+            text: 'OK'
+          }
+        ],
+        { cancelable: false }
+      )
     }
   }
 
@@ -109,10 +109,15 @@ class LoginScreen extends Component {
   render () {
     return (
       <View style={styles.container}>
+        <ScrollView
+        showsVerticalScrollIndicator={false}>
+        <KeyboardAvoidingView
+        behavior='padding'
+        keyboardVerticalOffset={50}
+        enabled>
         <LinearGradient colors={['#7CE0D3', '#28C9B9']} style={styles.linergradient}>
         <Image source={Images.mooimomLogoWhite} style={styles.title}/>
         <View style={styles.loginContainer}>
-          <KeyboardAvoidingView>
             <Text style={styles.caption1}>Sign In Sekarang</Text>
             <View style={styles.textInput}>
               <Text style={styles.number62}>+62</Text>
@@ -137,6 +142,7 @@ class LoginScreen extends Component {
             >
               <Text style={styles.btnText}>Sign In</Text>
             </TouchableOpacity>
+
             <View style={styles.SignUpContainer}>
               <Text style={styles.caption2}>Belum Punya Akun? </Text>
               <TouchableOpacity
@@ -145,9 +151,10 @@ class LoginScreen extends Component {
                 <Text style={styles.textSignIn}>Daftar</Text>
               </TouchableOpacity>
             </View>
-          </KeyboardAvoidingView>
         </View>
         </LinearGradient>
+        </KeyboardAvoidingView>
+        </ScrollView>
       </View>
     )
   }

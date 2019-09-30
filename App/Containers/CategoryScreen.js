@@ -443,7 +443,7 @@ class CategoryScreen extends Component {
         {this.state.willShareDescription && <View style={styles.modalShareView}>
           <View style={styles.modalShareContainer}>
             <Text style={styles.modalShareText}>Images Downloaded</Text>
-            <Text style={(this.state.finishShareImage ? styles.modalShareText : styles.modalShareText2)}>Product Name Copied</Text>
+            <Text style={(this.state.finishShareImage ? styles.modalShareText : styles.modalShareText2)}>Description Copied</Text>
           </View>
         </View>}
       </View>

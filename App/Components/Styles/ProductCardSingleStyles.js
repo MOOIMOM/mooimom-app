@@ -4,15 +4,13 @@ import { Fonts, Colors, Metrics } from '../../Themes/'
 export default StyleSheet.create({
   item: {
     width: Metrics.screenWidth - 40,
-    height:Metrics.screenHeight / 2,
     flex:1,
     justifyContent: 'flex-start',
     alignItems: 'center',
     flexDirection: 'column',
     paddingHorizontal: 15,
-    marginBottom: 10,
-    paddingBottom: 10,
     borderBottomWidth: 0.5,
+    paddingBottom: 20,
     borderBottomColor: Colors.black
   },
   topItem:{
@@ -32,12 +30,12 @@ export default StyleSheet.create({
   },
   wishlist:{
     position: 'absolute',
-    right: 15,
-    top: 10,
+    right: 0,
+    top: 10
   },
   wishlistImage:{
-    width: 20,
-    height: 20,
+    width: 20 * Metrics.screenWidth / 320,
+    height: 20 * Metrics.screenWidth / 320,
     resizeMode: 'contain'
   },
   image:{
@@ -45,7 +43,7 @@ export default StyleSheet.create({
   },
   name:{
     flexWrap: 'wrap',
-    fontSize: 12 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize2,
     fontFamily: Fonts.type.gotham2,
   },
   priceGroup:{
@@ -54,12 +52,12 @@ export default StyleSheet.create({
   },
   price:{
     color:Colors.black,
-    fontSize: 14 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize3,
     fontFamily: Fonts.type.gotham4
   },
   priceDiscount:{
     color:Colors.fire,
-    fontSize: 12 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize2,
     textDecorationLine:'line-through',
     fontFamily: Fonts.type.gotham2
   },
@@ -80,11 +78,11 @@ export default StyleSheet.create({
   },
   imageExtra:{
     resizeMode: 'contain',
-    width: 25,
-    height: 25
+    width: 20 * Metrics.screenWidth / 320,
+    height: 20 * Metrics.screenWidth / 320,
   },
   textBtnExtra:{
-    fontSize: 8 * Metrics.screenWidth / 320
+    fontSize: Metrics.fontSize0
   },
   bottomRightItem:{
     flex:1,
@@ -93,7 +91,7 @@ export default StyleSheet.create({
   },
   btn:{
     backgroundColor: Colors.mooimom,
-    height: 40,
+    height: 35 * Metrics.screenWidth / 320,
     width: Metrics.screenWidth / 3,
     justifyContent: 'center',
     alignItems: 'center',
@@ -103,20 +101,20 @@ export default StyleSheet.create({
   },
   imageBtn:{
     resizeMode: 'contain',
-    width: 25,
-    height: 25,
+    width: 20 * Metrics.screenWidth / 320,
+    height: 20 * Metrics.screenWidth / 320,
     marginRight: 10
   },
   textBtn:{
     color: Colors.white,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 12 * Metrics.screenWidth / 320
+    fontSize: Metrics.fontSize1
   },
   modalView:{
     width: Metrics.screenWidth - 80,
-    height: 40,
+    height: 40 * Metrics.screenWidth / 320,
     backgroundColor: Colors.modal,
-    borderRadius: 20,
+    borderRadius: 20 * Metrics.screenWidth / 320,
     position: 'absolute',
     bottom: 40,
     left: 20,
@@ -124,7 +122,7 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   modalText:{
-    fontSize: 14,
+    fontSize: Metrics.fontSize3,
     color: Colors.white,
     fontFamily: Fonts.type.gotham2,
   },

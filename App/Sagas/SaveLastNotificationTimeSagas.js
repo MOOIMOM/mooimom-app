@@ -17,7 +17,6 @@ import {max, format} from 'date-fns'
 
 export function * saveLastNotificationTime(action) {
   const { data } = action
-  console.info(data)
   const latest = max(...data.map(notification => notification.created))
   yield put(LastNotificationTimeActions.lastNotificationTimeSuccess(format(latest)))
 }

@@ -3,13 +3,15 @@ import { Metrics, ApplicationStyles, Colors, Fonts } from '../../Themes/'
 
 export default StyleSheet.create({
   container: {
-    flex:6,
+    flex:1,
+    backgroundColor: '#28C9B9',
     alignItems: 'center',
     color:Colors.white
   },
   linergradient:{
     width: Metrics.screenWidth,
     height: Metrics.screenHeight,
+    flex: 1,
     alignItems: 'center',
   },
   title:{
@@ -43,8 +45,6 @@ export default StyleSheet.create({
   },
   SignUpContainer:{
     flexDirection: 'row',
-    flex:1,
-    marginTop: -80,
     justifyContent: 'center',
     alignItems: 'center'
   },

@@ -34,12 +34,12 @@ export default StyleSheet.create({
     marginTop: 5
   },
   productSubtitle:{
-    fontSize: 14 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize3,
     fontFamily: Fonts.type.gotham4,
     color: Colors.black
   },
   productSubtitle2:{
-    fontSize: 12 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize2,
     fontFamily: Fonts.type.gotham4,
     color: Colors.gray
   },
@@ -74,12 +74,12 @@ export default StyleSheet.create({
     marginLeft: 10
   },
   addressName:{
-    fontSize: 12 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize2,
     fontFamily: Fonts.type.gotham4,
     color: Colors.black
   },
   address:{
-    fontSize: 12 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize2,
     fontFamily: Fonts.type.gotham2,
   },
   chooseAddressBtn:{
@@ -90,7 +90,7 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   chooseAddressText:{
-    fontSize: 12 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize2,
     fontFamily: Fonts.type.gotham4,
   },
   productContainer:{
@@ -118,7 +118,7 @@ export default StyleSheet.create({
     flex: 2
   },
   itemText:{
-    fontSize: 12 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize2,
     color: Colors.black,
     fontFamily: Fonts.type.gotham4,
   },
@@ -126,7 +126,7 @@ export default StyleSheet.create({
     flex:1,
   },
   productName:{
-    fontSize: 12 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize2,
     color: Colors.gray,
     fontFamily: Fonts.type.gotham2,
   },
@@ -174,7 +174,7 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   chooseDeliveryText:{
-    fontSize: 12 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize2,
     fontFamily: Fonts.type.gotham4,
     color: Colors.white,
   },
@@ -197,7 +197,7 @@ export default StyleSheet.create({
   buyText:{
     color:Colors.white,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 15 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize3,
   },
   subtotalWrapper:{
     borderWidth: 1,
@@ -211,19 +211,19 @@ export default StyleSheet.create({
   subtotalText:{
     color:Colors.gray,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 12 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize2,
     marginVertical: -3,
   },
   priceText:{
     color:Colors.black,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 16 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize3,
     marginVertical: -3,
   },
   commissionText:{
     color:Colors.mooimom,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 10 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize1,
     marginVertical: -3,
   },
 })

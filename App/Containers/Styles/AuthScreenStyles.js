@@ -4,7 +4,7 @@ import { Metrics, ApplicationStyles, Colors, Fonts } from '../../Themes/'
 export default StyleSheet.create({
   container: {
     flex:6,
-    backgroundColor: Colors.mooimom,
+    backgroundColor: '#28C9B9',
     alignItems: 'center',
     color:Colors.white
   },

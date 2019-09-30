@@ -34,12 +34,12 @@ export default StyleSheet.create({
     marginTop: 5
   },
   productSubtitle:{
-    fontSize: 14 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize3,
     fontFamily: Fonts.type.gotham4,
     color: Colors.black
   },
   productSubtitle2:{
-    fontSize: 12 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize2,
     fontFamily: Fonts.type.gotham4,
     color: Colors.gray
   },
@@ -74,12 +74,12 @@ export default StyleSheet.create({
     marginLeft: 10
   },
   addressName:{
-    fontSize: 12 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize2,
     fontFamily: Fonts.type.gotham4,
     color: Colors.black
   },
   address:{
-    fontSize: 12 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize2,
     fontFamily: Fonts.type.gotham2,
   },
   chooseAddressBtn:{
@@ -90,7 +90,7 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   chooseAddressText:{
-    fontSize: 12 * Metrics.screenWidth / 320,
+    fontSize: Metrics.fontSize2,
     fontFamily: Fonts.type.gotham4,
   },
 })

@@ -119,7 +119,6 @@ class HomeScreen extends Component {
       .onNotification(notification => {
         const { title, body } = notification
         this.refreshNotification()
-        firebase.notifications().displayNotification(notification);
       })
 
     /*

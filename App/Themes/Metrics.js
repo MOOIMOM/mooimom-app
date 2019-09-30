@@ -16,6 +16,13 @@ const metrics = {
   screenHeight: width < height ? height : width,
   navBarHeight: (Platform.OS === 'ios') ? 64 : 54,
   buttonRadius: 4,
+  fontSize0: (width < height ? width : height) <= 320 ? (6 * (width < height ? width : height) / 320) : 8 * (width < height ? width : height) / 320,
+  fontSize1: (width < height ? width : height) <= 320 ? (8 * (width < height ? width : height) / 320) : 10 * (width < height ? width : height) / 320,
+  fontSize2: (width < height ? width : height) <= 320 ? (10 * (width < height ? width : height) / 320) : 12 * (width < height ? width : height) / 320,
+  fontSize3: (width < height ? width : height) <= 320 ? (12 * (width < height ? width : height) / 320) : 14 * (width < height ? width : height) / 320,
+  fontSize4: (width < height ? width : height) <= 320 ? (14 * (width < height ? width : height) / 320) : 16 * (width < height ? width : height) / 320,
+  fontSize5: (width < height ? width : height) <= 320 ? (16 * (width < height ? width : height) / 320) : 20 * (width < height ? width : height) / 320,
+  fontSize6: (width < height ? width : height) <= 320 ? (20 * (width < height ? width : height) / 320) : 24 * (width < height ? width : height) / 320,
   icons: {
     tiny: 15,
     small: 20,

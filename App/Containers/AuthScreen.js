@@ -27,7 +27,7 @@ class AuthScreen extends Component {
 
   componentDidMount(){
     let that = this
-    timeoutOtp = setTimeout(function(){that.setState({isRequestOtp: false})}, 5000)
+    timeoutOtp = setTimeout(function(){that.setState({isRequestOtp: false})}, 60000)
   }
 
   componentWillUnmount(){
@@ -47,34 +47,21 @@ class AuthScreen extends Component {
         }
       else if (
         newProps.auth.payload === null &&
+        newProps.auth.error !== null &&
         !newProps.auth.fetching && isSendAuth
       ) {
         isSendAuth = false
         this.clear()
-        try {
-          Alert.alert(
-            '',
-            'Tolong Masukkan Kode Verifikasi Dengan Benar',
-            [
-              {
-                text: 'OK'
-              }
-            ],
-            { cancelable: false }
-          )
-        } catch (err) {
-          // Alert.alert('Can not connect server now')
-          Alert.alert(
-            '',
-            'Can not connect to the server now',
-            [
-              {
-                text: 'OK'
-              }
-            ],
-            { cancelable: false }
-          )
-        }
+        Alert.alert(
+          '',
+          'Tolong Masukkan Kode Verifikasi Dengan Benar',
+          [
+            {
+              text: 'OK'
+            }
+          ],
+          { cancelable: false }
+        )
       }
     }
   }
@@ -223,7 +210,13 @@ class AuthScreen extends Component {
     }
     return (
       <View style={styles.container}>
-        <LinearGradient colors={['#82DED2', '#66CCCC']} style={styles.linergradient}>
+      <ScrollView
+      showsVerticalScrollIndicator={false}>
+      <KeyboardAvoidingView
+      behavior='padding'
+      keyboardVerticalOffset={50}
+      enabled>
+      <LinearGradient colors={['#7CE0D3', '#28C9B9']} style={styles.linergradient}>
           <Image source={Images.mooimomLogoWhite} style={styles.title}/>
           <View style={styles.loginContainer}>
             <KeyboardAvoidingView>
@@ -245,6 +238,8 @@ class AuthScreen extends Component {
             </KeyboardAvoidingView>
           </View>
         </LinearGradient>
+        </KeyboardAvoidingView>
+        </ScrollView>
       </View>
     )
   }
