@@ -10,6 +10,8 @@ import {convertToRupiah, shareDescripton} from '../Lib/utils'
 
 // Styles
 import styles from './Styles/SearchScreenStyles'
+
+var isReloadPage = false
 class SearchScreen extends Component {
   constructor (props) {
     super(props)
@@ -19,7 +21,8 @@ class SearchScreen extends Component {
       products:[],
       willShareDescription:false,
       finishShareImage: false,
-      willShareDescriptionString:''
+      willShareDescriptionString:'',
+      currentPage: 1
     }
     this.shareWhatsapp = this.shareWhatsapp.bind(this)
   }
@@ -42,11 +45,23 @@ class SearchScreen extends Component {
       if (
         newProps.getSearch.payload !== null &&
         newProps.getSearch.error === null &&
-        !newProps.getSearch.fetching
+        !newProps.getSearch.fetching && !isReloadPage
       ) {
         this.setState({
           products: newProps.getSearch.payload.products,
         })
+      } else if(
+        newProps.getSearch.payload !== null &&
+        newProps.getSearch.error === null &&
+        !newProps.getSearch.fetching && isReloadPage
+      ){
+        var arr = [...this.state.products]
+        arr = arr.concat(newProps.getSearch.payload.products)
+        this.setState({
+          currentPage: this.state.currentPage + 1,
+          products: arr
+        })
+        isReloadPage = false
       }
     }
   }
@@ -99,6 +114,23 @@ class SearchScreen extends Component {
     }
   }
 
+  onEndReached(){
+    if (!isReloadPage) {
+      if (this.state.currentPage + 1 <= this.props.getSearch.payload.how_many_pages) {
+        isReloadPage = true
+        let data = {
+          data_request:{
+            user_id: this.props.auth.payload.user_id,
+            unique_token: this.props.auth.payload.unique_token,
+            what_user_search: this.state.search,
+            current_page: this.state.currentPage + 1
+          }
+        }
+        this.props.getSearchProcess(data)
+      }
+    }
+  }
+
   _renderProduct ({item, index}) {
     return (
       <TouchableWithoutFeedback
@@ -146,10 +178,7 @@ class SearchScreen extends Component {
           </View>
           <View style={styles.wrapperSeparator}/>
           <View style={styles.contentContainer}>
-            <ScrollView
-            showsVerticalScrollIndicator={false}
-            >
-            {this.props.getSearch.fetching && <View style={styles.containerLoading}>
+            {this.props.getSearch.fetching && !isReloadPage && <View style={styles.containerLoading}>
               <ActivityIndicator size="large" color={Colors.mooimom} />
             </View>}
               <FlatList
@@ -157,8 +186,9 @@ class SearchScreen extends Component {
                 data={this.state.products}
                 renderItem={this._renderProduct.bind(this)}
                 keyExtractor={(item, index) => index.toString()}
+                onEndReached={this.onEndReached.bind(this)}
+                onEndReachedThreshold={5}
               />
-            </ScrollView>
           </View>
         </View>
         {this.state.willShareDescription && <View style={styles.modalShareView}>

@@ -21,14 +21,14 @@ const create = (baseURL = 'https://www.mooimom.id/') => {
     // 10 second timeout...
     timeout: 10000
   })
-  const monitor = (response) => {
-    const { config: { method, url }, data, status } = response;
-    console.group(`Requesting [${method.toUpperCase()}] ${url}:`);
-    console.log('Response Status:', status);
-    console.log('Response Data:', data);
-    console.groupEnd();
-  };
-  api.addMonitor(monitor);
+  // const monitor = (response) => {
+  //   const { config: { method, url }, data, status } = response;
+  //   console.group(`Requesting [${method.toUpperCase()}] ${url}:`);
+  //   console.log('Response Status:', status);
+  //   console.log('Response Data:', data);
+  //   console.groupEnd();
+  // };
+  // api.addMonitor(monitor);
   api.addRequestTransform((request) => {
     if(request.url === 'app-update-profile-picture'){
       request.headers['Content-Type'] = 'multipart/form-data';
@@ -37,7 +37,6 @@ const create = (baseURL = 'https://www.mooimom.id/') => {
       request.data = qs.stringify(request.data);
       request.headers['Content-Type'] = 'application/x-www-form-urlencoded';
     }
-    console.info(request)
   });
   // ------
   // STEP 2

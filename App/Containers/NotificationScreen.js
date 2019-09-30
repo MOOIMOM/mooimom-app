@@ -13,7 +13,8 @@ class NotificationScreen extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      notification: []
+      notification: [],
+      fcmToken: this.props.navigation.state.params.fcmToken
     }
   }
 
@@ -21,7 +22,8 @@ class NotificationScreen extends Component {
     let data ={
       data_request:{
         user_id: this.props.auth.payload.user_id,
-        unique_token: this.props.auth.payload.unique_token
+        unique_token: this.props.auth.payload.unique_token,
+        fcmToken: this.state.fcmToken
       }
     }
     this.props.getNotificationProcess(data)
@@ -47,9 +49,22 @@ class NotificationScreen extends Component {
     navigate(screen, obj)
   }
 
+  onPress(item){
+    switch(item.the_type){
+      case 'create_order':
+      case 'order_status_change':
+        if(item.slug)
+          this.actNavigate('DetailOrderScreen', {order_id:item.slug})
+      break;
+      case 'withdraw_status_change':
+        this.actNavigate('PaymentScreen')
+      break;
+    }
+  }
+
   _renderNotification({item, index}){
     return (
-      <TouchableWithoutFeedback>
+      <TouchableWithoutFeedback onPress={() => this.onPress(item)}>
         <View style={[styles.notificationContainer, this.getStyle(item.the_type)]}>
           <Text style={styles.textNotif}>{item.the_message}</Text>
           <Text style={styles.textDateNotif}>{getDateFromString(item.created, true, false, true, false)}</Text>

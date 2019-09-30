@@ -106,6 +106,9 @@ class HomeScreen extends Component {
   }
 
   async createNotificationListeners () {
+    const channel = new firebase.notifications.Android.Channel('primary', 'Primary', firebase.notifications.Android.Importance.Max).setDescription('Mooimom.id'); //add this line
+
+    firebase.notifications().android.createChannel(channel); //add this line
     /*
      * Triggered when a particular notification has been received in foreground
      * */
@@ -115,7 +118,8 @@ class HomeScreen extends Component {
       .notifications()
       .onNotification(notification => {
         const { title, body } = notification
-        Alert.alert(title, body, [{ text: 'OK'}])
+        this.refreshNotification()
+        firebase.notifications().displayNotification(notification);
       })
 
     /*
@@ -125,7 +129,7 @@ class HomeScreen extends Component {
       .notifications()
       .onNotificationOpened(notificationOpen => {
         const { title, body } = notificationOpen.notification
-        Alert.alert(title, body, [{ text: 'OK'}])
+        this.refreshNotification()
       })
 
     /*
@@ -139,12 +143,24 @@ class HomeScreen extends Component {
     if (notificationOpen) {
       const { title, body } = notificationOpen.notification
       // this.actionGo()
+      this.refreshNotification()
     }
     /*
      * Triggered for data only payload in foreground
      * */
     this.messageListener = firebase.messaging().onMessage(message => {
       // this.actReloadOrder()
+      const newNotification = new firebase.notifications.Notification()
+          .android.setChannelId('primary')
+          .android.setSmallIcon('ic_launcher')
+          .android.setPriority(firebase.notifications.Android.Priority.Max)
+          .setNotificationId(message.messageId)
+          .setTitle(message.data.message_title)
+          .setBody(message.data.message_body)
+          .setData(message.data)
+          .setSound('default');
+      firebase.notifications().displayNotification(newNotification);
+      this.refreshNotification()
     })
   }
 
@@ -316,7 +332,7 @@ class HomeScreen extends Component {
               <View style={styles.headerButtonRight}>
                 <TouchableOpacity onPress={() => this.navigate_to('SharedProductScreen')}><Image source={Images.wishlist} style={styles.buttonHeader} /></TouchableOpacity>
                 <TouchableOpacity onPress={() => this.navigate_to('CartScreen')}><Image source={Images.shoppingCart} style={styles.buttonHeader} /></TouchableOpacity>
-                <TouchableOpacity onPress={() => this.navigate_to('NotificationScreen')}>
+                <TouchableOpacity onPress={() => this.navigate_to('NotificationScreen', {fcmToken: this.state.fcmToken})}>
                   <Image source={Images.notifWhite} style={styles.buttonHeader2} />
                   {notifCount > 0 && <View style={styles.notifContainer}>
                     <Text style={styles.textNotif}>{notifCount}</Text>

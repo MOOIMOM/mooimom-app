@@ -192,7 +192,6 @@ class DeliveryScreen extends Component {
     if(this.props.cart.data && this.props.cart.data.length > 0)
     return (
       this.props.cart.data.map((item, index) => {
-        console.info(item.product)
         var price = item.product.product_sale_price > 0 ? item.product.product_sale_price : item.product.product_regular_price
         price = convertToRupiah(price * item.qty)
         var isFound, size, color, title, custom = ''

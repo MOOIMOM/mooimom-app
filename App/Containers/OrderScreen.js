@@ -11,6 +11,8 @@ import {convertToRupiah, getDateFromString} from '../Lib/utils'
 // Styles
 import styles from './Styles/OrderScreenStyles'
 import menuStyles from './Styles/MenuComponentStyles'
+
+var isReloadPage = false
 class OrderScreen extends Component {
   static navigationOptions = {
       tabBarIcon: ({ focused, tintColor }) => {
@@ -30,7 +32,8 @@ class OrderScreen extends Component {
       ],
       selectedMenuIdx: 0,
       orders:[],
-      fcmToken: ''
+      fcmToken: '',
+      currentPage: 1
     }
 
     this._renderProductCart = this._renderProductCart.bind(this)
@@ -65,11 +68,23 @@ class OrderScreen extends Component {
       if (
         newProps.allOrder.payload !== null &&
         newProps.allOrder.error === null &&
-        !newProps.allOrder.fetching
+        !newProps.allOrder.fetching && !isReloadPage
       ) {
         this.setState({
           orders: newProps.allOrder.payload.all_orders_data,
         })
+      } else if(
+        newProps.allOrder.payload !== null &&
+        newProps.allOrder.error === null &&
+        !newProps.allOrder.fetching && isReloadPage
+      ){
+        var arr = [...this.state.orders]
+        arr = arr.concat(newProps.allOrder.payload.all_orders_data)
+        this.setState({
+          currentPage: this.state.currentPage + 1,
+          orders: arr
+        })
+        isReloadPage = false
       }
     }
   }
@@ -82,6 +97,7 @@ class OrderScreen extends Component {
   pressStatus(index){
     this.setState({
       selectedMenuIdx: index,
+      currentPage: 1,
       orders: []
     })
     let data = {
@@ -93,6 +109,24 @@ class OrderScreen extends Component {
       }
     }
     this.props.getAllOrderProcess(data)
+  }
+
+  onEndReached(){
+    if (!isReloadPage) {
+      if (this.state.currentPage + 1 <= this.props.allOrder.payload.how_many_pages) {
+        isReloadPage = true
+        let data = {
+          data_request:{
+            user_id: this.props.auth.payload.user_id,
+            unique_token: this.props.auth.payload.unique_token,
+            selected_status: this.state.menuStatus[this.state.selectedMenuIdx].status,
+            current_page: this.state.currentPage + 1,
+            fcmToken: this.state.fcmToken,
+          }
+        }
+        this.props.getAllOrderProcess(data)
+      }
+    }
   }
 
   _renderMenuStatus(){
@@ -167,6 +201,13 @@ class OrderScreen extends Component {
    )
   }
 
+  isCloseToBottom(nativeEvent){
+    const {layoutMeasurement, contentOffset, contentSize} = nativeEvent
+    const paddingToBottom = Metrics.screenHeight;
+    return layoutMeasurement.height + contentOffset.y >=
+      contentSize.height - paddingToBottom;
+  };
+
   render () {
     var target = 0
     if(this.props.commissionSummary.payload && this.props.commissionSummary.payload.how_much_commission_user_need_to_get_to_get_next_commission_target_percentage)
@@ -187,6 +228,12 @@ class OrderScreen extends Component {
           <View style={styles.contentContainer}>
             <ScrollView
             showsVerticalScrollIndicator={false}
+            onScroll={({nativeEvent}) => {
+              if (this.isCloseToBottom(nativeEvent)) {
+                this.onEndReached();
+              }
+            }}
+            scrollEventThrottle={0}
             >
               <LinearGradient colors={['#82DED2', '#66CCCC']} style={styles.topContainer}>
                 <TouchableOpacity onPress={() => this.actNavigate('DetailTargetScreen')}>

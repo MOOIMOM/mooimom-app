@@ -6,6 +6,7 @@ import {
   AsyncStorage
 } from 'react-native'
 import {isAfter, max, format} from 'date-fns'
+import firebase from 'react-native-firebase';
 
 export function convertToRupiah (price) {
   if(!price) return 'Rp 0'
@@ -181,7 +182,7 @@ export function getDateFromString(str, full = true, fullMonth = false, useTime =
        "Jul", "Agu", "Sep", "Okt", "Nov", "Des" ];
   const fullmonths = [ "Januari", "Februari", "Maret", "April", "Mei", "Juni",
       "Juli", "Agustus", "September", "Oktober", "November", "Desember" ];
-  let idx = parseInt(str[6] + str[7]) - 1
+  let idx = parseInt((str[5] +''+ str[6])) - 1
   if(idx < 0) return res
   //day
   res = parseInt(str[8] + str[9]).toString()
@@ -219,4 +220,19 @@ export function getNewNotificationsCount(notifications, time) {
     .filter(notificationTime => isAfter(notificationTime, time))
   // console.log('aaaa', times.length)
   return times.length
+}
+
+export async function onRemoteMessage(message){
+    // handle your message
+    const newNotification = new firebase.notifications.Notification()
+        .android.setChannelId('primary')
+        .android.setSmallIcon('ic_launcher')
+        .android.setPriority(firebase.notifications.Android.Priority.Max)
+        .setNotificationId(message.messageId)
+        .setTitle(message.data.message_title)
+        .setBody(message.data.message_body)
+        .setData(message.data)
+        .setSound('default');
+    await firebase.notifications().displayNotification(newNotification);
+    return Promise.resolve();
 }

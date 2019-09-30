@@ -61,7 +61,7 @@ class CategoryScreen extends Component {
   }
 
   componentWillReceiveProps(newProps){
-    if(newProps.navigation.state.params && newProps.navigation.state.params.category_id !== this.state.selectedCategoriesId){
+    if(newProps.navigation.state.params !== this.props.navigation.state.params && newProps.navigation.state.params.category_id !== this.state.selectedCategoriesId){
       const idx = this.getCategoryIndex(newProps.navigation.state.params.category_id)
       this.setState({
         selectedCategoriesId: newProps.navigation.state.params.category_id,
