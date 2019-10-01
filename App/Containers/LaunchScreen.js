@@ -8,7 +8,7 @@ import styles from './Styles/LaunchScreenStyles'
 export default class LaunchScreen extends Component {
   actionGo () {
     const { navigate } = this.props.navigation
-    navigate('SignupScreen', {})
+    navigate('HowtoScreen', {})
   }
   render () {
     return (

@@ -459,8 +459,15 @@ class CartScreen extends Component {
           <ScrollView
           showsVerticalScrollIndicator={false}
           >
-          <Text style={styles.productSubtitle}>Cart {(this.props.cart.data.length > 1 ? '(' + this.props.cart.data.length + ')' : '')}</Text>
+          {this.props.cart.data.length === 0 &&
+            <View style={{marginTop: 10, justifyContent: 'center', alignItems: 'center'}}>
+              <Text style={styles.subtotalText}>Keranjang Belanja Masih Kosong</Text>
+              <Text style={styles.subtotalText}>Ayo Mulai Belanja Sekarang</Text>
+            </View>
+          }
+          {this.props.cart.data.length > 0 && <Text style={styles.productSubtitle}>Cart {(this.props.cart.data.length > 1 ? '(' + this.props.cart.data.length + ')' : '')}</Text>}
           {this._renderProductCart()}
+
           </ScrollView>
         </View>
         {this.props.cart.data.length > 0 && <View style={styles.menuWrapper}>

@@ -18,7 +18,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 10,
     width: Metrics.screenWidth,
-    marginTop: 20,
+    marginTop: 10,
     height: 40
   },
   searchButton:{
@@ -56,23 +56,34 @@ export default StyleSheet.create({
   },
   notificationContainer:{
     width: Metrics.screenWidth - 40,
-    justifyContent: 'space-between',
-    paddingVertical: 2,
-    borderLeftWidth: 10,
-    borderRightWidth: 10,
-    paddingHorizontal: 10,
-    marginBottom: 5,
-    borderTopWidth: 0.5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 10,
     borderBottomWidth: 0.5,
+  },
+  leftNotif:{
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  colorNotif:{
+    width: 20,
+    height: 20,
     borderRadius: 10,
+  },
+  rightNotif:{
+    justifyContent: 'space-between',
+    flexDirection: 'column',
+    flex:1
   },
   textDateNotif:{
     color:Colors.gray,
     fontFamily: Fonts.type.gotham5,
     fontSize: Metrics.fontSize0,
-    textAlign: 'right'
+    textAlign: 'right',
+    paddingTop: 10
   },
   textNotif:{
+    marginLeft: 10,
     color:Colors.black,
     fontFamily: Fonts.type.gotham2,
     fontSize: Metrics.fontSize1,

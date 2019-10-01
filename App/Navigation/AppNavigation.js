@@ -1,6 +1,7 @@
 import { createStackNavigator, createAppContainer, createBottomTabNavigator, createSwitchNavigator } from 'react-navigation'
 import SplashScreen from '../Containers/SplashScreen'
 import LaunchScreen from '../Containers/LaunchScreen'
+import HowtoScreen from '../Containers/HowtoScreen'
 import SignupScreen from '../Containers/SignupScreen'
 import LoginScreen from '../Containers/LoginScreen'
 import AuthScreen from '../Containers/AuthScreen'
@@ -53,6 +54,7 @@ const MainNav = createBottomTabNavigator({
 
 const AuthStack = createStackNavigator({
   LaunchScreen: { screen: LaunchScreen },
+  HowtoScreen: { screen: HowtoScreen },
   SignupScreen: { screen: SignupScreen },
   LoginScreen: { screen: LoginScreen },
   AuthScreen: { screen: AuthScreen },

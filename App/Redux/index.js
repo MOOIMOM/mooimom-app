@@ -43,6 +43,7 @@ export const reducers = combineReducers({
   checkout: require('./CheckoutRedux').reducer,
   commissionEstimation: require('./CommissionEstimationRedux').reducer,
   lastNotification: require('./LastNotificationTimeRedux').reducer,
+  statusMidtrans: require('./GetOrderStatusMidtransRedux').reducer,
 })
 
 export default () => {

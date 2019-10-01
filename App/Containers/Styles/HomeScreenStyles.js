@@ -166,7 +166,7 @@ export default StyleSheet.create({
     flexWrap: 'wrap',
     textAlign: 'center',
     maxWidth: (Metrics.screenWidth - 40) / 4,
-    paddingHorizontal: 5 * (Metrics.screenWidth / 320),
+    paddingHorizontal: 7 * (Metrics.screenWidth / 320),
     fontSize: Metrics.fontSize1,
     marginTop: 10,
     fontFamily: Fonts.type.gotham2,

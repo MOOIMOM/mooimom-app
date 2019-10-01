@@ -35,7 +35,7 @@ export default class PickerCustom extends Component {
     if(this.state.selectedLabel !== ''){
       return <Picker.Item key={0} label={this.state.selectedLabel} value={this.state.selectedValue} color={Colors.black}/>
     }
-    return <Picker.Item key={0} label={this.props.label0} value={''} color={Colors.black}/>
+    return <Picker.Item key={0} label={this.props.label0} value={''} color={Colors.gray} style={{paddingLeft: 10}}/>
   }
 
   render(){
@@ -60,10 +60,8 @@ export default class PickerCustom extends Component {
           style={{
             width: widthFix - 20, height: 50,
             backgroundColor: 'rgba(0,0,0,0)',
-            alignItems: 'center',
-            justifyContent:'center',
           }}
-          itemStyle={{fontSize: 14, fontFamily: Fonts.type.gotham3}}
+          itemStyle={{fontSize: 14, fontFamily: Fonts.type.gotham3, paddingLeft: 10}}
           onValueChange={(itemValue, itemIndex) => {
             this.setState({
               selectedValue: '',

@@ -11,26 +11,25 @@ export default StyleSheet.create({
   linergradient:{
     width: Metrics.screenWidth,
     height: Metrics.screenHeight,
-    flex: 1,
     alignItems: 'center',
   },
   title:{
     width: Metrics.screenWidth - 150,
     resizeMode: 'contain',
-    flex:3,
+    flex:1,
   },
   loginContainer:{
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
-    flex:4,
-    marginBottom: 20
+    flex:2,
   },
   button:{
     backgroundColor: Colors.white,
     height: 40 * Metrics.screenWidth / 320,
     width: Metrics.screenWidth - 80,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    borderRadius: 5
   },
   btnText:{
     color: Colors.mooimom,
@@ -46,7 +45,8 @@ export default StyleSheet.create({
   SignUpContainer:{
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginTop: 15 * Metrics.screenWidth / 320,
   },
   caption2:{
     color:Colors.white,

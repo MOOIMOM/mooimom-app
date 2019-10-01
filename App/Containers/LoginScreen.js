@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { ScrollView, Text, View, TouchableOpacity, Image, KeyboardAvoidingView, TextInput, Alert } from 'react-native'
-import { Images } from '../Themes'
+import { Images, Colors } from '../Themes'
 import LinearGradient from 'react-native-linear-gradient';
 import LoginActions from '../Redux/LoginRedux'
 import SendOtpActions from '../Redux/SendOtpRedux'
@@ -15,6 +15,10 @@ class LoginScreen extends Component {
     this.state = {
       phone: '',
     }
+  }
+
+  componentDidMount(){
+    isProcessing = false
   }
 
   actNavigate (screen) {
@@ -53,6 +57,8 @@ class LoginScreen extends Component {
             ],
             { cancelable: false }
           )
+      } else if(!newProps.login.fetching){
+        isProcessing = false
       }
     }
 
@@ -65,24 +71,13 @@ class LoginScreen extends Component {
           this.actNavigate('AuthScreen')
           isProcessing = false
         }
-    } else if(!newProps.sendOtp.fetching && newProps.sendOtp.error !== null){
+    } else if(!newProps.sendOtp.fetching){
       isProcessing = false
-      Alert.alert(
-        '',
-        newProps.sendOtp.error.human_message,
-        [
-          {
-            text: 'OK'
-          }
-        ],
-        { cancelable: false }
-      )
     }
   }
 
   login(){
     if(isProcessing) return;
-    isProcessing = true
     const {phone} = this.state
     var myPhoneNumber = phone.indexOf('0') == 0 ? phone.substring(1) : phone;
     if(myPhoneNumber === "" || myPhoneNumber.length <= 9) {
@@ -98,6 +93,7 @@ class LoginScreen extends Component {
       )
       return
     }
+    isProcessing = true
     let data = {
       data_request: {
         phone_number: myPhoneNumber
@@ -131,7 +127,7 @@ class LoginScreen extends Component {
                 returnKeyType='done'
                 placeholder='contoh : 831345679989'
                 underlineColorAndroid='transparent'
-                placeholderTextColor='white'
+                placeholderTextColor={Colors.lightGray}
                 selectionColor='white'
                 onSubmitEditing={() => this.login()}
               />

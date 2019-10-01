@@ -168,7 +168,7 @@ class CategoryScreen extends Component {
       }
       var category = {
           img_url: arr[i].img_url,
-          name: arr[i].name,
+          name: arr[i].name.replace(' ', '\n'),
           slug: arr[i].slug,
           subcategories: subcategories
       }
@@ -349,9 +349,6 @@ class CategoryScreen extends Component {
             <Image source={Images.search} style={styles.imageSearch}/>
             <Text style={styles.textSearch}>Cari Baju Hamil, Bra, Korset, dll</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.btnHeader} onPress={() => this.navigate_to('CartScreen')}>
-            <Image source={Images.shoppingCart} style={styles.imgHeader}/>
-          </TouchableOpacity>
         </View>
         <View style={styles.wrapperSeparator}/>
         <View style={styles.contentContainer}>
@@ -402,7 +399,7 @@ class CategoryScreen extends Component {
           }>
             <Image source={Images.back} style={styles.imgHeader}/>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.searchButton} onPress={() => this.navigate_to('SearchScreen')}>
+          <TouchableOpacity style={styles.searchButton2} onPress={() => this.navigate_to('SearchScreen')}>
             <Image source={Images.search} style={styles.imageSearch}/>
             <Text style={styles.textSearch}>Cari Baju Hamil, Bra, Korset, dll</Text>
           </TouchableOpacity>

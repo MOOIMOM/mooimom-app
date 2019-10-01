@@ -18,7 +18,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 10,
     width: Metrics.screenWidth,
-    marginTop: 20,
+    marginTop: 10,
     height: 40
   },
   searchButton:{
@@ -112,7 +112,7 @@ export default StyleSheet.create({
     marginRight: 10,
     paddingVertical: 5,
     paddingHorizontal: 20,
-    borderWidth: 2,
+    borderWidth: 1,
     borderColor: Colors.mooimom,
     borderRadius: 5
   },
@@ -125,7 +125,7 @@ export default StyleSheet.create({
     marginRight: 10,
     paddingVertical: 5,
     paddingHorizontal: 20,
-    borderWidth: 2,
+    borderWidth: 1,
     borderColor: Colors.mooimom,
     backgroundColor: Colors.mooimom,
     borderRadius: 5
@@ -178,7 +178,7 @@ export default StyleSheet.create({
   orderAmount:{
     color:Colors.mooimom,
     fontFamily: Fonts.type.gotham4,
-    fontSize: Metrics.fontSize4,
+    fontSize: Metrics.fontSize3,
     textAlign: 'center'
   },
   orderContainerTotal:{
@@ -205,21 +205,23 @@ export default StyleSheet.create({
   },
   productImage:{
     flex:1,
+    marginBottom: 5
   },
   orderContainerRight:{
     flex:2,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    marginLeft: 10
   },
   productName:{
     color:Colors.black,
     fontFamily: Fonts.type.gotham2,
-    fontSize: Metrics.fontSize2,
-    lineHeight:18
+    fontSize: Metrics.fontSize1,
+    lineHeight: Metrics.fontSize2,
   },
   productPrice:{
     color:Colors.mooimom,
     fontFamily: Fonts.type.gotham4,
-    fontSize: Metrics.fontSize4,
+    fontSize: Metrics.fontSize3,
   },
   containerLoading:{
     marginTop: 100,

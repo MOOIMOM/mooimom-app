@@ -52,12 +52,12 @@ export default StyleSheet.create({
   },
   removeBtn:{
     position: 'absolute',
-    top: 0,
-    left: 0
+    top: 5,
+    left: 5
   },
   removeImg:{
-    height: 20 * Metrics.screenWidth / 320,
-    width: 20 * Metrics.screenWidth / 320,
+    height: 15 * Metrics.screenWidth / 320,
+    width: 15 * Metrics.screenWidth / 320,
     resizeMode: 'contain',
   },
   productDescriptionWrapper:{

@@ -4,6 +4,7 @@ import { Images, Metrics, Colors, Fonts } from '../Themes'
 import FastImage from 'react-native-fast-image'
 import GetOrderActions from '../Redux/GetOrderRedux'
 import CommissionEstimationActions from '../Redux/CommissionEstimationRedux'
+import GetOrderStatusMidtransActions from '../Redux/GetOrderStatusMidtransRedux'
 import { connect } from 'react-redux'
 import {convertToRupiah, getDateFromString } from '../Lib/utils'
 import ModalDropDown from '../Components/ModalDropDown'
@@ -38,6 +39,7 @@ class DetailOrderScreen extends Component {
       }
     }
     this.props.getOrderRequest(data)
+    this.props.getStatusMidtransProcess(data)
   }
 
   componentWillReceiveProps(newProps){
@@ -66,6 +68,16 @@ class DetailOrderScreen extends Component {
           this.setState({
             commission: newProps.commissionEstimation.payload.commission_expectation
           })
+      }
+    }
+
+    if (this.props.statusMidtrans !== newProps.statusMidtrans) {
+      if (
+        newProps.statusMidtrans.payload !== null &&
+        newProps.statusMidtrans.error === null &&
+        !newProps.statusMidtrans.fetching
+      ) {
+          console.info(newProps.statusMidtrans.payload)
       }
     }
   }
@@ -101,13 +113,13 @@ class DetailOrderScreen extends Component {
     }
 
     const transRequest = {
-        transactionId: "0001",
-        totalAmount: 4000,
+        transactionId: '' + this.state.order.order_id,
+        totalAmount: this.state.order.order_total,
         token: this.state.order.midtrans_token
     }
 
     const itemDetails = [
-        {id: "001", price: 1000, qty: 4, name: "peanuts"}
+
     ];
 
     const creditCardOptions = {
@@ -118,14 +130,14 @@ class DetailOrderScreen extends Component {
     };
 
     const userDetail = {
-        fullName: "jhon",
-        email: "jhon@payment.com",
-        phoneNumber: "0850000000",
-        userId: "U01",
-        address: "street coffee",
-        city: "yogyakarta",
+        fullName: this.state.order.billing_name,
+        email: '',
+        phoneNumber: this.state.order.billing_address,
+        userId: '',
+        address: '',
+        city: '',
         country: "IDN",
-        zipCode: "59382"
+        zipCode: ''
     };
 
     const optionColorTheme = {
@@ -279,6 +291,7 @@ class DetailOrderScreen extends Component {
       )
     }
     const {menuStatus, order} = this.state
+    console.info(order)
     var status = ''
     var idx = menuStatus.findIndex(status => status.status === order.order_status)
     if(idx >= 0)
@@ -324,6 +337,7 @@ const mapStateToProps = state => {
     order: state.order,
     auth: state.auth,
     commissionEstimation: state.commissionEstimation,
+    statusMidtrans: state.statusMidtrans
   }
 };
 
@@ -334,6 +348,9 @@ const mapDispatchToProps = dispatch => {
     },
     getCommissionEstimationProcess: data => {
       dispatch(CommissionEstimationActions.getCommissionEstimationRequest(data))
+    },
+    getStatusMidtransProcess: data => {
+      dispatch(GetOrderStatusMidtransActions.getOrderStatusMidtransRequest(data))
     },
   }
 };

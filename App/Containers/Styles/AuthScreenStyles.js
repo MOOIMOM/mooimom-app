@@ -16,13 +16,12 @@ export default StyleSheet.create({
   title:{
     width: Metrics.screenWidth - 150,
     resizeMode: 'contain',
-    flex:3,
+    flex:1,
   },
   loginContainer:{
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
-    flex:4,
-    marginBottom: 20
+    flex:2,
   },
   button:{
     backgroundColor: Colors.white,

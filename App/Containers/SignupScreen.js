@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { ScrollView, Text, View, TouchableOpacity, Image, KeyboardAvoidingView, TextInput, Alert } from 'react-native'
-import { Images } from '../Themes'
+import { Images, Colors } from '../Themes'
 import LinearGradient from 'react-native-linear-gradient';
 import SignUpActions from '../Redux/SignUpRedux'
 import SendOtpActions from '../Redux/SendOtpRedux'
@@ -48,6 +48,8 @@ class SignupScreen extends Component {
             ],
             { cancelable: false }
           )
+      } else if(!newProps.register.fetching){
+        isProcessing = false
       }
     }
 
@@ -57,22 +59,11 @@ class SignupScreen extends Component {
         newProps.sendOtp.error === null &&
         !newProps.sendOtp.fetching
       ) {
-          this.actNavigate('AuthScreen')
-          isProcessing = false
-        } else if(!newProps.sendOtp.fetching &&
-          newProps.sendOtp.error !== null
-        ){
-          isProcessing = false
-          Alert.alert(
-            '',
-            newProps.sendOtp.error.human_message,
-            [
-              {
-                text: 'OK'
-              }
-            ],
-            { cancelable: false }
-          )
+        this.actNavigate('AuthScreen')
+        isProcessing = false
+      }
+      else if(!newProps.sendOtp.fetching){
+        isProcessing = false
       }
     }
   }
@@ -85,7 +76,6 @@ class SignupScreen extends Component {
 
   signUp(){
     if(isProcessing) return;
-    isProcessing = true
     const {phone} = this.state
     var myPhoneNumber = phone.indexOf('0') == 0 ? phone.substring(1) : phone;
     if(myPhoneNumber === "" || myPhoneNumber.length <= 9) {
@@ -101,6 +91,7 @@ class SignupScreen extends Component {
       )
       return
     }
+    isProcessing = true
     let data = {
       data_request: {
         phone_number: myPhoneNumber
@@ -132,9 +123,9 @@ class SignupScreen extends Component {
                   keyboardType='numeric'
                   value={this.state.phone}
                   returnKeyType='done'
-                  placeholder='contoh : 831345679989'
+                  placeholder='contoh : 8123456789'
                   underlineColorAndroid='transparent'
-                  placeholderTextColor='white'
+                  placeholderTextColor={Colors.lightGray}
                   selectionColor='white'
                   onSubmitEditing={() => this.signUp()}
                 />

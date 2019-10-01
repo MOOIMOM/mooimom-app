@@ -14,28 +14,29 @@ export default StyleSheet.create({
     borderBottomColor: Colors.black
   },
   topItem:{
+    paddingTop: 5,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    height:Metrics.screenHeight / 3
+    height:Metrics.screenHeight / 4
   },
   topLeftItem:{
-    flex:2
+    flex:2,
+    justifyContent: 'center',
   },
   topRightItem:{
     flex:3,
     flexDirection: 'column',
     justifyContent: 'space-between',
-    paddingTop: 15,
-    paddingLeft:5
+    marginLeft: 10
   },
   wishlist:{
     position: 'absolute',
-    right: 0,
-    top: 10
+    right: 3,
+    top: 5
   },
   wishlistImage:{
-    width: 20 * Metrics.screenWidth / 320,
-    height: 20 * Metrics.screenWidth / 320,
+    width: 15 * Metrics.screenWidth / 320,
+    height: 15 * Metrics.screenWidth / 320,
     resizeMode: 'contain'
   },
   image:{
@@ -43,8 +44,10 @@ export default StyleSheet.create({
   },
   name:{
     flexWrap: 'wrap',
-    fontSize: Metrics.fontSize2,
+    fontSize: Metrics.fontSize1,
     fontFamily: Fonts.type.gotham2,
+    color: Colors.black,
+    lineHeight: Metrics.fontSize2,
   },
   priceGroup:{
     alignSelf: 'flex-start',

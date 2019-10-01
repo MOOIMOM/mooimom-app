@@ -40,6 +40,7 @@ import { GetCommissionSummaryTypes } from '../Redux/GetCommissionSummaryRedux'
 import { CheckoutTypes } from '../Redux/CheckoutRedux'
 import { CommissionEstimationTypes } from '../Redux/CommissionEstimationRedux'
 import { LastNotificationTimeTypes } from '../Redux/LastNotificationTimeRedux'
+import { GetOrderStatusMidtransTypes } from '../Redux/GetOrderStatusMidtransRedux'
 
 /* ------------- Sagas ------------- */
 
@@ -85,6 +86,7 @@ import { postGetCommissionSummary } from './GetCommissionSummarySagas'
 import { postCheckout } from './CheckoutSagas'
 import { postGetCommissionEstimation } from './GetCommissionEstimationSagas'
 import { saveLastNotificationTime } from './SaveLastNotificationTimeSagas'
+import { postGetOrderStatusMidtrans } from './GetOrderStatusMidtransSagas'
 
 /* ------------- API ------------- */
 
@@ -141,5 +143,6 @@ export default function * root () {
     takeLatest(GetCommissionSummaryTypes.GET_COMMISSION_SUMMARY_REQUEST, postGetCommissionSummary, api),
     takeLatest(CommissionEstimationTypes.GET_COMMISSION_ESTIMATION_REQUEST, postGetCommissionEstimation, api),
     takeLatest(CheckoutTypes.GET_CHECKOUT_REQUEST, postCheckout, api),
+    takeLatest(GetOrderStatusMidtransTypes.GET_ORDER_STATUS_MIDTRANS_REQUEST, postGetOrderStatusMidtrans, api),
   ])
 }

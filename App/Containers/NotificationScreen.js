@@ -65,22 +65,42 @@ class NotificationScreen extends Component {
   _renderNotification({item, index}){
     return (
       <TouchableWithoutFeedback onPress={() => this.onPress(item)}>
-        <View style={[styles.notificationContainer, this.getStyle(item.the_type)]}>
-          <Text style={styles.textNotif}>{item.the_message}</Text>
-          <Text style={styles.textDateNotif}>{getDateFromString(item.created, true, false, true, false)}</Text>
+        <View style={styles.notificationContainer}>
+          <View style={styles.leftNotif}>
+            <View style={[styles.colorNotif, this.getStyle(item)]}/>
+          </View>
+          <View style={styles.rightNotif}>
+            <Text style={styles.textNotif}>{item.the_message}</Text>
+            <Text style={styles.textDateNotif}>{getDateFromString(item.created, true, false, true, false)}</Text>
+          </View>
         </View>
       </TouchableWithoutFeedback>
     )
   }
 
-  getStyle(type){
-    switch(type){
+  getStyle(item){
+    console.info(item)
+    switch(item.the_type){
       case 'create_order':
-        return {borderLeftColor:Colors.mooimom, borderRightColor: Colors.mooimom}
+        return {backgroundColor:Colors.facebook}
       case 'order_status_change':
-        return {borderLeftColor:Colors.ember, borderRightColor: Colors.ember}
+        switch(item.status){
+          case 'cancelled':
+            return {backgroundColor:Colors.fire}
+          case 'pending':
+            return {backgroundColor:Colors.facebook}
+          case 'processing':
+            return {backgroundColor:'orange'}
+          case 'completed':
+            return {backgroundColor:Colors.mooimom}
+          default:
+            return {backgroundColor:Colors.gray}
+        }
+      break;
       case 'withdraw_status_change':
-        return {borderLeftColor:Colors.banner, borderRightColor: Colors.banner}
+        return {backgroundColor:Colors.banner}
+      default:
+        return {backgroundColor:Colors.steel}
     }
   }
 

@@ -50,7 +50,7 @@ export default class TextInputCustom extends Component {
         <TextInput
           onFocus={() => this.setState({ focous: true })}
           onBlur={() => this.setState({ focous: false })}
-          placeholderTextColor={!this.state.focous ? Colors.black : this.props.color}
+          placeholderTextColor={Colors.gray}
           placeholder={
             this.props.isRP
               ? ''

@@ -18,7 +18,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 10,
     width: Metrics.screenWidth,
-    marginTop: 20,
+    marginTop: 10,
     height: 40
   },
   searchButton:{

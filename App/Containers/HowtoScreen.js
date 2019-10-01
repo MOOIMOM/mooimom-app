@@ -2,19 +2,11 @@ import React, { Component } from 'react'
 import { ScrollView, Text, View, Image, TouchableOpacity } from 'react-native'
 import { Images, Metrics, Colors } from '../Themes'
 import Carousel, { ParallaxImage, Pagination  } from 'react-native-snap-carousel';
-import { connect } from 'react-redux'
 
 // Styles
-import styles from './Styles/LearnScreenStyles'
-import menuStyles from './Styles/MenuComponentStyles'
+import styles from './Styles/HowtoScreenStyles'
 
-class LearnScreen extends Component {
-  static navigationOptions = {
-      tabBarIcon: ({ focused, tintColor }) => {
-          const iconName = (focused ? Images.learn2 : Images.learn)
-          return <Image source={iconName} style={menuStyles.menuImage}/>
-      },
-  };
+class HowtoScreen extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -51,17 +43,6 @@ class LearnScreen extends Component {
   render () {
     return (
       <View style={styles.container}>
-        <View style={styles.headerWrapper}>
-          <TouchableOpacity style={styles.searchButton} onPress={() => this.actNavigate('SearchScreen')}>
-            <Image source={Images.search} style={styles.imageSearch}/>
-            <Text style={styles.textSearch}>Cari Baju Hamil, Bra, Korset, dll</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.btnHeader} onPress={() => this.actNavigate('CartScreen')}>
-            <Image source={Images.shoppingCartBlack} style={styles.imgHeader}/>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.wrapperSeparator}/>
-        <View style={styles.containerScroll}>
           <Carousel
             ref={(carousel) => { this._carousel = carousel; }}
             sliderWidth={Metrics.screenWidth}
@@ -73,6 +54,7 @@ class LearnScreen extends Component {
             lockScrollWhileSnapping={true}
             onSnapToItem={(index) => this.setState({ activeSlide: index }) }
           />
+          <View style={styles.bottom}>
           <Pagination
             dotsLength={this.state.learnpages.length}
             activeDotIndex={this.state.activeSlide}
@@ -82,24 +64,11 @@ class LearnScreen extends Component {
             containerStyle={styles.paginationContainerStyleHeroBanner}
             dotContainerStyle={styles.paginationDotContainerStyleHeroBanner}
           />
-        </View>
+          {this.state.activeSlide === this.state.learnpages.length - 1 && <Text style={styles.gotoText} onPress={() => this.actNavigate('SignupScreen')}>Lanjut ></Text>}
+          </View>
       </View>
     )
   }
 }
-const mapStateToProps = state => {
-  return {
 
-  }
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-
-  }
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(LearnScreen)
+export default HowtoScreen

@@ -1,4 +1,4 @@
-import { StyleSheet, Platform } from 'react-native'
+import { StyleSheet, Platform, StatusBar } from 'react-native'
 import { Metrics, ApplicationStyles, Colors, Fonts } from '../../Themes/'
 
 export default StyleSheet.create({
@@ -11,11 +11,11 @@ export default StyleSheet.create({
   },
   backgroundHeader: {
     width: Metrics.screenWidth,
-    height: Metrics.screenWidth,
+    height: Metrics.screenHeight,
     position:'absolute',
     alignSelf: "center",
     alignContent: "center",
-    top: Metrics.screenHeight * -0.27,
+    top: Metrics.screenHeight * -0.55,
     backgroundColor: Colors.mooimom,
     borderRadius: Metrics.screenWidth / 2,
     transform: [{ scaleX: 2 }, { scaleY: 0.25}],
@@ -34,6 +34,14 @@ export default StyleSheet.create({
     height: 40
   },
   searchButton:{
+    width: Metrics.screenWidth - 40,
+    height: 40,
+    borderRadius: 25,
+    backgroundColor: Colors.lightGray,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  searchButton2:{
     width: Metrics.screenWidth - 100,
     height: 40,
     borderRadius: 25,
@@ -80,12 +88,12 @@ export default StyleSheet.create({
   categoryView:{
     paddingVertical: 10 * Metrics.screenWidth / 320,
     paddingLeft: 10 * Metrics.screenWidth / 320,
-    flexWrap: 'wrap'
   },
   categoryView2:{
     paddingVertical: 10 * Metrics.screenWidth / 320,
     paddingLeft: 10 * Metrics.screenWidth / 320,
     flexWrap: 'wrap',
+    width: (Metrics.screenWidth - 20 - 10 * Metrics.screenWidth / 320) / 3,
     borderRightWidth: 3,
     borderRightColor: Colors.mooimom,
     backgroundColor: Colors.white

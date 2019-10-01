@@ -267,8 +267,8 @@ export default StyleSheet.create({
     borderWidth: 0.5
   },
   colorButtonSelected:{
-    borderWidth: 3,
-    borderColor: Colors.black
+    borderWidth: 2,
+    borderColor: Colors.mooimom
   },
   sizeWrapper:{
     flexDirection: 'column',
@@ -282,7 +282,8 @@ export default StyleSheet.create({
     justifyContent: 'flex-start'
   },
   sizeButton:{
-    width: 50 * Metrics.screenWidth / 320,
+    paddingHorizontal: 10,
+    minWidth: 50 * Metrics.screenWidth / 320,
     height: 30 * Metrics.screenWidth / 320,
     marginRight: 10,
     marginVertical: 5,
@@ -293,18 +294,18 @@ export default StyleSheet.create({
     borderColor: Colors.gray
   },
   sizeButtonSelected:{
-    borderColor: Colors.black,
-    borderWidth: 2
+    borderColor: Colors.mooimom,
+    backgroundColor: 'rgba(124,224,211,0.5)',
+    borderWidth: 1
   },
   sizeText:{
     color: Colors.gray,
-    fontSize: Metrics.fontSize3,
+    fontSize: Metrics.fontSize2,
     fontFamily: Fonts.type.gotham1,
   },
   buttonDisabled:{
     backgroundColor: 'rgba(1,1,1,0.2)',
     borderWidth: 1,
-    borderColor: Colors.fire,
   },
   buttonColorDisabled:{
     backgroundColor: 'rgba(1,1,1,0.5)',

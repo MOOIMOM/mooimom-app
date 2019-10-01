@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback , Image, Alert, FlatList, AsyncStorage, Linking } from 'react-native'
+import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback , Image, Alert, FlatList, AsyncStorage, Linking, RefreshControl } from 'react-native'
 import { Images, Metrics } from '../Themes'
 import { connect } from 'react-redux'
 import Carousel, { ParallaxImage, Pagination  } from 'react-native-snap-carousel';
@@ -35,16 +35,27 @@ class HomeScreen extends Component {
       activeSlide: 0,
       fcmToken: '',
       currentPage: 1,
+      refreshing: false
     }
 
     this._renderProduct = this._renderProduct.bind(this)
     this.navigate_to = this.navigate_to.bind(this)
+    this.refreshPage = this.refreshPage.bind(this)
   }
 
   async componentDidMount(){
     this.checkPermission()
     setTimeout(() => {
       this.createNotificationListeners()
+      this.refreshPage()
+    }, 200)
+  }
+
+  refreshPage(){
+    if(!this.state.refreshing){
+      this.setState({
+        refreshing: true
+      });
       let data = {
         data_request:{
           user_id: this.props.auth.payload.user_id,
@@ -52,10 +63,10 @@ class HomeScreen extends Component {
           fcm_token: this.state.fcmToken
         }
       }
-      this.props.getHomepageRequest(data)
-      this.props.getSettingRequest(data)
       this.refreshNotification()
-    }, 200)
+      this.props.getSettingRequest(data)
+      this.props.getHomepageRequest(data)
+    }
   }
 
   componentWillUnmount () {
@@ -174,6 +185,7 @@ class HomeScreen extends Component {
             products: newProps.getHomepage.payload.best_seller,
             banners: newProps.getHomepage.payload.big_banner,
             categories: newProps.getHomepage.payload.categories,
+            refreshing: false
           })
       } else if (
         newProps.getHomepage.payload !== null &&
@@ -184,7 +196,8 @@ class HomeScreen extends Component {
           arr = arr.concat(newProps.getHomepage.payload.best_seller)
           this.setState({
             currentPage: this.state.currentPage + 1,
-            products: arr
+            products: arr,
+            refreshing: false
           })
           isReloadPage = false
       }
@@ -321,6 +334,8 @@ class HomeScreen extends Component {
           }
         }}
         scrollEventThrottle={0}
+        refreshControl={
+            <RefreshControl refreshing={this.state.refreshing} onRefresh={this.refreshPage}/>}
         >
           <View style={styles.backgroundHeader} />
           <View style={styles.headerWrapper}>

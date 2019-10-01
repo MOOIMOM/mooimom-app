@@ -18,7 +18,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 10,
     width: Metrics.screenWidth,
-    marginTop: 20,
+    marginTop: 10,
     height: 40
   },
   searchButton:{
@@ -66,7 +66,7 @@ export default StyleSheet.create({
     marginRight: 10,
     paddingVertical: 5,
     paddingHorizontal: 15,
-    borderWidth: 2,
+    borderWidth: 1,
     borderColor: Colors.mooimom,
     borderRadius: 5
   },
@@ -79,7 +79,7 @@ export default StyleSheet.create({
     marginRight: 10,
     paddingVertical: 5,
     paddingHorizontal: 15,
-    borderWidth: 2,
+    borderWidth: 1,
     borderColor: Colors.mooimom,
     backgroundColor: Colors.mooimom,
     borderRadius: 5
