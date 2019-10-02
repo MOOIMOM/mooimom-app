@@ -46,6 +46,7 @@ export const reducers = combineReducers({
   statusMidtrans: require('./GetOrderStatusMidtransRedux').reducer,
   video: require('./GetVideoRedux').reducer,
   article: require('./GetArticleRedux').reducer,
+  question: require('./GetQuestionRedux').reducer,
 })
 
 export default () => {

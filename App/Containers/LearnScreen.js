@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, Image, TouchableOpacity } from 'react-native'
+import { ScrollView, Text, View, Image, TouchableOpacity, FlatList, Linking } from 'react-native'
 import { Images, Metrics, Colors } from '../Themes'
 import Carousel, { ParallaxImage, Pagination  } from 'react-native-snap-carousel';
 import { connect } from 'react-redux'
+import GetQuestionActions from '../Redux/GetQuestionRedux'
+import GetArticleActions from '../Redux/GetArticleRedux'
+import GetVideoActions from '../Redux/GetVideoRedux'
 
 // Styles
 import styles from './Styles/LearnScreenStyles'
@@ -18,15 +21,60 @@ class LearnScreen extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      activeSlide: 0,
-      learnpages:[
-        {image:Images.learnpage1, title:'Jadilah Reseller', desc:'Berbagi dengan semua ibu di Indonesia dan dapatkan keuntungan.'},
-        {image:Images.learnpage2, title:'Jelajahi Produk', desc:'Temukan semua produk kebutuhan ibu hamil, pasca melahirkan, masa menyusui, dan produk bayi yang berkualitas.'},
-        {image:Images.learnpage3, title:'Bagikan Produk', desc:'Tawarkan produk ke semua teman dan komunitas Moms melalui Whatsapp, Instagram Facebook, dan lainnya.'},
-        {image:Images.learnpage4, title:'Mulai Berjualan', desc:'Moms sudah menjadi seorang wirausaha hanya dengan menawarkan dan memesan produk untuk para Moms di aplikasi tanpa harus ribet packing dan kirim.'},
-        {image:Images.learnpage5, title:'Dapatkan Komisi', desc:'Moms akan mendapat komisi untuk produk yang dipesan di aplikasi. Semakin banyak pesanan, semakin besar komisi-nya sesuai dengan target yang dicapai.'},
-        {image:Images.learnpage6, title:'Bagikan & Hasilkan', desc:'Semakin banyak Moms berbagi produk ke semua teman dan komunitas, semakin besar penghasilan yang didapat Moms setiap minggu.'}
-      ]
+      activeMenu: 'video',
+      video: [],
+      article: [],
+      question: []
+    }
+  }
+
+  componentDidMount(){
+    let data = {
+      data_request:{
+        user_id: this.props.auth.payload.user_id,
+        unique_token: this.props.auth.payload.unique_token,
+      }
+    }
+    this.props.getVideoProcess(data)
+    this.props.getArticleProcess(data)
+    this.props.getQuestionProcess(data)
+  }
+
+  componentWillReceiveProps(newProps){
+    if(newProps.video !== this.props.video){
+      if (
+        newProps.video.payload !== null &&
+        newProps.video.error === null &&
+        !newProps.video.fetching
+      ) {
+        this.setState({
+          video: newProps.video.payload.youtube_videos
+        })
+      }
+    }
+
+    if(newProps.article !== this.props.article){
+      if (
+        newProps.article.payload !== null &&
+        newProps.article.error === null &&
+        !newProps.article.fetching
+      ) {
+        this.setState({
+          article: newProps.article.payload.articles
+        })
+      }
+    }
+
+    if(newProps.question !== this.props.question){
+      if (
+        newProps.question.payload !== null &&
+        newProps.question.error === null &&
+        !newProps.question.fetching
+      ) {
+        this.setState({
+          question: newProps.question.payload.all_qa
+        })
+      }
     }
   }
 
@@ -35,18 +83,82 @@ class LearnScreen extends Component {
     navigate(page, obj)
   }
 
-  _renderLearn ({item, index}, parallaxProps) {
-        return (
-            <View style={styles.itemHeroBanner}>
-                <Image
-                    source={item.image}
-                    style={styles.imageHeroBanner}
-                />
-                <Text style={styles.title}>{item.title}</Text>
-                <Text style={styles.desc}>{item.desc}</Text>
-            </View>
-        );
+  openVideo(url){
+    Linking.canOpenURL(url).then(supported => {
+      if (supported) {
+        Linking.openURL(url);
+      }
+    });
+  }
+
+  openArticle(url){
+    Linking.canOpenURL(url).then(supported => {
+      if (supported) {
+        Linking.openURL(url);
+      }
+    });
+  }
+
+  pressMenu(menu){
+    if(this.state.activeMenu !== menu){
+      this.setState({
+        activeMenu: menu
+      })
     }
+  }
+
+  isSelected(menu){
+    if(this.state.activeMenu === menu){
+      return {backgroundColor: Colors.mooimom}
+    }
+  }
+
+  isSelectedText(menu){
+    if(this.state.activeMenu === menu){
+      return {color: Colors.white}
+    }
+  }
+
+  _renderVideo({item, index}){
+    return (
+      <TouchableOpacity onPress={() => this.openVideo(item.youtube_url)}>
+        <View style={styles.videoItem}>
+          <Image source={{uri:item.image_for_youtube}} style={styles.imageItem}/>
+          <View style={styles.descItem}>
+            <Text style={styles.titleText}>{item.title}</Text>
+            <Text style={styles.titleText2}>durasi: {item.duration}</Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    )
+  }
+
+  _renderArticle({item, index}){
+    return (
+      <TouchableOpacity onPress={() => this.openArticle(item.article_url)}>
+        <View style={styles.videoItem}>
+          <Image source={{uri:item.image_for_article}} style={styles.imageItem}/>
+          <View style={styles.descItem}>
+            <Text style={styles.titleText}>{item.title}</Text>
+            <Text style={styles.titleText2}>waktu baca: {item.read_time}</Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    )
+  }
+
+  _renderQuestion({item, index}){
+    return (
+      <TouchableOpacity>
+        <View style={styles.videoItem}>
+          <Image source={{uri:item.image}} style={styles.imageItem}/>
+          <View style={styles.descItem}>
+            <Text style={styles.titleText}>{item.title}</Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    )
+  }
 
   render () {
     return (
@@ -62,26 +174,46 @@ class LearnScreen extends Component {
         </View>
         <View style={styles.wrapperSeparator}/>
         <View style={styles.containerScroll}>
-          <Carousel
-            ref={(carousel) => { this._carousel = carousel; }}
-            sliderWidth={Metrics.screenWidth}
-            sliderHeight={Metrics.screenHeight}
-            itemWidth={Metrics.screenWidth}
-            data={this.state.learnpages}
-            renderItem={this._renderLearn}
-            hasParallaxImages={false}
-            lockScrollWhileSnapping={true}
-            onSnapToItem={(index) => this.setState({ activeSlide: index }) }
-          />
-          <Pagination
-            dotsLength={this.state.learnpages.length}
-            activeDotIndex={this.state.activeSlide}
-            dotStyle={styles.paginationDotStyleHeroBanner}
-            inactiveDotOpacity={0.4}
-            inactiveDotScale={0.6}
-            containerStyle={styles.paginationContainerStyleHeroBanner}
-            dotContainerStyle={styles.paginationDotContainerStyleHeroBanner}
-          />
+          <View style={styles.menuContainer}>
+            <TouchableOpacity onPress={() => this.pressMenu('video')}>
+              <View style={[styles.menuButton, this.isSelected('video')]}>
+                <Text style={[styles.menuText, this.isSelectedText('video')]}>Video</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => this.pressMenu('article')}>
+              <View style={[styles.menuButton, this.isSelected('article')]}>
+                <Text style={[styles.menuText, this.isSelectedText('article')]}>Artikel</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => this.pressMenu('question')}>
+              <View style={[styles.menuButton, this.isSelected('question')]}>
+                <Text style={[styles.menuText, this.isSelectedText('question')]}>Pusat Bantuan</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.itemContainer}>
+            {this.state.activeMenu === 'video' &&
+            <FlatList
+              showsVerticalScrollIndicator={false}
+              data={this.state.video}
+              renderItem={this._renderVideo.bind(this)}
+              keyExtractor={(item, index) => index.toString()}
+            />}
+            {this.state.activeMenu === 'article' &&
+            <FlatList
+              showsVerticalScrollIndicator={false}
+              data={this.state.article}
+              renderItem={this._renderArticle.bind(this)}
+              keyExtractor={(item, index) => index.toString()}
+            />}
+            {this.state.activeMenu === 'question' &&
+            <FlatList
+              showsVerticalScrollIndicator={false}
+              data={this.state.question}
+              renderItem={this._renderQuestion.bind(this)}
+              keyExtractor={(item, index) => index.toString()}
+            />}
+          </View>
         </View>
       </View>
     )
@@ -89,13 +221,24 @@ class LearnScreen extends Component {
 }
 const mapStateToProps = state => {
   return {
-
+    auth: state.auth,
+    question: state.question,
+    article: state.article,
+    video: state.video
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-
+    getArticleProcess: data => {
+      dispatch(GetQuestionActions.getQuestionRequest(data))
+    },
+    getQuestionProcess: data => {
+      dispatch(GetArticleActions.getArticleRequest(data))
+    },
+    getVideoProcess: data => {
+      dispatch(GetVideoActions.getVideoRequest(data))
+    },
   }
 };
 

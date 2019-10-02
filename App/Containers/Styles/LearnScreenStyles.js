@@ -7,7 +7,7 @@ export default StyleSheet.create({
   },
   containerScroll:{
     paddingTop: 0,
-    height: Metrics.screenHeight - 110
+    flex: 1,
   },
   headerWrapper:{
     flexDirection: 'row',
@@ -48,43 +48,59 @@ export default StyleSheet.create({
     width: 20 * Metrics.screenWidth / 320,
     resizeMode: 'contain'
   },
-  itemHeroBanner: {
-    marginTop:30 *Metrics.screenWidth / 320,
-    width: Metrics.screenWidth,
-    height: Metrics.screenHeight / 2,
+  menuContainer:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     paddingHorizontal: 20,
-    alignItems: 'center',
+    marginTop: 10,
+  },
+  menuButton:{
     justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    marginHorizontal: 5,
+    backgroundColor: Colors.white,
+    width: (Metrics.screenWidth - 80) / 3,
+    height: 50,
+    borderWidth: 1,
+    borderColor: Colors.mooimom
   },
-  imageHeroBanner: {
-    resizeMode: 'contain',
-    width: Metrics.screenWidth,
-    height: Metrics.screenHeight / 2,
-  },
-  title:{
-    color:Colors.mooimom,
-    fontFamily: Fonts.type.gotham4,
-    fontSize:Metrics.fontSize4,
+  menuText:{
     textAlign: 'center',
-    marginBottom: 20
+    color: Colors.black,
+    fontFamily: Fonts.type.gotham4,
+    fontSize: Metrics.fontSize1
   },
-  desc:{
-    color:Colors.black,
-    fontFamily: Fonts.type.gotham2,
-    fontSize: Metrics.fontSize2,
-    textAlign: 'center'
+  itemContainer:{
+    marginTop:20,
+    paddingHorizontal: 20
   },
-  paginationDotStyleHeroBanner: {
-      width: 8 * Metrics.screenWidth / 320,
-      height: 8 * Metrics.screenWidth / 320,
-      borderRadius: 4 * Metrics.screenWidth / 320,
-      backgroundColor: Colors.mooimom
+  videoItem:{
+    flexDirection:'row',
+    marginBottom: 10,
+    paddingBottom: 10,
+    borderBottomWidth: 0.5,
+    flex: 1
   },
-  paginationContainerStyleHeroBanner: {
-    marginTop: 0,
-    paddingHorizontal: 0,
+  imageItem:{
+    width: 50,
+    height: 50,
   },
-  paginationDotContainerStyleHeroBanner: {
-    marginHorizontal:2
+  descItem:{
+    marginLeft: 10,
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    flex: 1
   },
+  titleText:{
+    color: Colors.black,
+    fontFamily: Fonts.type.gotham4,
+    fontSize: Metrics.fontSize2
+  },
+  titleText2:{
+    color: Colors.gray,
+    fontFamily: Fonts.type.gotham4,
+    fontSize: Metrics.fontSize1,
+    textAlign: 'right'
+  }
 })

@@ -139,6 +139,8 @@ const create = (baseURL = 'https://www.mooimom.id/') => {
     api.post('app-get-youtube-videos', params.data_request)
   const postGetArticle = params =>
     api.post('app-get-articles', params.data_request)
+  const postGetQuestion = params =>
+    api.post('app-get-question-and-answer', params.data_request)
 
 
   // ------
@@ -199,6 +201,7 @@ const create = (baseURL = 'https://www.mooimom.id/') => {
     postGetOrderStatusMidtrans,
     postGetVideo,
     postGetArticle,
+    postGetQuestion,
   }
 }
 

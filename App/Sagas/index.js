@@ -43,6 +43,7 @@ import { LastNotificationTimeTypes } from '../Redux/LastNotificationTimeRedux'
 import { GetOrderStatusMidtransTypes } from '../Redux/GetOrderStatusMidtransRedux'
 import { GetVideoTypes } from '../Redux/GetVideoRedux'
 import { GetArticleTypes } from '../Redux/GetArticleRedux'
+import { GetQuestionTypes } from '../Redux/GetQuestionRedux'
 
 /* ------------- Sagas ------------- */
 
@@ -91,6 +92,7 @@ import { saveLastNotificationTime } from './SaveLastNotificationTimeSagas'
 import { postGetOrderStatusMidtrans } from './GetOrderStatusMidtransSagas'
 import { postGetVideo } from './GetVideoSagas'
 import { postGetArticle } from './GetArticleSagas'
+import { postGetQuestion } from './GetQuestionSagas'
 
 /* ------------- API ------------- */
 
@@ -150,5 +152,6 @@ export default function * root () {
     takeLatest(GetOrderStatusMidtransTypes.GET_ORDER_STATUS_MIDTRANS_REQUEST, postGetOrderStatusMidtrans, api),
     takeLatest(GetVideoTypes.GET_VIDEO_REQUEST, postGetVideo, api),
     takeLatest(GetArticleTypes.GET_ARTICLE_REQUEST, postGetArticle, api),
+    takeLatest(GetQuestionTypes.GET_QUESTION_REQUEST, postGetQuestion, api),
   ])
 }
