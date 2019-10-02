@@ -249,5 +249,23 @@ export default StyleSheet.create({
     fontFamily: Fonts.type.gotham4,
     fontSize: Metrics.fontSize3,
     textAlign: 'center'
+  },
+  deliveryText3:{
+    color:Colors.black,
+    fontFamily: Fonts.type.gotham2,
+    fontSize: Metrics.fontSize2,
+    textAlign: 'center'
+  },
+  paymentGuideContainer:{
+    width: Metrics.screenWidth,
+    height: Metrics.screenHeight,
+    backgroundColor: Colors.white,
+    paddingBottom: 25
+  },
+  priceText2:{
+    color:Colors.mooimom,
+    fontFamily: Fonts.type.gotham2,
+    fontSize: Metrics.fontSize5,
+    textAlign: 'center'
   }
 })

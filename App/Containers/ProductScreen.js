@@ -643,7 +643,7 @@ class ProductScreen extends Component {
   }
 
   render () {
-    if(this.props.product.fetching){
+    if(this.props.product.fetching && (!this.state.product.product_name || this.state.product.product_name === '')){
       return (
         <View style={styles.containerLoading2}>
           <ActivityIndicator size="large" color={Colors.mooimom} />

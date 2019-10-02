@@ -44,6 +44,8 @@ export const reducers = combineReducers({
   commissionEstimation: require('./CommissionEstimationRedux').reducer,
   lastNotification: require('./LastNotificationTimeRedux').reducer,
   statusMidtrans: require('./GetOrderStatusMidtransRedux').reducer,
+  video: require('./GetVideoRedux').reducer,
+  article: require('./GetArticleRedux').reducer,
 })
 
 export default () => {

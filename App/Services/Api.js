@@ -135,6 +135,10 @@ const create = (baseURL = 'https://www.mooimom.id/') => {
     api.post('app-current-saldo', params.data_request)
   const postGetOrderStatusMidtrans = params =>
     api.post('app-get-order-status-from-midtrans', params.data_request)
+  const postGetVideo = params =>
+    api.post('app-get-youtube-videos', params.data_request)
+  const postGetArticle = params =>
+    api.post('app-get-articles', params.data_request)
 
 
   // ------
@@ -193,6 +197,8 @@ const create = (baseURL = 'https://www.mooimom.id/') => {
     postGetCommissionByDate,
     postGetBalance,
     postGetOrderStatusMidtrans,
+    postGetVideo,
+    postGetArticle,
   }
 }
 

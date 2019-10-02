@@ -14,6 +14,7 @@ import com.midtrans.sdk.corekit.core.LocalDataHandler;
 import com.midtrans.sdk.corekit.core.MidtransSDK;
 import com.midtrans.sdk.corekit.core.SdkCoreFlowBuilder;
 import com.midtrans.sdk.corekit.core.TransactionRequest;
+import com.midtrans.sdk.corekit.core.UIKitCustomSetting;
 import com.midtrans.sdk.corekit.core.themes.CustomColorTheme;
 import com.midtrans.sdk.corekit.models.ItemDetails;
 import com.midtrans.sdk.corekit.models.UserAddress;
@@ -71,9 +72,6 @@ public class MidtransModule extends ReactContextBaseJavaModule {
                     .enableLog(true)
                     .buildSDK();
         } else {
-            // Init custom settings
-//            UIKitCustomSetting uisetting = new UIKitCustomSetting();
-//            uisetting.setShowPaymentStatus(true);
 
             // SDK initiation for UIflow
             SdkUIFlowBuilder.init()
@@ -155,28 +153,34 @@ public class MidtransModule extends ReactContextBaseJavaModule {
                 .setColorTheme(colorTheme)
                 .buildSDK();
 
-        userDetail.setUserAddresses(userAddresses);
-        LocalDataHandler.saveObject("user_details", userDetail);
-
-        TransactionRequest transactionRequest = new TransactionRequest(
-                transRequest.getString("transactionId"),
-                transRequest.getInt("totalAmount"));
-
-        setItemDetail(itemDetails, transactionRequest);
-
-        CreditCard ccOptions = new CreditCard();
-        ccOptions.setSaveCard(creditCardOptions.getBoolean("saveCard"));
-        ccOptions.setAuthentication(Authentication.AUTH_RBA);
-        //ccOptions.setChannel(CreditCard.MIGS);
-        transactionRequest.setCreditCard(ccOptions);
-        transactionRequest.setCardPaymentInfo(creditCardOptions.getString("paymentMode"), creditCardOptions.getBoolean("secure"));
-
-        MidtransSDK.getInstance().setTransactionRequest(transactionRequest);
+        // userDetail.setUserAddresses(userAddresses);
+        // LocalDataHandler.saveObject("user_details", userDetail);
+        //
+        // TransactionRequest transactionRequest = new TransactionRequest(
+        //         transRequest.getString("transactionId"),
+        //         transRequest.getInt("totalAmount"));
+        //
+        // setItemDetail(itemDetails, transactionRequest);
+        //
+        // CreditCard ccOptions = new CreditCard();
+        // ccOptions.setSaveCard(creditCardOptions.getBoolean("saveCard"));
+        // ccOptions.setAuthentication(Authentication.AUTH_RBA);
+        // //ccOptions.setChannel(CreditCard.MIGS);
+        // transactionRequest.setCreditCard(ccOptions);
+        // transactionRequest.setCardPaymentInfo(creditCardOptions.getString("paymentMode"), creditCardOptions.getBoolean("secure"));
+        //
+        // MidtransSDK.getInstance().setTransactionRequest(transactionRequest);
 
         // if(transRequest.hasKey("paymentType")) {
         //     MidtransSDK.getInstance().startPaymentUiFlow(getCurrentActivity(), PaymentMethod.values()[transRequest.getInt("paymentType")]);
         // } else {
-            MidtransSDK.getInstance().startPaymentUiFlow(getCurrentActivity(),transRequest.getString("token") );
+        // Init custom settings
+        UIKitCustomSetting uisetting = new UIKitCustomSetting();
+        uisetting.setShowPaymentStatus(true);
+        uisetting.setSkipCustomerDetailsPages(true);
+        uisetting.setEnableAutoReadSms(true);
+        MidtransSDK.getInstance().setUIKitCustomSetting(uisetting);
+        MidtransSDK.getInstance().startPaymentUiFlow(getCurrentActivity(),transRequest.getString("token") );
         // }
     }
 

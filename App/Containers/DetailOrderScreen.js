@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Alert, ActivityIndicator } from 'react-native'
+import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Alert, ActivityIndicator, Modal } from 'react-native'
 import { Images, Metrics, Colors, Fonts } from '../Themes'
 import FastImage from 'react-native-fast-image'
 import GetOrderActions from '../Redux/GetOrderRedux'
@@ -7,7 +7,6 @@ import CommissionEstimationActions from '../Redux/CommissionEstimationRedux'
 import GetOrderStatusMidtransActions from '../Redux/GetOrderStatusMidtransRedux'
 import { connect } from 'react-redux'
 import {convertToRupiah, getDateFromString } from '../Lib/utils'
-import ModalDropDown from '../Components/ModalDropDown'
 import MidtransModule from '../Lib/Midtrans'
 
 // Styles
@@ -26,20 +25,14 @@ class DetailOrderScreen extends Component {
       order_id:this.props.navigation.state.params.order_id,
       totalPrice:0,
       commission:0,
-      order: {}
+      order: {},
+      midtrans: {},
+      isShowPaymentMethod: false
     }
   }
 
   componentDidMount () {
-    let data = {
-      data_request:{
-        user_id: this.props.auth.payload.user_id,
-        unique_token: this.props.auth.payload.unique_token,
-        order_id : this.state.order_id
-      }
-    }
-    this.props.getOrderRequest(data)
-    this.props.getStatusMidtransProcess(data)
+    this.reloadData()
   }
 
   componentWillReceiveProps(newProps){
@@ -49,10 +42,13 @@ class DetailOrderScreen extends Component {
         newProps.order.error === null &&
         !newProps.order.fetching
       ) {
+
         this.setState({
           order: newProps.order.payload,
           totalPrice: newProps.order.payload.order_total,
-          commission: newProps.order.payload.total_commission_for_this_order
+          commission: newProps.order.payload.total_commission_for_this_order,
+          midtrans: JSON.parse(newProps.order.payload.midtrans_data),
+          isShowPaymentMethod: false
         })
 
         // this.reloadCommission(newProps.order.payload.order_items)
@@ -70,16 +66,18 @@ class DetailOrderScreen extends Component {
           })
       }
     }
+  }
 
-    if (this.props.statusMidtrans !== newProps.statusMidtrans) {
-      if (
-        newProps.statusMidtrans.payload !== null &&
-        newProps.statusMidtrans.error === null &&
-        !newProps.statusMidtrans.fetching
-      ) {
-          console.info(newProps.statusMidtrans.payload)
+  reloadData(){
+    let data = {
+      data_request:{
+        user_id: this.props.auth.payload.user_id,
+        unique_token: this.props.auth.payload.unique_token,
+        order_id : this.state.order_id
       }
     }
+    this.props.getOrderRequest(data)
+    // this.props.getStatusMidtransProcess(data)
   }
 
   reloadCommission(items){
@@ -153,7 +151,7 @@ class DetailOrderScreen extends Component {
     }
 
     const callback = (res) => {
-        console.log(res)
+        this.reloadData()
     };
 
     MidtransModule.checkOut(
@@ -222,10 +220,138 @@ class DetailOrderScreen extends Component {
     )
   }
 
+  renderMethod(){
+    const {status_code, payment_type, va_numbers, payment_code,
+      permata_va_number, transaction_status, store,
+      biller_code, bill_key} = this.state.midtrans
+    if(status_code && status_code !== '201' && transaction_status && transaction_status !== 'pending') return <View/>
+    switch(payment_type){
+      case 'echannel':
+        return (
+          <View>
+            <Text style={styles.deliveryText2}>Mandiri Bill Payment</Text>
+            <View style={styles.wrapperSeparator}/>
+            <Text style={styles.deliveryText3}>Company Code</Text>
+            <Text style={styles.deliveryText2}>{biller_code}</Text>
+            <View style={styles.wrapperSeparator}/>
+            <Text style={styles.deliveryText3}>Billpay Code</Text>
+            <Text style={styles.deliveryText2}>{bill_key}</Text>
+          </View>
+        );
+      case 'bank_transfer':
+        if(va_numbers && va_numbers.length > 0){
+          switch(va_numbers[0].bank){
+            case 'bca':
+              return(
+              <View>
+                <Text style={styles.deliveryText2}>BCA Virtual Account</Text>
+                <View style={styles.wrapperSeparator}/>
+                <Text style={styles.deliveryText3}>Nomor Virtual Account</Text>
+                <Text style={styles.deliveryText2}>{va_numbers[0].va_number}</Text>
+              </View>
+              )
+            case 'bni':
+              return(
+              <View>
+                <Text style={styles.deliveryText2}>BNI Virtual Account</Text>
+                <View style={styles.wrapperSeparator}/>
+                <Text style={styles.deliveryText3}>Nomor Virtual Account</Text>
+                <Text style={styles.deliveryText2}>{va_numbers[0].va_number}</Text>
+              </View>
+              )
+            default:
+              return <View/>
+          }
+        } else if(permata_va_number && permata_va_number !== ''){
+          return(
+            <View>
+              <Text style={styles.deliveryText2}>Permata Virtual Account</Text>
+              <View style={styles.wrapperSeparator}/>
+              <Text style={styles.deliveryText3}>Nomor Virtual Account</Text>
+              <Text style={styles.deliveryText2}>{permata_va_number}</Text>
+            </View>
+          )
+        } else {
+          return <View/>
+        }
+      case 'cstore':
+        switch(store){
+          case 'indomaret':
+            return (
+            <View>
+              <Text style={styles.deliveryText2}>Indomaret</Text>
+              <View style={styles.wrapperSeparator}/>
+              <Text style={styles.deliveryText3}>Kode Pembayaran:</Text>
+              <Text style={styles.deliveryText2}>{payment_code}</Text>
+            </View>
+          );
+          default:
+            return <View/>
+        }
+        break;
+    }
+    return <View/>
+  }
+
+  renderShowPayment(){
+    if(!this.state.isShowPaymentMethod) return;
+    return (
+      <Modal
+      animationType="slide"
+      transparent={true}
+      visible={this.state.isShowPaymentMethod}
+      onRequestClose={() => {
+        this.setState({
+          isShowPaymentMethod:false
+        })
+      }}>
+        <View style={styles.paymentGuideContainer}>
+          <View style={styles.headerWrapper}>
+            <TouchableOpacity style={styles.headerButtonLeft} onPress={() => this.setState({
+              isShowPaymentMethod:false
+            })}>
+              <Image source={Images.back} style={styles.buttonHeader} />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.cartContainer}>
+            <ScrollView
+            showsVerticalScrollIndicator={false}
+            >
+            <Text style={styles.productSubtitle}>Cara Pembayaran</Text>
+            <View style={styles.wrapperSeparator}/>
+            <View style={styles.selectedDeliveryWrapper}>
+              <Text style={styles.deliveryText3}>Segera Lakukan Pembayaran Sebelum:</Text>
+              <Text style={styles.deliveryText2}> {getDateFromString(this.state.order.order_expire_date, true, true, true, false)}</Text>
+            </View>
+            <View style={styles.wrapperSeparator}/>
+            <Text style={styles.deliveryText3}>Jumlah yang harus dibayar:</Text>
+            <Text style={styles.priceText2}>{convertToRupiah(parseInt(this.state.midtrans.gross_amount))}</Text>
+            <View style={styles.wrapperSeparator}/>
+            <Text style={styles.deliveryText3}>Metode Pembayaran:</Text>
+            {this.renderMethod()}
+            </ScrollView>
+          </View>
+        </View>
+      </Modal>
+    )
+  }
+
   renderMenu(){
     var totalPrice = convertToRupiah(this.state.totalPrice)
     var commission = convertToRupiah(this.state.commission)
     if(this.state.order.order_status === 'pending'){
+      var menuPay
+      if(!this.state.midtrans || !this.state.midtrans.payment_type){
+        menuPay = (<TouchableOpacity style={styles.buyBtn} onPress={() => this.payNow()}>
+          <Text style={styles.buyText}>Bayar</Text>
+        </TouchableOpacity>)
+      } else {
+        menuPay = (<TouchableOpacity style={styles.buyBtn} onPress={() => this.setState({
+          isShowPaymentMethod: true
+        })}>
+          <Text style={styles.buyText}>Cara Pembayaran</Text>
+        </TouchableOpacity>)
+      }
       return (
         <View style={styles.menuWrapper}>
           <View style={styles.subtotalWrapper}>
@@ -233,9 +359,7 @@ class DetailOrderScreen extends Component {
             <Text style={styles.priceText}>{totalPrice}</Text>
             <Text style={styles.commissionText}>Est. Komisi {commission}</Text>
           </View>
-          <TouchableOpacity style={styles.buyBtn} onPress={() => this.payNow()}>
-            <Text style={styles.buyText}>Bayar</Text>
-          </TouchableOpacity>
+          {menuPay}
         </View>
       )
     } else if(this.state.order.order_status === 'completed'){
@@ -291,7 +415,6 @@ class DetailOrderScreen extends Component {
       )
     }
     const {menuStatus, order} = this.state
-    console.info(order)
     var status = ''
     var idx = menuStatus.findIndex(status => status.status === order.order_status)
     if(idx >= 0)
@@ -327,6 +450,7 @@ class DetailOrderScreen extends Component {
           </ScrollView>
         </View>
         {this.renderMenu()}
+        {this.renderShowPayment()}
       </View>
     )
   }
