@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, TouchableOpacity, Image, KeyboardAvoidingView, TextInput, Alert } from 'react-native'
-import { Images, Colors } from '../Themes'
+import { ScrollView, Text, View, TouchableOpacity, Image, KeyboardAvoidingView, TextInput, Alert, ActivityIndicator } from 'react-native'
+import { Images, Colors, Metrics } from '../Themes'
 import LinearGradient from 'react-native-linear-gradient';
 import SignUpActions from '../Redux/SignUpRedux'
 import SendOtpActions from '../Redux/SendOtpRedux'
+import LoginActions from '../Redux/LoginRedux'
 import { connect } from 'react-redux'
 // Styles
 import styles from './Styles/SignupScreenStyles'
@@ -37,10 +38,40 @@ class SignupScreen extends Component {
         newProps.register.error !== null &&
         !newProps.register.fetching
       ) {
-        isProcessing = false
+        const {phone} = this.state
+        var myPhoneNumber = phone.indexOf('0') == 0 ? phone.substring(1) : phone;
+        let data = {
+          data_request: {
+            phone_number: myPhoneNumber
+          }
+        }
+        this.props.loginProcess(data)
+      }
+    }
+
+    if (this.props.login !== newProps.login) {
+      if (
+        newProps.login.payload !== null &&
+        newProps.login.error === null &&
+        !newProps.login.fetching
+      ) {
+          let data ={
+            data_request: {
+              phone_number: this.props.login.data.data_request.phone_number,
+              user_id: newProps.login.payload.user_id
+            }
+          }
+          this.props.sendOtpProcess(data)
+        }
+      else if (
+        newProps.login.payload === null &&
+        newProps.login.error !== null &&
+        !newProps.login.fetching
+      ) {
+          isProcessing = false
           Alert.alert(
             '',
-            newProps.register.error.human_message,
+            newProps.login.error.human_message,
             [
               {
                 text: 'OK'
@@ -48,8 +79,6 @@ class SignupScreen extends Component {
             ],
             { cancelable: false }
           )
-      } else if(!newProps.register.fetching){
-        isProcessing = false
       }
     }
 
@@ -64,6 +93,16 @@ class SignupScreen extends Component {
       }
       else if(!newProps.sendOtp.fetching){
         isProcessing = false
+        Alert.alert(
+          '',
+          newProps.sendOtp.error.human_message,
+          [
+            {
+              text: 'OK'
+            }
+          ],
+          { cancelable: false }
+        )
       }
     }
   }
@@ -112,7 +151,7 @@ class SignupScreen extends Component {
         <LinearGradient colors={['#7CE0D3', '#28C9B9']} style={styles.linergradient}>
           <Image source={Images.mooimomLogoWhite} style={styles.title}/>
           <View style={styles.signUpContainer}>
-              <Text style={styles.caption1}>Buat Akun Mooimom Sekarang</Text>
+              <Text style={styles.caption1}>Masukkan Nomor Handphone</Text>
               <View style={styles.textInput}>
                 <Text style={styles.number62}>+62</Text>
                 <TextInput style={styles.textTextInput}
@@ -134,20 +173,15 @@ class SignupScreen extends Component {
                 style={styles.button}
                 onPress={() => this.signUp()}
               >
-                <Text style={styles.btnText}>Daftar</Text>
+                <Text style={styles.btnText}>Lanjutkan</Text>
               </TouchableOpacity>
-              <View style={styles.SignInContainer}>
-                <Text style={styles.caption2}>Sudah Punya Akun? </Text>
-                <TouchableOpacity
-                  onPress={() => this.actNavigate('LoginScreen')}
-                >
-                  <Text style={styles.textSignUp}>Sign In</Text>
-                </TouchableOpacity>
-              </View>
           </View>
         </LinearGradient>
         </KeyboardAvoidingView>
         </ScrollView>
+        {isProcessing && <View style={{position: 'absolute', top: 0, left: 0, width: Metrics.screenWidth, height: Metrics.screenHeight, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)'}}>
+          <ActivityIndicator size="large" color={Colors.mooimom} />
+        </View>}
       </View>
     )
   }
@@ -156,6 +190,7 @@ class SignupScreen extends Component {
 const mapStateToProps = state => {
   return {
     register: state.register,
+    login: state.login,
     sendOtp: state.sendOtp
   }
 };
@@ -167,7 +202,10 @@ const mapDispatchToProps = dispatch => {
     },
     sendOtpProcess: data => {
       dispatch(SendOtpActions.sendOtpRequest(data))
-    }
+    },
+    loginProcess: data => {
+      dispatch(LoginActions.loginRequest(data))
+    },
   }
 };
 
