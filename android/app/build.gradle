@@ -95,7 +95,11 @@ def enableProguardInReleaseBuilds = false
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 
     defaultConfig {
         applicationId "com.mooimom.id"
@@ -104,7 +108,7 @@ android {
         versionCode 1
         versionName "1.0"
         ndk {
-            abiFilters "armeabi-v7a", "x86"
+            abiFilters "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
         }
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled = true
@@ -139,7 +143,7 @@ android {
         variant.outputs.each { output ->
             // For each separate APK per architecture, set a unique version code as described here:
             // http://tools.android.com/tech-docs/new-build-system/user-guide/apk-splits
-            def versionCodes = ["armeabi-v7a":1, "x86":2]
+            def versionCodes = ["armeabi-v7a":1, "x86":2, "arm64-v8a":3, "x86_64":4]
             def abi = output.getFilter(OutputFile.ABI)
             if (abi != null) {  // null for the universal-debug, universal-release variants
                 output.versionCodeOverride =
@@ -150,7 +154,7 @@ android {
 }
 
 dependencies {
-    compile project(':react-native-fast-image')
+    implementation project(':react-native-fast-image')
     implementation project(':react-native-image-crop-picker')
     implementation project(':react-native-firebase')
     implementation project(':react-native-fetch-blob')
@@ -159,7 +163,7 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     implementation 'com.android.support:design:27.1.0'
-    implementation "com.facebook.react:react-native:+"  // From node_modules
+    implementation "com.facebook.react:react-native:0.59.10"
     implementation project(':react-native-linear-gradient')
     // Firebase dependencies
     implementation "com.google.android.gms:play-services-base:16.1.0"

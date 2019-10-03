@@ -111,6 +111,7 @@ class OrderScreen extends Component {
     this.setState({
       selectedMenuIdx: index,
       currentPage: 1,
+      refreshing: true,
       orders: []
     })
     let data = {
@@ -125,7 +126,7 @@ class OrderScreen extends Component {
   }
 
   onEndReached(){
-    if (!isReloadPage) {
+    if (!isReloadPage && this.props.allOrder && this.props.allOrder.payload && this.props.allOrder.payload.how_many_pages) {
       if (this.state.currentPage + 1 <= this.props.allOrder.payload.how_many_pages) {
         isReloadPage = true
         let data = {

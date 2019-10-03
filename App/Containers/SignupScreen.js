@@ -91,19 +91,6 @@ class SignupScreen extends Component {
         this.actNavigate('AuthScreen')
         isProcessing = false
       }
-      else if(!newProps.sendOtp.fetching){
-        isProcessing = false
-        Alert.alert(
-          '',
-          newProps.sendOtp.error.human_message,
-          [
-            {
-              text: 'OK'
-            }
-          ],
-          { cancelable: false }
-        )
-      }
     }
   }
 

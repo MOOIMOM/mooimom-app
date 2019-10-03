@@ -11,27 +11,17 @@ import _ from 'lodash';
 import styles from './Styles/AuthScreenStyles'
 
 const codeLength = 4
-var isSendAuth = false
-var timeoutOtp
+var isProcessing = false
 class AuthScreen extends Component {
   constructor (props) {
     super(props)
     this.state = {
       codeArr: new Array(codeLength).fill(''),
       currentIndex: 0,
-      isRequestOtp: true
+      isSendAuth: false
     };
 
     this.codeInputRefs = [];
-  }
-
-  componentDidMount(){
-    let that = this
-    timeoutOtp = setTimeout(function(){that.setState({isRequestOtp: false})}, 60000)
-  }
-
-  componentWillUnmount(){
-    clearTimeout(timeoutOtp)
   }
 
   componentWillReceiveProps (newProps) {
@@ -39,22 +29,61 @@ class AuthScreen extends Component {
       if (
         newProps.auth.payload !== null &&
         newProps.auth.error === null &&
-        !newProps.auth.fetching && isSendAuth
+        !newProps.auth.fetching && this.state.isSendAuth
       ) {
-          isSendAuth = false
+          this.setState({
+            isSendAuth: false
+          })
           this.clear()
           this.actNavigate('MainScreen')
         }
       else if (
         newProps.auth.payload === null &&
         newProps.auth.error !== null &&
-        !newProps.auth.fetching && isSendAuth
+        !newProps.auth.fetching && this.state.isSendAuth
       ) {
-        isSendAuth = false
+        this.setState({
+          isSendAuth: false
+        })
         this.clear()
         Alert.alert(
           '',
-          'Tolong Masukkan Kode Verifikasi Dengan Benar',
+          newProps.auth.error.human_message,
+          [
+            {
+              text: 'OK'
+            }
+          ],
+          { cancelable: false }
+        )
+      }
+    }
+
+    if (this.props.sendOtp !== newProps.sendOtp) {
+      if (
+        newProps.sendOtp.error !== null &&
+        !newProps.sendOtp.fetching && isProcessing
+      ) {
+        isProcessing = false
+        Alert.alert(
+          '',
+          newProps.sendOtp.error.human_message,
+          [
+            {
+              text: 'OK'
+            }
+          ],
+          { cancelable: false }
+        )
+      } else if (
+        newProps.sendOtp.payload !== null &&
+        newProps.sendOtp.error === null &&
+        !newProps.sendOtp.fetching && isProcessing
+      ) {
+        isProcessing = false
+        Alert.alert(
+          '',
+          'Kode Berhasil Dikirim Ulang',
           [
             {
               text: 'OK'
@@ -140,7 +169,7 @@ class AuthScreen extends Component {
   }
 
   onFulfill(){
-    if(isSendAuth) return;
+    if(this.state.isSendAuth) return;
     Keyboard.dismiss()
     const code = this.state.codeArr.join('');
     if(code.length < 4){
@@ -157,6 +186,9 @@ class AuthScreen extends Component {
       return;
     }
     // this.props.navigation.navigate('App');
+    this.setState({
+      isSendAuth: true
+    })
     let data ={
       data_request: {
         phone_number: this.props.sendOtp.data.data_request.phone_number,
@@ -165,24 +197,17 @@ class AuthScreen extends Component {
       }
     }
     this.props.authProcess(data)
-    isSendAuth = true
   }
 
   requestOtp(){
+    if(isProcessing) return;
     let data ={
       data_request: {
         phone_number: this.props.sendOtp.data.data_request.phone_number,
         user_id: this.props.sendOtp.data.data_request.user_id,
       }
     }
-    this.setState({
-      isRequestOtp: true
-    })
-    timeoutOtp = setTimeout(() => {
-      this.setState({
-        isRequestOtp: false
-      })
-    }, 30000);
+    isProcessing = true
     this.props.sendOtpProcess(data)
   }
 
@@ -254,16 +279,16 @@ class AuthScreen extends Component {
                 <Text style={styles.btnText}>Verifikasi</Text>
               </TouchableOpacity>
               <View style={styles.SignUpContainer}>
-                {!this.state.isRequestOtp && <TouchableOpacity onPress={() => this.requestOtp()}>
+                <TouchableOpacity onPress={() => this.requestOtp()}>
                   <Text style={styles.textSignIn}>Kirim ulang kode verifikasi</Text>
-                </TouchableOpacity>}
+                </TouchableOpacity>
               </View>
             </KeyboardAvoidingView>
           </View>
         </LinearGradient>
         </KeyboardAvoidingView>
         </ScrollView>
-        {isSendAuth && <View style={{position: 'absolute', top: 0, left: 0, width: Metrics.screenWidth, height: Metrics.screenHeight, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)'}}>
+        {this.state.isSendAuth && <View style={{position: 'absolute', top: 0, left: 0, width: Metrics.screenWidth, height: Metrics.screenHeight, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)'}}>
           <ActivityIndicator size="large" color={Colors.mooimom} />
         </View>}
       </View>
