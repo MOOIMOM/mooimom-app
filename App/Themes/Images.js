@@ -65,23 +65,6 @@ const images = {
   learnpage4: require('../Images/learn/4.png'),
   learnpage5: require('../Images/learn/5.png'),
   learnpage6: require('../Images/learn/6.png'),
-
-  //// TEMP:
-  catMasaKehamilan: require('../Images/Icons/masa-kehamilan.png'),
-  catMasaMenyusui: require('../Images/Icons/masa-menyusui.png'),
-  catPascaMelahirkan: require('../Images/Icons/pasca-melahirkan.png'),
-  catProdukBayi: require('../Images/Icons/produk-bayi.png'),
-  catGiftSet: require('../Images/Icons/gift-set.png'),
-  banner1: require('../Images/temp/banner-1.png'),
-  banner2: require('../Images/temp/banner-2.png'),
-  banner3: require('../Images/temp/banner-3.png'),
-  promo1: require('../Images/temp/promo-1.png'),
-  promo2: require('../Images/temp/promo-2.png'),
-  promo3: require('../Images/temp/promo-3.png'),
-  product1: require('../Images/temp/product-1.jpg'),
-  product2: require('../Images/temp/product-2.jpg'),
-  product3: require('../Images/temp/product-3.jpg'),
-  product4: require('../Images/temp/product-4.jpg'),
 }
 
 export default images

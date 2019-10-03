@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, TouchableOpacity, Image, KeyboardAvoidingView, TextInput, Alert, Keyboard } from 'react-native'
+import { ScrollView, Text, View, TouchableOpacity, Image, KeyboardAvoidingView, TextInput, Alert, Keyboard, ActivityIndicator } from 'react-native'
 import { NavigationActions, StackActions } from 'react-navigation'
-import { Images, Colors } from '../Themes'
+import { Images, Colors, Metrics } from '../Themes'
 import { connect } from 'react-redux'
 import AuthActions from '../Redux/AuthRedux'
 import SendOtpActions from '../Redux/SendOtpRedux'
@@ -140,6 +140,7 @@ class AuthScreen extends Component {
   }
 
   onFulfill(){
+    if(isSendAuth) return;
     Keyboard.dismiss()
     const code = this.state.codeArr.join('');
     if(code.length < 4){
@@ -189,24 +190,46 @@ class AuthScreen extends Component {
     let codeInputs = [];
     for (let i = 0; i < codeLength; i++) {
       const id = i;
-      codeInputs.push(
-        <TextInput
-          key={id}
-          ref={ref => (this.codeInputRefs[id] = ref)}
-          style={[
-            styles.codeInput
-          ]}
-          underlineColorAndroid="transparent"
-          selectionColor={Colors.mooimom}
-          keyboardType={'numeric'}
-          returnKeyType={'done'}
-          onFocus={() => this._onFocus(id)}
-          value={this.state.codeArr[id] ? this.state.codeArr[id].toString() : ''}
-          onChangeText={text => this._onInputCode(text, id)}
-          onKeyPress={(e) => this._onKeyPress(e)}
-          maxLength={1}
-        />
-      )
+      if(i === 0){
+        codeInputs.push(
+          <TextInput
+            key={id}
+            ref={ref => (this.codeInputRefs[id] = ref)}
+            style={[
+              styles.codeInput
+            ]}
+            underlineColorAndroid="transparent"
+            selectionColor={Colors.mooimom}
+            keyboardType={'numeric'}
+            returnKeyType={'done'}
+            autoFocus={true}
+            onFocus={() => this._onFocus(id)}
+            value={this.state.codeArr[id] ? this.state.codeArr[id].toString() : ''}
+            onChangeText={text => this._onInputCode(text, id)}
+            onKeyPress={(e) => this._onKeyPress(e)}
+            maxLength={1}
+          />
+        )
+      } else {
+        codeInputs.push(
+          <TextInput
+            key={id}
+            ref={ref => (this.codeInputRefs[id] = ref)}
+            style={[
+              styles.codeInput
+            ]}
+            underlineColorAndroid="transparent"
+            selectionColor={Colors.mooimom}
+            keyboardType={'numeric'}
+            returnKeyType={'done'}
+            onFocus={() => this._onFocus(id)}
+            value={this.state.codeArr[id] ? this.state.codeArr[id].toString() : ''}
+            onChangeText={text => this._onInputCode(text, id)}
+            onKeyPress={(e) => this._onKeyPress(e)}
+            maxLength={1}
+          />
+        )
+      }
     }
     return (
       <View style={styles.container}>
@@ -240,6 +263,9 @@ class AuthScreen extends Component {
         </LinearGradient>
         </KeyboardAvoidingView>
         </ScrollView>
+        {isSendAuth && <View style={{position: 'absolute', top: 0, left: 0, width: Metrics.screenWidth, height: Metrics.screenHeight, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)'}}>
+          <ActivityIndicator size="large" color={Colors.mooimom} />
+        </View>}
       </View>
     )
   }

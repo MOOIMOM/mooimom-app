@@ -162,6 +162,7 @@ class SignupScreen extends Component {
                   keyboardType='numeric'
                   value={this.state.phone}
                   returnKeyType='done'
+                  autoFocus={true}
                   placeholder='contoh : 8123456789'
                   underlineColorAndroid='transparent'
                   placeholderTextColor={Colors.lightGray}

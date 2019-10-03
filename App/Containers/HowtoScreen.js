@@ -55,6 +55,8 @@ class HowtoScreen extends Component {
             onSnapToItem={(index) => this.setState({ activeSlide: index }) }
           />
           <View style={styles.bottom}>
+          <View style={styles.bottom3}/>
+          <View style={styles.bottom3}>
           <Pagination
             dotsLength={this.state.learnpages.length}
             activeDotIndex={this.state.activeSlide}
@@ -64,7 +66,10 @@ class HowtoScreen extends Component {
             containerStyle={styles.paginationContainerStyleHeroBanner}
             dotContainerStyle={styles.paginationDotContainerStyleHeroBanner}
           />
+          </View>
+          <View style={styles.bottom3}>
           {this.state.activeSlide === this.state.learnpages.length - 1 && <Text style={styles.gotoText} onPress={() => this.actNavigate('SignupScreen')}>Lanjut ></Text>}
+          </View>
           </View>
       </View>
     )

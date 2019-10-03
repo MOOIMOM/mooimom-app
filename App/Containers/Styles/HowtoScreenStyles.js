@@ -39,13 +39,14 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  bottom3:{
+    flex: 1,
+    alignItems: 'center',
+  },
   gotoText:{
-    position: 'absolute',
-    left: Metrics.screenWidth / 4 + Metrics.screenWidth / 12,
     color:Colors.mooimom,
     fontFamily: Fonts.type.gotham4,
-    fontSize: 18,
-    top:20
+    fontSize: Metrics.fontSize4,
   },
   paginationDotStyleHeroBanner: {
       width: 8 * Metrics.screenWidth / 320,
