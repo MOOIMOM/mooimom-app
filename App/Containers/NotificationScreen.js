@@ -73,6 +73,7 @@ class NotificationScreen extends Component {
             <Text style={styles.textNotif}>{item.the_message}</Text>
             <Text style={styles.textDateNotif}>{getDateFromString(item.created, true, false, true, false)}</Text>
           </View>
+          <Image source={Images.rightArrowBlack} style={styles.imgMenu2}/>
         </View>
       </TouchableWithoutFeedback>
     )

@@ -120,12 +120,22 @@ export default StyleSheet.create({
   btnMenu:{
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-start'
+    justifyContent: 'space-between',
   },
   imgMenu:{
     width: 20* Metrics.screenWidth / 320,
     height:20* Metrics.screenWidth / 320,
     resizeMode: 'contain'
+  },
+  leftContainerMenu:{
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  imgMenu2:{
+    width: 10 * Metrics.screenWidth / 320,
+    height: 10 * Metrics.screenWidth / 320,
+    resizeMode: 'contain',
+    marginRight: 10
   },
   imgText:{
     color: Colors.gray,

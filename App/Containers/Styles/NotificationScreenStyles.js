@@ -78,7 +78,7 @@ export default StyleSheet.create({
   textDateNotif:{
     color:Colors.gray,
     fontFamily: Fonts.type.gotham5,
-    fontSize: Metrics.fontSize0,
+    fontSize: Metrics.fontSize1,
     textAlign: 'right',
     paddingTop: 10
   },
@@ -86,6 +86,12 @@ export default StyleSheet.create({
     marginLeft: 10,
     color:Colors.black,
     fontFamily: Fonts.type.gotham2,
-    fontSize: Metrics.fontSize1,
+    fontSize: Metrics.fontSize2,
+  },
+  imgMenu2:{
+    width: 10 * Metrics.screenWidth / 320,
+    height: 10 * Metrics.screenWidth / 320,
+    resizeMode: 'contain',
+    marginHorizontal: 10
   }
 })

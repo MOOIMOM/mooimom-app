@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableWithoutFeedback, Image } from 'react-native'
+import { View, Text, TouchableOpacity, Image } from 'react-native'
 import { Images } from '../Themes'
 import FastImage from 'react-native-fast-image'
 import {convertToRupiah, share} from '../Lib/utils'
@@ -11,11 +11,15 @@ export default class ProductCard extends Component {
     super(props);
     this.state = {
       product: this.props.product,
-      isInWishlist: this.props.product.wishlist === 1
+      isInWishlist: this.props.product.wishlist === 1,
+      modalClipboardVisible: false
     };
   }
 
   onSharePress(){
+    this.setState({
+      modalClipboardVisible: true
+    })
     share(this.state.product.images)
     if(this.props.sharedProductProcess){
       let data = {
@@ -23,6 +27,11 @@ export default class ProductCard extends Component {
       }
       this.props.sharedProductProcess(data)
     }
+    setTimeout(() => {
+      this.setState({
+        modalClipboardVisible: false
+      })
+    }, 3000);
   }
 
   onWishlistPress(){
@@ -62,14 +71,12 @@ export default class ProductCard extends Component {
     if(this.state.isInWishlist)
       image = Images.wishlist1
     return(
-      <TouchableWithoutFeedback onPress={() => this.onWishlistPress()}>
-        <View style={styles.wishlist}>
-          <Image
-              source={image}
-              style={styles.wishlistImage}
-          />
-        </View>
-      </TouchableWithoutFeedback>
+      <TouchableOpacity onPress={() => this.onWishlistPress()} style={styles.wishlist}>
+        <Image
+            source={image}
+            style={styles.wishlistImage}
+        />
+      </TouchableOpacity>
     )
   }
 
@@ -94,12 +101,13 @@ export default class ProductCard extends Component {
           <Text style={styles.price}>{price}</Text>
         </View>
         <View style={styles.extra}>
-          <TouchableWithoutFeedback onPress={() => this.onSharePress()}>
-            <View style={styles.btn}>
-              <Text style={styles.textBtn}>BAGIKAN</Text>
-            </View>
-          </TouchableWithoutFeedback>
+          <TouchableOpacity onPress={() => this.onSharePress()} style={styles.btn}>
+            <Text style={styles.textBtn}>BAGIKAN</Text>
+          </TouchableOpacity>
         </View>
+        {this.state.modalClipboardVisible && <View style={styles.modalView}>
+          <Text style={styles.modalText}>Sharing ...</Text>
+        </View>}
       </View>
     );
   }

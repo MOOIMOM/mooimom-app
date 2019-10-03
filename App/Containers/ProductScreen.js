@@ -26,6 +26,8 @@ class ProductScreen extends Component {
       customSelected:'',
       modalClipboardVisible: false,
       modalClipboardVisible2: false,
+      modalClipboardVisible3: false,
+      modalClipboardVisible4: false,
       willShareDescription:false,
       finishShareImage: false,
       socialShare: '',
@@ -133,11 +135,19 @@ class ProductScreen extends Component {
   };
 
   async shareSocial(social){
+    this.setState({
+      modalClipboardVisible3: true
+    })
     if(social === 'whatsapp') {
       const url = `whatsapp://send?phone=6281288446533`;
       Linking.canOpenURL(url).then(supported => {
           if (supported) {
             if(this.state.willShareDescription === false){
+              setTimeout(() => {
+                this.setState({
+                  modalClipboardVisible3: false
+                })
+              }, 3000);
               this.setState({
                 willShareDescription: true,
                 finishShareImage : false,
@@ -153,6 +163,11 @@ class ProductScreen extends Component {
             }
             this.props.sharedProductProcess(data)
           } else {
+            setTimeout(() => {
+              this.setState({
+                modalClipboardVisible3: false
+              })
+            }, 1000);
               Alert.alert(
                   'Sorry',
                   'WhatsApp is not installed on your phone',
@@ -163,9 +178,19 @@ class ProductScreen extends Component {
       const url = `fb://profile/mooimom.id`;
       Linking.canOpenURL(url).then(supported => {
           if (supported) {
+            setTimeout(() => {
+              this.setState({
+                modalClipboardVisible3: false
+              })
+            }, 3000);
             Clipboard.setString(this.state.product.product_content);
             share(this.state.product.images, social)
           } else {
+            setTimeout(() => {
+              this.setState({
+                modalClipboardVisible3: false
+              })
+            }, 1000);
               Alert.alert(
                   'Sorry',
                   'Facebook is not installed on your phone',
@@ -180,9 +205,19 @@ class ProductScreen extends Component {
       const url = `instagram://user?username=mooimom.id`;
       Linking.canOpenURL(url).then(supported => {
           if (supported) {
+            setTimeout(() => {
+              this.setState({
+                modalClipboardVisible3: false
+              })
+            }, 3000);
             Clipboard.setString(this.state.product.product_content);
             share(this.state.product.images, social)
           } else {
+              setTimeout(() => {
+                this.setState({
+                  modalClipboardVisible3: false
+                })
+              }, 1000);
               Alert.alert(
                   'Sorry',
                   'Instagram is not installed on your phone',
@@ -194,6 +229,11 @@ class ProductScreen extends Component {
           this.props.sharedProductProcess(data)
       })
     } else {
+      setTimeout(() => {
+        this.setState({
+          modalClipboardVisible3: false
+        })
+      }, 3000);
       Clipboard.setString(this.state.product.product_content);
       share(this.state.product.images, social)
       let data = {
@@ -216,10 +256,14 @@ class ProductScreen extends Component {
   }
 
   async downloadImages(){
+    this.setState({
+      modalClipboardVisible4: true
+    })
     let finish = await download(this.state.product.all_images_mobile_custom)
     if(finish){
       this.setState({
-        modalClipboardVisible2: true
+        modalClipboardVisible2: true,
+        modalClipboardVisible4: false
       })
       setTimeout(() => {
         this.setState({
@@ -789,6 +833,12 @@ class ProductScreen extends Component {
         </View>}
         {this.state.modalClipboardVisible2 && <View style={styles.modalView}>
           <Text style={styles.modalText}>Images have been downloaded</Text>
+        </View>}
+        {this.state.modalClipboardVisible3 && <View style={styles.modalView}>
+          <Text style={styles.modalText}>Sharing ...</Text>
+        </View>}
+        {this.state.modalClipboardVisible4 && <View style={styles.modalView}>
+          <Text style={styles.modalText}>Downloading Images ...</Text>
         </View>}
         {this.state.willShareDescription && <View style={styles.modalShareView}>
           <View style={styles.modalShareContainer}>

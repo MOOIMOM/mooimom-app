@@ -139,10 +139,10 @@ export async function share(images, social = '') {
         Share.shareSingle(shareOptions)
           .then(result => {})
           .catch((e) => {
-            Share.open(shareOptions).then(result => {}).catch((e) => {})
+            return Share.open(shareOptions).then(result => {}).catch((e) => {})
           })
       } else {
-        Share.open(shareOptions).then((resp) => {}).catch((e) => {})
+        return Share.open(shareOptions).then((resp) => {}).catch((e) => {})
       }
     })
     .catch((e) => {

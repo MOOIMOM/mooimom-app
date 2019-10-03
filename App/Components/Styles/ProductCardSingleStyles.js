@@ -31,7 +31,7 @@ export default StyleSheet.create({
   },
   wishlist:{
     position: 'absolute',
-    right: 3,
+    right: 10,
     top: 5
   },
   wishlistImage:{
@@ -115,7 +115,7 @@ export default StyleSheet.create({
   },
   modalView:{
     width: Metrics.screenWidth - 80,
-    height: 40 * Metrics.screenWidth / 320,
+    height: 25 * Metrics.screenWidth / 320,
     backgroundColor: Colors.modal,
     borderRadius: 20 * Metrics.screenWidth / 320,
     position: 'absolute',
@@ -125,7 +125,7 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   modalText:{
-    fontSize: Metrics.fontSize3,
+    fontSize: Metrics.fontSize2,
     color: Colors.white,
     fontFamily: Fonts.type.gotham2,
   },

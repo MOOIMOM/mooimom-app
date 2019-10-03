@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableWithoutFeedback, Image, Linking, Alert } from 'react-native'
+import { View, Text, TouchableOpacity, Image, Linking, Alert } from 'react-native'
 import { Images } from '../Themes'
 import FastImage from 'react-native-fast-image'
 import {convertToRupiah, share, download} from '../Lib/utils'
@@ -12,15 +12,25 @@ export default class ProductCardSingle extends Component {
     this.state = {
       product: this.props.product,
       isInWishlist: this.props.product.wishlist === 1,
-      modalClipboardVisible: false
+      modalClipboardVisible: false,
+      modalClipboardVisible2: false,
+      modalClipboardVisible3: false
     };
   }
 
   onSharePress(social = ''){
+    this.setState({
+      modalClipboardVisible2: true
+    })
     if(social === 'whatsapp') {
       const url = `whatsapp://send?phone=6281288446533`;
       Linking.canOpenURL(url).then(supported => {
           if (supported) {
+            setTimeout(() => {
+              this.setState({
+                modalClipboardVisible2: false
+              })
+            }, 3000);
             share(this.state.product.images, social)
             if(this.props.sharedProductProcess){
               let data = {
@@ -32,16 +42,26 @@ export default class ProductCardSingle extends Component {
               this.props.shareWhatsapp(this.state.product.product_content)
             }
           } else {
-              Alert.alert(
-                  'Sorry',
-                  'WhatsApp is not installed on your phone',
-              )
+            setTimeout(() => {
+              this.setState({
+                modalClipboardVisible2: false
+              })
+            }, 1000);
+            Alert.alert(
+                'Sorry',
+                'WhatsApp is not installed on your phone',
+            )
           }
       })
     } else if(social === 'facebook') {
       const url = `fb://profile/1234567`;
       Linking.canOpenURL(url).then(supported => {
           if (supported) {
+            setTimeout(() => {
+              this.setState({
+                modalClipboardVisible2: false
+              })
+            }, 3000);
             share(this.state.product.images, social)
             if(this.props.sharedProductProcess){
               let data = {
@@ -50,13 +70,23 @@ export default class ProductCardSingle extends Component {
               this.props.sharedProductProcess(data)
             }
           } else {
-              Alert.alert(
-                  'Sorry',
-                  'Facebook is not installed on your phone',
-              )
+            setTimeout(() => {
+              this.setState({
+                modalClipboardVisible2: false
+              })
+            }, 1000);
+            Alert.alert(
+                'Sorry',
+                'Facebook is not installed on your phone',
+            )
           }
       })
     } else {
+      setTimeout(() => {
+        this.setState({
+          modalClipboardVisible2: false
+        })
+      }, 3000);
       share(this.state.product.images, social)
       if(this.props.sharedProductProcess){
         let data = {
@@ -68,10 +98,14 @@ export default class ProductCardSingle extends Component {
   }
 
   async onDownloadPress(){
+    this.setState({
+      modalClipboardVisible3: true
+    })
     let finish = await download(this.state.product.images)
     if(finish){
       this.setState({
-        modalClipboardVisible: true
+        modalClipboardVisible: true,
+        modalClipboardVisible3: false
       })
       setTimeout(() => {
         this.setState({
@@ -118,14 +152,12 @@ export default class ProductCardSingle extends Component {
     if(this.state.isInWishlist)
       image = Images.wishlist1
     return(
-      <TouchableWithoutFeedback onPress={() => this.onWishlistPress()}>
-        <View style={styles.wishlist}>
-          <Image
-              source={image}
-              style={styles.wishlistImage}
-          />
-        </View>
-      </TouchableWithoutFeedback>
+      <TouchableOpacity onPress={() => this.onWishlistPress()} style={styles.wishlist}>
+        <Image
+            source={image}
+            style={styles.wishlistImage}
+        />
+      </TouchableOpacity>
     )
   }
 
@@ -156,36 +188,34 @@ export default class ProductCardSingle extends Component {
         </View>
         <View style={styles.bottomItem}>
           <View style={styles.bottomLeftItem}>
-            <TouchableWithoutFeedback onPress={() => this.onDownloadPress()}>
-              <View style={styles.btnExtra}>
-                <Image source={Images.download} style={styles.imageExtra}/>
-                <Text style={styles.textBtnExtra}>Download</Text>
-              </View>
-            </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={() => this.onSharePress('facebook')}>
-              <View style={styles.btnExtra}>
-                <Image source={Images.fb} style={styles.imageExtra}/>
-                <Text style={styles.textBtnExtra}>FB</Text>
-              </View>
-            </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={() => this.onSharePress('')}>
-              <View style={styles.btnExtra}>
-                <Image source={Images.share2} style={styles.imageExtra}/>
-                <Text style={styles.textBtnExtra}>Lainnya</Text>
-              </View>
-            </TouchableWithoutFeedback>
+            <TouchableOpacity onPress={() => this.onDownloadPress()} style={styles.btnExtra}>
+              <Image source={Images.download} style={styles.imageExtra}/>
+              <Text style={styles.textBtnExtra}>Download</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => this.onSharePress('facebook')} style={styles.btnExtra}>
+              <Image source={Images.fb} style={styles.imageExtra}/>
+              <Text style={styles.textBtnExtra}>FB</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => this.onSharePress('')} style={styles.btnExtra}>
+              <Image source={Images.share2} style={styles.imageExtra}/>
+              <Text style={styles.textBtnExtra}>Lainnya</Text>
+            </TouchableOpacity>
           </View>
           <View style={styles.bottomRightItem}>
-            <TouchableWithoutFeedback onPress={() => this.onSharePress('whatsapp')}>
-              <View style={styles.btn}>
-                <Image source={Images.wa2} style={styles.imageBtn}/>
-                <Text style={styles.textBtn}>Bagikan</Text>
-              </View>
-            </TouchableWithoutFeedback>
+            <TouchableOpacity onPress={() => this.onSharePress('whatsapp')} style={styles.btn}>
+              <Image source={Images.wa2} style={styles.imageBtn}/>
+              <Text style={styles.textBtn}>Bagikan</Text>
+            </TouchableOpacity>
           </View>
         </View>
         {this.state.modalClipboardVisible && <View style={styles.modalView}>
           <Text style={styles.modalText}>Images have been downloaded</Text>
+        </View>}
+        {this.state.modalClipboardVisible2 && <View style={styles.modalView}>
+          <Text style={styles.modalText}>Sharing ...</Text>
+        </View>}
+        {this.state.modalClipboardVisible3 && <View style={styles.modalView}>
+          <Text style={styles.modalText}>Downloading Image ...</Text>
         </View>}
       </View>
     );

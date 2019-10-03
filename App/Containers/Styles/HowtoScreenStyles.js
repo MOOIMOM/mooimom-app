@@ -41,7 +41,7 @@ export default StyleSheet.create({
   },
   gotoText:{
     position: 'absolute',
-    left: Metrics.screenWidth / 4 + Metrics.screenWidth / 8,
+    left: Metrics.screenWidth / 4 + Metrics.screenWidth / 12,
     color:Colors.mooimom,
     fontFamily: Fonts.type.gotham4,
     fontSize: 18,

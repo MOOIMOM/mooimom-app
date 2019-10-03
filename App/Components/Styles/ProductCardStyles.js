@@ -62,5 +62,21 @@ export default StyleSheet.create({
   textBtn:{
     color: Colors.white,
     fontFamily: Fonts.type.gotham4,
-  }
+  },
+  modalView:{
+    width: Metrics.screenWidth / 2 - 20,
+    height: 20 * Metrics.screenWidth / 320,
+    backgroundColor: Colors.modal,
+    borderRadius: 20 * Metrics.screenWidth / 320,
+    position: 'absolute',
+    bottom: 40,
+    left: 0,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  modalText:{
+    fontSize: Metrics.fontSize1,
+    color: Colors.white,
+    fontFamily: Fonts.type.gotham2,
+  },
 })

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, Image, TouchableOpacity, FlatList, AsyncStorage, ActivityIndicator} from 'react-native'
+import { ScrollView, Text, View, Image, TouchableOpacity, FlatList, AsyncStorage, RefreshControl} from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { Images, Metrics, Colors } from '../Themes'
 import LinearGradient from 'react-native-linear-gradient';
@@ -33,15 +33,26 @@ class OrderScreen extends Component {
       selectedMenuIdx: 0,
       orders:[],
       fcmToken: '',
-      currentPage: 1
+      currentPage: 1,
+      refreshing: false
     }
 
     this._renderProductCart = this._renderProductCart.bind(this)
+    this.refreshPage = this.refreshPage.bind(this)
   }
 
   async componentDidMount(){
     this.setState({ fcmToken: await AsyncStorage.getItem('fcmToken') })
-    this.reloadData()
+    this.refreshPage()
+  }
+
+  refreshPage(){
+    if(!this.state.refreshing){
+      this.setState({
+        refreshing: true
+      });
+      this.reloadData()
+    }
   }
 
   reloadData(){
@@ -72,6 +83,7 @@ class OrderScreen extends Component {
       ) {
         this.setState({
           orders: newProps.allOrder.payload.all_orders_data,
+          refreshing: false
         })
       } else if(
         newProps.allOrder.payload !== null &&
@@ -82,7 +94,8 @@ class OrderScreen extends Component {
         arr = arr.concat(newProps.allOrder.payload.all_orders_data)
         this.setState({
           currentPage: this.state.currentPage + 1,
-          orders: arr
+          orders: arr,
+          refreshing: false
         })
         isReloadPage = false
       }
@@ -234,6 +247,8 @@ class OrderScreen extends Component {
               }
             }}
             scrollEventThrottle={0}
+            refreshControl={
+                <RefreshControl refreshing={this.state.refreshing} onRefresh={this.refreshPage}/>}
             >
               <LinearGradient colors={['#82DED2', '#66CCCC']} style={styles.topContainer}>
                 <TouchableOpacity onPress={() => this.actNavigate('DetailTargetScreen')}>
@@ -253,9 +268,6 @@ class OrderScreen extends Component {
                 </View>
                 <View style={styles.wrapperSeparator}/>
                 <View style={styles.listOrders}>
-                  {this.props.allOrder.fetching && <View style={styles.containerLoading}>
-                    <ActivityIndicator size="large" color={Colors.mooimom} />
-                  </View>}
                   <FlatList
                     data={this.state.orders}
                     renderItem={this._renderOrders.bind(this)}

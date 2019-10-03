@@ -255,38 +255,56 @@ class ProfileScreen extends Component {
             <View style={styles.containerMenu}>
               <View style={styles.menu}>
                 <TouchableOpacity style={styles.btnMenu} onPress={() => this.actNavigate('PaymentScreen')}>
+                  <View style={styles.leftContainerMenu}>
                   <Image source={Images.card} style={styles.imgMenu}/>
                   <Text style={styles.imgText}>Pembayaran Saya</Text>
+                  </View>
+                  <Image source={Images.rightArrowBlack} style={styles.imgMenu2}/>
                 </TouchableOpacity>
               </View>
               <View style={styles.menu}>
                 <TouchableOpacity style={styles.btnMenu} onPress={() => this.actNavigate('SharedProductScreen', {selectedMenuIdx:1})}>
+                  <View style={styles.leftContainerMenu}>
                   <Image source={Images.share} style={styles.imgMenu}/>
                   <Text style={styles.imgText}>Produk Dibagikan</Text>
+                  </View>
+                  <Image source={Images.rightArrowBlack} style={styles.imgMenu2}/>
                 </TouchableOpacity>
               </View>
               <View style={styles.menu}>
                 <TouchableOpacity style={styles.btnMenu} onPress={() => this.actNavigate('AddressListScreen')}>
+                <View style={styles.leftContainerMenu}>
                   <Image source={Images.address} style={styles.imgMenu}/>
                   <Text style={styles.imgText}>Daftar Alamat</Text>
+                  </View>
+                  <Image source={Images.rightArrowBlack} style={styles.imgMenu2}/>
                 </TouchableOpacity>
               </View>
               <View style={styles.menu}>
                 <TouchableOpacity style={styles.btnMenu} onPress={() => this.actNavigate('AccountListScreen')}>
+                <View style={styles.leftContainerMenu}>
                   <Image source={Images.bank} style={styles.imgMenu}/>
                   <Text style={styles.imgText}>Daftar Rekening Bank</Text>
+                  </View>
+                  <Image source={Images.rightArrowBlack} style={styles.imgMenu2}/>
                 </TouchableOpacity>
               </View>
               <View style={styles.menu}>
                 <TouchableOpacity style={styles.btnMenu} onPress={() => this.actNavigate('ContactScreen')}>
+                <View style={styles.leftContainerMenu}>
                   <Image source={Images.contact} style={styles.imgMenu}/>
                   <Text style={styles.imgText}>Hubungi Kami</Text>
+                  </View>
+                  <Image source={Images.rightArrowBlack} style={styles.imgMenu2}/>
                 </TouchableOpacity>
               </View>
               <View style={styles.menu}>
                 <TouchableOpacity style={styles.btnMenu} onPress={() => this.logout()}>
+                <View style={styles.leftContainerMenu}>
                   <Image source={Images.logout} style={styles.imgMenu}/>
                   <Text style={styles.imgText}>Log out</Text>
+                  </View>
+                  <Image source={Images.rightArrowBlack} style={styles.imgMenu2}/>
                 </TouchableOpacity>
               </View>
             </View>
