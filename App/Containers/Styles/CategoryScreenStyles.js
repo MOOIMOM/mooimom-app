@@ -125,6 +125,7 @@ export default StyleSheet.create({
   },
   productContainer:{
     width: Metrics.screenWidth / 5,
+    paddingHorizontal: 5,
   },
   productImage:{
     width: Metrics.screenWidth / 5,
@@ -132,11 +133,11 @@ export default StyleSheet.create({
     marginBottom:10
   },
   productText:{
+    width: Metrics.screenWidth / 5,
     fontSize: Metrics.fontSize1,
-    lineHeight: 11 * Metrics.screenWidth / 320,
+    lineHeight: Metrics.fontSize2,
+    paddingHorizontal: 4 * Metrics.screenWidth / 320,
     textAlign: 'center',
-    flexWrap: 'wrap',
-    paddingHorizontal: 6,
     fontFamily: Fonts.type.gotham2,
   },
   contentContainer2:{
@@ -227,5 +228,23 @@ export default StyleSheet.create({
     marginTop: 100,
     justifyContent: 'center',
     alignItems: 'center',
-  }
+  },
+  notifContainer:{
+    width: 16 * Metrics.screenWidth / 320,
+    height: 16 * Metrics.screenWidth / 320,
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    right: -7,
+    top: -7,
+    borderRadius: 8 * Metrics.screenWidth / 320,
+    backgroundColor: Colors.fire,
+    flex: 1,
+    flexWrap: 'nowrap'
+  },
+  textNotif:{
+    fontSize: Metrics.fontSize1,
+    fontFamily: Fonts.type.gotham2,
+    color: Colors.white,
+  },
 })

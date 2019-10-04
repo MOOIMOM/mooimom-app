@@ -275,6 +275,9 @@ class LearnScreen extends Component {
           </TouchableOpacity>
           <TouchableOpacity style={styles.btnHeader} onPress={() => this.actNavigate('CartScreen')}>
             <Image source={Images.shoppingCartBlack} style={styles.imgHeader}/>
+            {this.props.cart.data.length > 0 && <View style={styles.notifContainer}>
+              <Text style={styles.textNotif}>{this.props.cart.data.length}</Text>
+            </View>}
           </TouchableOpacity>
         </View>
         <View style={styles.wrapperSeparator}/>
@@ -397,7 +400,6 @@ class LearnScreen extends Component {
                 showsVerticalScrollIndicator={false}
                 data={this.state.question[this.state.selectedQAIndex].children}
                 renderItem={({item, index}) => {
-                  console.info(item)
                   return (
                     <TouchableOpacity onPress={() => this.openQuestionSub(index)}>
                       <View style={styles.questionItem}>
@@ -492,7 +494,8 @@ const mapStateToProps = state => {
     auth: state.auth,
     question: state.question,
     article: state.article,
-    video: state.video
+    video: state.video,
+    cart: state.cart
   }
 };
 

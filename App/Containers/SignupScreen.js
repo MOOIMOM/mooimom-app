@@ -32,6 +32,8 @@ class SignupScreen extends Component {
             }
           }
           this.props.sendOtpProcess(data)
+          this.actNavigate('AuthScreen')
+          isProcessing = false
         }
       else if (
         newProps.register.payload === null &&
@@ -62,6 +64,8 @@ class SignupScreen extends Component {
             }
           }
           this.props.sendOtpProcess(data)
+          this.actNavigate('AuthScreen')
+          isProcessing = false
         }
       else if (
         newProps.login.payload === null &&
@@ -79,17 +83,6 @@ class SignupScreen extends Component {
             ],
             { cancelable: false }
           )
-      }
-    }
-
-    if (this.props.sendOtp !== newProps.sendOtp) {
-      if (
-        newProps.sendOtp.payload !== null &&
-        newProps.sendOtp.error === null &&
-        !newProps.sendOtp.fetching
-      ) {
-        this.actNavigate('AuthScreen')
-        isProcessing = false
       }
     }
   }
@@ -178,8 +171,7 @@ class SignupScreen extends Component {
 const mapStateToProps = state => {
   return {
     register: state.register,
-    login: state.login,
-    sendOtp: state.sendOtp
+    login: state.login
   }
 };
 

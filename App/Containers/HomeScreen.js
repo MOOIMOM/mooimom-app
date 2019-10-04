@@ -319,6 +319,7 @@ class HomeScreen extends Component {
   render () {
     const { navigate } = this.props.navigation
     var notifCount = 0
+    var cartCount = this.props.cart.data.length
     if(this.props.notification.payload && this.props.notification.payload.all_notifications.length > 0){
       notifCount = getNewNotificationsCount(this.props.notification.payload.all_notifications, this.props.lastNotification.payload)
     }
@@ -345,7 +346,11 @@ class HomeScreen extends Component {
               </View>
               <View style={styles.headerButtonRight}>
                 <TouchableOpacity onPress={() => this.navigate_to('SharedProductScreen')}><Image source={Images.wishlist} style={styles.buttonHeader} /></TouchableOpacity>
-                <TouchableOpacity onPress={() => this.navigate_to('CartScreen')}><Image source={Images.shoppingCart} style={styles.buttonHeader} /></TouchableOpacity>
+                <TouchableOpacity onPress={() => this.navigate_to('CartScreen')}><Image source={Images.shoppingCart} style={styles.buttonHeader} />
+                  {cartCount > 0 && <View style={styles.notifContainer}>
+                    <Text style={styles.textNotif}>{cartCount}</Text>
+                  </View>}
+                </TouchableOpacity>
                 <TouchableOpacity onPress={() => this.navigate_to('NotificationScreen', {fcmToken: this.state.fcmToken})}>
                   <Image source={Images.notifWhite} style={styles.buttonHeader2} />
                   {notifCount > 0 && <View style={styles.notifContainer}>
@@ -421,7 +426,8 @@ const mapStateToProps = state => {
     auth:state.auth,
     notification: state.notification,
     setting: state.setting,
-    lastNotification: state.lastNotification
+    lastNotification: state.lastNotification,
+    cart: state.cart
   }
 };
 

@@ -34,20 +34,24 @@ export default StyleSheet.create({
   },
   priceGroup:{
     flex:1,
+    width: Metrics.screenWidth / 2,
+    paddingHorizontal: 20,
     justifyContent: 'flex-end',
-    alignItems: 'center',
-    paddingVertical: 5
+    alignItems: 'flex-start',
+    paddingVertical: 5,
   },
   price:{
     color:Colors.black,
     fontSize: Metrics.fontSize2,
     fontFamily: Fonts.type.gotham4,
+    textAlign: 'left',
   },
   priceDiscount:{
     color:Colors.fire,
     fontSize: Metrics.fontSize1,
     textDecorationLine:'line-through',
     fontFamily: Fonts.type.gotham2,
+    textAlign: 'left',
   },
   extra:{
   },

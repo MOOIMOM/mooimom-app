@@ -405,6 +405,9 @@ class CategoryScreen extends Component {
           </TouchableOpacity>
           <TouchableOpacity style={styles.btnHeader} onPress={() => this.navigate_to('CartScreen')}>
             <Image source={Images.shoppingCartBlack} style={styles.imgHeader}/>
+            {this.props.cart.data.length > 0 && <View style={styles.notifContainer}>
+              <Text style={styles.textNotif}>{this.props.cart.data.length}</Text>
+            </View>}
           </TouchableOpacity>
         </View>
         <View style={styles.wrapperSeparator}/>
@@ -465,6 +468,7 @@ class CategoryScreen extends Component {
 const mapStateToProps = state => {
   return {
     auth: state.auth,
+    cart: state.cart,
     category: state.category,
     productCategory: state.productCategory
   }

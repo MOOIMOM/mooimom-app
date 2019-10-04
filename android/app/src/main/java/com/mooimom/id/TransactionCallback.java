@@ -21,9 +21,9 @@ public class TransactionCallback implements TransactionFinishedCallback {
     public void onTransactionFinished(TransactionResult transactionResult) {
         if(transactionResult.isTransactionCanceled()){
             Log.d("trans canceled", "Payment Canceled");
-        }else{
+        } else {
             Log.d("result", transactionResult.getStatus());
-            this.callback.invoke(transactionResult.getStatus());
+            this.callback.invoke(transactionResult.getStatus(), transactionResult.getResponse().getDeeplinkUrl());
         }
     }
 }

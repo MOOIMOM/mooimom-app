@@ -9,7 +9,7 @@ import CartActions from '../Redux/CartRedux'
 import EditWishlistActions from '../Redux/EditWishlistRedux'
 import FastImage from 'react-native-fast-image'
 import ScaledImage from '../Components/ScaledImage';
-import {convertToRupiah, share, shareDescripton, download, titleCase} from '../Lib/utils'
+import {convertToRupiah, share, shareDescripton, download, titleCase, getNewNotificationsCount} from '../Lib/utils'
 // Styles
 import styles from './Styles/ProductScreenStyles'
 
@@ -683,7 +683,10 @@ class ProductScreen extends Component {
       qty: 1
     }
     this.props.addToCartProcess(data)
-    this.actNavigate('CartScreen')
+    Alert.alert(
+      '',
+      'Produk Berhasil Ditambahkan!',
+    )
   }
 
   render () {
@@ -693,6 +696,10 @@ class ProductScreen extends Component {
           <ActivityIndicator size="large" color={Colors.mooimom} />
         </View>
       )
+    }
+    var notifCount = 0
+    if(this.props.notification.payload && this.props.notification.payload.all_notifications.length > 0){
+      notifCount = getNewNotificationsCount(this.props.notification.payload.all_notifications, this.props.lastNotification.payload)
     }
     if(this.state.isShowError){
       return (
@@ -709,8 +716,16 @@ class ProductScreen extends Component {
             </View>
             <View style={styles.headerButtonRight}>
               <TouchableOpacity onPress={() => this.actNavigate('SharedProductScreen')}><Image source={Images.wishlistBlack} style={styles.buttonHeader} /></TouchableOpacity>
-              <TouchableOpacity onPress={() => this.actNavigate('CartScreen')}><Image source={Images.shoppingCartBlack} style={styles.buttonHeader} /></TouchableOpacity>
-              <TouchableOpacity onPress={() => this.actNavigate('NotificationScreen')}><Image source={Images.notif} style={styles.buttonHeader2} /></TouchableOpacity>
+              <TouchableOpacity onPress={() => this.actNavigate('CartScreen')}><Image source={Images.shoppingCartBlack} style={styles.buttonHeader} />
+              {this.props.cart.data.length > 0 && <View style={styles.notifContainer}>
+                <Text style={styles.textNotif}>{this.props.cart.data.length}</Text>
+              </View>}
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => this.actNavigate('NotificationScreen')}><Image source={Images.notif} style={styles.buttonHeader2} />
+              {notifCount > 0 && <View style={styles.notifContainer2}>
+                <Text style={styles.textNotif}>{notifCount}</Text>
+              </View>}
+              </TouchableOpacity>
             </View>
           </View>
           <View style={styles.productContainer}>
@@ -744,8 +759,16 @@ class ProductScreen extends Component {
           </View>
           <View style={styles.headerButtonRight}>
             <TouchableOpacity onPress={() => this.actNavigate('SharedProductScreen')}><Image source={Images.wishlistBlack} style={styles.buttonHeader} /></TouchableOpacity>
-            <TouchableOpacity onPress={() => this.actNavigate('CartScreen')}><Image source={Images.shoppingCartBlack} style={styles.buttonHeader} /></TouchableOpacity>
-            <TouchableOpacity onPress={() => this.actNavigate('NotificationScreen')}><Image source={Images.notif} style={styles.buttonHeader2} /></TouchableOpacity>
+            <TouchableOpacity onPress={() => this.actNavigate('CartScreen')}><Image source={Images.shoppingCartBlack} style={styles.buttonHeader} />
+            {this.props.cart.data.length > 0 && <View style={styles.notifContainer}>
+              <Text style={styles.textNotif}>{this.props.cart.data.length}</Text>
+            </View>}
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => this.actNavigate('NotificationScreen')}><Image source={Images.notif} style={styles.buttonHeader2} />
+            {notifCount > 0 && <View style={styles.notifContainer2}>
+              <Text style={styles.textNotif}>{notifCount}</Text>
+            </View>}
+            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.productContainer}>
@@ -854,7 +877,9 @@ class ProductScreen extends Component {
 const mapStateToProps = state => {
   return {
     product: state.product,
-    cart: state.cart
+    cart: state.cart,
+    notification: state.notification,
+    lastNotification: state.lastNotification,
   }
 };
 

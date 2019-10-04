@@ -577,5 +577,36 @@ export default StyleSheet.create({
     left:0,
     justifyContent: 'center',
     alignItems: 'center',
-  }
+  },
+  notifContainer:{
+    width: 16 * Metrics.screenWidth / 320,
+    height: 16 * Metrics.screenWidth / 320,
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    right: 5,
+    top: -7,
+    borderRadius: 8 * Metrics.screenWidth / 320,
+    backgroundColor: Colors.fire,
+    flex: 1,
+    flexWrap: 'nowrap'
+  },
+  notifContainer2:{
+    width: 16 * Metrics.screenWidth / 320,
+    height: 16 * Metrics.screenWidth / 320,
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    right: 3,
+    top: -5,
+    borderRadius: 8 * Metrics.screenWidth / 320,
+    backgroundColor: Colors.fire,
+    flex: 1,
+    flexWrap: 'nowrap'
+  },
+  textNotif:{
+    fontSize: Metrics.fontSize1,
+    fontFamily: Fonts.type.gotham2,
+    color: Colors.white,
+  },
 })

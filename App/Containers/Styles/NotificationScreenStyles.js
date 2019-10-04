@@ -93,5 +93,23 @@ export default StyleSheet.create({
     height: 10 * Metrics.screenWidth / 320,
     resizeMode: 'contain',
     marginHorizontal: 10
-  }
+  },
+  notifContainer:{
+    width: 16 * Metrics.screenWidth / 320,
+    height: 16 * Metrics.screenWidth / 320,
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    right: -7,
+    top: -7,
+    borderRadius: 8 * Metrics.screenWidth / 320,
+    backgroundColor: Colors.fire,
+    flex: 1,
+    flexWrap: 'nowrap'
+  },
+  textNotif2:{
+    fontSize: Metrics.fontSize1,
+    fontFamily: Fonts.type.gotham2,
+    color: Colors.white,
+  },
 })

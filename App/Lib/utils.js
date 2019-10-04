@@ -218,7 +218,6 @@ export function getNewNotificationsCount(notifications, time) {
   const times = notifications
     .map(notification => notification.created)
     .filter(notificationTime => isAfter(notificationTime, time))
-  // console.log('aaaa', times.length)
   return times.length
 }
 

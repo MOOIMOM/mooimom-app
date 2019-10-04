@@ -47,6 +47,7 @@ export const reducers = combineReducers({
   video: require('./GetVideoRedux').reducer,
   article: require('./GetArticleRedux').reducer,
   question: require('./GetQuestionRedux').reducer,
+  gopay: require('./GopayRedux').reducer,
 })
 
 export default () => {

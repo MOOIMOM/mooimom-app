@@ -80,7 +80,6 @@ class NotificationScreen extends Component {
   }
 
   getStyle(item){
-    console.info(item)
     switch(item.the_type){
       case 'create_order':
         return {backgroundColor:Colors.facebook}
@@ -121,6 +120,9 @@ class NotificationScreen extends Component {
             </TouchableOpacity>
             <TouchableOpacity style={styles.btnHeader} onPress={() => this.actNavigate('CartScreen')}>
               <Image source={Images.shoppingCartBlack} style={styles.imgHeader}/>
+              {this.props.cart.data.length > 0 && <View style={styles.notifContainer}>
+                <Text style={styles.textNotif2}>{this.props.cart.data.length}</Text>
+              </View>}
             </TouchableOpacity>
           </View>
           <View style={styles.wrapperSeparator}/>
@@ -144,7 +146,8 @@ class NotificationScreen extends Component {
 const mapStateToProps = state => {
   return {
     notification: state.notification,
-    auth: state.auth
+    auth: state.auth,
+    cart: state.cart
   }
 };
 

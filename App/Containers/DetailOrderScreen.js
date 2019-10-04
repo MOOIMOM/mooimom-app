@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Alert, ActivityIndicator, Modal } from 'react-native'
+import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Alert, ActivityIndicator, Modal, Linking } from 'react-native'
 import { Images, Metrics, Colors, Fonts } from '../Themes'
 import FastImage from 'react-native-fast-image'
 import GetOrderActions from '../Redux/GetOrderRedux'
 import CommissionEstimationActions from '../Redux/CommissionEstimationRedux'
 import GetOrderStatusMidtransActions from '../Redux/GetOrderStatusMidtransRedux'
+import GopayActions from '../Redux/GopayRedux'
 import { connect } from 'react-redux'
 import {convertToRupiah, getDateFromString } from '../Lib/utils'
 import MidtransModule from '../Lib/Midtrans'
@@ -104,7 +105,39 @@ class DetailOrderScreen extends Component {
     navigate(screen, {})
   }
 
+  getGopayLink(){
+    const {data} = this.props.gopay
+    for(var i= 0;i< data.length;i++){
+      if(data[i].order_id === this.state.order.order_id){
+        return data[i].gopay_link
+      }
+    }
+    return ''
+  }
+
   async payNow(){
+    if(this.state.midtrans && this.state.midtrans.payment_type && this.state.midtrans.payment_type === 'gopay' && this.state.midtrans.transaction_status === 'pending'){
+      var link = this.getGopayLink()
+      if(link === '') {
+        Alert.alert(
+            'Sorry',
+            'This order is not valid anymore, please make a new order',
+        )
+        return;
+      }
+      Linking.canOpenURL(link).then(supported => {
+        if (supported) {
+          Linking.openURL(link);
+        } else {
+          Alert.alert(
+              'Sorry',
+              'Go-jek is not installed on your phone',
+          )
+        }
+      });
+      return
+    }
+
     const optionConect = {
         clientKey: "VT-client-35STW7Jm-F0bTh1x",
         urlMerchant: "http://www.mooimom.id"
@@ -113,7 +146,7 @@ class DetailOrderScreen extends Component {
     const transRequest = {
         transactionId: '' + this.state.order.order_id,
         totalAmount: this.state.order.order_total,
-        token: this.state.order.midtrans_token
+        token: this.state.order.midtrans_token,
     }
 
     const itemDetails = [
@@ -131,11 +164,11 @@ class DetailOrderScreen extends Component {
         fullName: this.state.order.billing_name,
         email: '',
         phoneNumber: this.state.order.billing_address,
-        userId: '',
-        address: '',
-        city: '',
+        userId: this.state.order.billing_phone,
+        address: this.state.order.billing_address,
+        city: this.state.order.billing_city,
         country: "IDN",
-        zipCode: ''
+        zipCode: this.state.order.billing_zip_code
     };
 
     const optionColorTheme = {
@@ -150,8 +183,17 @@ class DetailOrderScreen extends Component {
         boldText: Fonts.type.gotham2,
     }
 
-    const callback = (res) => {
+    const callback = (res, gopay) => {
         this.reloadData()
+        if(gopay && gopay !== '')
+        {
+          let data = {
+            order_id: this.state.order.order_id,
+            token: this.state.order.midtrans_token,
+            gopay_link: gopay
+          }
+          this.props.saveGopayRequestProcess(data)
+        }
     };
 
     MidtransModule.checkOut(
@@ -341,7 +383,7 @@ class DetailOrderScreen extends Component {
     var commission = convertToRupiah(this.state.commission)
     if(this.state.order.order_status === 'pending'){
       var menuPay
-      if(!this.state.midtrans || !this.state.midtrans.payment_type){
+      if(!this.state.midtrans || !this.state.midtrans.payment_type || this.state.midtrans.payment_type === 'gopay'){
         menuPay = (<TouchableOpacity style={styles.buyBtn} onPress={() => this.payNow()}>
           <Text style={styles.buyText}>Bayar</Text>
         </TouchableOpacity>)
@@ -461,7 +503,8 @@ const mapStateToProps = state => {
     order: state.order,
     auth: state.auth,
     commissionEstimation: state.commissionEstimation,
-    statusMidtrans: state.statusMidtrans
+    statusMidtrans: state.statusMidtrans,
+    gopay: state.gopay
   }
 };
 
@@ -475,6 +518,9 @@ const mapDispatchToProps = dispatch => {
     },
     getStatusMidtransProcess: data => {
       dispatch(GetOrderStatusMidtransActions.getOrderStatusMidtransRequest(data))
+    },
+    saveGopayRequestProcess: data => {
+      dispatch(GopayActions.saveGopayRequest(data))
     },
   }
 };
