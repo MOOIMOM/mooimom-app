@@ -22,14 +22,14 @@ export default StyleSheet.create({
   title:{
     color:Colors.mooimom,
     fontFamily: Fonts.type.gotham4,
-    fontSize:Metrics.fontSize4,
+    fontSize:Metrics.fontSize6,
     textAlign: 'center',
-    marginBottom: 20
+    marginBottom: 10,
   },
   desc:{
     color:Colors.black,
-    fontFamily: Fonts.type.gotham2,
-    fontSize: Metrics.fontSize2,
+    fontFamily: Fonts.type.gotham1,
+    fontSize: Metrics.fontSize3,
     lineHeight: Metrics.fontSize4,
     paddingHorizontal: 20,
     textAlign: 'center'

@@ -12,12 +12,12 @@ class HowtoScreen extends Component {
     this.state = {
       activeSlide: 0,
       learnpages:[
-        {image:Images.learnpage1, title:'Jadilah Reseller', desc:'Berbagi dengan semua ibu di Indonesia dan dapatkan keuntungan.'},
-        {image:Images.learnpage2, title:'Jelajahi Produk', desc:'Temukan semua produk kebutuhan ibu hamil, pasca melahirkan, masa menyusui, dan produk bayi yang berkualitas.'},
-        {image:Images.learnpage3, title:'Bagikan Produk', desc:'Tawarkan produk ke semua teman dan komunitas Moms melalui Whatsapp, Instagram Facebook, dan lainnya.'},
-        {image:Images.learnpage4, title:'Mulai Berjualan', desc:'Moms sudah menjadi seorang wirausaha hanya dengan menawarkan dan memesan produk untuk para Moms di aplikasi tanpa harus ribet packing dan kirim.'},
-        {image:Images.learnpage5, title:'Dapatkan Komisi', desc:'Moms akan mendapat komisi untuk produk yang dipesan di aplikasi. Semakin banyak pesanan, semakin besar komisi-nya sesuai dengan target yang dicapai.'},
-        {image:Images.learnpage6, title:'Bagikan & Hasilkan', desc:'Semakin banyak Moms berbagi produk ke semua teman dan komunitas, semakin besar penghasilan yang didapat Moms setiap minggu.'}
+        {image:Images.learnpage1, title:'Jadi Reseller Sukses', desc:'Berbagi dengan semua ibu di Indonesia dan dapatkan keuntungan'},
+        {image:Images.learnpage2, title:'Jelajahi Produk Terbaik', desc:'MOOIMOM menawarkan produk terbaik untuk memenuhi kebutuhan ibu hamil, pasca melahirkan, menyusui, dan produk bayi dengan kualitas terbaik.'},
+        {image:Images.learnpage3, title:'Sharing is Caring', desc:'Tawarkan semua produk bermanfaat untuk para sahabat, teman, hingga komunitas melalui Whatsapp, Instagram, Facebook, dan lainnya.'},
+        {image:Images.learnpage4, title:'Berjualan Anti Ribet', desc:'Tawarkan dan pesan produk untuk para pelanggan Anda lewat aplikasi. Kami yang akan packing dan kirim barang. Easy & simple.'},
+        {image:Images.learnpage5, title:'Komisi Menarik', desc:'Dapatkan komisi untuk produk yang dipesan melalui aplikasi. Tingkatkan jumlah pesanan untuk mendapatkan komisi yang lebih besar.'},
+        {image:Images.learnpage6, title:'Simply Share & Earn', desc:'Tak ada yang lebih menyenangkan daripada mendapatkan uang tambahan tanpa meninggalkan peran sebagai ibu. Hanya dengan share dan order di aplikasi, uang tambahan akan moms dapatkan.'}
       ]
     }
   }
