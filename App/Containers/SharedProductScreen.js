@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, FlatList } from 'react-native'
+import { SafeAreaView, ScrollView, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, FlatList } from 'react-native'
 import { Images, Metrics } from '../Themes'
 import ProductCard from '../Components/ProductCard'
 import WishlistActions from '../Redux/WishlistRedux'
@@ -156,7 +156,7 @@ class SharedProductScreen extends Component {
 
   render () {
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <View style={styles.containerScroll}>
           <View style={styles.headerWrapper}>
             <TouchableOpacity style={styles.btnHeader} onPress={
@@ -191,7 +191,7 @@ class SharedProductScreen extends Component {
             />
         </View>
       </View>
-    </View>
+    </SafeAreaView>
     )
   }
 }

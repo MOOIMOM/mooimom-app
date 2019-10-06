@@ -1,12 +1,13 @@
+
 const type = {
   base: 'Avenir-Book',
   bold: 'Avenir-Black',
   emphasis: 'HelveticaNeue-Italic',
   gotham1: 'Gotham Bold',
-  gotham2: 'Gotham Book',
-  gotham3: 'Gotham Light',
-  gotham4: 'Gotham Rounded Bold',
-  gotham5: 'Gotham Book Italic',
+  gotham2: 'Gotham-Book',
+  gotham3: 'Gotham-Light',
+  gotham4: 'GothamRounded-Bold',
+  gotham5: 'Gotham-BookItalic',
 }
 
 const size = {

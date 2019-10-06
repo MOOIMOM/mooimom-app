@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Clipboard, Alert, AsyncStorage, ActivityIndicator, AppState, Linking, Modal } from 'react-native'
+import { SafeAreaView, ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Clipboard, Alert, AsyncStorage, ActivityIndicator, AppState, Linking, Modal } from 'react-native'
 import { Images, Metrics, Colors } from '../Themes'
 import { connect } from 'react-redux'
 import Carousel, { Pagination  } from 'react-native-snap-carousel';
@@ -521,7 +521,7 @@ class ProductScreen extends Component {
             isShowSizeGuide:false
           })
         }}>
-          <View style={styles.sizeGuideWrapperContainer}>
+          <SafeAreaView style={styles.sizeGuideWrapperContainer}>
             <View style={styles.headerWrapper}>
               <TouchableOpacity style={styles.headerButtonLeft} onPress={() => this.setState({
                 isShowSizeGuide:false
@@ -547,7 +547,7 @@ class ProductScreen extends Component {
                 {this.renderTableFrontend(this.state.product.suggestion_table_header_frontend, this.state.product.suggestion_table_frontend)}
               </ScrollView>
             </View>
-          </View>
+          </SafeAreaView>
         </Modal>
       </View>
     )
@@ -703,7 +703,7 @@ class ProductScreen extends Component {
     }
     if(this.state.isShowError){
       return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
           <View style={styles.headerWrapper}>
             <TouchableOpacity style={styles.headerButtonLeft} onPress={() => this.props.navigation.goBack()}>
               <Image source={Images.back} style={styles.buttonHeader} />
@@ -736,7 +736,7 @@ class ProductScreen extends Component {
               </View>
             </View>
           </View>
-        </View>
+        </SafeAreaView>
       )
     }
     var price = ''
@@ -746,7 +746,7 @@ class ProductScreen extends Component {
        disc = this.state.product.product_sale_price > 0 ? convertToRupiah(this.state.product.product_regular_price) : ''
     }
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <View style={styles.headerWrapper}>
           <TouchableOpacity style={styles.headerButtonLeft} onPress={() => this.props.navigation.goBack()}>
             <Image source={Images.back} style={styles.buttonHeader} />
@@ -869,7 +869,7 @@ class ProductScreen extends Component {
             <Text style={(this.state.finishShareImage ? styles.modalShareText : styles.modalShareText2)}>Description Copied</Text>
           </View>
         </View>}
-      </View>
+      </SafeAreaView>
     )
   }
 }

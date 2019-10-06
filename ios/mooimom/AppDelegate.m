@@ -6,7 +6,7 @@
  */
 
 #import "AppDelegate.h"
-
+#import "Firebase.h"
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 
@@ -14,7 +14,16 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  [FIRApp configure];
   NSURL *jsCodeLocation;
+  for (NSString* family in [UIFont familyNames])
+{
+  NSLog(@"%@", family);
+  for (NSString* name in [UIFont fontNamesForFamilyName: family])
+  {
+    NSLog(@" %@", name);
+  }
+}
 
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
 

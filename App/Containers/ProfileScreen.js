@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, Image, TouchableOpacity, Alert, PermissionsAndroid, Modal, TouchableWithoutFeedback } from 'react-native'
+import { ScrollView, SafeAreaView, Text, View, Image, TouchableOpacity, Alert, PermissionsAndroid, Modal, TouchableWithoutFeedback } from 'react-native'
 import { Images, Metrics } from '../Themes'
 import FastImage from 'react-native-fast-image'
 import {NavigationEvents} from 'react-navigation';
@@ -217,7 +217,7 @@ class ProfileScreen extends Component {
     if(this.state.profile.profile_picture_thumb_url)
       imageprofile = {uri: this.state.profile.profile_picture_thumb_url}
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <View style={styles.containerScroll}>
           <View style={styles.headerWrapper}>
             <TouchableOpacity style={styles.searchButton} onPress={() => this.actNavigate('SearchScreen')}>
@@ -352,7 +352,7 @@ class ProfileScreen extends Component {
             </Modal>
           </View>
         </View>
-      </View>
+      </SafeAreaView>
     )
   }
 }

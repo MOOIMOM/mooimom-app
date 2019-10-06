@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Alert, ActivityIndicator, Modal, Linking } from 'react-native'
+import { SafeAreaView, ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Alert, ActivityIndicator, Modal, Linking } from 'react-native'
 import { Images, Metrics, Colors, Fonts } from '../Themes'
 import FastImage from 'react-native-fast-image'
 import GetOrderActions from '../Redux/GetOrderRedux'
@@ -347,7 +347,7 @@ class DetailOrderScreen extends Component {
           isShowPaymentMethod:false
         })
       }}>
-        <View style={styles.paymentGuideContainer}>
+        <SafeAreaView style={styles.paymentGuideContainer}>
           <View style={styles.headerWrapper}>
             <TouchableOpacity style={styles.headerButtonLeft} onPress={() => this.setState({
               isShowPaymentMethod:false
@@ -373,7 +373,7 @@ class DetailOrderScreen extends Component {
             {this.renderMethod()}
             </ScrollView>
           </View>
-        </View>
+        </SafeAreaView>
       </Modal>
     )
   }
@@ -462,7 +462,7 @@ class DetailOrderScreen extends Component {
     if(idx >= 0)
       status = menuStatus[idx].status_name_proses
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <View style={styles.headerWrapper}>
           <TouchableOpacity style={styles.headerButtonLeft} onPress={() => this.props.navigation.goBack()}>
             <Image source={Images.back} style={styles.buttonHeader} />
@@ -493,7 +493,7 @@ class DetailOrderScreen extends Component {
         </View>
         {this.renderMenu()}
         {this.renderShowPayment()}
-      </View>
+      </SafeAreaView>
     )
   }
 }

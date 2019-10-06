@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, Image, TouchableOpacity} from 'react-native'
+import { SafeAreaView, ScrollView, Text, View, Image, TouchableOpacity} from 'react-native'
 import { Images, Metrics } from '../Themes'
 import LinearGradient from 'react-native-linear-gradient';
 import GetCommissionSummaryActions from '../Redux/GetCommissionSummaryRedux';
@@ -107,7 +107,7 @@ class DetailTargetScreen extends Component {
     var target = left + achieve
     var total = processing + achieve
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <View style={styles.containerScroll}>
           <View style={styles.headerWrapper}>
             <TouchableOpacity style={styles.btnHeader} onPress={
@@ -192,7 +192,7 @@ class DetailTargetScreen extends Component {
             </ScrollView>
           </View>
         </View>
-      </View>
+      </SafeAreaView>
     )
   }
 }

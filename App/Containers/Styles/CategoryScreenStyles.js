@@ -4,10 +4,12 @@ import { Metrics, ApplicationStyles, Colors, Fonts } from '../../Themes/'
 export default StyleSheet.create({
   container: {
     flex:1,
+    backgroundColor: Colors.mooimom
   },
   containerScroll:{
     paddingTop: 0,
-    height: Metrics.screenHeight - 100
+    height: Metrics.screenHeight - 100,
+    backgroundColor: Colors.white
   },
   backgroundHeader: {
     width: Metrics.screenWidth,

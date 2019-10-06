@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, Image, TouchableOpacity } from 'react-native'
+import { SafeAreaView, ScrollView, Text, View, Image, TouchableOpacity } from 'react-native'
 import { Images, Metrics, Colors } from '../Themes'
 import { connect } from 'react-redux'
 import {convertToRupiah, getDateFromString} from '../Lib/utils'
@@ -131,7 +131,7 @@ class PaymentScreen extends Component {
 
   render () {
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <View style={styles.containerScroll}>
           <View style={styles.headerWrapper}>
             <TouchableOpacity style={styles.btnHeader} onPress={() => this.props.navigation.goBack()}>
@@ -169,7 +169,7 @@ class PaymentScreen extends Component {
             </ScrollView>
           </View>
         </View>
-      </View>
+      </SafeAreaView>
     )
   }
 }

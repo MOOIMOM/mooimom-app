@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Alert } from 'react-native'
+import { SafeAreaView, ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Alert } from 'react-native'
 import { Images, Metrics } from '../Themes'
 import FastImage from 'react-native-fast-image'
 import { connect } from 'react-redux'
@@ -449,7 +449,7 @@ class CartScreen extends Component {
     var totalPrice = convertToRupiah(price)
     var commission = convertToRupiah(this.state.commission)
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <View style={styles.headerWrapper}>
           <TouchableOpacity style={styles.headerButtonLeft} onPress={() => this.props.navigation.goBack()}>
             <Image source={Images.back} style={styles.buttonHeader} />
@@ -480,7 +480,7 @@ class CartScreen extends Component {
             <Text style={styles.buyText}>Beli</Text>
           </TouchableOpacity>
         </View>}
-      </View>
+      </SafeAreaView>
     )
   }
 }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback , Image, Alert, FlatList, AsyncStorage, Linking, RefreshControl } from 'react-native'
-import { Images, Metrics } from '../Themes'
+import { SafeAreaView, ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback , Image, Alert, FlatList, AsyncStorage, Linking, RefreshControl } from 'react-native'
+import { Images, Metrics, Colors } from '../Themes'
 import { connect } from 'react-redux'
 import Carousel, { ParallaxImage, Pagination  } from 'react-native-snap-carousel';
 import ProductCard from '../Components/ProductCard'
@@ -293,7 +293,7 @@ class HomeScreen extends Component {
   }
 
   loadMoreData(){
-    if (!isReloadPage) {
+    if (!isReloadPage && this.props.getHomepage.payload) {
       if (this.state.currentPage + 1 <= this.props.getHomepage.payload.total_pages) {
         isReloadPage = true
         let data = {
@@ -324,6 +324,7 @@ class HomeScreen extends Component {
       notifCount = getNewNotificationsCount(this.props.notification.payload.all_notifications, this.props.lastNotification.payload)
     }
     return (
+    <SafeAreaView style={{backgroundColor:Colors.mooimom, flex: 1}}>
     <View style={styles.container}>
       <View style={styles.containerScroll}>
         <ScrollView
@@ -417,6 +418,7 @@ class HomeScreen extends Component {
           </ScrollView>
         </View>
       </View>
+      </SafeAreaView>
     )
   }
 }

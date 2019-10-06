@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, Image, TouchableOpacity, FlatList, AsyncStorage, RefreshControl} from 'react-native'
+import { ScrollView, SafeAreaView, Text, View, Image, TouchableOpacity, FlatList, AsyncStorage, RefreshControl} from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { Images, Metrics, Colors } from '../Themes'
 import LinearGradient from 'react-native-linear-gradient';
@@ -227,7 +227,7 @@ class OrderScreen extends Component {
     if(this.props.commissionSummary.payload && this.props.commissionSummary.payload.how_much_commission_user_need_to_get_to_get_next_commission_target_percentage)
       target = this.props.commissionSummary.payload.how_much_commission_user_need_to_get_to_get_next_commission_target_percentage
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <View style={styles.containerScroll}>
           <View style={styles.headerWrapper}>
             <TouchableOpacity style={styles.searchButton} onPress={() => this.actNavigate('SearchScreen')}>
@@ -257,7 +257,7 @@ class OrderScreen extends Component {
               <LinearGradient colors={['#82DED2', '#66CCCC']} style={styles.topContainer}>
                 <TouchableOpacity onPress={() => this.actNavigate('DetailTargetScreen')}>
                   <Text style={styles.textTarget}>Target Bonus Minggu Ini</Text>
-                  <Text style={styles.textTargetAmount}>{convertToRupiah(target)}</Text>
+                  <View style={styles.textTargetAmountContainer}><Text style={styles.textTargetAmount}>{convertToRupiah(target)}</Text></View>
                   <Text style={styles.textTargetMore}>Raih Target dan dapatkan bonus lebih banyak</Text>
                   <Image source={Images.rightArrow} style={styles.iconRight}/>
                 </TouchableOpacity>
@@ -283,7 +283,7 @@ class OrderScreen extends Component {
             </ScrollView>
           </View>
         </View>
-      </View>
+      </SafeAreaView>
     )
   }
 }

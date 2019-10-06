@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Alert } from 'react-native'
+import { ScrollView, SafeAreaView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Alert } from 'react-native'
 import { Images, Metrics, Colors } from '../Themes'
 import { connect } from 'react-redux'
 import GetAddressActions from '../Redux/GetAddressRedux'
@@ -129,7 +129,7 @@ class AddressListScreen extends Component {
 
   render () {
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <View style={styles.headerWrapper}>
           <TouchableOpacity style={styles.headerButtonLeft} onPress={() => this.props.navigation.goBack()}>
             <Image source={Images.back} style={styles.buttonHeader} />
@@ -148,7 +148,7 @@ class AddressListScreen extends Component {
           </TouchableOpacity>
           </ScrollView>
         </View>
-      </View>
+      </SafeAreaView>
     )
   }
 }

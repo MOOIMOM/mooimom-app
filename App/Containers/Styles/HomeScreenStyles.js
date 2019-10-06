@@ -4,6 +4,7 @@ import { Metrics, ApplicationStyles, Colors, Fonts } from '../../Themes/'
 export default StyleSheet.create({
   container: {
     flex:1,
+    backgroundColor: Colors.white
   },
   containerScroll:{
     flex: 1,
@@ -18,7 +19,7 @@ export default StyleSheet.create({
     top: Metrics.screenHeight * -0.22,
     backgroundColor: Colors.mooimom,
     borderRadius: Metrics.screenWidth / 2,
-    transform: [{ scaleX: 2 }, { scaleY: 0.5 }],
+    transform: [{ scaleX: 2 }, { scaleY: 1 }],
     flex: 1
   },
   wrapperSeparator:{

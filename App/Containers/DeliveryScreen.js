@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Alert, Modal, ActivityIndicator } from 'react-native'
+import { SafeAreaView, ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Alert, Modal, ActivityIndicator } from 'react-native'
 import { Images, Metrics, Colors } from '../Themes'
 import FastImage from 'react-native-fast-image'
 import { connect } from 'react-redux'
@@ -343,7 +343,7 @@ class DeliveryScreen extends Component {
     var totalPrice = convertToRupiah(price + deliveryPrice)
     var commission = convertToRupiah(this.state.commission)
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <View style={styles.headerWrapper}>
           <TouchableOpacity style={styles.headerButtonLeft} onPress={() => this.props.navigation.goBack()}>
             <Image source={Images.back} style={styles.buttonHeader} />
@@ -381,7 +381,7 @@ class DeliveryScreen extends Component {
         {this.props.checkout.fetching && <View style={styles.fullScreenModal}>
           <ActivityIndicator size="large" color={Colors.mooimom} />
         </View>}
-      </View>
+      </SafeAreaView>
     )
   }
 }

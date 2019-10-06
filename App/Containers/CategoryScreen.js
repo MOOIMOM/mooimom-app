@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, FlatList, SectionList, BackHandler, ActivityIndicator, AppState, Clipboard } from 'react-native'
+import { ScrollView, SafeAreaView, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, FlatList, SectionList, BackHandler, ActivityIndicator, AppState, Clipboard } from 'react-native'
 import { Images, Metrics,Colors } from '../Themes'
 import FastImage from 'react-native-fast-image'
 import ProductCardSingle from '../Components/ProductCardSingle'
@@ -458,10 +458,10 @@ class CategoryScreen extends Component {
         </View>
       )
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         {!this.state.isSelectSubCategory && this._renderCategoryView()}
         {this.state.isSelectSubCategory && this._renderSubCategoryView()}
-      </View>
+      </SafeAreaView>
     )
   }
 }

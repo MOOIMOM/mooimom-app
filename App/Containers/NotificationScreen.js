@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, FlatList, ActivityIndicator } from 'react-native'
+import { SafeAreaView, ScrollView, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, FlatList, ActivityIndicator } from 'react-native'
 import { Images, Metrics, Colors } from '../Themes'
 import GetNotificationActions from '../Redux/GetNotificationRedux'
 import LastNotificationTimeActions from '../Redux/LastNotificationTimeRedux'
@@ -106,7 +106,7 @@ class NotificationScreen extends Component {
 
   render () {
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <View style={styles.containerScroll}>
           <View style={styles.headerWrapper}>
             <TouchableOpacity style={styles.btnHeader} onPress={
@@ -139,7 +139,7 @@ class NotificationScreen extends Component {
             />
           </View>
         </View>
-      </View>
+      </SafeAreaView>
     )
   }
 }

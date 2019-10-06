@@ -68,17 +68,21 @@ export default StyleSheet.create({
     fontSize: Metrics.fontSize2,
     textAlign: 'center'
   },
+  textTargetAmountContainer:{
+    paddingVertical: 5,
+    marginVertical: 5,
+    width: (Metrics.screenWidth - 20) / 2,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    alignSelf: 'center',
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   textTargetAmount:{
     color:Colors.white,
     fontFamily: Fonts.type.gotham4,
     fontSize: Metrics.fontSize4,
-    paddingVertical: 5,
     textAlign: 'center',
-    alignSelf: 'center',
-    borderRadius: 5,
-    marginVertical: 5,
-    width: (Metrics.screenWidth - 20) / 2,
-    backgroundColor: 'rgba(0,0,0,0.5)'
   },
   textTargetMore:{
     color:Colors.white,

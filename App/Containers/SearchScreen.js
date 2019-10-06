@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, TextInput, FlatList, Alert, AppState, Clipboard, ActivityIndicator } from 'react-native'
+import { SafeAreaView, ScrollView, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, TextInput, FlatList, Alert, AppState, Clipboard, ActivityIndicator } from 'react-native'
 import { Images, Metrics, Colors } from '../Themes'
 import ProductCardSingle from '../Components/ProductCardSingle'
 import GetSearchActions from '../Redux/GetSearchRedux'
@@ -155,7 +155,7 @@ class SearchScreen extends Component {
 
   render () {
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <View style={styles.containerScroll}>
           <View style={styles.headerWrapper}>
             <TouchableOpacity style={styles.btnHeader} onPress={
@@ -200,7 +200,7 @@ class SearchScreen extends Component {
             <Text style={(this.state.finishShareImage ? styles.modalShareText : styles.modalShareText2)}>Description Copied</Text>
           </View>
         </View>}
-      </View>
+      </SafeAreaView>
     )
   }
 }

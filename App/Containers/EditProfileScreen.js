@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, TouchableOpacity, TextInput, Image, KeyboardAvoidingView, Alert, ActivityIndicator } from 'react-native'
+import { SafeAreaView, ScrollView, Text, View, TouchableOpacity, TextInput, Image, KeyboardAvoidingView, Alert, ActivityIndicator } from 'react-native'
 import { Images, Metrics, Colors } from '../Themes'
 import { connect } from 'react-redux'
 import {convertToRupiah } from '../Lib/utils'
@@ -148,7 +148,7 @@ class EditProfileScreen extends Component {
 
   render () {
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <View style={styles.headerWrapper}>
           <TouchableOpacity style={styles.headerButtonLeft} onPress={() => this.props.navigation.goBack()}>
             <Image source={Images.back} style={styles.buttonHeader} />
@@ -293,7 +293,7 @@ class EditProfileScreen extends Component {
             <Text style={styles.chooseAddressText}>Simpan</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </SafeAreaView>
     )
   }
 }

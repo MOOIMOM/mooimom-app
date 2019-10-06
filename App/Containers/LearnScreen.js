@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, Image, TouchableOpacity, FlatList, Linking, WebView, AppState, ActivityIndicator, Modal } from 'react-native'
+import { ScrollView, SafeAreaView, Text, View, Image, TouchableOpacity, FlatList, Linking, WebView, AppState, ActivityIndicator, Modal } from 'react-native'
 import { Images, Metrics, Colors } from '../Themes'
 import Carousel, { ParallaxImage, Pagination  } from 'react-native-snap-carousel';
 import { connect } from 'react-redux'
@@ -267,7 +267,7 @@ class LearnScreen extends Component {
 
   render () {
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <View style={styles.headerWrapper}>
           <TouchableOpacity style={styles.searchButton} onPress={() => this.actNavigate('SearchScreen')}>
             <Image source={Images.search} style={styles.imageSearch}/>
@@ -384,7 +384,7 @@ class LearnScreen extends Component {
                 isShowQASub:false
               })
             }}>
-              <View
+              <SafeAreaView
                 style={styles.containerModal2}
                 activeOpacity={1}
               >
@@ -414,7 +414,7 @@ class LearnScreen extends Component {
                 }}
                 keyExtractor={(item, index) => index.toString()}
                 />
-            </View>
+            </SafeAreaView>
           </Modal>}
           {this.state.isShowQASub2 && <Modal
             animationType="slide"
@@ -425,7 +425,7 @@ class LearnScreen extends Component {
                 isShowQASub2:false
               })
             }}>
-              <View
+              <SafeAreaView
                 style={styles.containerModal2}
                 activeOpacity={1}
               >
@@ -450,7 +450,7 @@ class LearnScreen extends Component {
                 }}
                 keyExtractor={(item, index) => index.toString()}
                 />
-            </View>
+            </SafeAreaView>
           </Modal>}
           <View style={styles.itemContainer}>
             {this.state.activeMenu === 'video' &&
@@ -485,7 +485,7 @@ class LearnScreen extends Component {
             </View>}
           </View>
         </View>
-      </View>
+      </SafeAreaView>
     )
   }
 }

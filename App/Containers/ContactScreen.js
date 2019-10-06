@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, Image, TouchableOpacity, Alert, Linking } from 'react-native'
+import { SafeAreaView, ScrollView, Text, View, Image, TouchableOpacity, Alert, Linking } from 'react-native'
 import { Images, Metrics } from '../Themes'
 import { connect } from 'react-redux'
 import {convertToRupiah} from '../Lib/utils'
@@ -91,7 +91,7 @@ class ContactScreen extends Component {
 
   render () {
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <View style={styles.containerScroll}>
           <View style={styles.headerWrapper}>
             <TouchableOpacity style={styles.btnHeader} onPress={() => this.props.navigation.goBack()}>
@@ -183,7 +183,7 @@ class ContactScreen extends Component {
             </ScrollView>
           </View>
         </View>
-      </View>
+      </SafeAreaView>
     )
   }
 }
