@@ -16,10 +16,10 @@ export default StyleSheet.create({
     position:'absolute',
     alignSelf: "center",
     alignContent: "center",
-    top: Metrics.screenHeight * -0.22,
+    top: Metrics.screenHeight * -0.25,
     backgroundColor: Colors.mooimom,
     borderRadius: Metrics.screenWidth / 2,
-    transform: [{ scaleX: 2 }, { scaleY: 1 }],
+    transform: [{ scaleX: 2 }, { scaleY: 0.8 }],
     flex: 1
   },
   wrapperSeparator:{
