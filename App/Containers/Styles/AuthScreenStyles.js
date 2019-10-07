@@ -12,6 +12,7 @@ export default StyleSheet.create({
     width: Metrics.screenWidth,
     height: Metrics.screenHeight,
     alignItems: 'center',
+    flex: 1
   },
   title:{
     width: Metrics.screenWidth - 150,

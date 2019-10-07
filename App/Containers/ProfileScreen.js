@@ -250,10 +250,10 @@ class ProfileScreen extends Component {
               </View>
             </View>
             <View style={styles.wrapperSeparator}/>
-            <View style={styles.saldoContainer}>
+            <TouchableOpacity style={styles.saldoContainer} onPress={() => this.actNavigate('PaymentScreen')}>
               <Text style={styles.textSaldo}>SALDO</Text>
               <Text style={styles.textSaldoAmount}>{convertToRupiah(this.state.balance)}</Text>
-            </View>
+            </TouchableOpacity>
             <View style={styles.wrapperSeparator}/>
             <View style={styles.containerMenu}>
               <View style={styles.menu}>

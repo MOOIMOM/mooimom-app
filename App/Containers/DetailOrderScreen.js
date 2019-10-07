@@ -6,6 +6,7 @@ import GetOrderActions from '../Redux/GetOrderRedux'
 import CommissionEstimationActions from '../Redux/CommissionEstimationRedux'
 import GetOrderStatusMidtransActions from '../Redux/GetOrderStatusMidtransRedux'
 import GopayActions from '../Redux/GopayRedux'
+import CartActions from '../Redux/CartRedux'
 import { connect } from 'react-redux'
 import {convertToRupiah, getDateFromString } from '../Lib/utils'
 import MidtransModule from '../Lib/Midtrans'
@@ -206,6 +207,39 @@ class DetailOrderScreen extends Component {
         optionFont,
         callback
     );
+  }
+
+  pressOrderAgain(){
+    const {order_items} = this.state.order
+    if(!order_items || order_items.length < 1)
+      return;
+    order_items.map(item => {
+      let product ={
+        colors: item.colors,
+        slug: item.product_slug,
+        product_name: item.product_name,
+        product_regular_price: item.product_regular_price,
+        product_sale_price: item.product_sale_price,
+        sizes: item.sizes,
+        all_product_variations_with_stock_data: item.all_product_variations_with_stock_data,
+        custom_attribute_text: item.custom_attribute_text,
+        custom_attributes: item.custom_attributes,
+        img_url: item.main_image
+      }
+      let data = {
+        product: product,
+        color: item.color_slug,
+        size: item.size_slug,
+        custom: item.custom_attribute_1_slug,
+        sku: item.sku,
+        qty: item.quantity
+      }
+      this.props.addToCartProcess(data)
+    })
+    Alert.alert(
+      '',
+      'Produk Berhasil Ditambahkan!',
+    )
   }
 
   _renderProductCart(data){
@@ -416,6 +450,11 @@ class DetailOrderScreen extends Component {
               <Text style={styles.commissionText2}>Komisi</Text>
               <Text style={styles.commissionText2}>{commission}</Text>
             </View>
+            <View style={styles.menuTextTopWrapper}>
+              <TouchableOpacity style={styles.btnOrderAgain} onPress={() => this.pressOrderAgain()}>
+                <Text style={styles.textOrderAgain}>Beli Lagi</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       )
@@ -521,6 +560,9 @@ const mapDispatchToProps = dispatch => {
     },
     saveGopayRequestProcess: data => {
       dispatch(GopayActions.saveGopayRequest(data))
+    },
+    addToCartProcess: data => {
+      dispatch(CartActions.addCartRequest(data))
     },
   }
 };

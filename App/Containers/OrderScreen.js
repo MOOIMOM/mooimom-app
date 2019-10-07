@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { ScrollView, SafeAreaView, Text, View, Image, TouchableOpacity, FlatList, AsyncStorage, RefreshControl} from 'react-native'
+import { ScrollView, SafeAreaView, Text, View, Image, Alert, TouchableOpacity, FlatList, AsyncStorage, RefreshControl} from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { Images, Metrics, Colors } from '../Themes'
 import LinearGradient from 'react-native-linear-gradient';
 import GetAllOrderActions from '../Redux/GetAllOrderRedux';
 import GetCommissionSummaryActions from '../Redux/GetCommissionSummaryRedux';
+import CartActions from '../Redux/CartRedux';
 import { connect } from 'react-redux'
 import {convertToRupiah, getDateFromString} from '../Lib/utils'
 
@@ -125,6 +126,38 @@ class OrderScreen extends Component {
     this.props.getAllOrderProcess(data)
   }
 
+  pressOrderAgain(items){
+    if(!items || items.length < 1)
+      return;
+    items.map(item => {
+      let product ={
+        colors: item.colors,
+        slug: item.product_slug,
+        product_name: item.product_name,
+        product_regular_price: item.product_regular_price,
+        product_sale_price: item.product_sale_price,
+        sizes: item.sizes,
+        all_product_variations_with_stock_data: item.all_product_variations_with_stock_data,
+        custom_attribute_text: item.custom_attribute_text,
+        custom_attributes: item.custom_attributes,
+        img_url: item.main_image
+      }
+      let data = {
+        product: product,
+        color: item.color_slug,
+        size: item.size_slug,
+        custom: item.custom_attribute_1_slug,
+        sku: item.sku,
+        qty: item.quantity
+      }
+      this.props.addToCartProcess(data)
+    })
+    Alert.alert(
+      '',
+      'Produk Berhasil Ditambahkan!',
+    )
+  }
+
   onEndReached(){
     if (!isReloadPage && this.props.allOrder && this.props.allOrder.payload && this.props.allOrder.payload.how_many_pages) {
       if (this.state.currentPage + 1 <= this.props.allOrder.payload.how_many_pages) {
@@ -177,7 +210,7 @@ class OrderScreen extends Component {
             </View>
             <View style={styles.orderContainerRight}>
               <Text style={styles.productName}>{item.product_name}</Text>
-              <Text style={styles.productPrice}>{convertToRupiah(item.price)}</Text>
+              <Text style={styles.productPrice}>{convertToRupiah(item.price * item.quantity)}</Text>
             </View>
           </View>
         )
@@ -209,6 +242,8 @@ class OrderScreen extends Component {
          <View style={styles.orderContainerTotal}>
            <Text style={styles.orderAmount}>Total</Text>
            <Text style={styles.orderAmount}>{convertToRupiah(item.order_total)}</Text>
+           {item.order_status === 'completed' && <TouchableOpacity style={styles.orderAgainBtn} onPress={() => this.pressOrderAgain(item.order_items)}>
+           <Text style={styles.orderAgainText}>Beli Lagi</Text></TouchableOpacity>}
          </View>
        </View>
      </TouchableOpacity>
@@ -303,6 +338,9 @@ const mapDispatchToProps = dispatch => {
     },
     getCommissionSummaryProcess: data => {
       dispatch(GetCommissionSummaryActions.getCommissionSummaryRequest(data))
+    },
+    addToCartProcess: data => {
+      dispatch(CartActions.addCartRequest(data))
     },
   }
 };

@@ -267,5 +267,18 @@ export default StyleSheet.create({
     fontFamily: Fonts.type.gotham2,
     fontSize: Metrics.fontSize5,
     textAlign: 'center'
+  },
+  btnOrderAgain:{
+    backgroundColor: Colors.fire,
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: Metrics.screenWidth / 4,
+    paddingVertical: 5 * Metrics.screenWidth / 320
+  },
+  textOrderAgain:{
+    color:Colors.white,
+    fontFamily: Fonts.type.gotham4,
+    fontSize: Metrics.fontSize1,
   }
 })

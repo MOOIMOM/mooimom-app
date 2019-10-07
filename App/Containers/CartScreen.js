@@ -328,13 +328,13 @@ class CartScreen extends Component {
       var price = item.product.product_sale_price > 0 ? item.product.product_sale_price : item.product.product_regular_price
       price = convertToRupiah(price * item.qty)
       var isFound, size, color, title, custom = ''
-      isFound = item.product.sizes.find(x => x.slug === item.size)
+      isFound = (item.product.sizes && item.product.sizes.length > 0) ? item.product.sizes.find(x => x.slug === item.size) : false
       if(isFound)
         size = isFound.name
-      isFound = item.product.colors.find(x => x.slug === item.color)
+      isFound = (item.product.colors && item.product.colors.length > 0) ? item.product.colors.find(x => x.slug === item.color) : false
       if(isFound)
         color = isFound.image_url
-      isFound = item.product.custom_attributes.find(x => x.slug === item.custom)
+      isFound = (item.product.custom_attributes && item.product.custom_attributes.length > 0) ? item.product.custom_attributes.find(x => x.slug === item.custom) : false
       if(isFound){
         custom = isFound.name
         title = titleCase(item.product.custom_attribute_text)
@@ -344,21 +344,27 @@ class CartScreen extends Component {
         image = {uri:item.product.img_url}
       }
       var sizes = []
-      for(var i=0;i<item.product.sizes.length;i++){
-        if(!this.checkEmpty(item.product.all_product_variations_with_stock_data, item.product.sizes[i].slug, 2, item.size, item.color, item.custom)){
-          sizes.push(item.product.sizes[i])
+      if(item.product.sizes && item.product.sizes.length > 0){
+        for(var i=0;i<item.product.sizes.length;i++){
+          if(!this.checkEmpty(item.product.all_product_variations_with_stock_data, item.product.sizes[i].slug, 2, item.size, item.color, item.custom)){
+            sizes.push(item.product.sizes[i])
+          }
         }
       }
       var colors = []
-      for(var i=0;i<item.product.colors.length;i++){
-        if(!this.checkEmpty(item.product.all_product_variations_with_stock_data, item.product.colors[i].slug, 1, item.size, item.color, item.custom)){
-          colors.push(item.product.colors[i])
+      if(item.product.colors && item.product.colors.length > 0){
+        for(var i=0;i<item.product.colors.length;i++){
+          if(!this.checkEmpty(item.product.all_product_variations_with_stock_data, item.product.colors[i].slug, 1, item.size, item.color, item.custom)){
+            colors.push(item.product.colors[i])
+          }
         }
       }
       var customs = []
-      for(var i=0;i<item.product.custom_attributes.length;i++){
-        if(!this.checkEmpty(item.product.all_product_variations_with_stock_data, item.product.custom_attributes[i].slug, 3, item.size, item.color, item.custom)){
-          customs.push(item.product.custom_attributes[i])
+      if(item.product.custom_attributes && item.product.custom_attributes.length > 0){
+        for(var i=0;i<item.product.custom_attributes.length;i++){
+          if(!this.checkEmpty(item.product.all_product_variations_with_stock_data, item.product.custom_attributes[i].slug, 3, item.size, item.color, item.custom)){
+            customs.push(item.product.custom_attributes[i])
+          }
         }
       }
       return(

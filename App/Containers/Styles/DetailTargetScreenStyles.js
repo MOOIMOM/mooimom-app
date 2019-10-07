@@ -7,8 +7,8 @@ export default StyleSheet.create({
   },
   containerScroll:{
     paddingTop: 0,
-    height: Metrics.screenHeight - 120,
-    paddingBottom: 50
+    flex: 1,
+    paddingBottom: 85 * Metrics.screenWidth / 320
   },
   wrapperSeparator:{
     marginTop: 20,

@@ -250,4 +250,16 @@ export default StyleSheet.create({
     fontFamily: Fonts.type.gotham2,
     color: Colors.white,
   },
+  orderAgainBtn:{
+    backgroundColor: Colors.fire,
+    borderRadius: 5,
+    width: Metrics.screenWidth / 4,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  orderAgainText:{
+    fontSize: Metrics.fontSize2,
+    fontFamily: Fonts.type.gotham4,
+    color: Colors.white,
+  }
 })
