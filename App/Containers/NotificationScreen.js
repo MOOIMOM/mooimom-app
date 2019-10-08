@@ -88,25 +88,25 @@ class NotificationScreen extends Component {
   getStyle(item){
     switch(item.the_type){
       case 'create_order':
-        return {backgroundColor:Colors.facebook}
+        return {backgroundColor:Colors.notifordercreated}
       case 'order_status_change':
         switch(item.status){
           case 'cancelled':
-            return {backgroundColor:Colors.fire}
+            return {backgroundColor:Colors.notifordercancelled}
           case 'pending':
-            return {backgroundColor:Colors.facebook}
+            return {backgroundColor:Colors.notifordercreated}
           case 'processing':
-            return {backgroundColor:'orange'}
+            return {backgroundColor:Colors.notiforderprocessing}
           case 'completed':
-            return {backgroundColor:Colors.mooimom}
+            return {backgroundColor:Colors.notifordercompleted}
           default:
-            return {backgroundColor:Colors.gray}
+            return {backgroundColor:Colors.steel}
         }
       break;
       case 'withdraw_status_change':
-        return {backgroundColor:Colors.banner}
+        return {backgroundColor:Colors.notifwithdrawstatus}
       case 'product_have_stock_again':
-        return {backgroundColor:Colors.green}
+        return {backgroundColor:Colors.notifproductbackinstock}
       default:
         return {backgroundColor:Colors.steel}
     }

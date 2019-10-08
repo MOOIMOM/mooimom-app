@@ -133,16 +133,16 @@ export default StyleSheet.create({
     position: 'absolute',
     top: Metrics.screenHeight / 4 - 45,
     width: '100%',
-    paddingHorizontal: 5,
+    paddingHorizontal: 4,
     height: 40,
     backgroundColor: Colors.modal,
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center'
   },
   textSoldContainer:{
+    marginLeft: 5,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'flex-start',
   },
   imageSad:{
     width: 20,
@@ -155,7 +155,7 @@ export default StyleSheet.create({
     fontFamily: Fonts.type.gotham2,
   },
   textSold2:{
-    fontSize: Metrics.fontSize0,
+    fontSize: 7*Metrics.screenWidth / 320,
     color: Colors.white,
     fontFamily: Fonts.type.gotham2,
   }

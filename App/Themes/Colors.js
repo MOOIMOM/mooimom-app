@@ -29,7 +29,12 @@ const colors = {
   lightGray: '#EFEFEF',
   modal:'rgba(100,100,100,0.8)',
   blueMooimom: '#5cbfaf',
-  green: '#90EE90'
+  notifordercreated: '#81ded0',
+  notifordercancelled: '#ec297b',
+  notifordercompleted: '#1b75bb',
+  notiforderprocessing: '#3fc0e8',
+  notifwithdrawstatus: '#90278e',
+  notifproductbackinstock: '#fff100',
 }
 
 export default colors

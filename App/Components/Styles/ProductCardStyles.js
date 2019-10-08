@@ -10,7 +10,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'column',
     paddingHorizontal: 15,
-    marginBottom: 20
+    marginBottom: 20,
   },
   wishlist:{
     position: 'absolute',
@@ -23,7 +23,7 @@ export default StyleSheet.create({
     resizeMode: 'contain'
   },
   image:{
-    width: Metrics.screenWidth / 2,
+    width: Metrics.screenWidth / 2 - 30,
     height: 200 * Metrics.screenWidth / 320,
     marginBottom:5
   },
@@ -86,17 +86,17 @@ export default StyleSheet.create({
   productEmptyContainer:{
     position: 'absolute',
     top: 150 * Metrics.screenWidth / 320,
-    width: Metrics.screenWidth / 2 - 20,
+    width: Metrics.screenWidth / 2 - 30,
     paddingHorizontal: 10,
-    height: 50,
+    height: 50 * Metrics.screenWidth / 320,
     backgroundColor: Colors.modal,
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center'
   },
   textSoldContainer:{
+    marginLeft: 5,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'flex-start',
   },
   imageSad:{
     width: 25,
@@ -104,12 +104,12 @@ export default StyleSheet.create({
     resizeMode: 'contain',
   },
   textSold1:{
-    fontSize: Metrics.fontSize2,
+    fontSize: Metrics.fontSize1,
     color: Colors.white,
     fontFamily: Fonts.type.gotham2,
   },
   textSold2:{
-    fontSize: Metrics.fontSize1,
+    fontSize: Metrics.fontSize0,
     color: Colors.white,
     fontFamily: Fonts.type.gotham2,
   }
