@@ -28,7 +28,8 @@ const colors = {
   black: '#5d5d5d',
   lightGray: '#EFEFEF',
   modal:'rgba(100,100,100,0.8)',
-  blueMooimom: '#5cbfaf'
+  blueMooimom: '#5cbfaf',
+  green: '#90EE90'
 }
 
 export default colors

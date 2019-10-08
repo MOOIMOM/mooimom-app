@@ -54,6 +54,9 @@ export default StyleSheet.create({
     fontSize: 15 * Metrics.screenWidth / 320,
     fontFamily: Fonts.type.gotham2,
   },
+  btnResend:{
+    height: 30 * Metrics.screenWidth / 320,
+  },
   textSignIn:{
     color:Colors.white,
     fontSize: 15 * Metrics.screenWidth / 320,

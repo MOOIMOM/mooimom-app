@@ -141,6 +141,8 @@ const create = (baseURL = 'https://www.mooimom.id/') => {
     api.post('app-get-articles', params.data_request)
   const postGetQuestion = params =>
     api.post('app-get-question-and-answer', params.data_request)
+  const postSubscribeProduct = params =>
+    api.post('app-link-user-with-product-stock-notification', params.data_request)
 
 
   // ------
@@ -202,6 +204,7 @@ const create = (baseURL = 'https://www.mooimom.id/') => {
     postGetVideo,
     postGetArticle,
     postGetQuestion,
+    postSubscribeProduct,
   }
 }
 

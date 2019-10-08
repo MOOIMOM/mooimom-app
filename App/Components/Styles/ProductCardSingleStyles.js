@@ -129,4 +129,34 @@ export default StyleSheet.create({
     color: Colors.white,
     fontFamily: Fonts.type.gotham2,
   },
+  productEmptyContainer:{
+    position: 'absolute',
+    top: Metrics.screenHeight / 4 - 45,
+    width: '100%',
+    paddingHorizontal: 5,
+    height: 40,
+    backgroundColor: Colors.modal,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  textSoldContainer:{
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  imageSad:{
+    width: 20,
+    height: 20,
+    resizeMode: 'contain',
+  },
+  textSold1:{
+    fontSize: Metrics.fontSize1,
+    color: Colors.white,
+    fontFamily: Fonts.type.gotham2,
+  },
+  textSold2:{
+    fontSize: Metrics.fontSize0,
+    color: Colors.white,
+    fontFamily: Fonts.type.gotham2,
+  }
 })

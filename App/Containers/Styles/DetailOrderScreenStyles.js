@@ -29,9 +29,10 @@ export default StyleSheet.create({
   },
   cartContainer:{
     width: Metrics.screenWidth - 40,
-    height: Metrics.screenHeight - 130,
+    height: Metrics.screenHeight - 100,
     marginHorizontal: 20,
-    marginTop: 5
+    marginTop: 5,
+    paddingBottom: 50
   },
   productSubtitle:{
     fontSize: Metrics.fontSize3,

@@ -230,10 +230,40 @@ class HomeScreen extends Component {
           }
         });
         break
+      case 'activity_page':
+        switch(item.url){
+          case '[category_menu]':
+          this.navigate_to('Category')
+          break;
+          case '[homepage]':
+          break;
+          case '[my_profile]':
+          this.navigate_to('Akun')
+          break;
+          case '[learn_youtube]':
+          this.navigate_to('Learn', {
+            activeMenu: "video"
+          })
+          break;
+          case '[learn_article]':
+          this.navigate_to('Learn', {
+            activeMenu: "article"
+          })
+          break;
+          case '[learn_qa]':
+          this.navigate_to('Learn', {
+            activeMenu: "question"
+          })
+          break;
+          case '[order_history]':
+          this.navigate_to('Order')
+          break;
+        }
+        break
     }
   }
 
-  _renderHeroBanner ({item, index}, parallaxProps) {
+  _renderHeroBanner ({item, index}) {
       var image = Images.default
       if(item.img_url && item.img_url !== '')
         image = {uri:item.img_url}
@@ -242,12 +272,10 @@ class HomeScreen extends Component {
         onPress={()=>this.pressBanner.bind(this)(item)}
         >
           <View style={styles.itemHeroBanner}>
-              <ParallaxImage
+              <FastImage
                   source={image}
-                  containerStyle={styles.imageContainerHeroBanner}
                   style={styles.imageHeroBanner}
-                  parallaxFactor={0.6}
-                  {...parallaxProps}
+                  resizeMode={FastImage.resizeMode.contain}
               />
           </View>
         </TouchableWithoutFeedback>
@@ -373,11 +401,9 @@ class HomeScreen extends Component {
             <Carousel
               ref={(carousel) => { this._carousel = carousel; }}
               sliderWidth={Metrics.screenWidth}
-              sliderHeight={220}
               itemWidth={Metrics.screenWidth - 60}
               data={this.state.banners}
               renderItem={this._renderHeroBanner.bind(this)}
-              hasParallaxImages={true}
               autoplay={true}
               lockScrollWhileSnapping={true}
               onSnapToItem={(index) => this.setState({ activeSlide: index }) }

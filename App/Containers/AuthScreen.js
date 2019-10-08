@@ -279,7 +279,11 @@ class AuthScreen extends Component {
                 <Text style={styles.btnText}>Verifikasi</Text>
               </TouchableOpacity>
               <View style={styles.SignUpContainer}>
-                <Text style={styles.textSignIn} onPress={() => this.requestOtp()}>Kirim ulang kode verifikasi</Text>
+                <TouchableOpacity
+                  style={styles.btnResend}
+                  onPress={() => this.requestOtp()}>
+                  <Text style={styles.textSignIn}>Kirim ulang kode verifikasi</Text>
+                </TouchableOpacity>
               </View>
             </KeyboardAvoidingView>
           </View>

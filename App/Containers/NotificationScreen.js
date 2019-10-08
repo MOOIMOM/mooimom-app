@@ -59,6 +59,12 @@ class NotificationScreen extends Component {
       case 'withdraw_status_change':
         this.actNavigate('PaymentScreen')
       break;
+      case 'product_have_stock_again':
+        this.actNavigate('ProductScreen', {
+          product_slug: item.slug,
+          auth: this.props.auth
+        })
+      break;
     }
   }
 
@@ -99,6 +105,8 @@ class NotificationScreen extends Component {
       break;
       case 'withdraw_status_change':
         return {backgroundColor:Colors.banner}
+      case 'product_have_stock_again':
+        return {backgroundColor:Colors.green}
       default:
         return {backgroundColor:Colors.steel}
     }

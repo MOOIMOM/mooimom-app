@@ -44,6 +44,7 @@ import { GetOrderStatusMidtransTypes } from '../Redux/GetOrderStatusMidtransRedu
 import { GetVideoTypes } from '../Redux/GetVideoRedux'
 import { GetArticleTypes } from '../Redux/GetArticleRedux'
 import { GetQuestionTypes } from '../Redux/GetQuestionRedux'
+import { SubscribeProductTypes } from '../Redux/SubscribeProductRedux'
 
 /* ------------- Sagas ------------- */
 
@@ -93,6 +94,7 @@ import { postGetOrderStatusMidtrans } from './GetOrderStatusMidtransSagas'
 import { postGetVideo } from './GetVideoSagas'
 import { postGetArticle } from './GetArticleSagas'
 import { postGetQuestion } from './GetQuestionSagas'
+import { postSubscribeProduct } from './SubscribeProductSagas'
 
 /* ------------- API ------------- */
 
@@ -153,5 +155,6 @@ export default function * root () {
     takeLatest(GetVideoTypes.GET_VIDEO_REQUEST, postGetVideo, api),
     takeLatest(GetArticleTypes.GET_ARTICLE_REQUEST, postGetArticle, api),
     takeLatest(GetQuestionTypes.GET_QUESTION_REQUEST, postGetQuestion, api),
+    takeLatest(SubscribeProductTypes.SUBSCRIBE_PRODUCT_REQUEST, postSubscribeProduct, api),
   ])
 }

@@ -609,4 +609,83 @@ export default StyleSheet.create({
     fontFamily: Fonts.type.gotham2,
     color: Colors.white,
   },
+  qtyWrapper:{
+    flex:1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderColor: Colors.gray,
+    paddingBottom: 20,
+  },
+  qtyContainer:{
+    width: Metrics.screenWidth / 4 + 1,
+    marginLeft: 20,
+    height: 27,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    borderWidth: 0.5,
+    borderRadius: 3,
+    paddingRight: 1,
+    borderColor: Colors.black
+  },
+  btnQty:{
+    backgroundColor: Colors.lightGray,
+    width: Metrics.screenWidth / 5 / 3,
+    height: 28,
+    justifyContent: 'center',
+    flex:1,
+    alignItems: 'center'
+  },
+  qtyText:{
+    flex:1,
+    alignItems: 'center'
+  },
+  dropdown_text: {
+    fontSize: Metrics.fontSize5,
+    color: Colors.black,
+    fontFamily: Fonts.type.gotham4,
+  },
+  emptyContainer:{
+    backgroundColor: Colors.lightGray,
+    paddingTop: 10,
+    marginBottom: 10,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: Metrics.screenWidth - 40,
+    flex: 1
+  },
+  emptyText1:{
+    textAlign: 'center',
+    fontSize: Metrics.fontSize4,
+    color: Colors.black,
+    fontFamily: Fonts.type.gotham4,
+    paddingVertical: 5
+  },
+  emptyText2:{
+    textAlign: 'center',
+    fontSize: Metrics.fontSize3,
+    color: Colors.mooimom,
+    fontFamily: Fonts.type.gotham4,
+    paddingVertical: 5
+  },
+  emptyText3:{
+    textAlign: 'center',
+    fontSize: Metrics.fontSize1,
+    color: Colors.gray,
+    fontFamily: Fonts.type.gotham2,
+  },
+  emptyBtn:{
+    marginVertical: 20,
+    backgroundColor: Colors.mooimom,
+    borderRadius: 6,
+    paddingHorizontal: 10,
+    paddingVertical: 5
+  },
+  emptyTextBtn:{
+    textAlign: 'center',
+    fontSize: Metrics.fontSize2,
+    color: Colors.white,
+    fontFamily: Fonts.type.gotham4,
+  },
 })

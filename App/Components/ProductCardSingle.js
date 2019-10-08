@@ -147,6 +147,19 @@ export default class ProductCardSingle extends Component {
     }
   }
 
+  renderOutofstock(){
+    if(this.state.product && this.state.product.stock < 1)
+    return (
+      <View style={styles.productEmptyContainer}>
+        <Image source={Images.sad} style={styles.imageSad}/>
+        <View style={styles.textSoldContainer}>
+          <Text style={styles.textSold1}>SOLD OUT!</Text>
+          <Text style={styles.textSold2}>we will restock soon</Text>
+        </View>
+      </View>
+    )
+  }
+
   renderWishlist(){
     var image = Images.wishlistBlack
     if(this.state.isInWishlist)
@@ -176,6 +189,7 @@ export default class ProductCardSingle extends Component {
               style={styles.image}
               resizeMode={FastImage.resizeMode.contain}
           />
+          {this.renderOutofstock()}
           {this.renderWishlist()}
           </View>
           <View style={styles.topRightItem}>

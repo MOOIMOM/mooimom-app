@@ -7,6 +7,7 @@ import SharedProductActions from '../Redux/SharedProductRedux'
 import GetProductActions from '../Redux/GetProductRedux'
 import CartActions from '../Redux/CartRedux'
 import EditWishlistActions from '../Redux/EditWishlistRedux'
+import SubscribeProductActions from '../Redux/SubscribeProductRedux'
 import FastImage from 'react-native-fast-image'
 import ScaledImage from '../Components/ScaledImage';
 import {convertToRupiah, share, shareDescripton, download, titleCase, getNewNotificationsCount} from '../Lib/utils'
@@ -33,7 +34,8 @@ class ProductScreen extends Component {
       socialShare: '',
       isShowSizeGuide: false,
       fcmToken: '',
-      isShowError: false
+      isShowError: false,
+      qty: 1
     }
   }
 
@@ -101,7 +103,8 @@ class ProductScreen extends Component {
           sizeSelected: size,
           customSelected: custom,
           isInWishlist: newProps.product.payload.wishlist === 1,
-          isShowError: false
+          isShowError: false,
+          qty: 1
         })
       } else if(newProps.product.payload === null
         && !newProps.product.fetching
@@ -133,6 +136,22 @@ class ProductScreen extends Component {
     }
     this.setState({appState: nextAppState});
   };
+
+  subscribeProduct(){
+    let data = {
+      data_request:{
+        product_slug: this.state.product.slug,
+        user_id: this.props.navigation.state.params.auth.payload.user_id,
+        unique_token: this.props.navigation.state.params.auth.payload.unique_token,
+        fcmToken: this.state.fcmToken
+      }
+    }
+    this.props.subscribeProductProcess(data)
+    Alert.alert(
+      '',
+      'Kami akan memberi tahu Anda lewat notifikasi ketika barang sudah tersedia',
+    )
+  }
 
   async shareSocial(social){
     this.setState({
@@ -364,9 +383,25 @@ class ProductScreen extends Component {
     )
   }
 
+  renderEmpty(){
+    if(this.state.product && this.state.product.stock < 1)
+    return(
+      <View style={styles.emptyContainer}>
+        <Text style={styles.emptyText1}>Produk Habis Terjual</Text>
+        <Text style={styles.emptyText2}>Akan restock segera</Text>
+        <Text style={styles.emptyText3}>Klik untuk mendapatkan notifikasi</Text>
+        <Text style={styles.emptyText3}>jika barang sudah tersedia</Text>
+        <TouchableOpacity style={styles.emptyBtn} onPress={() => this.subscribeProduct()}>
+          <Text style={styles.emptyTextBtn}>KABARI BILA TERSEDIA</Text>
+        </TouchableOpacity>
+      </View>
+    )
+  }
+
   renderColor(){
     if(this.state.product.colors && this.state.product.colors.length > 0)
     return(
+      <>
       <View style={styles.colorWrapper}>
         <Text style={styles.productSubtitle}>Warna</Text>
         <View style={styles.colorContainer}>
@@ -387,6 +422,8 @@ class ProductScreen extends Component {
           )})}
         </View>
       </View>
+      <View style={styles.wrapperSeparator}/>
+    </>
     )
   }
 
@@ -433,6 +470,7 @@ class ProductScreen extends Component {
   renderSize(){
     if(this.state.product.sizes && this.state.product.sizes.length > 0)
     return(
+      <>
       <View style={styles.sizeWrapper}>
         <Text style={styles.productSubtitle}>Ukuran</Text>
         <View style={styles.sizeContainer}>
@@ -452,6 +490,8 @@ class ProductScreen extends Component {
           )})}
         </View>
       </View>
+      <View style={styles.wrapperSeparator}/>
+    </>
     )
   }
 
@@ -465,6 +505,7 @@ class ProductScreen extends Component {
     if(this.state.product.custom_attributes && this.state.product.custom_attributes.length > 0){
       var title = titleCase(this.state.product.custom_attribute_text)
       return(
+        <>
         <View style={styles.sizeWrapper}>
           <Text style={styles.productSubtitle}>{title}</Text>
           <View style={styles.sizeContainer}>
@@ -484,8 +525,42 @@ class ProductScreen extends Component {
             )})}
           </View>
         </View>
+        <View style={styles.wrapperSeparator}/>
+      </>
       )
     }
+  }
+
+  minQty(){
+    if(this.state.qty > 1){
+      this.setState({
+        qty: this.state.qty - 1
+      })
+    }
+  }
+
+  addQty(){
+    this.setState({
+      qty: this.state.qty + 1
+    })
+  }
+
+  renderQty(){
+    if(this.state.product.stock > 0)
+    return(
+      <>
+      <View style={styles.qtyWrapper}>
+        <Text style={styles.productSubtitle}>Qty</Text>
+        <View style={styles.qtyContainer}>
+          <TouchableOpacity onPress={this.minQty.bind(this)}><View style={styles.btnQty}>
+            <Text style={styles.dropdown_text}>-</Text></View></TouchableOpacity>
+          <View style={styles.qtyText}><Text style={styles.dropdown_text}>{this.state.qty}</Text></View>
+          <TouchableOpacity onPress={this.addQty.bind(this)}><View style={styles.btnQty}><Text style={styles.dropdown_text}>+</Text></View></TouchableOpacity>
+        </View>
+      </View>
+      <View style={styles.wrapperSeparator}/>
+      </>
+    )
   }
 
   customStyling(id) {
@@ -495,9 +570,9 @@ class ProductScreen extends Component {
   }
 
   renderSizeGuide(){
-    if(!this.state.product.show_size_guide_button)
-      return <View/>
+    if(this.state.product.show_size_guide_button)
     return (
+      <>
         <View style={styles.sizeGuideWrapper}>
         <TouchableOpacity onPress={() => this.setState({
           isShowSizeGuide: true
@@ -550,6 +625,8 @@ class ProductScreen extends Component {
           </SafeAreaView>
         </Modal>
       </View>
+      <View style={styles.wrapperSeparator}/>
+      </>
     )
   }
 
@@ -592,6 +669,7 @@ class ProductScreen extends Component {
   renderImagesCustom(){
     if(this.state.product.all_images_mobile_custom && this.state.product.all_images_mobile_custom.length > 0){
       return (
+        <>
         <View style={styles.customImagesContainer}>
         <TouchableOpacity style={styles.btnDownload} onPress={() => this.downloadImages()}>
           <Text style={styles.textCopy}>Download Images</Text>
@@ -602,6 +680,8 @@ class ProductScreen extends Component {
           )
         })}
         </View>
+        <View style={styles.wrapperSeparator}/>
+      </>
       )
     }
   }
@@ -658,12 +738,20 @@ class ProductScreen extends Component {
       return;
     var arr = this.props.product.payload.all_product_variations_with_stock_data
     var sku = ''
+    var qty = this.state.qty
     for(var i = 0;i<arr.length;i++){
       if(arr[i].color_slug === this.state.colorSelected
          && arr[i].size_slug === this.state.sizeSelected
          && arr[i].custom_attribute_1_slug === this.state.customSelected){
-        if(arr[i].stock_quantity > 0)
+        if(arr[i].stock_quantity > 0){
           sku = arr[i].sku
+          if(arr[i].stock_quantity < this.state.qty){
+            qty = arr[i].stock_quantity
+            this.setState({
+              qty: qty
+            })
+          }
+        }
         break;
       }
     }
@@ -680,7 +768,7 @@ class ProductScreen extends Component {
       size: this.state.sizeSelected,
       custom: this.state.customSelected,
       sku: sku,
-      qty: 1
+      qty: qty
     }
     this.props.addToCartProcess(data)
     Alert.alert(
@@ -822,6 +910,7 @@ class ProductScreen extends Component {
             </View>
             <View style={styles.wrapperSeparator}/>
             {this.renderRating()}
+            {this.renderEmpty()}
             <View style={styles.descriptionWrapper}>
               <View style={styles.descriptionHeader}>
                 <Text style={styles.productSubtitle}>Deskripsi Produk</Text>
@@ -832,14 +921,11 @@ class ProductScreen extends Component {
               <Text style={styles.productDescriptionText}>{this.state.product.product_content}</Text>
             </View>
               {this.renderColor()}
-            <View style={styles.wrapperSeparator}/>
               {this.renderSize()}
-            <View style={styles.wrapperSeparator}/>
               {this.renderCustomAttribute()}
-            <View style={styles.wrapperSeparator}/>
+              {this.renderQty()}
               {this.renderSizeGuide()}
               {this.renderImagesCustom()}
-            <View style={styles.wrapperSeparator}/>
               {this.renderReview()}
           </ScrollView>
         </View>
@@ -880,6 +966,7 @@ const mapStateToProps = state => {
     cart: state.cart,
     notification: state.notification,
     lastNotification: state.lastNotification,
+    subscribeProduct: state.subscribeProduct
   }
 };
 
@@ -902,6 +989,9 @@ const mapDispatchToProps = dispatch => {
     },
     deleteWishlistProductProcess: data => {
       dispatch(EditWishlistActions.deleteWishlistRequest(data))
+    },
+    subscribeProductProcess: data => {
+      dispatch(SubscribeProductActions.subscribeProductRequest(data))
     }
   }
 };

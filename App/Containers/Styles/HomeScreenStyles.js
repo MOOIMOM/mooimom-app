@@ -19,7 +19,7 @@ export default StyleSheet.create({
     top: Metrics.screenHeight * -0.25,
     backgroundColor: Colors.mooimom,
     borderRadius: Metrics.screenWidth / 2,
-    transform: [{ scaleX: 2 }, { scaleY: 0.8 }],
+    transform: [{ scaleX: 2 }, { scaleY: 0.65 }],
     flex: 1
   },
   wrapperSeparator:{
@@ -120,7 +120,7 @@ export default StyleSheet.create({
   },
   itemHeroBanner: {
     width: Metrics.screenWidth - 60,
-    height: 180 * (Metrics.screenWidth / 320),
+    height: (Metrics.screenWidth - 60) / 950 * 480,
   },
   imageContainerHeroBanner: {
     flex: 1,
@@ -129,7 +129,7 @@ export default StyleSheet.create({
     borderRadius: 10 * (Metrics.screenWidth / 320),
   },
   imageHeroBanner: {
-    resizeMode: 'contain',
+    flex:1,
   },
   paginationDotStyleHeroBanner: {
       width: 8 * (Metrics.screenWidth / 320),

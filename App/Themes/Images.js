@@ -16,6 +16,7 @@ const images = {
   order2: require('../Images/Icons/order-2.png'),
   shoppingCart: require('../Images/Icons/shopping-cart.png'),
   shoppingCartBlack: require('../Images/Icons/shopping-cart-black.png'),
+  sad: require('../Images/Icons/sad.png'),
   wishlist: require('../Images/Icons/wishlist.png'),
   wishlist1: require('../Images/Icons/wishlist-1.png'),
   wishlistBlack: require('../Images/Icons/wishlist-black.png'),

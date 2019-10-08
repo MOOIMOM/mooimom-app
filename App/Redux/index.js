@@ -48,6 +48,7 @@ export const reducers = combineReducers({
   article: require('./GetArticleRedux').reducer,
   question: require('./GetQuestionRedux').reducer,
   gopay: require('./GopayRedux').reducer,
+  subscribeProduct: require('./SubscribeProductRedux').reducer,
 })
 
 export default () => {

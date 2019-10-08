@@ -28,7 +28,7 @@ class LearnScreen extends Component {
       appState: AppState.currentState,
       isShowVideo: false,
       isShowArticle: false,
-      activeMenu: 'video',
+      activeMenu: (this.props.navigation.state.params && this.props.navigation.state.params.activeMenu && this.props.navigation.state.params.activeMenu !== '') ? this.props.navigation.state.params.activeMenu : 'video',
       video: [],
       article: [],
       question: [],
@@ -126,6 +126,13 @@ class LearnScreen extends Component {
         })
       }
     }
+
+    if(newProps.navigation.state.params !== this.props.navigation.state.params
+      && newProps.navigation.state.params.activeMenu
+      && newProps.navigation.state.params.activeMenu !== ''
+      && newProps.navigation.state.params.activeMenu !== this.state.activeMenu){
+      this.pressMenu(newProps.navigation.state.params.activeMenu)
+    }
   }
 
   actNavigate(page, obj = {}) {
@@ -168,6 +175,7 @@ class LearnScreen extends Component {
       videoUrl: url,
       videoTitle: title,
       isShowVideo: true,
+      activeMenu: 'video'
     })
   }
 
@@ -176,13 +184,15 @@ class LearnScreen extends Component {
       articleUrl: url,
       articleTitle: title,
       isShowArticle: true,
+      activeMenu: 'article'
     })
   }
 
   openQuestion(index){
     this.setState({
       selectedQAIndex: index,
-      isShowQASub: true
+      isShowQASub: true,
+      activeMenu: 'question'
     })
   }
 
@@ -196,7 +206,7 @@ class LearnScreen extends Component {
   pressMenu(menu){
     if(this.state.activeMenu !== menu){
       this.setState({
-        activeMenu: menu
+        activeMenu: menu,
       })
     }
   }
@@ -305,7 +315,8 @@ class LearnScreen extends Component {
             visible={this.state.isShowVideo}
             onRequestClose={() => {
               this.setState({
-                isShowVideo:false
+                isShowVideo:false,
+                videoUrl: '',
               })
             }}>
               <View
@@ -314,7 +325,8 @@ class LearnScreen extends Component {
               >
                 <View style={styles.videoWrapper}>
                   <TouchableOpacity style={styles.closeBtn} onPress={() => this.setState({
-                    isShowVideo:false
+                    isShowVideo:false,
+                    videoUrl: '',
                   })}>
                     <Image source={Images.x} style={styles.closeImage}/>
                   </TouchableOpacity>
