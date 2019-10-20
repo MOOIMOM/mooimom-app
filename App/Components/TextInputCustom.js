@@ -96,16 +96,18 @@ export default class TextInputCustom extends Component {
           numberOfLines = {this.props.numberOfLines}
         />
         <View style={styles.inputLabelWrapper}>
+          <View style={styles.inputLabelContainer}>
           <Text
             style={
               [
                 styles.inputLabel,
-                { color: 'white', backgroundColor: Colors.mooimom }
+                { color: 'white' }
               ]
             }
           >
             {this.props.label ? this.props.label : 'Label'}
           </Text>
+        </View>
         </View>
         {labelPhone}
       </View>

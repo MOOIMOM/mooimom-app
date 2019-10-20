@@ -3,7 +3,9 @@ import RNFetchBlob from 'react-native-fetch-blob';
 import {
   PermissionsAndroid,
   Alert,
-  AsyncStorage
+  AsyncStorage,
+  Platform,
+  CameraRoll
 } from 'react-native'
 import {isAfter, max, format} from 'date-fns'
 import firebase from 'react-native-firebase';
@@ -28,13 +30,18 @@ export function convertToRupiah (price) {
   )
 }
 
-const PictureDir = RNFetchBlob.fs.dirs.PictureDir + '/Mooimom/';
+const PictureDir = Platform.OS === 'ios' ? RNFetchBlob.fs.dirs.DocumentDir + '/Mooimom/' : RNFetchBlob.fs.dirs.PictureDir + '/Mooimom/';
 const base64Text = 'data:image/png;base64,';
 
 export async function downloadFile(url, filename){
-  var resp = await RNFetchBlob.fetch('GET', url)
+  var resp = await RNFetchBlob.fetch('GET', url, {
+                    'Cache-Control': 'no-store'
+                })
   let base64image = resp.data;
   let imageLocation = PictureDir+filename;
+  if(Platform.OS === 'ios'){
+    CameraRoll.saveToCameraRoll(url, 'photo');
+  }
   RNFetchBlob.fs.writeFile(imageLocation, base64image, 'base64');
   RNFetchBlob.fs.scanFile([ { path : imageLocation, mime : 'multipart/mixed' } ])
    .then(() => {
@@ -80,8 +87,7 @@ export async function download(images){
     file.name = image.url.substring(image.url.lastIndexOf('/')+1);
     files.push(file)
   })
-
-  var allowedStorage = await PermissionsAndroid.request(
+  var allowedStorage = Platform.OS === 'ios' ? 'granted' : await PermissionsAndroid.request(
     PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
   )
   if (allowedStorage === 'granted') {
@@ -108,7 +114,7 @@ export async function share(images, social = '') {
     files.push(file)
   })
 
-  var allowedStorage = await PermissionsAndroid.request(
+  var allowedStorage = Platform.OS === 'ios' ? 'granted' : await PermissionsAndroid.request(
     PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
   )
   if (allowedStorage === 'granted') {

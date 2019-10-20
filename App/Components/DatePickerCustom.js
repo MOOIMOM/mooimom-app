@@ -75,6 +75,7 @@ export default class DatePickerCustom extends Component {
           maxDate={today}
         />
         <View style={styles.inputLabelWrapper}>
+        <View style={styles.inputLabelContainer}>
           <Text
             style={
               [
@@ -85,6 +86,7 @@ export default class DatePickerCustom extends Component {
           >
             {this.props.label ? this.props.label : 'Label'}
           </Text>
+        </View>
         </View>
       </View>
     )

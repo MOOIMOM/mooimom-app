@@ -69,6 +69,7 @@ PODS:
   - nanopb/decode (0.3.901)
   - nanopb/encode (0.3.901)
   - Protobuf (3.10.0)
+  - QBImagePickerController (3.4.0)
   - React (0.59.10):
     - React/Core (= 0.59.10)
   - React/Core (0.59.10):
@@ -105,9 +106,6 @@ PODS:
     - React/Core
     - React/fishhook
     - React/RCTBlob
-  - RNFirebase (5.2.1):
-    - Firebase/Core
-    - React
   - yoga (0.59.10.React)
 
 DEPENDENCIES:
@@ -117,11 +115,11 @@ DEPENDENCIES:
   - Firebase/Messaging (~> 5.15.0)
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
+  - QBImagePickerController (from `../node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePickerController.podspec`)
   - React (from `../node_modules/react-native`)
   - React/Core (from `../node_modules/react-native`)
   - React/CxxBridge (from `../node_modules/react-native`)
   - React/DevSupport (from `../node_modules/react-native`)
-  - RNFirebase (from `../node_modules/react-native-firebase/ios`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -147,10 +145,10 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/Folly.podspec"
   glog:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
+  QBImagePickerController:
+    :path: "../node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePickerController.podspec"
   React:
     :path: "../node_modules/react-native"
-  RNFirebase:
-    :path: "../node_modules/react-native-firebase/ios"
   yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -170,10 +168,10 @@ SPEC CHECKSUMS:
   GoogleUtilities: 04fce34bcd5620c1ee76fb79172105c74a4df335
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Protobuf: a4dc852ad69c027ca2166ed287b856697814375b
+  QBImagePickerController: d54cf93db6decf26baf6ed3472f336ef35cae022
   React: 36d0768f9e93be2473b37e7fa64f92c1d5341eef
-  RNFirebase: 24ed56149251c99f6cb7d44100cade4b953fbd08
   yoga: 684513b14b03201579ba3cee20218c9d1298b0cc
 
-PODFILE CHECKSUM: 043490250d86d01f903f0101fb9b3fb95bc68ae2
+PODFILE CHECKSUM: da339faa29287bedf0da8ec14ea6c9edbe4dedce
 
 COCOAPODS: 1.7.4

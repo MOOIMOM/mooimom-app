@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Platform } from 'react-native'
 import { Metrics, ApplicationStyles, Colors, Fonts } from '../../Themes/'
 
 export default StyleSheet.create({
@@ -148,7 +148,7 @@ export default StyleSheet.create({
   chooseDeliveryWrapper2:{
     backgroundColor: Colors.white,
     top:Metrics.screenHeight / 2,
-    height: Metrics.screenHeight / 2 - 20,
+    height: Platform.OS === 'ios' ? Metrics.screenHeight / 2 : Metrics.screenHeight / 2 - 20,
     width: Metrics.screenWidth,
   },
   chooseDeliveryBtn:{
@@ -238,13 +238,13 @@ export default StyleSheet.create({
     color:Colors.gray,
     fontFamily: Fonts.type.gotham4,
     fontSize: Metrics.fontSize2,
-    marginVertical: -3,
+    marginVertical: Platform.OS === 'ios' ? 0 : -3,
   },
   priceText:{
     color:Colors.black,
     fontFamily: Fonts.type.gotham4,
     fontSize: Metrics.fontSize3,
-    marginVertical: -3,
+    marginVertical: Platform.OS === 'ios' ? 0 : -3,
   },
   commissionText:{
     color:Colors.mooimom,

@@ -39,7 +39,7 @@ class EditProfileScreen extends Component {
       enumStatus:[
         {name:'Single', id:'single'},
         {name:'Menikah', id:'married'},
-        {name:'Bercerai', id:'divorced'},
+        {name:'Bercerai', id:'divorce'},
       ],
       enumChildren:[
         {name:'0', id:0},
@@ -86,6 +86,16 @@ class EditProfileScreen extends Component {
     }
   }
 
+  componentWillReceiveProps(newProps){
+    if(this.props.editprofile !== newProps.editprofile){
+      if (
+        !newProps.editprofile.fetching
+      ) {
+        this.props.navigation.goBack()
+      }
+    }
+  }
+
   actNavigate (screen) {
     const { navigate } = this.props.navigation
     navigate(screen, {})
@@ -117,7 +127,6 @@ class EditProfileScreen extends Component {
       }
     }
     this.props.editProfileProcess(data)
-    this.props.navigation.goBack()
   }
 
   async changeProvince(val){
@@ -301,6 +310,7 @@ class EditProfileScreen extends Component {
 const mapStateToProps = state => {
   return {
     auth: state.auth,
+    editprofile: state.editprofile,
     province: state.province,
     city: state.city,
     district: state.district

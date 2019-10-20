@@ -15,15 +15,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   [FIRApp configure];
+  [FIRMessaging messaging].delegate = self;
   NSURL *jsCodeLocation;
-  for (NSString* family in [UIFont familyNames])
-{
-  NSLog(@"%@", family);
-  for (NSString* name in [UIFont fontNamesForFamilyName: family])
-  {
-    NSLog(@" %@", name);
-  }
-}
 
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
 

@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Platform } from 'react-native'
 import { Metrics, ApplicationStyles, Colors, Fonts } from '../../Themes/'
 
 export default StyleSheet.create({
@@ -85,17 +85,20 @@ export default StyleSheet.create({
     flexDirection: 'column-reverse',
     marginTop: 10
   },
-  inputLabel: {
+  inputLabelWrapper:{
     alignSelf: 'flex-start',
-    backgroundColor: 'white',
     borderRadius: 20,
     height: 20,
     marginBottom: -10,
     marginLeft: 20,
     paddingLeft: 20,
     paddingRight: 20,
+    backgroundColor: Colors.mooimom,
+  },
+  inputLabel: {
     color: 'gray',
     fontFamily: Fonts.type.gotham4,
+    marginTop:Platform.OS === 'ios' ? 3: 0
   },
   chooseAddressBtn:{
     backgroundColor: Colors.mooimom,

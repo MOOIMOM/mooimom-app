@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Platform } from 'react-native'
 import { Metrics, ApplicationStyles, Colors, Fonts } from '../../Themes/'
 
 export default StyleSheet.create({
@@ -215,7 +215,7 @@ export default StyleSheet.create({
     color:Colors.gray,
     fontFamily: Fonts.type.gotham4,
     fontSize: Metrics.fontSize2,
-    marginVertical: -3,
+    marginVertical: Platform.OS === 'ios' ? 0 : -3,
   },
   priceText:{
     color:Colors.black,

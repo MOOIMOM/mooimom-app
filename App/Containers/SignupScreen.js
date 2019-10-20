@@ -133,7 +133,7 @@ class SignupScreen extends Component {
           <View style={styles.signUpContainer}>
               <Text style={styles.caption1}>Masukkan Nomor Handphone</Text>
               <View style={styles.textInput}>
-                <Text style={styles.number62}>+62</Text>
+                <View style={styles.number62}><Text style={styles.number62Text}>+62</Text></View>
                 <TextInput style={styles.textTextInput}
                   // onFocus={() => this.onFocus1()}
                   // onBlur={() => this.onBlur()}

@@ -80,6 +80,7 @@ export default StyleSheet.create({
     fontSize: 20 * Metrics.screenWidth / 320,
     backgroundColor: Colors.white,
     borderRadius: 10,
+    height: (Metrics.screenWidth - 40 - 100)/ 4,
     fontFamily: Fonts.type.gotham4,
   },
 })

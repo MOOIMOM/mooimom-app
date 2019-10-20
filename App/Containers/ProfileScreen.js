@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, SafeAreaView, Text, View, Image, TouchableOpacity, Alert, PermissionsAndroid, Modal, TouchableWithoutFeedback } from 'react-native'
+import { ScrollView, SafeAreaView, Text, View, Image, TouchableOpacity, Alert, PermissionsAndroid, Modal, TouchableWithoutFeedback, Platform } from 'react-native'
 import { Images, Metrics } from '../Themes'
 import FastImage from 'react-native-fast-image'
 import {NavigationEvents} from 'react-navigation';
@@ -91,11 +91,11 @@ class ProfileScreen extends Component {
   }
 
   async selectPhoto () {
-    const alloweStorage = await PermissionsAndroid.request(
+    const alloweStorage = Platform.OS === 'ios' ? 'granted' : await PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
     )
     if (alloweStorage === 'granted') {
-      const alloweCamera = await PermissionsAndroid.request(
+      const alloweCamera = Platform.OS === 'ios' ? 'granted' : await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.CAMERA
       )
       if (alloweCamera === 'granted') {
@@ -129,6 +129,7 @@ class ProfileScreen extends Component {
           let data = {
             data_request: form
           }
+          console.info(data)
           this.props.updateProfilePictureProcess(data)
         })
       } else {
@@ -140,11 +141,11 @@ class ProfileScreen extends Component {
   }
 
   async selectGalery () {
-    const alloweStorage = await PermissionsAndroid.request(
+    const alloweStorage = Platform.OS === 'ios' ? 'granted' : await PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
     )
     if (alloweStorage === 'granted') {
-      const alloweCamera = await PermissionsAndroid.request(
+      const alloweCamera = Platform.OS === 'ios' ? 'granted' : await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.CAMERA
       )
       if (alloweCamera === 'granted') {

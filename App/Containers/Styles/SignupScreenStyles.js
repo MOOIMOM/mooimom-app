@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Platform } from 'react-native'
 import { Metrics, ApplicationStyles, Colors, Fonts } from '../../Themes/'
 
 export default StyleSheet.create({
@@ -22,6 +22,7 @@ export default StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     flex:2,
+    width: Metrics.screenWidth - 40
   },
   button:{
     backgroundColor: Colors.white,
@@ -61,6 +62,7 @@ export default StyleSheet.create({
   },
   textInput: {
     height: 45,
+    width: '65%',
     borderBottomWidth: 1,
     borderBottomColor: Colors.white,
     marginTop: 30,
@@ -71,20 +73,22 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   number62:{
-    color: Colors.white,
-    fontSize: 16 * Metrics.screenWidth / 320,
-    fontStyle: 'italic',
-    fontFamily: Fonts.type.gotham1,
     backgroundColor: 'rgba(0,0,0,0.3)',
     width:50,
     borderRadius:5,
     justifyContent:'center',
     alignItems:'center',
-    textAlign:'center',
     height:45,
-    paddingTop:10,
+    paddingTop:Platform.OS === 'ios' ? 0 : 10,
     marginLeft:-60,
     marginRight:10
+  },
+  number62Text:{
+    color: Colors.white,
+    fontSize: 16 * Metrics.screenWidth / 320,
+    fontStyle: 'italic',
+    fontFamily: Fonts.type.gotham1,
+    textAlign:'center',
   },
   textTextInput:{
     color: Colors.white,

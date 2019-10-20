@@ -23,8 +23,6 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
-		1DFE25EF43F64F1C9CA84CD3 /* Gotham Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = BF3A4486442E43809C59C0DA /* Gotham Book.otf */; };
-		2A18C78D1FE349FD99F6B7D4 /* Gotham Book Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2371A356974141059E3C30F6 /* Gotham Book Italic.otf */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -41,13 +39,20 @@
 		311600C4B06E4657B68EF660 /* libFastImage-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 31FB956A40D44C879BF09B60 /* libFastImage-tvOS.a */; };
 		3407A66A566A42B4957B1E22 /* libRNShare.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 97926DC5FE594A6BA7BDD6C9 /* libRNShare.a */; };
 		41B3D9F3F07447DCA4D5CEC9 /* libFastImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D68E62ED1D6D4C2E9EC2F948 /* libFastImage.a */; };
-		65BDD7D7EC3C460E8611EF47 /* Gotham Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = FB04DE2A9E6C49678AF85F04 /* Gotham Light.otf */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		842643EBAE9B43449110191E /* libRNFetchBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0019236E53844ABA94120CD0 /* libRNFetchBlob.a */; };
-		9E4E082E2349B96D001CB993 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9E4E082D2349B96D001CB993 /* GoogleService-Info.plist */; };
+		9E0349A62357145A004D5CE5 /* GothamRounded-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9E03497423571459004D5CE5 /* GothamRounded-Bold.otf */; };
+		9E0349A72357145A004D5CE5 /* Gotham-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9E0349A223571459004D5CE5 /* Gotham-Light.otf */; };
+		9E0349A82357145A004D5CE5 /* Gotham-BookItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9E0349A32357145A004D5CE5 /* Gotham-BookItalic.otf */; };
+		9E0349A92357145A004D5CE5 /* Gotham-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9E0349A52357145A004D5CE5 /* Gotham-Book.otf */; };
+		9E5515442357260100EFAA98 /* RSKImageCropper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E0349C0235724B6004D5CE5 /* RSKImageCropper.framework */; };
+		9E5515452357260100EFAA98 /* RSKImageCropper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9E0349C0235724B6004D5CE5 /* RSKImageCropper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9E55157723573AF300EFAA98 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E55157623573AF300EFAA98 /* Social.framework */; };
+		9E55157923573B0100EFAA98 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E55157823573B0100EFAA98 /* MessageUI.framework */; };
+		9E551580235745AF00EFAA98 /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E55157F2357459B00EFAA98 /* libRCTCameraRoll.a */; };
+		9EF4974823570C04008C8795 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9E357BEC2356F509001C93F6 /* GoogleService-Info.plist */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		BB6F5A7A1ACE40E4906E9E37 /* libimageCropPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 526AD553C1464A9B80786C53 /* libimageCropPicker.a */; };
-		BE4CC9771F7D4A9390D88262 /* Gotham Rounded Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 209946536A084E348256DFBF /* Gotham Rounded Bold.otf */; };
 		BF48400D78CF46DBBA944E21 /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B74164DFAC44F4D90B7351B /* libRNGestureHandler.a */; };
 		CE379B5CFB694155802D065F /* Gotham Bold.TTF in Resources */ = {isa = PBXBuildFile; fileRef = AC668D3D66E744A284E591D4 /* Gotham Bold.TTF */; };
 		D168AAE07DD94BF8BF36AF4F /* libReactNativeConfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2676742B7A5E48B1986EC0E1 /* libReactNativeConfig.a */; };
@@ -378,6 +383,13 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RNShare;
 		};
+		9E55157E2357459B00EFAA98 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9E55157A2357459A00EFAA98 /* RCTCameraRoll.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 58B5115D1A9E6B3D00147676;
+			remoteInfo = RCTCameraRoll;
+		};
 		ADBDB9261DFEBF0700ED6528 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */;
@@ -386,6 +398,20 @@
 			remoteInfo = RCTBlob;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		9E5515732357260100EFAA98 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				9E5515452357260100EFAA98 /* RSKImageCropper.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0019236E53844ABA94120CD0 /* libRNFetchBlob.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFetchBlob.a; sourceTree = "<group>"; };
@@ -428,7 +454,18 @@
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		8CFE55A6374C4B08ADB31E32 /* RNFetchBlob.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFetchBlob.xcodeproj; path = "../node_modules/react-native-fetch-blob/ios/RNFetchBlob.xcodeproj"; sourceTree = "<group>"; };
 		97926DC5FE594A6BA7BDD6C9 /* libRNShare.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNShare.a; sourceTree = "<group>"; };
-		9E4E082D2349B96D001CB993 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "mooimom/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		9E03497423571459004D5CE5 /* GothamRounded-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "GothamRounded-Bold.otf"; path = "../App/fonts/GothamRounded-Bold.otf"; sourceTree = "<group>"; };
+		9E0349A223571459004D5CE5 /* Gotham-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Gotham-Light.otf"; path = "../App/fonts/Gotham-Light.otf"; sourceTree = "<group>"; };
+		9E0349A32357145A004D5CE5 /* Gotham-BookItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Gotham-BookItalic.otf"; path = "../App/fonts/Gotham-BookItalic.otf"; sourceTree = "<group>"; };
+		9E0349A42357145A004D5CE5 /* Gotham Bold.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Gotham Bold.TTF"; path = "../App/fonts/Gotham Bold.TTF"; sourceTree = "<group>"; };
+		9E0349A52357145A004D5CE5 /* Gotham-Book.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Gotham-Book.otf"; path = "../App/fonts/Gotham-Book.otf"; sourceTree = "<group>"; };
+		9E0349C0235724B6004D5CE5 /* RSKImageCropper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RSKImageCropper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9E0349C3235724B6004D5CE5 /* QBImagePicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = QBImagePicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9E357BEC2356F509001C93F6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		9E357BEE2356F602001C93F6 /* mooimom.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = mooimom.entitlements; path = mooimom/mooimom.entitlements; sourceTree = "<group>"; };
+		9E55157623573AF300EFAA98 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		9E55157823573B0100EFAA98 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		9E55157A2357459A00EFAA98 /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
 		AC668D3D66E744A284E591D4 /* Gotham Bold.TTF */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Gotham Bold.TTF"; path = "../App/fonts/Gotham Bold.TTF"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		AE7BE21F558148A4B545734F /* imageCropPicker.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = imageCropPicker.xcodeproj; path = "../node_modules/react-native-image-crop-picker/ios/imageCropPicker.xcodeproj"; sourceTree = "<group>"; };
@@ -463,10 +500,14 @@
 				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
 				139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */,
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
+				9E5515442357260100EFAA98 /* RSKImageCropper.framework in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
+				9E551580235745AF00EFAA98 /* libRCTCameraRoll.a in Frameworks */,
 				BF48400D78CF46DBBA944E21 /* libRNGestureHandler.a in Frameworks */,
 				3407A66A566A42B4957B1E22 /* libRNShare.a in Frameworks */,
+				9E55157923573B0100EFAA98 /* MessageUI.framework in Frameworks */,
+				9E55157723573AF300EFAA98 /* Social.framework in Frameworks */,
 				842643EBAE9B43449110191E /* libRNFetchBlob.a in Frameworks */,
 				D168AAE07DD94BF8BF36AF4F /* libReactNativeConfig.a in Frameworks */,
 				DCD750F31CCC42ECAA222CFA /* libRNFirebase.a in Frameworks */,
@@ -585,8 +626,9 @@
 		13B07FAE1A68108700A75B9A /* mooimom */ = {
 			isa = PBXGroup;
 			children = (
+				9E357BEE2356F602001C93F6 /* mooimom.entitlements */,
+				9E357BEC2356F509001C93F6 /* GoogleService-Info.plist */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
-				9E4E082D2349B96D001CB993 /* GoogleService-Info.plist */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -623,6 +665,8 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9E55157823573B0100EFAA98 /* MessageUI.framework */,
+				9E55157623573AF300EFAA98 /* Social.framework */,
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
 				175B93BD2E493384A980B208 /* libPods-mooimom.a */,
 			);
@@ -659,6 +703,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				9E55157A2357459A00EFAA98 /* RCTCameraRoll.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -694,6 +739,13 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				9E0349C3235724B6004D5CE5 /* QBImagePicker.framework */,
+				9E0349C0235724B6004D5CE5 /* RSKImageCropper.framework */,
+				9E0349A42357145A004D5CE5 /* Gotham Bold.TTF */,
+				9E0349A52357145A004D5CE5 /* Gotham-Book.otf */,
+				9E0349A32357145A004D5CE5 /* Gotham-BookItalic.otf */,
+				9E0349A223571459004D5CE5 /* Gotham-Light.otf */,
+				9E03497423571459004D5CE5 /* GothamRounded-Bold.otf */,
 				13B07FAE1A68108700A75B9A /* mooimom */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* mooimomTests */,
@@ -791,6 +843,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		9E55157B2357459A00EFAA98 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9E55157F2357459B00EFAA98 /* libRCTCameraRoll.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		ADBDB9201DFEBF0600ED6528 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -842,6 +902,8 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
+				F011F7120E28DAF90A35058A /* [CP] Copy Pods Resources */,
+				9E5515732357260100EFAA98 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -901,6 +963,17 @@
 						CreatedOnToolsVersion = 6.2;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
+					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = K83N4PRU8C;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
+					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
 						ProvisioningStyle = Automatic;
@@ -944,6 +1017,10 @@
 				{
 					ProductGroup = ADBDB9201DFEBF0600ED6528 /* Products */;
 					ProjectRef = ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */;
+				},
+				{
+					ProductGroup = 9E55157B2357459A00EFAA98 /* Products */;
+					ProjectRef = 9E55157A2357459A00EFAA98 /* RCTCameraRoll.xcodeproj */;
 				},
 				{
 					ProductGroup = 00C302B61ABCB90400DB3ED1 /* Products */;
@@ -1321,6 +1398,13 @@
 			remoteRef = 9E4E082B2349B655001CB993 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		9E55157F2357459B00EFAA98 /* libRCTCameraRoll.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTCameraRoll.a;
+			remoteRef = 9E55157E2357459B00EFAA98 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1342,14 +1426,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				9E4E082E2349B96D001CB993 /* GoogleService-Info.plist in Resources */,
-				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				9E0349A62357145A004D5CE5 /* GothamRounded-Bold.otf in Resources */,
+				9E0349A72357145A004D5CE5 /* Gotham-Light.otf in Resources */,
+				9E0349A82357145A004D5CE5 /* Gotham-BookItalic.otf in Resources */,
 				CE379B5CFB694155802D065F /* Gotham Bold.TTF in Resources */,
-				1DFE25EF43F64F1C9CA84CD3 /* Gotham Book.otf in Resources */,
-				65BDD7D7EC3C460E8611EF47 /* Gotham Light.otf in Resources */,
-				BE4CC9771F7D4A9390D88262 /* Gotham Rounded Bold.otf in Resources */,
-				2A18C78D1FE349FD99F6B7D4 /* Gotham Book Italic.otf in Resources */,
+				9E0349A92357145A004D5CE5 /* Gotham-Book.otf in Resources */,
+				9EF4974823570C04008C8795 /* GoogleService-Info.plist in Resources */,
+				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1383,7 +1467,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1419,6 +1503,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F011F7120E28DAF90A35058A /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-mooimom/Pods-mooimom-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/QBImagePickerController/QBImagePicker.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/QBImagePicker.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-mooimom/Pods-mooimom-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1572,8 +1674,10 @@
 			baseConfigurationReference = 097166657B11E3AAFDAEB266 /* Pods-mooimom.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = mooimom/mooimom.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = K83N4PRU8C;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)..\node_modules\neact-native-gesture-handlerios/**",
@@ -1591,7 +1695,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mooimom.id.ios;
 				PRODUCT_NAME = mooimom;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1602,7 +1706,9 @@
 			baseConfigurationReference = B71E67465ACC957F2D2605A0 /* Pods-mooimom.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = mooimom/mooimom.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K83N4PRU8C;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)..\node_modules\neact-native-gesture-handlerios/**",
@@ -1620,7 +1726,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mooimom.id.ios;
 				PRODUCT_NAME = mooimom;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

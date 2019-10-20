@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 import { ApplicationStyles, Colors, Metrics, Fonts } from '../../Themes';
 
 export default StyleSheet.create({
@@ -29,17 +29,20 @@ export default StyleSheet.create({
   inputLabelWrapper: {
     // backgroundColor: 'rgb(50, 50, 200)',
   },
+  inputLabelContainer:{
+    backgroundColor: Colors.mooimom,
+      alignSelf: 'flex-start',
+      borderRadius: 20,
+      height: 20,
+      marginBottom: -10,
+      marginLeft: 20,
+      paddingLeft: 20,
+      paddingRight: 20,
+  },
   inputLabel: {
-    alignSelf: 'flex-start',
-    backgroundColor: 'white',
-    borderRadius: 20,
-    height: 20,
-    marginBottom: -10,
-    marginLeft: 20,
-    paddingLeft: 20,
-    paddingRight: 20,
     color: 'gray',
     fontFamily: Fonts.type.gotham4,
+    marginTop:Platform.OS === 'ios' ? 3: 0
   },
   labelPhone: {
     // zIndex: 2,
@@ -53,5 +56,12 @@ export default StyleSheet.create({
     marginBottom: -50,
     backgroundColor: 'gray',
     paddingVertical: 5
+  },
+  placeholderIOS:{
+    textAlign: 'left',
+    fontSize: 14,
+    paddingTop:20,
+    fontFamily: Fonts.type.gotham2,
+    color: Colors.black
   }
 });

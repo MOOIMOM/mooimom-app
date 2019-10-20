@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Platform } from 'react-native'
 import { Metrics, ApplicationStyles, Colors, Fonts } from '../../Themes/'
 
 export default StyleSheet.create({
@@ -35,14 +35,14 @@ export default StyleSheet.create({
     fontFamily: Fonts.type.gotham3,
     fontSize: 43 * Metrics.screenWidth / 320,
     letterSpacing: -1,
-    marginBottom:-25 * Metrics.screenWidth / 320,
+    marginBottom:Platform.OS === 'ios' ? -10 : -25 * Metrics.screenWidth / 320,
   },
   caption2:{
     color: Colors.white,
     width: Metrics.screenWidth - 80,
     fontFamily: Fonts.type.gotham3,
     fontWeight:'900',
-    fontSize: 87 * Metrics.screenWidth / 320,
+    fontSize: Platform.OS === 'ios' ? 80 * Metrics.screenWidth / 320 : 87 * Metrics.screenWidth / 320,
   },
   caption3:{
     color: Colors.white,

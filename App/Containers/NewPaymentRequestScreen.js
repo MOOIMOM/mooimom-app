@@ -75,7 +75,7 @@ class NewPaymentRequestScreen extends Component {
               style={
                 [
                   styles.inputLabel,
-                  { color: 'white', backgroundColor: Colors.mooimom }
+                  { color: 'white' }
                 ]
               }
             >

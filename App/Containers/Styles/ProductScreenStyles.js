@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Platform } from 'react-native'
 import { Metrics, ApplicationStyles, Colors, Fonts } from '../../Themes/'
 
 export default StyleSheet.create({
@@ -458,7 +458,8 @@ export default StyleSheet.create({
     width: 15 * Metrics.screenWidth / 320,
     height: 15 * Metrics.screenWidth / 320,
     resizeMode: 'contain',
-    marginRight: 5 * Metrics.screenWidth / 320
+    marginRight: 5 * Metrics.screenWidth / 320,
+    marginBottom: Platform.OS === 'ios' ? 5 : 0
   },
   reviewTitle:{
     fontSize: Metrics.fontSize2,
