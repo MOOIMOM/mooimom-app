@@ -155,7 +155,7 @@ export default StyleSheet.create({
     fontFamily: Fonts.type.gotham2,
   },
   textSold2:{
-    fontSize: 7*Metrics.screenWidth / 320,
+    fontSize: 6*Metrics.screenWidth / 320,
     color: Colors.white,
     fontFamily: Fonts.type.gotham2,
   }

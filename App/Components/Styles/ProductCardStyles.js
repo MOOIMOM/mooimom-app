@@ -30,6 +30,7 @@ export default StyleSheet.create({
   name:{
     flexWrap: 'wrap',
     fontSize: Metrics.fontSize1,
+    lineHeight: Metrics.fontSize2,
     fontFamily: Fonts.type.gotham2,
   },
   priceGroup:{
