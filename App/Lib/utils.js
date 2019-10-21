@@ -5,7 +5,8 @@ import {
   Alert,
   AsyncStorage,
   Platform,
-  CameraRoll
+  CameraRoll,
+  Dimensions
 } from 'react-native'
 import {isAfter, max, format} from 'date-fns'
 import firebase from 'react-native-firebase';
@@ -240,4 +241,14 @@ export async function onRemoteMessage(message){
         .setSound('default');
     await firebase.notifications().displayNotification(newNotification);
     return Promise.resolve();
+}
+
+export function isIphoneXorAbove() {
+  const dimen = Dimensions.get('window');
+  return (
+    Platform.OS === 'ios' &&
+    !Platform.isPad &&
+    !Platform.isTVOS &&
+    ((dimen.height === 812 || dimen.width === 812) || (dimen.height === 896 || dimen.width === 896))
+  );
 }

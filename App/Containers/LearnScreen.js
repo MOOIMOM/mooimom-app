@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, SafeAreaView, Text, View, Image, TouchableOpacity, FlatList, Linking, WebView, AppState, ActivityIndicator, Modal } from 'react-native'
+import { ScrollView, Platform, SafeAreaView, Text, View, Image, TouchableOpacity, FlatList, Linking, WebView, AppState, ActivityIndicator, Modal } from 'react-native'
 import { Images, Metrics, Colors } from '../Themes'
 import Carousel, { ParallaxImage, Pagination  } from 'react-native-snap-carousel';
 import { connect } from 'react-redux'
@@ -332,8 +332,20 @@ class LearnScreen extends Component {
                   </TouchableOpacity>
                   <Text style={styles.videoTitle}>{this.state.videoTitle}</Text>
                   <View style={styles.videoPlayer}>
-                    {this.state.appState === 'active' &&
-                    <WebView
+                    {Platform.OS === 'ios' && <WebView
+                      mediaPlaybackRequiresUserAction={true}
+                      renderLoading={() => {
+                        return (
+                          <ActivityIndicator
+                            color={Colors.mooimom}
+                            size="large"
+                          />
+                        )
+                      }}
+                     ref={(ref) => { this.videoPlayer = ref;}}
+                     source={{ html:  '<html><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" /><iframe src="https://www.youtube.com/embed/' + this.state.videoUrl + '?modestbranding=1&playsinline=1&showinfo=0&rel=0" frameborder="0" style="overflow:hidden;overflow-x:hidden;overflow-y:hidden;height:100%;width:100%;position:absolute;top:0px;left:0px;right:0px;bottom:0px" height="100%" width="100%"></iframe></html>'}}
+                    />}
+                    {Platform.OS === 'android' && this.state.appState === 'active' && <WebView
                       startInLoadingState={true}
                       renderLoading={() => {
                         return (
@@ -361,7 +373,7 @@ class LearnScreen extends Component {
                 isShowArticle:false
               })
             }}>
-              <View
+              <SafeAreaView
                 style={styles.containerModal2}
                 activeOpacity={1}
               >
@@ -385,12 +397,12 @@ class LearnScreen extends Component {
                   }}
                   source={{ uri:  this.state.articleUrl}}
                 />
-            </View>
+            </SafeAreaView>
           </Modal>
           {this.state.isShowQASub && <Modal
-            animationType="slide"
+            animationType={Platform.OS === 'ios' ? "none" : "slide"}
             transparent={true}
-            visible={this.state.isShowQASub}
+            visible={this.state.isShowQASub && (Platform.OS === 'ios' ? !this.state.isShowQASub2 : true)}
             onRequestClose={() => {
               this.setState({
                 isShowQASub:false
@@ -429,7 +441,7 @@ class LearnScreen extends Component {
             </SafeAreaView>
           </Modal>}
           {this.state.isShowQASub2 && <Modal
-            animationType="slide"
+            animationType={Platform.OS === 'ios' ? "none" : "slide"}
             transparent={true}
             visible={this.state.isShowQASub2}
             onRequestClose={() => {

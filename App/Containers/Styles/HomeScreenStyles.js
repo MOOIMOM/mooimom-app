@@ -1,5 +1,6 @@
 import { StyleSheet, Platform } from 'react-native'
 import { Metrics, ApplicationStyles, Colors, Fonts } from '../../Themes/'
+import {isIphoneXorAbove} from '../../Lib/utils'
 
 export default StyleSheet.create({
   container: {
@@ -16,10 +17,10 @@ export default StyleSheet.create({
     position:'absolute',
     alignSelf: "center",
     alignContent: "center",
-    top: Metrics.screenHeight * -0.25,
+    top: Metrics.screenHeight * (isIphoneXorAbove() ? -0.15 : -0.25),
     backgroundColor: Colors.mooimom,
     borderRadius: Metrics.screenWidth / 2,
-    transform: [{ scaleX: 2 }, { scaleY: 0.65 }],
+    transform: [{ scaleX: (isIphoneXorAbove() ? 3 : 2) }, { scaleY: 0.65 }],
     flex: 1
   },
   wrapperSeparator:{
