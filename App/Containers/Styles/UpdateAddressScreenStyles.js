@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native'
 import { Metrics, ApplicationStyles, Colors, Fonts } from '../../Themes/'
+import {isIphoneXorAbove} from '../../Lib/utils'
 
 export default StyleSheet.create({
   container: {
@@ -51,7 +52,7 @@ export default StyleSheet.create({
   },
   menuWrapper:{
     position:'absolute',
-    bottom: 5,
+    bottom: isIphoneXorAbove() ? 20 : 5,
     left: 0,
     width: Metrics.screenWidth
   },

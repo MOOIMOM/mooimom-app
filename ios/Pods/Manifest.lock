@@ -63,6 +63,12 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (5.8.0):
     - GoogleUtilities/Logger
+  - MidtransCoreKit (1.16.0)
+  - MidtransKit (1.16.0):
+    - MidtransCoreKit (= 1.16.0)
+    - MidtransKit/UI (= 1.16.0)
+  - MidtransKit/UI (1.16.0):
+    - MidtransCoreKit (= 1.16.0)
   - nanopb (0.3.901):
     - nanopb/decode (= 0.3.901)
     - nanopb/encode (= 0.3.901)
@@ -115,6 +121,8 @@ DEPENDENCIES:
   - Firebase/Messaging (~> 5.15.0)
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
+  - MidtransCoreKit
+  - MidtransKit
   - QBImagePickerController (from `../node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePickerController.podspec`)
   - React (from `../node_modules/react-native`)
   - React/Core (from `../node_modules/react-native`)
@@ -133,6 +141,8 @@ SPEC REPOS:
     - FirebaseMessaging
     - GoogleAppMeasurement
     - GoogleUtilities
+    - MidtransCoreKit
+    - MidtransKit
     - nanopb
     - Protobuf
 
@@ -166,12 +176,14 @@ SPEC CHECKSUMS:
   glog: aefd1eb5dda2ab95ba0938556f34b98e2da3a60d
   GoogleAppMeasurement: 98b71f5e04142793729a5ef23e5b96651ff4b70f
   GoogleUtilities: 04fce34bcd5620c1ee76fb79172105c74a4df335
+  MidtransCoreKit: f26aeea63b1f5ccd153baf1e41c4c7d4c2474589
+  MidtransKit: 0d2ec0f285a458559dfb5560fa5d46dd2a9bd4a8
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Protobuf: a4dc852ad69c027ca2166ed287b856697814375b
   QBImagePickerController: d54cf93db6decf26baf6ed3472f336ef35cae022
   React: 36d0768f9e93be2473b37e7fa64f92c1d5341eef
   yoga: 684513b14b03201579ba3cee20218c9d1298b0cc
 
-PODFILE CHECKSUM: da339faa29287bedf0da8ec14ea6c9edbe4dedce
+PODFILE CHECKSUM: 99416e8c86734234719b52f152562d5ef98efc91
 
 COCOAPODS: 1.7.4

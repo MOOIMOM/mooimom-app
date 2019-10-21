@@ -50,6 +50,9 @@
 		9E55157723573AF300EFAA98 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E55157623573AF300EFAA98 /* Social.framework */; };
 		9E55157923573B0100EFAA98 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E55157823573B0100EFAA98 /* MessageUI.framework */; };
 		9E551580235745AF00EFAA98 /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E55157F2357459B00EFAA98 /* libRCTCameraRoll.a */; };
+		9EE7FFBF235D841C00C3BB74 /* MidtransModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EE7FFBE235D841C00C3BB74 /* MidtransModule.m */; };
+		9EE7FFC1235D845A00C3BB74 /* libMidtransCoreKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EE7FFC0235D845A00C3BB74 /* libMidtransCoreKit.a */; };
+		9EE7FFC3235D845A00C3BB74 /* libMidtransKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EE7FFC2235D845A00C3BB74 /* libMidtransKit.a */; };
 		9EF4974823570C04008C8795 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9E357BEC2356F509001C93F6 /* GoogleService-Info.plist */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		BB6F5A7A1ACE40E4906E9E37 /* libimageCropPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 526AD553C1464A9B80786C53 /* libimageCropPicker.a */; };
@@ -466,6 +469,10 @@
 		9E55157623573AF300EFAA98 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		9E55157823573B0100EFAA98 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		9E55157A2357459A00EFAA98 /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
+		9EE7FF8F235D841C00C3BB74 /* MidtransModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MidtransModule.h; path = mooimom/MidtransModule.h; sourceTree = "<group>"; };
+		9EE7FFBE235D841C00C3BB74 /* MidtransModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MidtransModule.m; path = mooimom/MidtransModule.m; sourceTree = "<group>"; };
+		9EE7FFC0235D845A00C3BB74 /* libMidtransCoreKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libMidtransCoreKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		9EE7FFC2235D845A00C3BB74 /* libMidtransKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libMidtransKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC668D3D66E744A284E591D4 /* Gotham Bold.TTF */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Gotham Bold.TTF"; path = "../App/fonts/Gotham Bold.TTF"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		AE7BE21F558148A4B545734F /* imageCropPicker.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = imageCropPicker.xcodeproj; path = "../node_modules/react-native-image-crop-picker/ios/imageCropPicker.xcodeproj"; sourceTree = "<group>"; };
@@ -513,6 +520,8 @@
 				DCD750F31CCC42ECAA222CFA /* libRNFirebase.a in Frameworks */,
 				BB6F5A7A1ACE40E4906E9E37 /* libimageCropPicker.a in Frameworks */,
 				41B3D9F3F07447DCA4D5CEC9 /* libFastImage.a in Frameworks */,
+				9EE7FFC1235D845A00C3BB74 /* libMidtransCoreKit.a in Frameworks */,
+				9EE7FFC3235D845A00C3BB74 /* libMidtransKit.a in Frameworks */,
 				DC1B715FEB27F1564894A19F /* libPods-mooimom.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -626,6 +635,8 @@
 		13B07FAE1A68108700A75B9A /* mooimom */ = {
 			isa = PBXGroup;
 			children = (
+				9EE7FF8F235D841C00C3BB74 /* MidtransModule.h */,
+				9EE7FFBE235D841C00C3BB74 /* MidtransModule.m */,
 				9E357BEE2356F602001C93F6 /* mooimom.entitlements */,
 				9E357BEC2356F509001C93F6 /* GoogleService-Info.plist */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
@@ -665,6 +676,8 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9EE7FFC0235D845A00C3BB74 /* libMidtransCoreKit.a */,
+				9EE7FFC2235D845A00C3BB74 /* libMidtransKit.a */,
 				9E55157823573B0100EFAA98 /* MessageUI.framework */,
 				9E55157623573AF300EFAA98 /* Social.framework */,
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
@@ -1512,10 +1525,12 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-mooimom/Pods-mooimom-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/MidtransKit/MidtransKit.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/QBImagePickerController/QBImagePicker.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MidtransKit.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/QBImagePicker.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1540,6 +1555,7 @@
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				9EE7FFBF235D841C00C3BB74 /* MidtransModule.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
