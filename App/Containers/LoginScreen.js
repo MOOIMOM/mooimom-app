@@ -80,7 +80,7 @@ class LoginScreen extends Component {
     if(isProcessing) return;
     const {phone} = this.state
     var myPhoneNumber = phone.indexOf('0') == 0 ? phone.substring(1) : phone;
-    if(myPhoneNumber === "" || myPhoneNumber.length <= 9) {
+    if(myPhoneNumber === "" || myPhoneNumber.length <= 5) {
       Alert.alert(
         '',
         'Please insert your correct phone number',

@@ -76,6 +76,7 @@ export default StyleSheet.create({
     flexDirection:'row',
     width: Metrics.screenWidth - 20,
     marginHorizontal: 10,
+    marginTop: Platform.OS === 'ios' ? 10* Metrics.screenWidth / 320 : 0,
   },
   leftContainer:{
     flex:1,
@@ -191,7 +192,7 @@ export default StyleSheet.create({
     color: Colors.black,
     fontFamily: Fonts.type.gotham4,
     fontSize: Metrics.fontSize3,
-    marginVertical: 10
+    marginTop: 10
   },
   modalShareView:{
     width: Metrics.screenWidth,

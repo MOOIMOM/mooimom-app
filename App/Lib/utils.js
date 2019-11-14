@@ -228,21 +228,6 @@ export function getNewNotificationsCount(notifications, time) {
   return times.length
 }
 
-export async function onRemoteMessage(message){
-    // handle your message
-    const newNotification = new firebase.notifications.Notification()
-        .android.setChannelId('primary')
-        .android.setSmallIcon('ic_launcher')
-        .android.setPriority(firebase.notifications.Android.Priority.Max)
-        .setNotificationId(message.messageId)
-        .setTitle(message.data.message_title)
-        .setBody(message.data.message_body)
-        .setData(message.data)
-        .setSound('default');
-    await firebase.notifications().displayNotification(newNotification);
-    return Promise.resolve();
-}
-
 export function isIphoneXorAbove() {
   const dimen = Dimensions.get('window');
   return (

@@ -11,7 +11,8 @@ export default StyleSheet.create({
     paddingHorizontal: 15,
     borderBottomWidth: 0.5,
     paddingBottom: 20,
-    borderBottomColor: Colors.black
+    borderBottomColor: Colors.black,
+    marginTop: 10
   },
   topItem:{
     paddingTop: 5,
@@ -31,7 +32,7 @@ export default StyleSheet.create({
   },
   wishlist:{
     position: 'absolute',
-    right: 10,
+    right: 5,
     top: 5
   },
   wishlistImage:{
@@ -40,7 +41,8 @@ export default StyleSheet.create({
     resizeMode: 'contain'
   },
   image:{
-    flex:1
+    flex:1,
+    justifyContent: 'space-around'
   },
   name:{
     flexWrap: 'wrap',
@@ -67,6 +69,7 @@ export default StyleSheet.create({
   bottomItem:{
     flexDirection: 'row',
     justifyContent: 'center',
+    marginTop: 5
   },
   bottomLeftItem:{
     flex:1,

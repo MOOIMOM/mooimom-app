@@ -187,7 +187,6 @@ export default class ProductCardSingle extends Component {
           <FastImage
               source={image}
               style={styles.image}
-              resizeMode={FastImage.resizeMode.contain}
           />
           {this.renderOutofstock()}
           {this.renderWishlist()}
