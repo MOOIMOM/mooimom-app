@@ -29,7 +29,7 @@ export default StyleSheet.create({
   },
   cartContainer:{
     width: Metrics.screenWidth - 40,
-    height: Metrics.screenHeight - (150 * Metrics.screenWidth / 320),
+    height: isIphoneXorAbove() ? (Metrics.screenHeight - (150 * Metrics.screenWidth / 320)) : (Metrics.screenHeight - (120 * Metrics.screenWidth / 320)),
     marginHorizontal: 20,
     marginTop: 5,
   },
