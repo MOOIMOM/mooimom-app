@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import Config from 'react-native-config'
 import { DotIndicator } from 'react-native-indicators'
 
-import { convertToRupiah, titleCase, convertToThousandOrHigher } from '../Lib/utils'
+import { convertToRupiah } from '../Lib/utils'
 import { Colors, Fonts, Metrics, Images } from '../Themes'
 
 
