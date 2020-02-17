@@ -1,97 +1,97 @@
 import { StyleSheet, Platform } from 'react-native'
 import { Metrics, ApplicationStyles, Colors, Fonts } from '../../Themes/'
-import {isIphoneXorAbove} from '../../Lib/utils'
+import { isIphoneXorAbove } from '../../Lib/utils'
 
 export default StyleSheet.create({
   container: {
-    flex:6,
+    flex: 6,
     alignItems: 'flex-start'
   },
-  wrapperSeparator:{
+  wrapperSeparator: {
     marginVertical: 10,
   },
-  headerWrapper:{
+  headerWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
     marginHorizontal: 10,
     marginTop: 10,
     justifyContent: 'space-between'
   },
-  headerButtonLeft:{
+  headerButtonLeft: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center'
   },
-  buttonHeader:{
+  buttonHeader: {
     height: 20 * Metrics.screenWidth / 320,
     width: 20 * Metrics.screenWidth / 320,
     resizeMode: 'contain'
   },
-  cartContainer:{
+  cartContainer: {
     width: Metrics.screenWidth - 40,
     height: Metrics.screenHeight - 130,
     marginHorizontal: 20,
     marginTop: 5
   },
-  productContainer:{
+  productContainer: {
     width: (Metrics.screenWidth - 40),
-    flex:1,
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
     marginBottom: 10,
-    marginTop:10
+    marginTop: 10
   },
-  productImageWrapper:{
-    flex:1,
+  productImageWrapper: {
+    flex: 1,
     width: (Metrics.screenWidth - 40) / 2,
   },
-  productImage:{
+  productImage: {
     width: (Metrics.screenWidth - 40) / 2 - 5,
     height: Metrics.screenHeight / 3 - 5,
   },
-  removeBtn:{
+  removeBtn: {
     position: 'absolute',
     top: 5,
     left: 5
   },
-  removeImg:{
+  removeImg: {
     height: 15 * Metrics.screenWidth / 320,
     width: 15 * Metrics.screenWidth / 320,
     resizeMode: 'contain',
   },
-  productDescriptionWrapper:{
+  productDescriptionWrapper: {
     width: (Metrics.screenWidth - 40) / 2,
     height: Metrics.screenHeight / 3,
     flex: 1
   },
-  itemText:{
+  itemText: {
     fontSize: Metrics.fontSize1,
     color: Colors.black,
     fontFamily: Fonts.type.gotham4,
   },
-  itemText2:{
+  itemText2: {
     fontSize: Metrics.fontSize2,
     color: Colors.black,
     fontFamily: Fonts.type.gotham4,
   },
-  nameWrapper:{
+  nameWrapper: {
     marginBottom: 5
   },
-  productName:{
+  productName: {
     fontSize: Metrics.fontSize1,
     color: Colors.gray,
     fontFamily: Fonts.type.gotham2,
   },
-  propertyWrapper:{
-    flex:1,
+  propertyWrapper: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 5
   },
-  sizeWrapper:{
-    flex:1,
+  sizeWrapper: {
+    flex: 1,
     width: (Metrics.screenWidth - 40) / 2,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -115,41 +115,41 @@ export default StyleSheet.create({
     borderRadius: 3,
     borderColor: Colors.black,
   },
-  sizeBtn:{
+  sizeBtn: {
     width: Metrics.screenWidth / 5,
     height: 20,
     alignItems: 'center'
   },
-  sizeText:{
+  sizeText: {
     fontSize: Metrics.fontSize3,
     color: Colors.black,
     fontFamily: Fonts.type.gotham4,
   },
-  colorWrapper:{
-    flex:1,
+  colorWrapper: {
+    flex: 1,
     width: (Metrics.screenWidth - 40) / 2,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 5
   },
-  colorBtn:{
+  colorBtn: {
     width: Metrics.screenWidth / 5,
     height: 30,
     alignItems: 'center'
   },
-  colorPick:{
+  colorPick: {
     width: 20,
     height: 20,
   },
-  qtyWrapper:{
-    flex:1,
+  qtyWrapper: {
+    flex: 1,
     width: (Metrics.screenWidth - 40) / 2,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center'
   },
-  qtyContainer:{
+  qtyContainer: {
     width: Metrics.screenWidth / 5 + 1,
     height: 27,
     flexDirection: 'row',
@@ -160,29 +160,29 @@ export default StyleSheet.create({
     paddingRight: 1,
     borderColor: Colors.black
   },
-  btnQty:{
+  btnQty: {
     backgroundColor: Colors.lightGray,
     width: Metrics.screenWidth / 5 / 3,
     height: 28,
     justifyContent: 'center',
-    flex:1,
+    flex: 1,
     alignItems: 'center'
   },
-  qtyText:{
-    flex:1,
+  qtyText: {
+    flex: 1,
     alignItems: 'center'
   },
-  priceWrapper:{
+  priceWrapper: {
     alignItems: 'flex-start',
     justifyContent: 'flex-end'
   },
-  productSubtitle:{
+  productSubtitle: {
     fontSize: Metrics.fontSize3,
     fontFamily: Fonts.type.gotham4,
     color: Colors.black
   },
-  menuWrapper:{
-    position:'absolute',
+  menuWrapper: {
+    position: 'absolute',
     bottom: isIphoneXorAbove() ? 20 : 0,
     left: 0,
     height: 60 * Metrics.screenWidth / 320,
@@ -191,41 +191,41 @@ export default StyleSheet.create({
     justifyContent: 'flex-start',
     flex: 1
   },
-  buyBtn:{
+  buyBtn: {
     width: Metrics.screenWidth / 2,
     backgroundColor: Colors.mooimom,
     justifyContent: 'center',
     alignItems: 'center'
   },
-  buyText:{
-    color:Colors.white,
+  buyText: {
+    color: Colors.white,
     fontFamily: Fonts.type.gotham4,
     fontSize: Metrics.fontSize3,
   },
-  subtotalWrapper:{
+  subtotalWrapper: {
     backgroundColor: Colors.white,
-    borderWidth: 1,
+    borderWidth: 0.5,
     paddingLeft: 20,
     paddingVertical: 10,
     width: Metrics.screenWidth / 2,
-    borderColor: Colors.black,
+    borderColor: Colors.mooimom,
     justifyContent: 'center',
     alignItems: 'flex-start'
   },
-  subtotalText:{
-    color:Colors.gray,
+  subtotalText: {
+    color: Colors.gray,
     fontFamily: Fonts.type.gotham4,
     fontSize: Metrics.fontSize2,
     marginVertical: Platform.OS === 'ios' ? 0 : -3,
   },
-  priceText:{
-    color:Colors.black,
+  priceText: {
+    color: Colors.black,
     fontFamily: Fonts.type.gotham4,
     fontSize: Metrics.fontSize3,
     marginVertical: -3,
   },
-  commissionText:{
-    color:Colors.blueMooimom,
+  commissionText: {
+    color: Colors.blueMooimom,
     fontFamily: Fonts.type.gotham2,
     fontSize: Metrics.fontSize1,
     marginVertical: 0,

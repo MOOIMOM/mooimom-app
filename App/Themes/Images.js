@@ -1,5 +1,7 @@
 // leave off @2x/@3x
 const images = {
+  mooimomCash: require('../Images/Icons/mooimom-cash.png'),
+  mooimomPoints: require('../Images/Icons/mooimom-points.png'),
   opening: require('../Images/opening.jpg'),
   default: require('../Images/default.jpg'),
   mooimomLogo: require('../Images/mooimom-logo.png'),
@@ -32,6 +34,7 @@ const images = {
   sizeGuide: require('../Images/Icons/size-guide.png'),
   rightArrow: require('../Images/Icons/next.png'),
   rightArrowBlack: require('../Images/Icons/next2.png'),
+  downArrow: require('../Images/Icons/down-arrow.png'),
   share: require('../Images/Icons/share.png'),
   starEmpty: require('../Images/Icons/star-empty.png'),
   star: require('../Images/Icons/star.png'),
@@ -66,6 +69,20 @@ const images = {
   learnpage4: require('../Images/learn/4.png'),
   learnpage5: require('../Images/learn/5.png'),
   learnpage6: require('../Images/learn/6.png'),
+  tutorDeleteNotif: require('../Images/learn/tutor-delete-notif.png'),
+  pin: require('../Images/Icons/pin.png'),
+  poweredByGoogle: require('../Images/Icons/powered-by-google.png'),
+  discountVoucher: require('../Images/Icons/discount-voucher.png'),
+  couponIcon: require('../Images/Icons/voucher.png'),
+  gosendIcon: require('../Images/Icons/gosend.png'),
+  momsClassBanner: require('../Images/moms-class-banner.jpeg'),
+  dad: require('../Images/dad.png'),
+  mom: require('../Images/mom.png'),
+  forceUpdatePopUp: require('../Images/notif-update.png'),
+  profilePopUp: require('../Images/profile-popup.png'),
+  maternityBanner: require('../Images/banner-due-date.png'),
+  babyAgeBanner: require('../Images/banner-baby-age.png'),
+  bin: require('../Images/Icons/bin.png'),
 }
 
 export default images

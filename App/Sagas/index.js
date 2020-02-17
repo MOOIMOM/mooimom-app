@@ -41,10 +41,26 @@ import { CheckoutTypes } from '../Redux/CheckoutRedux'
 import { CommissionEstimationTypes } from '../Redux/CommissionEstimationRedux'
 import { LastNotificationTimeTypes } from '../Redux/LastNotificationTimeRedux'
 import { GetOrderStatusMidtransTypes } from '../Redux/GetOrderStatusMidtransRedux'
+import { GetMidtransStatusTypes } from '../Redux/GetMidtransStatusRedux'
 import { GetVideoTypes } from '../Redux/GetVideoRedux'
 import { GetArticleTypes } from '../Redux/GetArticleRedux'
 import { GetQuestionTypes } from '../Redux/GetQuestionRedux'
 import { SubscribeProductTypes } from '../Redux/SubscribeProductRedux'
+import { GetMooimomPointsTypes } from '../Redux/GetMooimomPointsRedux'
+import { GetGoSendShipmentTypes } from '../Redux/GetGoSendShipmentRedux'
+import { CheckCouponTypes } from '../Redux/CheckCouponRedux'
+import { GetVouchersTypes } from '../Redux/GetVouchersRedux'
+import { GetOneVoucherTypes } from '../Redux/GetOneVoucherRedux'
+import { ClaimVoucherTypes } from '../Redux/ClaimVoucherRedux'
+import { EventFormHandlerTypes } from '../Redux/EventFormHandlerRedux'
+import { DeleteNotifTypes } from '../Redux/DeleteNotifRedux'
+import { GetOnlineCartTypes } from '../Redux/GetOnlineCartRedux'
+import { CancelOrderTypes } from '../Redux/CancelOrderRedux'
+import { GetAppVersionTypes } from '../Redux/GetAppVersionRedux'
+import { DeleteOrderHistoryTypes } from '../Redux/DeleteOrderHistoryRedux'
+import { UpdateOnlineCartTypes } from '../Redux/UpdateOnlineCartRedux'
+import { ChooseFreeGiftTypes } from '../Redux/ChooseFreeGiftRedux'
+import { GetAllEventFormTypes } from '../Redux/GetAllEventFormRedux'
 
 /* ------------- Sagas ------------- */
 
@@ -91,10 +107,27 @@ import { postCheckout } from './CheckoutSagas'
 import { postGetCommissionEstimation } from './GetCommissionEstimationSagas'
 import { saveLastNotificationTime } from './SaveLastNotificationTimeSagas'
 import { postGetOrderStatusMidtrans } from './GetOrderStatusMidtransSagas'
+import { postGetMidtransStatus } from './GetMidtransStatusSagas'
 import { postGetVideo } from './GetVideoSagas'
 import { postGetArticle } from './GetArticleSagas'
 import { postGetQuestion } from './GetQuestionSagas'
 import { postSubscribeProduct } from './SubscribeProductSagas'
+import { postGetMooimomPoints } from './GetMooimomPointsSagas'
+import { postGetGoSendShipment } from './GetGoSendShipmentSagas'
+import { postCheckCoupon } from './CheckCouponSagas'
+import { postGetVouchers } from './GetVouchersSagas'
+import { postGetOneVoucher } from './GetOneVoucherSagas'
+import { claimVoucher } from './ClaimVoucherSagas'
+import { postEventFormHandler } from './EventFormHandlerSagas'
+import { postDeleteNotif } from './DeleteNotifSagas'
+import { postGetOnlineCart } from './GetOnlineCartSagas'
+import { postCancelOrder } from './CancelOrderSagas'
+import { postGetAppVersion } from './GetAppVersionSagas'
+import { postDeleteOrderHistory } from './DeleteOrderHistorySagas'
+import { postUpdateOnlineCart } from './UpdateOnlineCartSagas'
+import { postChooseFreeGift } from './ChooseFreeGiftSagas'
+import { postGetAllEventForm } from './GetAllEventFormSagas'
+
 
 /* ------------- API ------------- */
 
@@ -102,14 +135,16 @@ import { postSubscribeProduct } from './SubscribeProductSagas'
 // to the sagas which need it.
 const api = DebugConfig.useFixtures ? FixtureAPI : API.create()
 
+
 /* ------------- Connect Types To Sagas ------------- */
 
-export default function * root () {
+export default function* root() {
   yield all([
     // some sagas only receive an action
     takeLatest(StartupTypes.STARTUP, startup),
     takeLatest(SharedProductTypes.SHARED_PRODUCT_REQUEST, saveSharedProduct),
     takeLatest(CartTypes.ADD_CART_REQUEST, addCart),
+    takeLatest(ClaimVoucherTypes.CLAIM_VOUCHER_REQUEST, claimVoucher),
     takeLatest(LastNotificationTimeTypes.LAST_NOTIFICATION_TIME_REQUEST, saveLastNotificationTime),
 
     // some sagas receive extra parameters in addition to an action
@@ -152,9 +187,24 @@ export default function * root () {
     takeLatest(CommissionEstimationTypes.GET_COMMISSION_ESTIMATION_REQUEST, postGetCommissionEstimation, api),
     takeLatest(CheckoutTypes.GET_CHECKOUT_REQUEST, postCheckout, api),
     takeLatest(GetOrderStatusMidtransTypes.GET_ORDER_STATUS_MIDTRANS_REQUEST, postGetOrderStatusMidtrans, api),
+    takeLatest(GetMidtransStatusTypes.GET_MIDTRANS_STATUS_REQUEST, postGetMidtransStatus, api),
     takeLatest(GetVideoTypes.GET_VIDEO_REQUEST, postGetVideo, api),
     takeLatest(GetArticleTypes.GET_ARTICLE_REQUEST, postGetArticle, api),
     takeLatest(GetQuestionTypes.GET_QUESTION_REQUEST, postGetQuestion, api),
     takeLatest(SubscribeProductTypes.SUBSCRIBE_PRODUCT_REQUEST, postSubscribeProduct, api),
+    takeLatest(GetMooimomPointsTypes.GET_MOOIMOM_POINTS_REQUEST, postGetMooimomPoints, api),
+    takeLatest(GetGoSendShipmentTypes.GET_GO_SEND_SHIPMENT_REQUEST, postGetGoSendShipment, api),
+    takeLatest(CheckCouponTypes.CHECK_COUPON_REQUEST, postCheckCoupon, api),
+    takeLatest(GetVouchersTypes.GET_VOUCHERS_REQUEST, postGetVouchers, api),
+    takeLatest(GetOneVoucherTypes.GET_ONE_VOUCHER_REQUEST, postGetOneVoucher, api),
+    takeLatest(EventFormHandlerTypes.EVENT_FORM_HANDLER_REQUEST, postEventFormHandler, api),
+    takeLatest(DeleteNotifTypes.DELETE_NOTIF_REQUEST, postDeleteNotif, api),
+    takeLatest(GetOnlineCartTypes.GET_ONLINE_CART_REQUEST, postGetOnlineCart, api),
+    takeLatest(CancelOrderTypes.CANCEL_ORDER_REQUEST, postCancelOrder, api),
+    takeLatest(GetAppVersionTypes.GET_APP_VERSION_REQUEST, postGetAppVersion, api),
+    takeLatest(DeleteOrderHistoryTypes.DELETE_ORDER_HISTORY_REQUEST, postDeleteOrderHistory, api),
+    takeLatest(UpdateOnlineCartTypes.UPDATE_ONLINE_CART_REQUEST, postUpdateOnlineCart, api),
+    takeLatest(ChooseFreeGiftTypes.CHOOSE_FREE_GIFT_REQUEST, postChooseFreeGift, api),
+    takeLatest(GetAllEventFormTypes.GET_ALL_EVENT_FORM_REQUEST, postGetAllEventForm, api)
   ])
 }

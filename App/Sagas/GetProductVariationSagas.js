@@ -14,27 +14,29 @@ import { call, put } from 'redux-saga/effects'
 import GetProductActions from '../Redux/GetProductRedux'
 // import { RegisterSelectors } from '../Redux/RegisterRedux'
 
-export function * postGetProductVariation(api, action) {
+export function* postGetProductVariation(api, action) {
   const { data } = action
   // get current data from Store
   // const currentData = yield select(RegisterSelectors.getData)
   // make the call to the api
   const response = yield call(api.postGetProductVariation, data)
-    // success?
-    if (response.data.success === 1) {
-      console.tron.log(response)
-      // You might need to change the response here - do this with a 'transform',
-      // located in ../Transforms/. Otherwise, just pass the data back from the api.
-      yield put(GetProductActions.getProductVariationSuccess(response.data))
-    } else if (response.problem === 'TIMEOUT_ERROR') {
-      var err = {
-        error: {
-          error_code: '0',
-          error_message: 'Can not connect server now'
-        }
+  // success?
+  if (response.data.success === 1) {
+    if (__DEV__) console.tron.log(response)
+    // You might need to change the response here - do this with a 'transform',
+    // located in ../Transforms/. Otherwise, just pass the data back from the api.
+    console.log(data)
+    yield put(GetProductActions.getProductVariationSuccess(response.data))
+  } else if (response.problem === 'TIMEOUT_ERROR') {
+    var err = {
+      error: {
+        error_code: '0',
+        error_message: 'Can not connect server now'
       }
-      yield put(GetProductActions.getProductVariationFailure(err))
-    } else {
-      yield put(GetProductActions.getProductVariationFailure(response.data))
     }
+    yield put(GetProductActions.getProductVariationFailure(err))
+  } else {
+    console.log(data)
+    yield put(GetProductActions.getProductVariationFailure(response.data))
+  }
 }

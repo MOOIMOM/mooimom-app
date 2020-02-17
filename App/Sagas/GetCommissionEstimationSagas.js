@@ -22,7 +22,7 @@ export function * postGetCommissionEstimation(api, action) {
   const response = yield call(api.postGetCommissionEstimation, data)
     // success?
     if (response.data.success === 1) {
-      console.tron.log(response)
+      if (__DEV__) console.tron.log(response)
       // You might need to change the response here - do this with a 'transform',
       // located in ../Transforms/. Otherwise, just pass the data back from the api.
       yield put(CommissionEstimationActions.getCommissionEstimationSuccess(response.data))

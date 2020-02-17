@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity, Image, Linking, Alert } from 'react-native'
+import { View, Text, TouchableOpacity, Image, Linking, Alert, Platform } from 'react-native'
 import { Images } from '../Themes'
 import FastImage from 'react-native-fast-image'
 import {convertToRupiah, share, download} from '../Lib/utils'
@@ -200,7 +200,7 @@ export default class ProductCardSingle extends Component {
           </View>
         </View>
         <View style={styles.bottomItem}>
-          <View style={styles.bottomLeftItem}>
+          {Platform.OS !== 'ios' && <View style={styles.bottomLeftItem}>
             <TouchableOpacity onPress={() => this.onDownloadPress()} style={styles.btnExtra}>
               <Image source={Images.download} style={styles.imageExtra}/>
               <Text style={styles.textBtnExtra}>Download</Text>
@@ -213,13 +213,21 @@ export default class ProductCardSingle extends Component {
               <Image source={Images.share2} style={styles.imageExtra}/>
               <Text style={styles.textBtnExtra}>Lainnya</Text>
             </TouchableOpacity>
-          </View>
-          <View style={styles.bottomRightItem}>
+          </View>}
+          {Platform.OS !== 'ios' && <View style={styles.bottomRightItem}>
             <TouchableOpacity onPress={() => this.onSharePress('whatsapp')} style={styles.btn}>
               <Image source={Images.wa2} style={styles.imageBtn}/>
               <Text style={styles.textBtn}>Bagikan</Text>
             </TouchableOpacity>
-          </View>
+          </View>}
+         {Platform.OS === 'ios' && <View style={styles.bottomLeftItem}>
+            <TouchableOpacity onPress={() => this.onDownloadPress()} style={styles.btn}>
+              <Text style={styles.textBtn}>Download</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => this.onSharePress('')} style={styles.btn}>
+              <Text style={styles.textBtn}>Bagikan</Text>
+            </TouchableOpacity>
+          </View>}
         </View>
         {this.state.modalClipboardVisible && <View style={styles.modalView}>
           <Text style={styles.modalText}>Images have been downloaded</Text>

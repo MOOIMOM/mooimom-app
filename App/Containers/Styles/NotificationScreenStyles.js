@@ -3,16 +3,16 @@ import { Metrics, ApplicationStyles, Colors, Fonts } from '../../Themes/'
 
 export default StyleSheet.create({
   container: {
-    flex:1,
+    flex: 1,
   },
-  containerScroll:{
+  containerScroll: {
     paddingTop: 0,
     height: Metrics.screenHeight - 100
   },
-  wrapperSeparator:{
+  wrapperSeparator: {
     marginTop: 10,
   },
-  headerWrapper:{
+  headerWrapper: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
@@ -21,7 +21,7 @@ export default StyleSheet.create({
     marginTop: 10,
     height: 40
   },
-  searchButton:{
+  searchButton: {
     width: Metrics.screenWidth - 100,
     height: 40,
     borderRadius: 25,
@@ -29,72 +29,73 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  imageSearch:{
-    height:20,
-    width:20,
+  imageSearch: {
+    height: 20,
+    width: 20,
     marginHorizontal: 10,
     resizeMode: 'contain'
   },
-  textSearch:{
-    color:Colors.gray,
+  textSearch: {
+    color: Colors.gray,
     fontFamily: Fonts.type.gotham5,
     fontSize: Metrics.fontSize1
   },
-  btnHeader:{
+  btnHeader: {
     justifyContent: 'center',
     alignItems: 'center',
   },
-  imgHeader:{
+  imgHeader: {
     height: 20 * Metrics.screenWidth / 320,
     width: 20 * Metrics.screenWidth / 320,
     resizeMode: 'contain'
   },
-  contentContainer:{
-    flexDirection:'row',
+  contentContainer: {
+    flexDirection: 'row',
     width: Metrics.screenWidth - 40,
     marginHorizontal: 20,
   },
-  notificationContainer:{
+  notificationContainer: {
     width: Metrics.screenWidth - 40,
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 10,
     borderBottomWidth: 0.5,
+    borderColor: Colors.mediumGray
   },
-  leftNotif:{
+  leftNotif: {
     flexDirection: 'row',
     alignItems: 'center'
   },
-  colorNotif:{
+  colorNotif: {
     width: 20,
     height: 20,
     borderRadius: 10,
   },
-  rightNotif:{
+  rightNotif: {
     justifyContent: 'space-between',
     flexDirection: 'column',
-    flex:1
+    flex: 1
   },
-  textDateNotif:{
-    color:Colors.gray,
+  textDateNotif: {
+    color: Colors.gray,
     fontFamily: Fonts.type.gotham5,
     fontSize: Metrics.fontSize1,
     textAlign: 'right',
     paddingTop: 10
   },
-  textNotif:{
+  textNotif: {
     marginLeft: 10,
-    color:Colors.black,
+    color: Colors.black,
     fontFamily: Fonts.type.gotham2,
     fontSize: Metrics.fontSize2,
   },
-  imgMenu2:{
+  imgMenu2: {
     width: 10 * Metrics.screenWidth / 320,
     height: 10 * Metrics.screenWidth / 320,
     resizeMode: 'contain',
     marginHorizontal: 10
   },
-  notifContainer:{
+  notifContainer: {
     width: 16 * Metrics.screenWidth / 320,
     height: 16 * Metrics.screenWidth / 320,
     position: 'absolute',
@@ -107,7 +108,7 @@ export default StyleSheet.create({
     flex: 1,
     flexWrap: 'nowrap'
   },
-  textNotif2:{
+  textNotif2: {
     fontSize: Metrics.fontSize1,
     fontFamily: Fonts.type.gotham2,
     color: Colors.white,

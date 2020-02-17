@@ -36,8 +36,20 @@
 		2D16E6881FA4F8E400B85C8A /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D16E6891FA4F8E400B85C8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* mooimomTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* mooimomTests.m */; };
 		2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
+		2E03E37F23FA4EC9005E5A0F /* ServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2E03E37723FA4EC9005E5A0F /* ServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		2E03E3B823FA4EEA005E5A0F /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E03E3B723FA4EEA005E5A0F /* UserNotifications.framework */; };
+		2E03E3BA23FA4EEA005E5A0F /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E03E3B923FA4EEA005E5A0F /* UserNotificationsUI.framework */; };
+		2E03E3C523FA4EEA005E5A0F /* ContentExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2E03E3B623FA4EEA005E5A0F /* ContentExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		2E03E3CB23FA4FF2005E5A0F /* NotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E03E3CA23FA4FF2005E5A0F /* NotificationService.m */; };
+		2E03E3D023FA52AE005E5A0F /* NotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E03E3CD23FA52AD005E5A0F /* NotificationViewController.m */; };
+		2E03E3D123FA52AE005E5A0F /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2E03E3CE23FA52AD005E5A0F /* MainInterface.storyboard */; };
+		2E03E3D723FA63A4005E5A0F /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E03E3D623FA63A4005E5A0F /* iCarousel.m */; };
+		2E03E3D923FA6428005E5A0F /* libQGNotificationSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E03E3D823FA6428005E5A0F /* libQGNotificationSdk.a */; };
+		2E03E3DA23FA6448005E5A0F /* libQGNotificationSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E03E3D823FA6428005E5A0F /* libQGNotificationSdk.a */; };
+		2E03E3DC23FA684F005E5A0F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E03E3DB23FA684F005E5A0F /* QuartzCore.framework */; };
 		311600C4B06E4657B68EF660 /* libFastImage-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 31FB956A40D44C879BF09B60 /* libFastImage-tvOS.a */; };
 		3407A66A566A42B4957B1E22 /* libRNShare.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 97926DC5FE594A6BA7BDD6C9 /* libRNShare.a */; };
+		407F8EE187C44E3EAE9FDF45 /* libRNAiquaSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9CC591E2F3140CA912AEBDB /* libRNAiquaSdk.a */; };
 		41B3D9F3F07447DCA4D5CEC9 /* libFastImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D68E62ED1D6D4C2E9EC2F948 /* libFastImage.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		842643EBAE9B43449110191E /* libRNFetchBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0019236E53844ABA94120CD0 /* libRNFetchBlob.a */; };
@@ -58,7 +70,6 @@
 		BB6F5A7A1ACE40E4906E9E37 /* libimageCropPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 526AD553C1464A9B80786C53 /* libimageCropPicker.a */; };
 		BF48400D78CF46DBBA944E21 /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B74164DFAC44F4D90B7351B /* libRNGestureHandler.a */; };
 		CE379B5CFB694155802D065F /* Gotham Bold.TTF in Resources */ = {isa = PBXBuildFile; fileRef = AC668D3D66E744A284E591D4 /* Gotham Bold.TTF */; };
-		D168AAE07DD94BF8BF36AF4F /* libReactNativeConfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2676742B7A5E48B1986EC0E1 /* libReactNativeConfig.a */; };
 		DC1B715FEB27F1564894A19F /* libPods-mooimom.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 175B93BD2E493384A980B208 /* libPods-mooimom.a */; };
 		DCD750F31CCC42ECAA222CFA /* libRNFirebase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EBA0EEDC19B1406F99D27E13 /* libRNFirebase.a */; };
 /* End PBXBuildFile section */
@@ -196,6 +207,27 @@
 			proxyType = 2;
 			remoteGlobalIDString = 3D383D621EBD27B9005632C8;
 			remoteInfo = "double-conversion-tvOS";
+		};
+		2E03E37D23FA4EC9005E5A0F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2E03E37623FA4EC9005E5A0F;
+			remoteInfo = ServiceExtension;
+		};
+		2E03E3C323FA4EEA005E5A0F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2E03E3B523FA4EEA005E5A0F;
+			remoteInfo = ContentExtension;
+		};
+		2E74C3B323ED413A00DF3E71 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 64221BB8734242B7A5A7AA50 /* RNAiquaSdk.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNAiquaSdk;
 		};
 		3DAD3E831DF850E9000B6D8A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -365,13 +397,6 @@
 			remoteGlobalIDString = FD751C4D229EB44C002BE1F4;
 			remoteInfo = "FastImage-tvOS";
 		};
-		9E4E08212349B655001CB993 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0AC2F0BE9EA24B20ABE5085D /* ReactNativeConfig.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = EB2648DF1C7BE17A00B8F155;
-			remoteInfo = ReactNativeConfig;
-		};
 		9E4E08262349B655001CB993 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8CFE55A6374C4B08ADB31E32 /* RNFetchBlob.xcodeproj */;
@@ -403,6 +428,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		2E03E38023FA4EC9005E5A0F /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				2E03E3C523FA4EEA005E5A0F /* ContentExtension.appex in Embed App Extensions */,
+				2E03E37F23FA4EC9005E5A0F /* ServiceExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9E5515732357260100EFAA98 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -428,7 +465,6 @@
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* mooimomTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = mooimomTests.m; sourceTree = "<group>"; };
 		097166657B11E3AAFDAEB266 /* Pods-mooimom.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mooimom.debug.xcconfig"; path = "Target Support Files/Pods-mooimom/Pods-mooimom.debug.xcconfig"; sourceTree = "<group>"; };
-		0AC2F0BE9EA24B20ABE5085D /* ReactNativeConfig.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeConfig.xcodeproj; path = "../node_modules/react-native-config/ios/ReactNativeConfig.xcodeproj"; sourceTree = "<group>"; };
 		0B74164DFAC44F4D90B7351B /* libRNGestureHandler.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNGestureHandler.a; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
@@ -443,15 +479,35 @@
 		175B93BD2E493384A980B208 /* libPods-mooimom.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mooimom.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		209946536A084E348256DFBF /* Gotham Rounded Bold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Gotham Rounded Bold.otf"; path = "../App/fonts/Gotham Rounded Bold.otf"; sourceTree = "<group>"; };
 		2371A356974141059E3C30F6 /* Gotham Book Italic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Gotham Book Italic.otf"; path = "../App/fonts/Gotham Book Italic.otf"; sourceTree = "<group>"; };
-		2676742B7A5E48B1986EC0E1 /* libReactNativeConfig.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReactNativeConfig.a; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* mooimom-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "mooimom-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* mooimom-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "mooimom-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		2E03E37723FA4EC9005E5A0F /* ServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		2E03E37C23FA4EC9005E5A0F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2E03E3B623FA4EEA005E5A0F /* ContentExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ContentExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		2E03E3B723FA4EEA005E5A0F /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		2E03E3B923FA4EEA005E5A0F /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
+		2E03E3C223FA4EEA005E5A0F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2E03E3C923FA4FF2005E5A0F /* NotificationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotificationService.h; path = "../../../../../../Downloads/ObjC-4.6.1/QGNotificationServiceExtension/NotificationService.h"; sourceTree = "<group>"; };
+		2E03E3CA23FA4FF2005E5A0F /* NotificationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotificationService.m; path = "../../../../../../Downloads/ObjC-4.6.1/QGNotificationServiceExtension/NotificationService.m"; sourceTree = "<group>"; };
+		2E03E3CC23FA501C005E5A0F /* ServiceExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ServiceExtension.entitlements; sourceTree = "<group>"; };
+		2E03E3CD23FA52AD005E5A0F /* NotificationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotificationViewController.m; path = "../../../../../../Downloads/ObjC-4.6.1/QGNotificationContentExtension/NotificationViewController.m"; sourceTree = "<group>"; };
+		2E03E3CE23FA52AD005E5A0F /* MainInterface.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = MainInterface.storyboard; path = "../../../../../../Downloads/ObjC-4.6.1/QGNotificationContentExtension/MainInterface.storyboard"; sourceTree = "<group>"; };
+		2E03E3CF23FA52AE005E5A0F /* NotificationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotificationViewController.h; path = "../../../../../../Downloads/ObjC-4.6.1/QGNotificationContentExtension/NotificationViewController.h"; sourceTree = "<group>"; };
+		2E03E3D223FA52E8005E5A0F /* ContentExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ContentExtension.entitlements; sourceTree = "<group>"; };
+		2E03E3D323FA6379005E5A0F /* QGNotificationSdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QGNotificationSdk.h; path = "../../../../../../Downloads/ObjC-4.6.1/QGNotificationSdk/QGNotificationSdk.h"; sourceTree = "<group>"; };
+		2E03E3D423FA6387005E5A0F /* QGNotificationSdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QGNotificationSdk.h; path = "../../../../../../Downloads/ObjC-4.6.1/QGNotificationSdk/QGNotificationSdk.h"; sourceTree = "<group>"; };
+		2E03E3D523FA639D005E5A0F /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iCarousel.h; path = "../../../../../../Downloads/ObjC-4.6.1/QGNotificationSdk/iCarousel.h"; sourceTree = "<group>"; };
+		2E03E3D623FA63A4005E5A0F /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iCarousel.m; path = "../../../../../../Downloads/ObjC-4.6.1/QGNotificationSdk/iCarousel.m"; sourceTree = "<group>"; };
+		2E03E3D823FA6428005E5A0F /* libQGNotificationSdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libQGNotificationSdk.a; path = "../../../../../Downloads/ObjC-4.6.1/QGNotificationSdk/libQGNotificationSdk.a"; sourceTree = "<group>"; };
+		2E03E3DB23FA684F005E5A0F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		2E74C3CC23ED53FE00DF3E71 /* mooimomDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = mooimomDebug.entitlements; path = mooimom/mooimomDebug.entitlements; sourceTree = "<group>"; };
 		2F524662220549359AD7DD9D /* RNGestureHandler.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNGestureHandler.xcodeproj; path = "../node_modules/react-native-gesture-handler/ios/RNGestureHandler.xcodeproj"; sourceTree = "<group>"; };
 		31FB956A40D44C879BF09B60 /* libFastImage-tvOS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = "libFastImage-tvOS.a"; sourceTree = "<group>"; };
 		526AD553C1464A9B80786C53 /* libimageCropPicker.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libimageCropPicker.a; sourceTree = "<group>"; };
 		552DF2DC1E0B4C959441F0BA /* RNShare.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNShare.xcodeproj; path = "../node_modules/react-native-share/ios/RNShare.xcodeproj"; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
+		64221BB8734242B7A5A7AA50 /* RNAiquaSdk.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNAiquaSdk.xcodeproj; path = "../node_modules/react-native-aiqua-sdk/ios/RNAiquaSdk.xcodeproj"; sourceTree = "<group>"; };
 		66AA6E460A614AA59DF7FF2B /* FastImage.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = FastImage.xcodeproj; path = "../node_modules/react-native-fast-image/ios/FastImage.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
@@ -480,6 +536,7 @@
 		B71E67465ACC957F2D2605A0 /* Pods-mooimom.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mooimom.release.xcconfig"; path = "Target Support Files/Pods-mooimom/Pods-mooimom.release.xcconfig"; sourceTree = "<group>"; };
 		BF3A4486442E43809C59C0DA /* Gotham Book.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Gotham Book.otf"; path = "../App/fonts/Gotham Book.otf"; sourceTree = "<group>"; };
 		D68E62ED1D6D4C2E9EC2F948 /* libFastImage.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libFastImage.a; sourceTree = "<group>"; };
+		D9CC591E2F3140CA912AEBDB /* libRNAiquaSdk.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNAiquaSdk.a; sourceTree = "<group>"; };
 		EBA0EEDC19B1406F99D27E13 /* libRNFirebase.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFirebase.a; sourceTree = "<group>"; };
 		FB04DE2A9E6C49678AF85F04 /* Gotham Light.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Gotham Light.otf"; path = "../App/fonts/Gotham Light.otf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -516,13 +573,13 @@
 				9E55157923573B0100EFAA98 /* MessageUI.framework in Frameworks */,
 				9E55157723573AF300EFAA98 /* Social.framework in Frameworks */,
 				842643EBAE9B43449110191E /* libRNFetchBlob.a in Frameworks */,
-				D168AAE07DD94BF8BF36AF4F /* libReactNativeConfig.a in Frameworks */,
 				DCD750F31CCC42ECAA222CFA /* libRNFirebase.a in Frameworks */,
 				BB6F5A7A1ACE40E4906E9E37 /* libimageCropPicker.a in Frameworks */,
 				41B3D9F3F07447DCA4D5CEC9 /* libFastImage.a in Frameworks */,
 				9EE7FFC1235D845A00C3BB74 /* libMidtransCoreKit.a in Frameworks */,
 				9EE7FFC3235D845A00C3BB74 /* libMidtransKit.a in Frameworks */,
 				DC1B715FEB27F1564894A19F /* libPods-mooimom.a in Frameworks */,
+				407F8EE187C44E3EAE9FDF45 /* libRNAiquaSdk.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -547,6 +604,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2E03E37423FA4EC9005E5A0F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2E03E3DA23FA6448005E5A0F /* libQGNotificationSdk.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2E03E3B323FA4EEA005E5A0F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2E03E3DC23FA684F005E5A0F /* QuartzCore.framework in Frameworks */,
+				2E03E3D923FA6428005E5A0F /* libQGNotificationSdk.a in Frameworks */,
+				2E03E3BA23FA4EEA005E5A0F /* UserNotificationsUI.framework in Frameworks */,
+				2E03E3B823FA4EEA005E5A0F /* UserNotifications.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -635,6 +711,7 @@
 		13B07FAE1A68108700A75B9A /* mooimom */ = {
 			isa = PBXGroup;
 			children = (
+				2E74C3CC23ED53FE00DF3E71 /* mooimomDebug.entitlements */,
 				9EE7FF8F235D841C00C3BB74 /* MidtransModule.h */,
 				9EE7FFBE235D841C00C3BB74 /* MidtransModule.m */,
 				9E357BEE2356F602001C93F6 /* mooimom.entitlements */,
@@ -676,14 +753,53 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2E03E3DB23FA684F005E5A0F /* QuartzCore.framework */,
+				2E03E3D823FA6428005E5A0F /* libQGNotificationSdk.a */,
 				9EE7FFC0235D845A00C3BB74 /* libMidtransCoreKit.a */,
 				9EE7FFC2235D845A00C3BB74 /* libMidtransKit.a */,
 				9E55157823573B0100EFAA98 /* MessageUI.framework */,
 				9E55157623573AF300EFAA98 /* Social.framework */,
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
 				175B93BD2E493384A980B208 /* libPods-mooimom.a */,
+				2E03E3B723FA4EEA005E5A0F /* UserNotifications.framework */,
+				2E03E3B923FA4EEA005E5A0F /* UserNotificationsUI.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2E03E37823FA4EC9005E5A0F /* ServiceExtension */ = {
+			isa = PBXGroup;
+			children = (
+				2E03E3D323FA6379005E5A0F /* QGNotificationSdk.h */,
+				2E03E3CC23FA501C005E5A0F /* ServiceExtension.entitlements */,
+				2E03E3C923FA4FF2005E5A0F /* NotificationService.h */,
+				2E03E3CA23FA4FF2005E5A0F /* NotificationService.m */,
+				2E03E37C23FA4EC9005E5A0F /* Info.plist */,
+			);
+			path = ServiceExtension;
+			sourceTree = "<group>";
+		};
+		2E03E3BB23FA4EEA005E5A0F /* ContentExtension */ = {
+			isa = PBXGroup;
+			children = (
+				2E03E3D623FA63A4005E5A0F /* iCarousel.m */,
+				2E03E3D523FA639D005E5A0F /* iCarousel.h */,
+				2E03E3D423FA6387005E5A0F /* QGNotificationSdk.h */,
+				2E03E3D223FA52E8005E5A0F /* ContentExtension.entitlements */,
+				2E03E3CE23FA52AD005E5A0F /* MainInterface.storyboard */,
+				2E03E3CF23FA52AE005E5A0F /* NotificationViewController.h */,
+				2E03E3CD23FA52AD005E5A0F /* NotificationViewController.m */,
+				2E03E3C223FA4EEA005E5A0F /* Info.plist */,
+			);
+			path = ContentExtension;
+			sourceTree = "<group>";
+		};
+		2E74C3B023ED413A00DF3E71 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2E74C3B423ED413A00DF3E71 /* libRNAiquaSdk.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		4DDB249DF729F69C8E673924 /* Pods */ = {
@@ -732,10 +848,10 @@
 				2F524662220549359AD7DD9D /* RNGestureHandler.xcodeproj */,
 				552DF2DC1E0B4C959441F0BA /* RNShare.xcodeproj */,
 				8CFE55A6374C4B08ADB31E32 /* RNFetchBlob.xcodeproj */,
-				0AC2F0BE9EA24B20ABE5085D /* ReactNativeConfig.xcodeproj */,
 				B50BDBC736404985A0140077 /* RNFirebase.xcodeproj */,
 				AE7BE21F558148A4B545734F /* imageCropPicker.xcodeproj */,
 				66AA6E460A614AA59DF7FF2B /* FastImage.xcodeproj */,
+				64221BB8734242B7A5A7AA50 /* RNAiquaSdk.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -762,6 +878,8 @@
 				13B07FAE1A68108700A75B9A /* mooimom */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* mooimomTests */,
+				2E03E37823FA4EC9005E5A0F /* ServiceExtension */,
+				2E03E3BB23FA4EEA005E5A0F /* ContentExtension */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				DFE7935994274C8D80941CE7 /* Resources */,
@@ -780,6 +898,8 @@
 				00E356EE1AD99517003FC87E /* mooimomTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* mooimom-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* mooimom-tvOSTests.xctest */,
+				2E03E37723FA4EC9005E5A0F /* ServiceExtension.appex */,
+				2E03E3B623FA4EEA005E5A0F /* ContentExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -790,11 +910,11 @@
 				0B74164DFAC44F4D90B7351B /* libRNGestureHandler.a */,
 				97926DC5FE594A6BA7BDD6C9 /* libRNShare.a */,
 				0019236E53844ABA94120CD0 /* libRNFetchBlob.a */,
-				2676742B7A5E48B1986EC0E1 /* libReactNativeConfig.a */,
 				EBA0EEDC19B1406F99D27E13 /* libRNFirebase.a */,
 				526AD553C1464A9B80786C53 /* libimageCropPicker.a */,
 				D68E62ED1D6D4C2E9EC2F948 /* libFastImage.a */,
 				31FB956A40D44C879BF09B60 /* libFastImage-tvOS.a */,
+				D9CC591E2F3140CA912AEBDB /* libRNAiquaSdk.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -819,14 +939,6 @@
 			isa = PBXGroup;
 			children = (
 				9E4E08152349B654001CB993 /* libRNGestureHandler.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		9E4E08162349B655001CB993 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				9E4E08222349B655001CB993 /* libReactNativeConfig.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -917,10 +1029,13 @@
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				F011F7120E28DAF90A35058A /* [CP] Copy Pods Resources */,
 				9E5515732357260100EFAA98 /* Embed Frameworks */,
+				2E03E38023FA4EC9005E5A0F /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				2E03E37E23FA4EC9005E5A0F /* PBXTargetDependency */,
+				2E03E3C423FA4EEA005E5A0F /* PBXTargetDependency */,
 			);
 			name = mooimom;
 			productName = "Hello World";
@@ -963,6 +1078,40 @@
 			productReference = 2D02E4901E0B4A5D006451C7 /* mooimom-tvOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		2E03E37623FA4EC9005E5A0F /* ServiceExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2E03E3B123FA4EC9005E5A0F /* Build configuration list for PBXNativeTarget "ServiceExtension" */;
+			buildPhases = (
+				2E03E37323FA4EC9005E5A0F /* Sources */,
+				2E03E37423FA4EC9005E5A0F /* Frameworks */,
+				2E03E37523FA4EC9005E5A0F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ServiceExtension;
+			productName = ServiceExtension;
+			productReference = 2E03E37723FA4EC9005E5A0F /* ServiceExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		2E03E3B523FA4EEA005E5A0F /* ContentExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2E03E3C623FA4EEA005E5A0F /* Build configuration list for PBXNativeTarget "ContentExtension" */;
+			buildPhases = (
+				2E03E3B223FA4EEA005E5A0F /* Sources */,
+				2E03E3B323FA4EEA005E5A0F /* Frameworks */,
+				2E03E3B423FA4EEA005E5A0F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ContentExtension;
+			productName = ContentExtension;
+			productReference = 2E03E3B623FA4EEA005E5A0F /* ContentExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -995,6 +1144,16 @@
 						CreatedOnToolsVersion = 8.2.1;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 2D02E47A1E0B4A5D006451C7;
+					};
+					2E03E37623FA4EC9005E5A0F = {
+						CreatedOnToolsVersion = 11.2.1;
+						DevelopmentTeam = K83N4PRU8C;
+						ProvisioningStyle = Automatic;
+					};
+					2E03E3B523FA4EEA005E5A0F = {
+						CreatedOnToolsVersion = 11.2.1;
+						DevelopmentTeam = K83N4PRU8C;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -1072,8 +1231,8 @@
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
 				{
-					ProductGroup = 9E4E08162349B655001CB993 /* Products */;
-					ProjectRef = 0AC2F0BE9EA24B20ABE5085D /* ReactNativeConfig.xcodeproj */;
+					ProductGroup = 2E74C3B023ED413A00DF3E71 /* Products */;
+					ProjectRef = 64221BB8734242B7A5A7AA50 /* RNAiquaSdk.xcodeproj */;
 				},
 				{
 					ProductGroup = 9E4E08232349B655001CB993 /* Products */;
@@ -1098,6 +1257,8 @@
 				00E356ED1AD99517003FC87E /* mooimomTests */,
 				2D02E47A1E0B4A5D006451C7 /* mooimom-tvOS */,
 				2D02E48F1E0B4A5D006451C7 /* mooimom-tvOSTests */,
+				2E03E37623FA4EC9005E5A0F /* ServiceExtension */,
+				2E03E3B523FA4EEA005E5A0F /* ContentExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -1220,6 +1381,13 @@
 			fileType = archive.ar;
 			path = "libdouble-conversion.a";
 			remoteRef = 2DF0FFE82056DD460020B375 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		2E74C3B423ED413A00DF3E71 /* libRNAiquaSdk.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNAiquaSdk.a;
+			remoteRef = 2E74C3B323ED413A00DF3E71 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		3DAD3E841DF850E9000B6D8A /* libRCTImage-tvOS.a */ = {
@@ -1390,13 +1558,6 @@
 			remoteRef = 9E4E081E2349B655001CB993 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		9E4E08222349B655001CB993 /* libReactNativeConfig.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libReactNativeConfig.a;
-			remoteRef = 9E4E08212349B655001CB993 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		9E4E08272349B655001CB993 /* libRNFetchBlob.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1462,6 +1623,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2E03E37523FA4EC9005E5A0F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2E03E3B423FA4EEA005E5A0F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2E03E3D123FA52AE005E5A0F /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1576,6 +1752,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2E03E37323FA4EC9005E5A0F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2E03E3CB23FA4FF2005E5A0F /* NotificationService.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2E03E3B223FA4EEA005E5A0F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2E03E3D023FA52AE005E5A0F /* NotificationViewController.m in Sources */,
+				2E03E3D723FA63A4005E5A0F /* iCarousel.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1588,6 +1781,16 @@
 			isa = PBXTargetDependency;
 			target = 2D02E47A1E0B4A5D006451C7 /* mooimom-tvOS */;
 			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
+		};
+		2E03E37E23FA4EC9005E5A0F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2E03E37623FA4EC9005E5A0F /* ServiceExtension */;
+			targetProxy = 2E03E37D23FA4EC9005E5A0F /* PBXContainerItemProxy */;
+		};
+		2E03E3C423FA4EEA005E5A0F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2E03E3B523FA4EEA005E5A0F /* ContentExtension */;
+			targetProxy = 2E03E3C323FA4EEA005E5A0F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1621,21 +1824,12 @@
 					"$(SRCROOT)..\node_modules\neact-native-firebaseiosRNFirebase/**",
 					"$(SRCROOT)..\node_modules\neact-native-image-crop-pickerios/**",
 					"$(SRCROOT)..\node_modules\neact-native-fast-imageiosFastImage/**",
+					"$(SRCROOT)/../node_modules/react-native-aiqua-sdk/ios",
 				);
 				INFOPLIST_FILE = mooimomTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1660,21 +1854,12 @@
 					"$(SRCROOT)..\node_modules\neact-native-firebaseiosRNFirebase/**",
 					"$(SRCROOT)..\node_modules\neact-native-image-crop-pickerios/**",
 					"$(SRCROOT)..\node_modules\neact-native-fast-imageiosFastImage/**",
+					"$(SRCROOT)/../node_modules/react-native-aiqua-sdk/ios",
 				);
 				INFOPLIST_FILE = mooimomTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1690,8 +1875,8 @@
 			baseConfigurationReference = 097166657B11E3AAFDAEB266 /* Pods-mooimom.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = mooimom/mooimom.entitlements;
-				CURRENT_PROJECT_VERSION = 1;
+				CODE_SIGN_ENTITLEMENTS = mooimom/mooimomDebug.entitlements;
+				CURRENT_PROJECT_VERSION = 26;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = K83N4PRU8C;
 				HEADER_SEARCH_PATHS = (
@@ -1703,9 +1888,12 @@
 					"$(SRCROOT)..\node_modules\neact-native-firebaseiosRNFirebase/**",
 					"$(SRCROOT)..\node_modules\neact-native-image-crop-pickerios/**",
 					"$(SRCROOT)..\node_modules\neact-native-fast-imageiosFastImage/**",
+					"$(SRCROOT)/../node_modules/react-native-aiqua-sdk/ios",
 				);
 				INFOPLIST_FILE = mooimom/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.2.18;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1723,7 +1911,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = mooimom/mooimom.entitlements;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 26;
 				DEVELOPMENT_TEAM = K83N4PRU8C;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1734,9 +1922,12 @@
 					"$(SRCROOT)..\node_modules\neact-native-firebaseiosRNFirebase/**",
 					"$(SRCROOT)..\node_modules\neact-native-image-crop-pickerios/**",
 					"$(SRCROOT)..\node_modules\neact-native-fast-imageiosFastImage/**",
+					"$(SRCROOT)/../node_modules/react-native-aiqua-sdk/ios",
 				);
 				INFOPLIST_FILE = mooimom/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.2.18;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1769,20 +1960,11 @@
 					"$(SRCROOT)..\node_modules\neact-native-firebaseiosRNFirebase/**",
 					"$(SRCROOT)..\node_modules\neact-native-image-crop-pickerios/**",
 					"$(SRCROOT)..\node_modules\neact-native-fast-imageiosFastImage/**",
+					"$(SRCROOT)/../node_modules/react-native-aiqua-sdk/ios",
 				);
 				INFOPLIST_FILE = "mooimom-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1816,20 +1998,11 @@
 					"$(SRCROOT)..\node_modules\neact-native-firebaseiosRNFirebase/**",
 					"$(SRCROOT)..\node_modules\neact-native-image-crop-pickerios/**",
 					"$(SRCROOT)..\node_modules\neact-native-fast-imageiosFastImage/**",
+					"$(SRCROOT)/../node_modules/react-native-aiqua-sdk/ios",
 				);
 				INFOPLIST_FILE = "mooimom-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1862,20 +2035,11 @@
 					"$(SRCROOT)..\node_modules\neact-native-firebaseiosRNFirebase/**",
 					"$(SRCROOT)..\node_modules\neact-native-image-crop-pickerios/**",
 					"$(SRCROOT)..\node_modules\neact-native-fast-imageiosFastImage/**",
+					"$(SRCROOT)/../node_modules/react-native-aiqua-sdk/ios",
 				);
 				INFOPLIST_FILE = "mooimom-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1908,20 +2072,11 @@
 					"$(SRCROOT)..\node_modules\neact-native-firebaseiosRNFirebase/**",
 					"$(SRCROOT)..\node_modules\neact-native-image-crop-pickerios/**",
 					"$(SRCROOT)..\node_modules\neact-native-fast-imageiosFastImage/**",
+					"$(SRCROOT)/../node_modules/react-native-aiqua-sdk/ios",
 				);
 				INFOPLIST_FILE = "mooimom-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1931,6 +2086,110 @@
 				SDKROOT = appletvos;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/mooimom-tvOS.app/mooimom-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
+			};
+			name = Release;
+		};
+		2E03E38123FA4EC9005E5A0F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = ServiceExtension/ServiceExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = K83N4PRU8C;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = ServiceExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mooimom.id.ios.ServiceExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2E03E38223FA4EC9005E5A0F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = ServiceExtension/ServiceExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = K83N4PRU8C;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = ServiceExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mooimom.id.ios.ServiceExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		2E03E3C723FA4EEA005E5A0F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = ContentExtension/ContentExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = K83N4PRU8C;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = ContentExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mooimom.id.ios.ContentExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2E03E3C823FA4EEA005E5A0F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = ContentExtension/ContentExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = K83N4PRU8C;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = ContentExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mooimom.id.ios.ContentExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -2068,6 +2327,24 @@
 			buildConfigurations = (
 				2D02E4991E0B4A5E006451C7 /* Debug */,
 				2D02E49A1E0B4A5E006451C7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2E03E3B123FA4EC9005E5A0F /* Build configuration list for PBXNativeTarget "ServiceExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2E03E38123FA4EC9005E5A0F /* Debug */,
+				2E03E38223FA4EC9005E5A0F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2E03E3C623FA4EEA005E5A0F /* Build configuration list for PBXNativeTarget "ContentExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2E03E3C723FA4EEA005E5A0F /* Debug */,
+				2E03E3C823FA4EEA005E5A0F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

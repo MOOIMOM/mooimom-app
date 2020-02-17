@@ -1,19 +1,23 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View, TouchableOpacity, Image, KeyboardAvoidingView, TextInput, Alert, Keyboard, ActivityIndicator } from 'react-native'
+import { ScrollView, Text, View, TouchableOpacity, Image, KeyboardAvoidingView, TextInput, Alert, Keyboard, Platform } from 'react-native'
 import { NavigationActions, StackActions } from 'react-navigation'
 import { Images, Colors, Metrics } from '../Themes'
 import { connect } from 'react-redux'
 import AuthActions from '../Redux/AuthRedux'
 import SendOtpActions from '../Redux/SendOtpRedux'
 import LinearGradient from 'react-native-linear-gradient';
+
+import RNAiqua from 'react-native-aiqua-sdk'
 import _ from 'lodash';
 // Styles
 import styles from './Styles/AuthScreenStyles'
 
+import { DotIndicator } from 'react-native-indicators'
+
 const codeLength = 4
 var isProcessing = false
 class AuthScreen extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       codeArr: new Array(codeLength).fill(''),
@@ -24,19 +28,34 @@ class AuthScreen extends Component {
     this.codeInputRefs = [];
   }
 
-  componentWillReceiveProps (newProps) {
+  componentWillReceiveProps(newProps) {
     if (this.props.auth !== newProps.auth) {
       if (
         newProps.auth.payload !== null &&
         newProps.auth.error === null &&
         !newProps.auth.fetching && this.state.isSendAuth
       ) {
-          this.setState({
-            isSendAuth: false
-          })
-          this.clear()
-          this.actNavigate('MainScreen')
-        }
+        this.setState({
+          isSendAuth: false
+        })
+        // if (Platform.OS === 'ios') {
+        //   let logData = [
+        //     RNAiqua.setUserId(newProps.payload.user_id),
+        //     RNAiqua.setCustomKey('phoneNo', this.props.login.data.data_request.phone_number)
+        //   ]
+        //   RNAiqua.logEvent('user_logged_in', logData)
+        //   // console.log('RNAiqua, user_logged_in', 'userId : ', this.props.auth.payload.user_id, 'phone : ', this.props.login.data.data_request.phone_number)
+        // } else {
+        //   let logData = [
+        //     RNAiqua.setUserId(newProps.payload.user_id),
+        //     RNAiqua.setPhoneNumber(this.props.login.data.data_request.phone_number)
+        //   ]
+        //   RNAiqua.logEvent('user_logged_in', logData)
+        //   // console.log('RNAiqua, user_logged_in', 'userId : ', this.props.auth.payload.user_id, 'phone : ', this.props.login.data.data_request.phone_number)
+        // }
+        this.clear()
+        this.actNavigate('MainScreen')
+      }
       else if (
         newProps.auth.payload === null &&
         newProps.auth.error !== null &&
@@ -95,7 +114,7 @@ class AuthScreen extends Component {
     }
   }
 
-  actNavigate (screen) {
+  actNavigate(screen) {
     const { navigate } = this.props.navigation
     navigate(screen, {})
   }
@@ -168,11 +187,11 @@ class AuthScreen extends Component {
     }
   }
 
-  onFulfill(){
-    if(this.state.isSendAuth) return;
+  onFulfill() {
+    if (this.state.isSendAuth) return;
     Keyboard.dismiss()
     const code = this.state.codeArr.join('');
-    if(code.length < 4){
+    if (code.length < 4) {
       Alert.alert(
         '',
         'Tolong masukkan kode verifikasi terlebih dahulu',
@@ -189,7 +208,7 @@ class AuthScreen extends Component {
     this.setState({
       isSendAuth: true
     })
-    let data ={
+    let data = {
       data_request: {
         phone_number: this.props.sendOtp.data.data_request.phone_number,
         user_id: this.props.sendOtp.data.data_request.user_id,
@@ -199,9 +218,9 @@ class AuthScreen extends Component {
     this.props.authProcess(data)
   }
 
-  requestOtp(){
-    if(isProcessing) return;
-    let data ={
+  requestOtp() {
+    if (isProcessing) return;
+    let data = {
       data_request: {
         phone_number: this.props.sendOtp.data.data_request.phone_number,
         user_id: this.props.sendOtp.data.data_request.user_id,
@@ -211,11 +230,11 @@ class AuthScreen extends Component {
     this.props.sendOtpProcess(data)
   }
 
-  render () {
+  render() {
     let codeInputs = [];
     for (let i = 0; i < codeLength; i++) {
       const id = i;
-      if(i === 0){
+      if (i === 0) {
         codeInputs.push(
           <TextInput
             key={id}
@@ -258,40 +277,40 @@ class AuthScreen extends Component {
     }
     return (
       <View style={styles.container}>
-      <ScrollView
-      showsVerticalScrollIndicator={false}>
-      <KeyboardAvoidingView
-      behavior='padding'
-      keyboardVerticalOffset={50}
-      enabled>
-      <LinearGradient colors={['#7CE0D3', '#28C9B9']} style={styles.linergradient}>
-          <Image source={Images.mooimomLogoWhite} style={styles.title}/>
-          <View style={styles.loginContainer}>
-            <KeyboardAvoidingView>
-              <Text style={styles.caption1}>Masukkan kode SMS verifikasi</Text>
-              <View style={styles.textInput}>
-                {codeInputs}
+        <ScrollView
+          showsVerticalScrollIndicator={false}>
+          <KeyboardAvoidingView
+            behavior='padding'
+            keyboardVerticalOffset={50}
+            enabled>
+            <LinearGradient colors={['#7CE0D3', '#28C9B9']} style={styles.linergradient}>
+              <Image source={Images.mooimomLogoWhite} style={styles.title} />
+              <View style={styles.loginContainer}>
+                <KeyboardAvoidingView>
+                  <Text style={styles.caption1}>Masukkan kode SMS verifikasi</Text>
+                  <View style={styles.textInput}>
+                    {codeInputs}
+                  </View>
+                  <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => this.onFulfill()}
+                  >
+                    <Text style={styles.btnText}>Verifikasi</Text>
+                  </TouchableOpacity>
+                  <View style={styles.SignUpContainer}>
+                    <TouchableOpacity
+                      style={styles.btnResend}
+                      onPress={() => this.requestOtp()}>
+                      <Text style={styles.textSignIn}>Kirim ulang kode verifikasi</Text>
+                    </TouchableOpacity>
+                  </View>
+                </KeyboardAvoidingView>
               </View>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => this.onFulfill()}
-              >
-                <Text style={styles.btnText}>Verifikasi</Text>
-              </TouchableOpacity>
-              <View style={styles.SignUpContainer}>
-                <TouchableOpacity
-                  style={styles.btnResend}
-                  onPress={() => this.requestOtp()}>
-                  <Text style={styles.textSignIn}>Kirim ulang kode verifikasi</Text>
-                </TouchableOpacity>
-              </View>
-            </KeyboardAvoidingView>
-          </View>
-        </LinearGradient>
-        </KeyboardAvoidingView>
+            </LinearGradient>
+          </KeyboardAvoidingView>
         </ScrollView>
-        {this.state.isSendAuth && <View style={{position: 'absolute', top: 0, left: 0, width: Metrics.screenWidth, height: Metrics.screenHeight, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)'}}>
-          <ActivityIndicator size="large" color={Colors.mooimom} />
+        {this.state.isSendAuth && <View style={{ position: 'absolute', top: 0, left: 0, width: Metrics.screenWidth, height: Metrics.screenHeight, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
+          <DotIndicator size={12} color={Colors.mooimom} />
         </View>}
       </View>
     )

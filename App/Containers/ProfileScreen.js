@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import { ScrollView, SafeAreaView, Text, View, Image, TouchableOpacity, Alert, PermissionsAndroid, Modal, TouchableWithoutFeedback, Platform } from 'react-native'
-import { Images, Metrics } from '../Themes'
+import { ScrollView, SafeAreaView, Text, View, Image, TouchableOpacity, Alert, PermissionsAndroid, Modal, TouchableWithoutFeedback, Platform, AsyncStorage } from 'react-native'
+import { Images, Metrics, Colors, Fonts } from '../Themes'
 import FastImage from 'react-native-fast-image'
-import {NavigationEvents} from 'react-navigation';
+import { NavigationEvents } from 'react-navigation';
 import { connect } from 'react-redux'
-import {convertToRupiah} from '../Lib/utils'
+import { convertToRupiah, convertToThousandOrHigher } from '../Lib/utils'
 import ImagePicker from 'react-native-image-crop-picker'
 import AuthActions from '../Redux/AuthRedux'
 import SendOtpActions from '../Redux/SendOtpRedux'
@@ -13,6 +13,9 @@ import LastNotificationTimeActions from '../Redux/LastNotificationTimeRedux'
 import ProfileActions from '../Redux/ProfileRedux'
 import BalanceActions from '../Redux/BalanceRedux'
 import EditProfileActions from '../Redux/EditProfileRedux'
+import GetMooimomPointsActions from '../Redux/GetMooimomPointsRedux'
+
+import { DotIndicator } from 'react-native-indicators'
 
 // Styles
 import styles from './Styles/ProfileScreenStyles'
@@ -20,30 +23,33 @@ import menuStyles from './Styles/MenuComponentStyles'
 
 class ProfileScreen extends Component {
   static navigationOptions = {
-      title: 'Akun',
-      tabBarIcon: ({ focused, tintColor }) => {
-          const iconName = (focused ? Images.account2 : Images.account)
-          return <Image source={iconName} style={menuStyles.menuImage}/>
-      },
+    title: 'Akun',
+    tabBarIcon: ({ focused, tintColor }) => {
+      const iconName = (focused ? Images.account2 : Images.account)
+      return <Image source={iconName} style={menuStyles.menuImage} />
+    },
   };
-  constructor (props) {
+  constructor(props) {
     super(props)
-    this.state ={
+    this.state = {
       profile: {},
       phone_number: '',
       balance: 0,
+      points: 0,
       modalUpImage: false,
+      fcm_token: ''
     }
     this.selectPhoto = this.selectPhoto.bind(this)
     this.selectGalery = this.selectGalery.bind(this)
   }
 
-  componentDidMount(){
+  async componentDidMount() {
+    this.setState({ fcm_token: await AsyncStorage.getItem('fcmToken') })
     this.reloadData()
   }
 
-  componentWillReceiveProps(newProps){
-    if(this.props.profile !== newProps.profile){
+  componentWillReceiveProps(newProps) {
+    if (this.props.profile !== newProps.profile) {
       if (
         newProps.profile.payload !== null &&
         newProps.profile.error === null &&
@@ -56,7 +62,7 @@ class ProfileScreen extends Component {
       }
     }
 
-    if(this.props.editprofile !== newProps.editprofile){
+    if (this.props.editprofile !== newProps.editprofile) {
       if (
         newProps.editprofile.payload !== null &&
         newProps.editprofile.error === null &&
@@ -66,7 +72,7 @@ class ProfileScreen extends Component {
       }
     }
 
-    if(this.props.balance !== newProps.balance){
+    if (this.props.balance !== newProps.balance) {
       if (
         newProps.balance.payload !== null &&
         newProps.balance.error === null &&
@@ -77,20 +83,40 @@ class ProfileScreen extends Component {
         })
       }
     }
+
+    if (this.props.mooimomPoints !== newProps.mooimomPoints) {
+      if (
+        newProps.mooimomPoints.payload !== null &&
+        newProps.mooimomPoints.error === null &&
+        !newProps.mooimomPoints.fetching
+      ) {
+        this.setState({
+          points: newProps.mooimomPoints.payload.how_many_points
+        })
+      }
+    }
   }
 
-  reloadData(){
-    let data ={
-      data_request:{
+  reloadData() {
+    let data = {
+      data_request: {
         user_id: this.props.auth.payload.user_id,
         unique_token: this.props.auth.payload.unique_token,
       }
     }
+    let data2 = {
+      data_request: {
+        user_id: this.props.auth.payload.user_id,
+        unique_token: this.props.auth.payload.unique_token,
+        fcm_token: this.state.fcm_token
+      }
+    }
     this.props.getProfileProcess(data)
     this.props.getBalanceProcess(data)
+    this.props.getMooimomPointsProcess(data2)
   }
 
-  async selectPhoto () {
+  async selectPhoto() {
     const alloweStorage = Platform.OS === 'ios' ? 'granted' : await PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
     )
@@ -140,7 +166,7 @@ class ProfileScreen extends Component {
     }
   }
 
-  async selectGalery () {
+  async selectGalery() {
     const alloweStorage = Platform.OS === 'ios' ? 'granted' : await PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
     )
@@ -187,12 +213,12 @@ class ProfileScreen extends Component {
     }
   }
 
-  actNavigate (screen , obj = {}) {
+  actNavigate(screen, obj = {}) {
     const { navigate } = this.props.navigation
     navigate(screen, obj)
   }
 
-  logout(){
+  logout() {
     const { dispatch } = this.props.navigation
     Alert.alert(
       'Logout',
@@ -213,108 +239,169 @@ class ProfileScreen extends Component {
     )
   }
 
-  render () {
+  render() {
     var imageprofile = Images.profile
-    if(this.state.profile.profile_picture_thumb_url)
-      imageprofile = {uri: this.state.profile.profile_picture_thumb_url}
+    var mooimomCash = Images.mooimomCash
+    var mooimomPoints = Images.mooimomPoints
+
+    if (this.state.profile.profile_picture_thumb_url)
+      imageprofile = { uri: this.state.profile.profile_picture_thumb_url }
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.containerScroll}>
           <View style={styles.headerWrapper}>
             <TouchableOpacity style={styles.searchButton} onPress={() => this.actNavigate('SearchScreen')}>
-              <Image source={Images.search} style={styles.imageSearch}/>
+              <Image source={Images.search} style={styles.imageSearch} />
               <Text style={styles.textSearch}>Cari Baju Hamil, Bra, Korset, dll</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.btnHeader} onPress={() => this.actNavigate('CartScreen')}>
-              <Image source={Images.shoppingCartBlack} style={styles.imgHeader}/>
+              <Image source={Images.shoppingCartBlack} style={styles.imgHeader} />
               {this.props.cart.data.length > 0 && <View style={styles.notifContainer}>
                 <Text style={styles.textNotif}>{this.props.cart.data.length}</Text>
               </View>}
             </TouchableOpacity>
           </View>
-          <View style={styles.wrapperSeparator}/>
+          <View style={styles.wrapperSeparator} />
           <View style={styles.contentContainer}>
             <ScrollView
-            showsVerticalScrollIndicator={false}
+              showsVerticalScrollIndicator={false}
             >
-            <View style={styles.topView}>
-              <View style={styles.topLeftView}>
-                <Text style={styles.textPhone}>{this.state.phone_number}</Text>
-                <TouchableOpacity style={styles.btnEditProfile} onPress={() => this.actNavigate('EditProfileScreen', {profile: this.state.profile})}>
-                  <Text style={styles.textEditProfile}>Edit Profile</Text>
-                </TouchableOpacity>
+              <View style={styles.topView}>
+                {
+                  this.props.profile.fetching ?
+                    <DotIndicator color={Colors.mooimom} size={8} />
+                    :
+                    <View style={styles.topLeftView}>
+                      <Text style={styles.textPhone}>{this.state.phone_number}</Text>
+                      <View style={{ marginVertical: 10 }}>
+                        <Text style={{ fontFamily: Fonts.type.gotham2, color: Colors.gray, fontSize: Metrics.fontSize3 }}>{this.state.profile.name}</Text>
+                        <Text style={{ fontFamily: Fonts.type.gotham2, color: Colors.gray, fontSize: Metrics.fontSize1 }}>Bergabung sejak : {this.state.profile.created_at}</Text>
+                      </View>
+                      <TouchableOpacity style={styles.btnEditProfile} onPress={() => this.actNavigate('EditProfileScreen', { profile: this.state.profile })}>
+                        <Text style={styles.textEditProfile}>Edit Profile</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity style={styles.btnEditProfile} onPress={() => this.actNavigate('OpenMapScreen', { profile: this.state.profile })}>
+                        <Text style={styles.textEditProfile}>Map</Text>
+                      </TouchableOpacity>
+                    </View>
+                }
+                <View style={styles.topRightView}>
+                  <TouchableOpacity onPress={() => this.setState({ modalUpImage: true })}>
+                    <FastImage source={imageprofile} style={styles.imgProfile} resizeMode={FastImage.resizeMode.contain} />
+                  </TouchableOpacity>
+                </View>
               </View>
-              <View style={styles.topRightView}>
-                <TouchableOpacity onPress={() => this.setState({ modalUpImage: true })}>
-                  <FastImage source={imageprofile} style={styles.imgProfile} resizeMode={FastImage.resizeMode.contain}/>
-                </TouchableOpacity>
+              <View style={styles.wrapperSeparator} />
+              <View style={styles.cardBallanceContainer} >
+                <View style={styles.containerBallanceTittle}>
+                  <Text style={styles.textBallanceCardTitle}>Saldo Anda Saat Ini</Text>
+                </View>
+                <View style={styles.wrapperBallanceArea}>
+                  <TouchableOpacity activeOpacity={0.5} onPress={() => this.actNavigate('PaymentScreen')} style={styles.centerizedWrapper}>
+                    <View style={styles.wrapperBallanceHeader}>
+                      <FastImage source={mooimomCash} style={styles.imgMooimomCash} resizeMode={FastImage.resizeMode.contain} />
+                      <View>
+                        <Text style={styles.textMooimomBallance}>Mooimom</Text>
+                        <Text style={styles.textMooimomBallance}>Cash</Text>
+                      </View>
+                    </View>
+                    <View style={styles.ballanceSizedVerticalMargin} />
+                    <Text style={styles.textBallanceNumber}>{convertToRupiah(this.state.balance)}</Text>
+                  </TouchableOpacity>
+
+                  <View style={styles.boundariesLine} />
+
+                  <TouchableOpacity activeOpacity={0.5} onPress={() => this.actNavigate('PointsHistoryScreen')} style={styles.centerizedWrapper}>
+                    <View style={styles.wrapperBallanceHeader}>
+                      <FastImage source={mooimomPoints} style={styles.imgMooimomPoints} resizeMode={FastImage.resizeMode.contain} />
+                      <View>
+                        <Text style={styles.textMooimomBallance}>Mooimom</Text>
+                        <Text style={styles.textMooimomBallance}>Points</Text>
+                      </View>
+                    </View>
+                    <View style={styles.ballanceSizedVerticalMargin} />
+                    <View style={styles.rowAlign}>
+                      <Text style={styles.textBallanceNumber}>{convertToThousandOrHigher(this.state.points)}</Text>
+                      <View style={styles.ballanceSizedHorizontalMargin} />
+                      <Text style={styles.textBallanceCurrency}>points</Text>
+                    </View>
+                  </TouchableOpacity>
+                </View>
               </View>
-            </View>
-            <View style={styles.wrapperSeparator}/>
-            <TouchableOpacity style={styles.saldoContainer} onPress={() => this.actNavigate('PaymentScreen')}>
-              <Text style={styles.textSaldo}>SALDO</Text>
-              <Text style={styles.textSaldoAmount}>{convertToRupiah(this.state.balance)}</Text>
-            </TouchableOpacity>
-            <View style={styles.wrapperSeparator}/>
-            <View style={styles.containerMenu}>
-              <View style={styles.menu}>
-                <TouchableOpacity style={styles.btnMenu} onPress={() => this.actNavigate('PaymentScreen')}>
-                  <View style={styles.leftContainerMenu}>
-                  <Image source={Images.card} style={styles.imgMenu}/>
-                  <Text style={styles.imgText}>Pembayaran Saya</Text>
-                  </View>
-                  <Image source={Images.rightArrowBlack} style={styles.imgMenu2}/>
-                </TouchableOpacity>
+
+              <View style={styles.wrapperSeparator} />
+              <View style={styles.containerMenu}>
+                <View style={styles.menu}>
+                  <TouchableOpacity style={styles.btnMenu} onPress={() => this.actNavigate('VoucherScreen')}>
+                    <View style={styles.leftContainerMenu}>
+                      <Image source={Images.discountVoucher} style={styles.imgMenu} />
+                      <Text style={styles.imgText}>Voucher</Text>
+                    </View>
+                    <Image source={Images.rightArrowBlack} style={styles.imgMenu2} />
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.menu}>
+                  <TouchableOpacity style={styles.btnMenu} onPress={() => this.actNavigate('PaymentScreen')}>
+                    <View style={styles.leftContainerMenu}>
+                      <Image source={Images.card} style={styles.imgMenu} />
+                      <Text style={styles.imgText}>Pembayaran Saya</Text>
+                    </View>
+                    <Image source={Images.rightArrowBlack} style={styles.imgMenu2} />
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.menu}>
+                  <TouchableOpacity style={styles.btnMenu} onPress={() => this.actNavigate('SharedProductScreen', { selectedMenuIdx: 1 })}>
+                    <View style={styles.leftContainerMenu}>
+                      <Image source={Images.share} style={styles.imgMenu} />
+                      <Text style={styles.imgText}>Produk Dibagikan</Text>
+                    </View>
+                    <Image source={Images.rightArrowBlack} style={styles.imgMenu2} />
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.menu}>
+                  <TouchableOpacity style={styles.btnMenu} onPress={() => this.actNavigate('AddressListScreen')}>
+                    <View style={styles.leftContainerMenu}>
+                      <Image source={Images.address} style={styles.imgMenu} />
+                      <Text style={styles.imgText}>Daftar Alamat</Text>
+                    </View>
+                    <Image source={Images.rightArrowBlack} style={styles.imgMenu2} />
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.menu}>
+                  <TouchableOpacity style={styles.btnMenu} onPress={() => this.actNavigate('AccountListScreen')}>
+                    <View style={styles.leftContainerMenu}>
+                      <Image source={Images.bank} style={styles.imgMenu} />
+                      <Text style={styles.imgText}>Daftar Rekening Bank</Text>
+                    </View>
+                    <Image source={Images.rightArrowBlack} style={styles.imgMenu2} />
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.menu}>
+                  <TouchableOpacity style={styles.btnMenu} onPress={() => this.actNavigate('ContactScreen')}>
+                    <View style={styles.leftContainerMenu}>
+                      <Image source={Images.contact} style={styles.imgMenu} />
+                      <Text style={styles.imgText}>Hubungi Kami</Text>
+                    </View>
+                    <Image source={Images.rightArrowBlack} style={styles.imgMenu2} />
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.menu}>
+                  <TouchableOpacity style={styles.btnMenu} onPress={() => this.logout()}>
+                    <View style={styles.leftContainerMenu}>
+                      <Image source={Images.logout} style={styles.imgMenu} />
+                      <Text style={styles.imgText}>Log out</Text>
+                    </View>
+                    <Image source={Images.rightArrowBlack} style={styles.imgMenu2} />
+                  </TouchableOpacity>
+                </View>
               </View>
-              <View style={styles.menu}>
-                <TouchableOpacity style={styles.btnMenu} onPress={() => this.actNavigate('SharedProductScreen', {selectedMenuIdx:1})}>
-                  <View style={styles.leftContainerMenu}>
-                  <Image source={Images.share} style={styles.imgMenu}/>
-                  <Text style={styles.imgText}>Produk Dibagikan</Text>
-                  </View>
-                  <Image source={Images.rightArrowBlack} style={styles.imgMenu2}/>
-                </TouchableOpacity>
+              <View style={{ marginVertical: 30 }}>
+                <Text style={{ fontFamily: Fonts.type.gotham2, fontSize: Metrics.fontSize1, color: Colors.mediumGray, alignSelf: 'center' }}>Version {Platform.OS === 'ios' ? '1.2.18' : '1.2.19'}</Text>
               </View>
-              <View style={styles.menu}>
-                <TouchableOpacity style={styles.btnMenu} onPress={() => this.actNavigate('AddressListScreen')}>
-                <View style={styles.leftContainerMenu}>
-                  <Image source={Images.address} style={styles.imgMenu}/>
-                  <Text style={styles.imgText}>Daftar Alamat</Text>
-                  </View>
-                  <Image source={Images.rightArrowBlack} style={styles.imgMenu2}/>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.menu}>
-                <TouchableOpacity style={styles.btnMenu} onPress={() => this.actNavigate('AccountListScreen')}>
-                <View style={styles.leftContainerMenu}>
-                  <Image source={Images.bank} style={styles.imgMenu}/>
-                  <Text style={styles.imgText}>Daftar Rekening Bank</Text>
-                  </View>
-                  <Image source={Images.rightArrowBlack} style={styles.imgMenu2}/>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.menu}>
-                <TouchableOpacity style={styles.btnMenu} onPress={() => this.actNavigate('ContactScreen')}>
-                <View style={styles.leftContainerMenu}>
-                  <Image source={Images.contact} style={styles.imgMenu}/>
-                  <Text style={styles.imgText}>Hubungi Kami</Text>
-                  </View>
-                  <Image source={Images.rightArrowBlack} style={styles.imgMenu2}/>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.menu}>
-                <TouchableOpacity style={styles.btnMenu} onPress={() => this.logout()}>
-                <View style={styles.leftContainerMenu}>
-                  <Image source={Images.logout} style={styles.imgMenu}/>
-                  <Text style={styles.imgText}>Log out</Text>
-                  </View>
-                  <Image source={Images.rightArrowBlack} style={styles.imgMenu2}/>
-                </TouchableOpacity>
-              </View>
-            </View>
+              <View style={{ marginVertical: 20 }} />
             </ScrollView>
             <Modal
-              animationType='slide'
+              animationType='fade'
               transparent
               visible={this.state.modalUpImage}
               onRequestClose={() => {
@@ -353,7 +440,7 @@ class ProfileScreen extends Component {
             </Modal>
           </View>
         </View>
-      </SafeAreaView>
+      </SafeAreaView >
     )
   }
 }
@@ -363,7 +450,8 @@ const mapStateToProps = state => {
     profile: state.profile,
     balance: state.balance,
     editprofile: state.editprofile,
-    cart: state.cart
+    cart: state.cart,
+    mooimomPoints: state.mooimomPoints
   }
 };
 
@@ -371,7 +459,7 @@ const mapDispatchToProps = dispatch => {
   return {
     logoutProcess: () => {
       dispatch(AuthActions.logout(null)),
-      dispatch(SendOtpActions.logout(null))
+        dispatch(SendOtpActions.logout(null))
       dispatch(CartActions.logout(null))
       dispatch(LastNotificationTimeActions.logout(null))
     },
@@ -380,6 +468,9 @@ const mapDispatchToProps = dispatch => {
     },
     getBalanceProcess: data => {
       dispatch(BalanceActions.getBalanceRequest(data))
+    },
+    getMooimomPointsProcess: data => {
+      dispatch(GetMooimomPointsActions.getMooimomPointsRequest(data))
     },
     updateProfilePictureProcess: data => {
       dispatch(EditProfileActions.editProfilePictureRequest(data))

@@ -1,33 +1,35 @@
 import React, { Component } from 'react'
-import { SafeAreaView, ScrollView, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, TextInput, FlatList, Alert, AppState, Clipboard, ActivityIndicator } from 'react-native'
+import { SafeAreaView, ScrollView, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, TextInput, FlatList, Alert, AppState, Clipboard } from 'react-native'
 import { Images, Metrics, Colors } from '../Themes'
 import ProductCardSingle from '../Components/ProductCardSingle'
 import GetSearchActions from '../Redux/GetSearchRedux'
 import EditWishlistActions from '../Redux/EditWishlistRedux'
 import SharedProductActions from '../Redux/SharedProductRedux'
 import { connect } from 'react-redux'
-import {convertToRupiah, shareDescripton} from '../Lib/utils'
+import { convertToRupiah, shareDescripton } from '../Lib/utils'
+
+import { DotIndicator } from 'react-native-indicators'
 
 // Styles
 import styles from './Styles/SearchScreenStyles'
 
 var isReloadPage = false
 class SearchScreen extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       appState: AppState.currentState,
-      search:'',
-      products:[],
-      willShareDescription:false,
+      search: '',
+      products: [],
+      willShareDescription: false,
       finishShareImage: false,
-      willShareDescriptionString:'',
+      willShareDescriptionString: '',
       currentPage: 1
     }
     this.shareWhatsapp = this.shareWhatsapp.bind(this)
   }
 
-  actNavigate (screen , obj = {}) {
+  actNavigate(screen, obj = {}) {
     const { navigate } = this.props.navigation
     navigate(screen, obj)
   }
@@ -40,8 +42,8 @@ class SearchScreen extends Component {
     AppState.removeEventListener('change', this._handleAppStateChange);
   }
 
-  componentWillReceiveProps(newProps){
-    if(this.props.getSearch !== newProps.getSearch){
+  componentWillReceiveProps(newProps) {
+    if (this.props.getSearch !== newProps.getSearch) {
       if (
         newProps.getSearch.payload !== null &&
         newProps.getSearch.error === null &&
@@ -50,11 +52,11 @@ class SearchScreen extends Component {
         this.setState({
           products: newProps.getSearch.payload.products,
         })
-      } else if(
+      } else if (
         newProps.getSearch.payload !== null &&
         newProps.getSearch.error === null &&
         !newProps.getSearch.fetching && isReloadPage
-      ){
+      ) {
         var arr = [...this.state.products]
         arr = arr.concat(newProps.getSearch.payload.products)
         this.setState({
@@ -71,7 +73,7 @@ class SearchScreen extends Component {
       this.state.appState.match(/inactive|background/) &&
       nextAppState === 'active'
     ) {
-      if(this.state.willShareDescription === true){
+      if (this.state.willShareDescription === true) {
         this.setState({
           finishShareImage: true
         })
@@ -83,28 +85,28 @@ class SearchScreen extends Component {
         }, 1000);
       }
     }
-    this.setState({appState: nextAppState});
+    this.setState({ appState: nextAppState });
   };
 
-  shareWhatsapp(desc){
-    if(this.state.willShareDescription === false){
+  shareWhatsapp(desc) {
+    if (this.state.willShareDescription === false) {
       this.setState({
         willShareDescriptionString: desc,
         willShareDescription: true,
-        finishShareImage : false
+        finishShareImage: false
       });
     } else {
       Clipboard.setString(desc);
     }
   }
 
-  processSearch(){
-    if(this.state.search.length >= 3){
+  processSearch() {
+    if (this.state.search.length >= 3) {
       this.setState({
         products: []
       })
-      let data ={
-        data_request:{
+      let data = {
+        data_request: {
           user_id: this.props.auth.payload.user_id,
           unique_token: this.props.auth.payload.unique_token,
           what_user_search: this.state.search
@@ -114,12 +116,12 @@ class SearchScreen extends Component {
     }
   }
 
-  onEndReached(){
+  onEndReached() {
     if (!isReloadPage) {
       if (this.state.currentPage + 1 <= this.props.getSearch.payload.how_many_pages) {
         isReloadPage = true
         let data = {
-          data_request:{
+          data_request: {
             user_id: this.props.auth.payload.user_id,
             unique_token: this.props.auth.payload.unique_token,
             what_user_search: this.state.search,
@@ -131,7 +133,7 @@ class SearchScreen extends Component {
     }
   }
 
-  _renderProduct ({item, index}) {
+  _renderProduct({ item, index }) {
     return (
       <TouchableWithoutFeedback
         onPress={() => this.actNavigate('ProductScreen', {
@@ -153,7 +155,7 @@ class SearchScreen extends Component {
     )
   }
 
-  render () {
+  render() {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.containerScroll}>
@@ -161,7 +163,7 @@ class SearchScreen extends Component {
             <TouchableOpacity style={styles.btnHeader} onPress={
               () => this.props.navigation.goBack()
             }>
-              <Image source={Images.back} style={styles.imgHeader}/>
+              <Image source={Images.back} style={styles.imgHeader} />
             </TouchableOpacity>
             <View style={styles.searchButton}>
               <TextInput
@@ -173,25 +175,25 @@ class SearchScreen extends Component {
               />
             </View>
             <TouchableOpacity style={styles.btnHeader} onPress={() => this.actNavigate('CartScreen')}>
-              <Image source={Images.shoppingCartBlack} style={styles.imgHeader}/>
+              <Image source={Images.shoppingCartBlack} style={styles.imgHeader} />
               {this.props.cart.data.length > 0 && <View style={styles.notifContainer}>
                 <Text style={styles.textNotif}>{this.props.cart.data.length}</Text>
               </View>}
             </TouchableOpacity>
           </View>
-          <View style={styles.wrapperSeparator}/>
+          <View style={styles.wrapperSeparator} />
           <View style={styles.contentContainer}>
             {this.props.getSearch.fetching && !isReloadPage && <View style={styles.containerLoading}>
-              <ActivityIndicator size="large" color={Colors.mooimom} />
+              <DotIndicator size={12} color={Colors.mooimom} />
             </View>}
-              <FlatList
-                showsVerticalScrollIndicator={false}
-                data={this.state.products}
-                renderItem={this._renderProduct.bind(this)}
-                keyExtractor={(item, index) => index.toString()}
-                onEndReached={this.onEndReached.bind(this)}
-                onEndReachedThreshold={5}
-              />
+            <FlatList
+              showsVerticalScrollIndicator={false}
+              data={this.state.products}
+              renderItem={this._renderProduct.bind(this)}
+              keyExtractor={(item, index) => index.toString()}
+              onEndReached={this.onEndReached.bind(this)}
+              onEndReachedThreshold={5}
+            />
           </View>
         </View>
         {this.state.willShareDescription && <View style={styles.modalShareView}>

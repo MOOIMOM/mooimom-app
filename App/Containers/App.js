@@ -5,8 +5,18 @@ import { Provider } from 'react-redux'
 import RootContainer from './RootContainer'
 import createStore from '../Redux'
 
+import RNAiqua from 'react-native-aiqua-sdk'
+
 // create our store
 const store = createStore()
+
+
+RNAiqua.configure({
+  appId: '886fd65fc66d1db30244',
+  isDev: false,
+  senderId: '436426610167',
+  appGroup: 'group.com.mooimom.id.ios.notification'// ios dev or prod - default `false` - optional
+})
 
 /**
  * Provides an entry point into our application.  Both index.ios.js and index.android.js
@@ -18,7 +28,7 @@ const store = createStore()
  * We separate like this to play nice with React Native's hot reloading.
  */
 class App extends Component {
-  render () {
+  render() {
     return (
       <Provider store={store}>
         <RootContainer />

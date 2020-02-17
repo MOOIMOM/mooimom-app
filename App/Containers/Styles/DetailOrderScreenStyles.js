@@ -1,286 +1,299 @@
 import { StyleSheet, Platform } from 'react-native'
 import { Metrics, ApplicationStyles, Colors, Fonts } from '../../Themes/'
-import {isIphoneXorAbove} from '../../Lib/utils'
+import { isIphoneXorAbove } from '../../Lib/utils'
 
 export default StyleSheet.create({
   container: {
-    flex:6,
+    flex: 6,
     alignItems: 'flex-start'
   },
-  wrapperSeparator:{
+  wrapperSeparator: {
     marginVertical: 5,
   },
-  headerWrapper:{
+  headerWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
     marginHorizontal: 10,
     marginTop: 10,
     justifyContent: 'space-between'
   },
-  headerButtonLeft:{
+  headerButtonLeft: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center'
   },
-  buttonHeader:{
+  buttonHeader: {
     height: 20 * Metrics.screenWidth / 320,
     width: 20 * Metrics.screenWidth / 320,
     resizeMode: 'contain'
   },
-  cartContainer:{
+  cartContainer: {
     width: Metrics.screenWidth - 40,
-    height: Metrics.screenHeight - 100,
+    // height: Metrics.screenHeight - 100,
+    flex: 1,
     marginHorizontal: 20,
     marginTop: 5,
-    paddingBottom: 50
+
   },
-  productSubtitle:{
+  productSubtitle: {
     fontSize: Metrics.fontSize3,
     fontFamily: Fonts.type.gotham4,
     color: Colors.black
   },
-  productSubtitle2:{
+  productSubtitle2: {
     fontSize: Metrics.fontSize2,
     fontFamily: Fonts.type.gotham4,
     color: Colors.gray
   },
-  deliveryAddressContainer:{
-    borderWidth: 1,
+  deliveryAddressContainer: {
+    borderWidth: 0.5,
     borderRadius: 10,
     paddingVertical: 20,
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
+    borderColor: Colors.black,
   },
-  addressName:{
+  addressName: {
     fontSize: Metrics.fontSize2,
     fontFamily: Fonts.type.gotham4,
     color: Colors.black
   },
-  address:{
+  address: {
     fontSize: Metrics.fontSize2,
     fontFamily: Fonts.type.gotham2,
   },
-  chooseAddressBtn:{
+  chooseAddressBtn: {
     backgroundColor: Colors.lightGray,
     height: 35,
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center'
   },
-  chooseAddressText:{
+  chooseAddressText: {
     fontSize: Metrics.fontSize2,
     fontFamily: Fonts.type.gotham4,
   },
-  productContainer:{
+  productContainer: {
     width: (Metrics.screenWidth - 40),
     height: Metrics.screenHeight / 4,
-    flex:1,
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
     marginVertical: 15,
-    paddingTop: 15,
-    borderTopWidth: 1
+    paddingHorizontal: 20,
+    borderTopWidth: 0.5,
+    borderColor: Colors.black
   },
-  productImageWrapper:{
-    flex:1,
+  productImageWrapper: {
+    flex: 1,
+    marginRight: 20,
   },
-  productImage:{
+  productImage: {
     width: (Metrics.screenWidth - 40) / 3 - 5,
     height: Metrics.screenHeight / 4,
   },
-  productDescriptionWrapper:{
+  productDescriptionWrapper: {
     width: (Metrics.screenWidth - 40) / 2,
     height: Metrics.screenHeight / 4,
+    justifyContent: 'space-around',
+    marginLeft: 10,
     flex: 2
   },
-  itemText:{
+  itemText: {
     fontSize: Metrics.fontSize1,
     color: Colors.black,
     fontFamily: Fonts.type.gotham4,
   },
-  itemText2:{
+  itemText2: {
     fontSize: Metrics.fontSize2,
     color: Colors.black,
     fontFamily: Fonts.type.gotham4,
   },
-  nameWrapper:{
-    flex:1,
+  nameWrapper: {
   },
-  productName:{
+  productName: {
     fontSize: Metrics.fontSize1,
     color: Colors.gray,
     fontFamily: Fonts.type.gotham2,
   },
-  propertyWrapper:{
-    flex:2,
+  propertyWrapper: {
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    paddingVertical:21
+    paddingVertical: 10
   },
-  sizeWrapper:{
+  sizeWrapper: {
     width: (Metrics.screenWidth - 40) / 2,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center'
   },
-  colorWrapper:{
+  colorWrapper: {
     width: (Metrics.screenWidth - 40) / 2,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center'
   },
-  qtyWrapper:{
+  qtyWrapper: {
     width: (Metrics.screenWidth - 40) / 2,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginBottom: 10,
   },
-  priceWrapper:{
-    flex:1,
+  priceWrapper: {
+    flex: 1,
     alignItems: 'flex-start',
     justifyContent: 'flex-end'
   },
-  chooseDeliveryWrapper:{
+  chooseDeliveryWrapper: {
     marginTop: 15,
     borderTopWidth: 1,
-    paddingTop:15
+    paddingTop: 15
   },
-  chooseDeliveryBtn:{
+  chooseDeliveryBtn: {
     backgroundColor: Colors.mooimom,
     height: 35,
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center'
   },
-  chooseDeliveryText:{
+  chooseDeliveryText: {
     fontSize: Metrics.fontSize2,
     fontFamily: Fonts.type.gotham4,
     color: Colors.white,
   },
-  menuWrapper:{
-    position:'absolute',
+  menuWrapper: {
     bottom: isIphoneXorAbove() ? 20 : 0,
     left: 0,
-    height: 60 * Metrics.screenWidth / 320,
     width: Metrics.screenWidth,
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
     flex: 1
   },
-  buyBtn:{
-    width: Metrics.screenWidth / 2,
+  buyBtn: {
     backgroundColor: Colors.mooimom,
+    borderRadius: 5,
     justifyContent: 'center',
-    alignItems: 'center'
-  },
-  buyText:{
-    color:Colors.white,
-    fontFamily: Fonts.type.gotham4,
-    fontSize: Metrics.fontSize3,
-  },
-  subtotalWrapper:{
-    borderWidth: 1,
-    paddingLeft: 20,
-    paddingVertical: 10,
-    borderColor: Colors.black,
-    backgroundColor: Colors.white,
-    width: Metrics.screenWidth / 2,
-    justifyContent: 'center',
-    alignItems: 'flex-start'
-  },
-  subtotalWrapper2:{
-    borderWidth: 1,
-    paddingVertical: 10,
-    width: Metrics.screenWidth,
-    backgroundColor: Colors.lightGray,
-    justifyContent: 'space-around',
     alignItems: 'center',
-    flexDirection: 'row'
+    width: Metrics.screenWidth - 40,
+    paddingVertical: isIphoneXorAbove() ? 10 * Metrics.screenWidth / 320 : 5 * Metrics.screenWidth / 320
   },
-  subtotalText:{
-    color:Colors.gray,
+  buyText: {
+    color: Colors.white,
+    fontFamily: Fonts.type.gotham4,
+    fontSize: isIphoneXorAbove() ? Metrics.fontSize3 : Metrics.fontSize1,
+  },
+  subtotalWrapper: {
+    borderTopWidth: 0.5,
+    borderColor: Colors.gray,
+    paddingVertical: isIphoneXorAbove() ? 20 * Metrics.screenWidth / 320 : 10,
+    width: Metrics.screenWidth - 40,
+    alignItems: 'center',
+    flexDirection: 'column'
+  },
+  subtotalWrapper2: {
+    paddingVertical: isIphoneXorAbove() ? 20 : 10,
+    width: Metrics.screenWidth - 40,
+    alignItems: 'center',
+    flexDirection: 'column'
+  },
+  subtotalText: {
+    color: Colors.gray,
     fontFamily: Fonts.type.gotham4,
     fontSize: Metrics.fontSize2,
     marginVertical: Platform.OS === 'ios' ? 0 : -3,
   },
-  priceText:{
-    color:Colors.black,
+  priceText: {
+    color: Colors.black,
     fontFamily: Fonts.type.gotham4,
-    fontSize: Metrics.fontSize3,
-    marginVertical: Platform.OS === 'ios' ? 0 :-3,
+    fontSize: Metrics.fontSize4,
+    marginVertical: Platform.OS === 'ios' ? 0 : -3,
   },
-  commissionText:{
-    color:Colors.mooimom,
+  commissionText: {
+    color: Colors.mooimom,
     fontFamily: Fonts.type.gotham4,
     fontSize: Metrics.fontSize1,
-    marginVertical: Platform.OS === 'ios' ? 0 :-3,
+    marginVertical: Platform.OS === 'ios' ? 0 : -3,
   },
-  menuTextTopWrapper:{
+  menuTextTopWrapper: {
+    width: Metrics.screenWidth - 40,
     flexDirection: 'column',
     justifyContent: 'space-around',
     alignItems: 'center'
   },
-  commissionText2:{
-    color:Colors.blueMooimom,
-    fontFamily: Fonts.type.gotham4,
-    fontSize: Metrics.fontSize3,
+  commissionText2: {
+    color: Colors.blueMooimom,
+    fontFamily: Fonts.type.gotham3,
+    fontSize: Metrics.fontSize1,
   },
-  selectedDeliveryWrapper:{
-    borderWidth: 1,
+  selectedDeliveryWrapper: {
+    borderColor: Colors.black,
+    borderWidth: 0.5,
     borderRadius: 10,
     justifyContent: 'space-between',
     paddingHorizontal: 20,
-    paddingVertical: 5,
+    paddingVertical: 10,
     marginVertical: 10,
     flex: 1
   },
-  selectedDeliveryTextWrapper:{
+  selectedDeliveryTextWrapper: {
     justifyContent: 'space-between',
     alignItems: 'center',
     flexDirection: 'row',
     flex: 1
   },
-  deliveryText:{
-    color:Colors.black,
+  deliveryText: {
+    color: Colors.black,
     fontFamily: Fonts.type.gotham2,
     fontSize: Metrics.fontSize2,
   },
-  deliveryText2:{
-    color:Colors.black,
+  decreasedMooimomPoints: {
+    color: Colors.fire,
+    fontFamily: Fonts.type.gotham2,
+    fontSize: Metrics.fontSize2,
+  },
+  deliveryText2: {
+    color: Colors.black,
     fontFamily: Fonts.type.gotham4,
-    fontSize: Metrics.fontSize3,
+    fontSize: Metrics.fontSize2,
     textAlign: 'center'
   },
-  deliveryText3:{
-    color:Colors.black,
+  deliveryText3: {
+    color: Colors.black,
     fontFamily: Fonts.type.gotham2,
     fontSize: Metrics.fontSize2,
     textAlign: 'center'
   },
-  paymentGuideContainer:{
+  paymentGuideContainer: {
     width: Metrics.screenWidth,
     height: Metrics.screenHeight,
     backgroundColor: Colors.white,
     paddingBottom: 25
   },
-  priceText2:{
-    color:Colors.mooimom,
+  priceText2: {
+    color: Colors.mooimom,
     fontFamily: Fonts.type.gotham2,
     fontSize: Metrics.fontSize5,
     textAlign: 'center'
   },
-  btnOrderAgain:{
+  btnOrderAgain: {
     backgroundColor: Colors.fire,
     borderRadius: 5,
     justifyContent: 'center',
     alignItems: 'center',
-    width: Metrics.screenWidth / 4,
-    paddingVertical: 5 * Metrics.screenWidth / 320
+    width: Metrics.screenWidth - 40,
+    paddingVertical: isIphoneXorAbove() ? 10 * Metrics.screenWidth / 320 : 5 * Metrics.screenWidth / 320
   },
-  textOrderAgain:{
-    color:Colors.white,
+  textOrderAgain: {
+    color: Colors.white,
     fontFamily: Fonts.type.gotham4,
-    fontSize: Metrics.fontSize1,
-  }
+    fontSize: isIphoneXorAbove() ? Metrics.fontSize3 : Metrics.fontSize1,
+  },
+  sizedVerticalMargin: {
+    marginVertical: 10
+  },
+  imgMooimomPoints: {
+    width: 18 * Metrics.screenWidth / 320,
+    height: 18 * Metrics.screenWidth / 320,
+    marginRight: 5 * Metrics.screenWidth / 320
+  },
 })

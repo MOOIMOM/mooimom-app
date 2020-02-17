@@ -1,62 +1,70 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Platform } from 'react-native'
 import { Fonts, Colors, Metrics } from '../../Themes/'
 
 export default StyleSheet.create({
   item: {
     width: Metrics.screenWidth / 2 - 20,
     height: 320 * Metrics.screenWidth / 320,
-    flex:1,
+    flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
     flexDirection: 'column',
     paddingHorizontal: 15,
     marginBottom: 20,
   },
-  wishlist:{
+  wishlist: {
     position: 'absolute',
     right: 15,
     top: 0,
   },
-  wishlistImage:{
+  wishlistImage: {
     width: 15 * Metrics.screenWidth / 320,
     height: 15 * Metrics.screenWidth / 320,
     resizeMode: 'contain'
   },
-  image:{
+  image: {
     width: Metrics.screenWidth / 2 - 30,
     height: 200 * Metrics.screenWidth / 320,
-    marginBottom:5
+    marginBottom: 5
   },
-  name:{
+  name: {
     flexWrap: 'wrap',
     fontSize: Metrics.fontSize1,
     lineHeight: Metrics.fontSize2,
     fontFamily: Fonts.type.gotham2,
   },
-  priceGroup:{
-    flex:1,
+  productNameContainer: {
+    flex: 2,
+    width: Metrics.screenWidth / 2,
+    paddingHorizontal: 20,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    paddingVertical: 5,
+  },
+  priceGroup: {
+    flex: 1,
     width: Metrics.screenWidth / 2,
     paddingHorizontal: 20,
     justifyContent: 'flex-end',
     alignItems: 'flex-start',
     paddingVertical: 5,
   },
-  price:{
-    color:Colors.black,
+  price: {
+    color: Colors.black,
     fontSize: Metrics.fontSize2,
     fontFamily: Fonts.type.gotham4,
     textAlign: 'left',
   },
-  priceDiscount:{
-    color:Colors.fire,
+  priceDiscount: {
+    color: Colors.fire,
     fontSize: Metrics.fontSize1,
-    textDecorationLine:'line-through',
+    textDecorationLine: 'line-through',
     fontFamily: Fonts.type.gotham2,
     textAlign: 'left',
   },
-  extra:{
+  extra: {
   },
-  btn:{
+  btnShare: {
     backgroundColor: Colors.mooimom,
     height: 30 * Metrics.screenWidth / 320,
     width: Metrics.screenWidth / 3,
@@ -64,11 +72,12 @@ export default StyleSheet.create({
     alignItems: 'center',
     borderRadius: 20
   },
-  textBtn:{
+  textBtn: {
     color: Colors.white,
     fontFamily: Fonts.type.gotham4,
+    marginTop: Platform.OS === 'ios' ? 4 : 0,
   },
-  modalView:{
+  modalView: {
     width: Metrics.screenWidth / 2 - 20,
     height: 20 * Metrics.screenWidth / 320,
     backgroundColor: Colors.modal,
@@ -79,12 +88,12 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  modalText:{
+  modalText: {
     fontSize: Metrics.fontSize1,
     color: Colors.white,
     fontFamily: Fonts.type.gotham2,
   },
-  productEmptyContainer:{
+  productEmptyContainer: {
     position: 'absolute',
     top: 150 * Metrics.screenWidth / 320,
     width: Metrics.screenWidth / 2 - 30,
@@ -94,22 +103,22 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center'
   },
-  textSoldContainer:{
+  textSoldContainer: {
     marginLeft: 5,
     justifyContent: 'center',
     alignItems: 'flex-start',
   },
-  imageSad:{
+  imageSad: {
     width: 25,
     height: 25,
     resizeMode: 'contain',
   },
-  textSold1:{
+  textSold1: {
     fontSize: Metrics.fontSize1,
     color: Colors.white,
     fontFamily: Fonts.type.gotham2,
   },
-  textSold2:{
+  textSold2: {
     fontSize: Metrics.fontSize0,
     color: Colors.white,
     fontFamily: Fonts.type.gotham2,

@@ -3,16 +3,16 @@ import { Metrics, ApplicationStyles, Colors, Fonts } from '../../Themes/'
 
 export default StyleSheet.create({
   container: {
-    flex:1,
+    flex: 1,
   },
-  containerScroll:{
+  containerScroll: {
     paddingTop: 0,
-    height: Metrics.screenHeight - 160
+    flex: 1
   },
-  wrapperSeparator:{
+  wrapperSeparator: {
     marginTop: 10,
   },
-  headerWrapper:{
+  headerWrapper: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
@@ -21,7 +21,7 @@ export default StyleSheet.create({
     marginTop: 10,
     height: 40
   },
-  searchButton:{
+  searchButton: {
     width: Metrics.screenWidth - 100,
     height: 40,
     borderRadius: 25,
@@ -29,46 +29,46 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  imageSearch:{
-    height:20,
-    width:20,
+  imageSearch: {
+    height: 20,
+    width: 20,
     marginHorizontal: 10,
     resizeMode: 'contain'
   },
-  textSearch:{
-    color:Colors.gray,
+  textSearch: {
+    color: Colors.gray,
     fontFamily: Fonts.type.gotham5,
-    fontSize:Metrics.fontSize1
+    fontSize: Metrics.fontSize1
   },
-  btnHeader:{
+  btnHeader: {
     height: 20 * Metrics.screenWidth / 320,
     width: 20 * Metrics.screenWidth / 320,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  imgHeader:{
+  imgHeader: {
     height: 20 * Metrics.screenWidth / 320,
     width: 20 * Metrics.screenWidth / 320,
     resizeMode: 'contain'
   },
-  contentContainer:{
-    flexDirection:'row',
-    width: Metrics.screenWidth,
+  contentContainer: {
+    flexDirection: 'row',
+    width: Metrics.screenWidth
   },
-  topContainer:{
+  topContainer: {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'flex-start',
     width: Metrics.screenWidth,
     paddingVertical: 10
   },
-  textTarget:{
-    color:Colors.white,
+  textTarget: {
+    color: Colors.white,
     fontFamily: Fonts.type.gotham4,
     fontSize: Metrics.fontSize2,
     textAlign: 'center'
   },
-  textTargetAmountContainer:{
+  textTargetAmountContainer: {
     paddingVertical: 5,
     marginVertical: 5,
     width: (Metrics.screenWidth - 20) / 2,
@@ -78,41 +78,41 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  textTargetAmount:{
-    color:Colors.white,
+  textTargetAmount: {
+    color: Colors.white,
     fontFamily: Fonts.type.gotham4,
     fontSize: Metrics.fontSize4,
     textAlign: 'center',
   },
-  textTargetMore:{
-    color:Colors.white,
+  textTargetMore: {
+    color: Colors.white,
     fontFamily: Fonts.type.gotham4,
     fontSize: Metrics.fontSize2,
     textAlign: 'center',
   },
-  iconRight:{
-    width: 15* Metrics.screenWidth / 320,
-    height: 15* Metrics.screenWidth / 320,
+  iconRight: {
+    width: 15 * Metrics.screenWidth / 320,
+    height: 15 * Metrics.screenWidth / 320,
     resizeMode: 'contain',
     position: 'absolute',
     right: 0,
-    top:'38%'
+    top: '38%'
   },
-  bottomContainer:{
+  bottomContainer: {
     width: Metrics.screenWidth - 40,
     marginLeft: 20
   },
-  textMenuStatus:{
-    color:Colors.black,
+  textMenuStatus: {
+    color: Colors.black,
     fontFamily: Fonts.type.gotham3,
     fontSize: Metrics.fontSize3,
     fontWeight: 'bold'
   },
-  menuStatus:{
-    marginTop:10,
+  menuStatus: {
+    marginTop: 10,
     flexDirection: 'row'
   },
-  menuBtn:{
+  menuBtn: {
     marginRight: 10,
     paddingVertical: 5,
     paddingHorizontal: 20,
@@ -120,12 +120,12 @@ export default StyleSheet.create({
     borderColor: Colors.mooimom,
     borderRadius: 5
   },
-  menuText:{
-    color:Colors.black,
+  menuText: {
+    color: Colors.black,
     fontFamily: Fonts.type.gotham4,
     fontSize: Metrics.fontSize2,
   },
-  menuBtn2:{
+  menuBtn2: {
     marginRight: 10,
     paddingVertical: 5,
     paddingHorizontal: 20,
@@ -134,21 +134,21 @@ export default StyleSheet.create({
     backgroundColor: Colors.mooimom,
     borderRadius: 5
   },
-  menuText2:{
-    color:Colors.white,
+  menuText2: {
+    color: Colors.white,
     fontFamily: Fonts.type.gotham4,
     fontSize: Metrics.fontSize2,
   },
-  listOrders:{
-
+  listOrders: {
+    marginTop: 10
   },
-  orderContainer:{
+  orderContainer: {
     borderColor: Colors.gray,
     borderRadius: 10,
     borderWidth: 1,
     marginBottom: 10
   },
-  orderContainerTop:{
+  orderContainerTop: {
     backgroundColor: Colors.mooimom,
     justifyContent: 'center',
     alignItems: 'center',
@@ -157,82 +157,84 @@ export default StyleSheet.create({
     borderTopRightRadius: 10,
     paddingVertical: 5
   },
-  orderStatusText:{
-    color:Colors.white,
+  orderStatusText: {
+    color: Colors.white,
     fontFamily: Fonts.type.gotham4,
     fontSize: Metrics.fontSize3,
     paddingVertical: 5
   },
-  orderContainerMid:{
+  orderContainerMid: {
     paddingHorizontal: 20,
     borderBottomWidth: 0.5,
     borderBottomColor: Colors.gray,
     paddingVertical: 5
   },
-  orderDateText:{
-    color:Colors.gray,
+  orderDateText: {
+    color: Colors.gray,
     fontFamily: Fonts.type.gotham2,
     fontSize: Metrics.fontSize2,
   },
-  orderIDText:{
-    color:Colors.black,
+  orderIDText: {
+    color: Colors.black,
     fontFamily: Fonts.type.gotham2,
     fontSize: Metrics.fontSize2,
   },
-  orderAmount:{
-    color:Colors.mooimom,
+  orderAmount: {
+    color: Colors.mooimom,
     fontFamily: Fonts.type.gotham4,
     fontSize: Metrics.fontSize3,
-    textAlign: 'center'
+    textAlign: 'center',
+    marginTop: Platform.OS === 'ios' ? 7 : 0
   },
-  orderContainerTotal:{
+  orderContainerTotal: {
     width: Metrics.screenWidth - 40,
     paddingHorizontal: 20,
     borderColor: Colors.gray,
-    marginTop:10,
+    marginTop: 10,
     paddingVertical: 10,
     borderTopWidth: 0.5,
+    alignItems: 'center',
     justifyContent: 'space-between',
     flexDirection: 'row'
   },
-  orderContainerBottom:{
+  orderContainerBottom: {
     marginHorizontal: 20,
-    paddingTop:5
+    paddingTop: 5
   },
-  orderContainerProductWrapper:{
+  orderContainerProductWrapper: {
     flexDirection: 'row',
     paddingVertical: 5
   },
-  orderContainerLeft:{
-    flex:1,
+  orderContainerLeft: {
+    flex: 1,
     height: Metrics.screenHeight / 6,
   },
-  productImage:{
-    flex:1,
+  productImage: {
+    flex: 1,
     marginBottom: 5
   },
-  orderContainerRight:{
-    flex:2,
+  orderContainerRight: {
+    flex: 2,
     justifyContent: 'space-between',
     marginLeft: 10
   },
-  productName:{
-    color:Colors.black,
+  productName: {
+    color: Colors.black,
     fontFamily: Fonts.type.gotham2,
     fontSize: Metrics.fontSize1,
     lineHeight: Metrics.fontSize2,
   },
-  productPrice:{
-    color:Colors.mooimom,
+  productPrice: {
+    color: Colors.mooimom,
     fontFamily: Fonts.type.gotham4,
     fontSize: Metrics.fontSize3,
   },
-  containerLoading:{
+  containerLoading: {
     marginTop: 100,
     justifyContent: 'center',
     alignItems: 'center'
   },
-  notifContainer:{
+  notifContainer: {
     width: 16 * Metrics.screenWidth / 320,
     height: 16 * Metrics.screenWidth / 320,
     position: 'absolute',
@@ -245,21 +247,26 @@ export default StyleSheet.create({
     flex: 1,
     flexWrap: 'nowrap'
   },
-  textNotif:{
+  textNotif: {
     fontSize: Metrics.fontSize1,
     fontFamily: Fonts.type.gotham2,
     color: Colors.white,
   },
-  orderAgainBtn:{
-    backgroundColor: Colors.fire,
+  orderAgainBtn: {
+    backgroundColor: '#43aea0',
     borderRadius: 5,
     width: Metrics.screenWidth / 4,
+    height: 25 * Metrics.screenWidth / 320,
+    paddingTop: Platform.OS === 'ios' ? 4 : 0,
     justifyContent: 'center',
     alignItems: 'center'
   },
-  orderAgainText:{
+  orderAgainText: {
     fontSize: Metrics.fontSize2,
     fontFamily: Fonts.type.gotham4,
     color: Colors.white,
+  },
+  sizedVerticalMargin: {
+    marginBottom: 50 * Metrics.screenHeight / 320
   }
 })

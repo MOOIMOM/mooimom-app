@@ -14,27 +14,27 @@ import { call, put } from 'redux-saga/effects'
 import GetAllOrderActions from '../Redux/GetAllOrderRedux'
 // import { RegisterSelectors } from '../Redux/RegisterRedux'
 
-export function * postGetAllOrders(api, action) {
+export function* postGetAllOrders(api, action) {
   const { data } = action
   // get current data from Store
   // const currentData = yield select(RegisterSelectors.getData)
   // make the call to the api
   const response = yield call(api.postGetAllOrders, data)
-    // success?
-    if (response.data.success === 1) {
-      console.tron.log(response)
-      // You might need to change the response here - do this with a 'transform',
-      // located in ../Transforms/. Otherwise, just pass the data back from the api.
-      yield put(GetAllOrderActions.getAllOrderSuccess(response.data))
-    } else if (response.problem === 'TIMEOUT_ERROR') {
-      var err = {
-        error: {
-          error_code: '0',
-          error_message: 'Can not connect server now'
-        }
+  // success?
+  if (response.data.success === 1) {
+    console.log(response.data)
+    // You might need to change the response here - do this with a 'transform',
+    // located in ../Transforms/. Otherwise, just pass the data back from the api.
+    yield put(GetAllOrderActions.getAllOrderSuccess(response.data))
+  } else if (response.problem === 'TIMEOUT_ERROR') {
+    var err = {
+      error: {
+        error_code: '0',
+        error_message: 'Can not connect server now'
       }
-      yield put(GetAllOrderActions.getAllOrderFailure(err))
-    } else {
-      yield put(GetAllOrderActions.getAllOrderFailure(response.data))
     }
+    yield put(GetAllOrderActions.getAllOrderFailure(err))
+  } else {
+    yield put(GetAllOrderActions.getAllOrderFailure(response.data))
+  }
 }

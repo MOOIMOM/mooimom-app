@@ -27,16 +27,25 @@ import NewAccountScreen from '../Containers/NewAccountScreen'
 import UpdateAccountScreen from '../Containers/UpdateAccountScreen'
 import PaymentScreen from '../Containers/PaymentScreen'
 import NewPaymentRequestScreen from '../Containers/NewPaymentRequestScreen'
+import VoucherScreen from '../Containers/VoucherScreen'
+import VoucherDetailScreen from '../Containers/VoucherDetailScreen'
+import EventRegistrationScreen from '../Containers/EventRegistrationScreen'
+import PointsHistoryScreen from '../Containers/PointsHistoryScreen'
+import ProfileCompletionScreen from '../Containers/ProfileCompletionScreen'
+import OpenMapScreen from '../Containers/OpenMapScreen'
+import BeOurMerchantScreen from '../Containers/BeOurMerchantScreen'
+
+
 import { Images, Colors, Fonts, Metrics } from '../Themes'
 
 import styles from './Styles/NavigationStyles'
 
 const MainNav = createBottomTabNavigator({
-  Home: { screen: HomeScreen},
-  Learn: { screen: LearnScreen},
-  Category: { screen: CategoryScreen},
-  Order: { screen: OrderScreen},
-  Akun: { screen: ProfileScreen},
+  Home: { screen: HomeScreen },
+  Learn: { screen: LearnScreen },
+  Category: { screen: CategoryScreen },
+  Order: { screen: OrderScreen },
+  Akun: { screen: ProfileScreen },
 }, {
   // Default config for all screens
   // Default config for all screens
@@ -68,7 +77,7 @@ const AuthStack = createStackNavigator({
 // Manifest of possible screens
 const AppStack = createStackNavigator({
   MainScreen: {
-     screen: MainNav
+    screen: MainNav
   },
   ProductScreen: { screen: ProductScreen },
   CartScreen: { screen: CartScreen },
@@ -88,6 +97,14 @@ const AppStack = createStackNavigator({
   UpdateAccountScreen: { screen: UpdateAccountScreen },
   PaymentScreen: { screen: PaymentScreen },
   NewPaymentRequestScreen: { screen: NewPaymentRequestScreen },
+  VoucherScreen: { screen: VoucherScreen },
+  VoucherDetailScreen: { screen: VoucherDetailScreen },
+  EventRegistrationScreen: { screen: EventRegistrationScreen },
+  PointsHistoryScreen: { screen: PointsHistoryScreen },
+  ProfileCompletionScreen: { screen: ProfileCompletionScreen },
+  OpenMapScreen: { screen: OpenMapScreen },
+  BeOurMerchantScreen: { screen: BeOurMerchantScreen }
+
 }, {
   // Default config for all screens
   headerMode: 'none',

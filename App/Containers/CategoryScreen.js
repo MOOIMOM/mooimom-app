@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { ScrollView, SafeAreaView, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, FlatList, SectionList, BackHandler, ActivityIndicator, AppState, Clipboard } from 'react-native'
-import { Images, Metrics,Colors } from '../Themes'
+import { ScrollView, SafeAreaView, Text, View, Image, TouchableOpacity, TouchableWithoutFeedback, FlatList, SectionList, BackHandler, AppState, Clipboard } from 'react-native'
+import { Images, Metrics, Colors } from '../Themes'
 import FastImage from 'react-native-fast-image'
 import ProductCardSingle from '../Components/ProductCardSingle'
 import CategoryActions from '../Redux/CategoryRedux'
@@ -8,7 +8,11 @@ import SharedProductActions from '../Redux/SharedProductRedux'
 import EditWishlistActions from '../Redux/EditWishlistRedux'
 import GetProductCategoryActions from '../Redux/GetProductCategoryRedux'
 import { connect } from 'react-redux'
-import {shareDescripton} from '../Lib/utils'
+import { shareDescripton } from '../Lib/utils'
+
+import RNAiqua from 'react-native-aiqua-sdk'
+
+import { DotIndicator } from 'react-native-indicators'
 
 // Styles
 import styles from './Styles/CategoryScreenStyles'
@@ -16,12 +20,12 @@ import menuStyles from './Styles/MenuComponentStyles'
 var isReloadPage = false
 class CategoryScreen extends Component {
   static navigationOptions = {
-      tabBarIcon: ({ focused, tintColor }) => {
-          const iconName = (focused ? Images.category2 : Images.category)
-          return <Image source={iconName} style={menuStyles.menuImage}/>
-      },
+    tabBarIcon: ({ focused, tintColor }) => {
+      const iconName = (focused ? Images.category2 : Images.category)
+      return <Image source={iconName} style={menuStyles.menuImage} />
+    },
   };
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       appState: AppState.currentState,
@@ -31,8 +35,8 @@ class CategoryScreen extends Component {
       selectedSubCategoriesId: 0,
       selectedSubCategoriesIdx: 0,
       isSelectSubCategory: false,
-      arrTopCategory:[],
-      willShareDescription:false,
+      arrTopCategory: [],
+      willShareDescription: false,
       finishShareImage: false,
       currentPage: 1,
       products: []
@@ -51,7 +55,7 @@ class CategoryScreen extends Component {
   componentDidMount() {
     AppState.addEventListener('change', this._handleAppStateChange);
     let data = {
-      data_request:{
+      data_request: {
         user_id: this.props.auth.payload.user_id,
         unique_token: this.props.auth.payload.unique_token,
         willShareDescriptionString: ''
@@ -60,21 +64,21 @@ class CategoryScreen extends Component {
     this.props.getCategoryRequest(data)
   }
 
-  componentWillReceiveProps(newProps){
-    if(newProps.navigation.state.params !== this.props.navigation.state.params
+  componentWillReceiveProps(newProps) {
+    if (newProps.navigation.state.params !== this.props.navigation.state.params
       && newProps.navigation.state.params.category_id
       && newProps.navigation.state.params.category_id !== ''
-      && newProps.navigation.state.params.category_id !== this.state.selectedCategoriesId){
+      && newProps.navigation.state.params.category_id !== this.state.selectedCategoriesId) {
       const idx = this.getCategoryIndex(newProps.navigation.state.params.category_id)
       this.setState({
         selectedCategoriesId: newProps.navigation.state.params.category_id,
         selectedCategoriesIdx: idx,
-        currentPage:1,
+        currentPage: 1,
         isSelectSubCategory: false
       })
     }
 
-    if(newProps.category !== this.props.category){
+    if (newProps.category !== this.props.category) {
       if (
         newProps.category.payload !== null &&
         newProps.category.error === null &&
@@ -84,7 +88,7 @@ class CategoryScreen extends Component {
       }
     }
 
-    if(newProps.productCategory !== this.props.productCategory){
+    if (newProps.productCategory !== this.props.productCategory) {
       if (
         newProps.productCategory.payload !== null &&
         newProps.productCategory.error === null &&
@@ -93,11 +97,11 @@ class CategoryScreen extends Component {
         this.setState({
           products: newProps.productCategory.payload.products
         })
-      } else if(
+      } else if (
         newProps.productCategory.payload !== null &&
         newProps.productCategory.error === null &&
         !newProps.productCategory.fetching && isReloadPage
-      ){
+      ) {
         var arr = [...this.state.products]
         arr = arr.concat(newProps.productCategory.payload.products)
         this.setState({
@@ -118,7 +122,7 @@ class CategoryScreen extends Component {
       this.state.appState.match(/inactive|background/) &&
       nextAppState === 'active'
     ) {
-      if(this.state.willShareDescription === true){
+      if (this.state.willShareDescription === true) {
         this.setState({
           finishShareImage: true
         })
@@ -130,14 +134,14 @@ class CategoryScreen extends Component {
         }, 1000);
       }
     }
-    this.setState({appState: nextAppState});
+    this.setState({ appState: nextAppState });
   };
 
-  shareWhatsapp(desc){
-    if(this.state.willShareDescription === false){
+  shareWhatsapp(desc) {
+    if (this.state.willShareDescription === false) {
       this.setState({
         willShareDescription: true,
-        finishShareImage : false,
+        finishShareImage: false,
         willShareDescriptionString: desc
       });
     } else {
@@ -145,23 +149,23 @@ class CategoryScreen extends Component {
     }
   }
 
-  getCategoryIndex(id){
+  getCategoryIndex(id) {
     var idx = this.state.categories.indexOf(this.state.categories.find(category => category.slug === id))
     return idx
   }
 
-  fillCategories(arr){
+  fillCategories(arr) {
     var categories = []
     var firstCategorySlug = ''
-    for(var i=0;i<arr.length;i++){
+    for (var i = 0; i < arr.length; i++) {
       var subcategories = []
       var l = -1
-      for(var j=0;j<arr[i].subcategories.length;j++){
-        if(arr[i].subcategories[j].text_only === true){ //CREATE TITLE
+      for (var j = 0; j < arr[i].subcategories.length; j++) {
+        if (arr[i].subcategories[j].text_only === true) { //CREATE TITLE
           title = arr[i].subcategories[j].name
-          subcategories.push({title: title, data: []})
+          subcategories.push({ title: title, data: [] })
           l++
-        } else if(l > -1){ //THIS MAY CAUSE BUG!!!
+        } else if (l > -1) { //THIS MAY CAUSE BUG!!!
           subcategories[l].data.push({
             name: arr[i].subcategories[j].name,
             slug: arr[i].subcategories[j].slug,
@@ -170,12 +174,12 @@ class CategoryScreen extends Component {
         }
       }
       var category = {
-          img_url: arr[i].img_url,
-          name: arr[i].name.replace(' ', '\n'),
-          slug: arr[i].slug,
-          subcategories: subcategories
+        img_url: arr[i].img_url,
+        name: arr[i].name.replace(' ', '\n'),
+        slug: arr[i].slug,
+        subcategories: subcategories
       }
-      if(firstCategorySlug === ''){
+      if (firstCategorySlug === '') {
         firstCategorySlug = category.slug
       }
       categories.push(category)
@@ -184,7 +188,7 @@ class CategoryScreen extends Component {
       categories: categories,
       selectedCategoriesIdx: 0,
       selectedCategoriesId: firstCategorySlug,
-      currentPage:1,
+      currentPage: 1,
     })
   }
 
@@ -195,7 +199,7 @@ class CategoryScreen extends Component {
   }
 
   handleBackButtonClick() {
-    if(this.state.isSelectSubCategory){
+    if (this.state.isSelectSubCategory) {
       this.setState({
         isSelectSubCategory: false
       })
@@ -203,7 +207,7 @@ class CategoryScreen extends Component {
     }
   }
 
-  pressSubCategory(slug, index){
+  pressSubCategory(slug, index) {
     this.setState({
       selectedSubCategoriesId: slug,
       selectedSubCategoriesIdx: index,
@@ -211,7 +215,7 @@ class CategoryScreen extends Component {
       products: []
     })
     let data = {
-      data_request:{
+      data_request: {
         user_id: this.props.auth.payload.user_id,
         unique_token: this.props.auth.payload.unique_token,
         category_slug: slug
@@ -220,7 +224,7 @@ class CategoryScreen extends Component {
     this.props.getProductCategoryRequest(data)
   }
 
-  moveToSubCategories(id){
+  moveToSubCategories(id) {
     var idx = this.state.selectedCategoriesIdx
     var arrTopCategory = []
     this.state.categories[idx].subcategories.map((category) => {
@@ -235,55 +239,68 @@ class CategoryScreen extends Component {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
     this.setState({
       isSelectSubCategory: true,
-      arrTopCategory:arrTopCategory,
+      arrTopCategory: arrTopCategory,
     })
     this.pressSubCategory(id, index)
   }
 
-  _renderCategories(){
-    if(this.state.categories.length > 0)
-    return (
-      <ScrollView showsVerticalScrollIndicator={false}>
-      {this.state.categories.map((item, index) => {
-        let style = styles.categoryView
-        if(this.state.selectedCategoriesIdx === index){
-          style = styles.categoryView2
-        }
-        return (
-          <TouchableOpacity
-          onPress={() => this.setState({
-            selectedCategoriesId: item.slug,
-            selectedCategoriesIdx: index
+  _renderCategories() {
+    if (this.state.categories.length > 0)
+      return (
+        <ScrollView showsVerticalScrollIndicator={false}>
+          {this.state.categories.map((item, index) => {
+            let style = styles.categoryView
+            if (this.state.selectedCategoriesIdx === index) {
+              style = styles.categoryView2
+            }
+            return (
+              <TouchableOpacity
+                onPress={() => this.setState({
+                  selectedCategoriesId: item.slug,
+                  selectedCategoriesIdx: index
+                })}
+                key={index.toString()}
+              >
+                <View style={style}>
+                  <Text style={styles.categoryText}>{item.name}</Text>
+                </View>
+              </TouchableOpacity>
+            );
           })}
-          key={index.toString()}
-          >
-            <View style={style}>
-              <Text style={styles.categoryText}>{item.name}</Text>
-            </View>
-          </TouchableOpacity>
-        );
-      })}
-      </ScrollView>
-    )
+        </ScrollView>
+      )
   }
 
-  _renderTopCategories({item, index}){
+  _renderTopCategories({ item, index }) {
     let styleBtn = styles.btnTopCategories
     let styleText = styles.textBtnTopCategories
-    if(this.state.selectedSubCategoriesId === item.slug){
+    if (this.state.selectedSubCategoriesId === item.slug) {
       styleBtn = styles.btnTopCategoriesSelected
       styleText = styles.textBtnTopCategoriesSelected
     }
     return (
       <TouchableOpacity style={styleBtn}
-      onPress={() => this.pressSubCategory(item.slug, index)}
+        onPress={() => this.pressSubCategory(item.slug, index)}
       >
         <Text style={styleText}>{item.name}</Text>
       </TouchableOpacity>
     );
   }
 
-  _renderSubCategories({ section, index}){
+  onPressSubCategories(data, index) {
+    let logData = {
+      category_id: index,
+      category_URL: `www.mooimom.id/product-category/${data.slug}`,
+      category_Image_URL: data.img_url
+    }
+    console.log('RNAiqua category_viewed', logData)
+    RNAiqua.logEvent('category_viewed', logData)
+
+    this.moveToSubCategories(data.slug)
+  }
+
+  _renderSubCategories({ section, index }) {
+    console.log(section)
     if (index % 3 !== 0) return null;
     const { navigate } = this.props.navigation
     const items = [];
@@ -293,15 +310,20 @@ class CategoryScreen extends Component {
         break;
       }
       var image = Images.default
-      if(section.data[i].img_url && section.data[i].img_url !== '')
-        image = {uri:section.data[i].img_url}
+      if (section.data[i].img_url && section.data[i].img_url !== '')
+        image = { uri: section.data[i].img_url }
       items.push(
         <TouchableWithoutFeedback key={section.data[i].slug} onPress={() => {
-          this.moveToSubCategories(section.data[i].slug)
+          this.onPressSubCategories(section.data[i], index)
         }}>
           <View style={styles.productContainer}>
-            <FastImage source={image} style={styles.productImage} resizeMode={FastImage.resizeMode.contain}/>
-            <Text style={styles.productText}>{section.data[i].name}</Text>
+            <FastImage source={image} style={styles.productImage} resizeMode={FastImage.resizeMode.contain} />
+            {
+              section.title === 'Other Brands' ?
+                <View />
+                :
+                <Text style={styles.productText}>{section.data[i].name}</Text>
+            }
           </View>
         </TouchableWithoutFeedback>
       );
@@ -314,21 +336,21 @@ class CategoryScreen extends Component {
     );
   }
 
-  _renderSectionHeader({section: {title}}) {
+  _renderSectionHeader({ section: { title } }) {
     return (
       <Text style={styles.subCategoryHeaderText}>{title}</Text>
     )
   }
 
-  _renderProduct ({item, index}) {
+  _renderProduct({ item, index }) {
     const { navigate } = this.props.navigation
     return (
       <TouchableWithoutFeedback
         onPress={() => this.navigate_to('ProductScreen', {
           product_slug: item.slug,
           auth: this.props.auth
-          })}
-          >
+        })}
+      >
         <View>
           <ProductCardSingle
             product={item}
@@ -343,17 +365,17 @@ class CategoryScreen extends Component {
     );
   }
 
-  _renderCategoryView(){
+  _renderCategoryView() {
     return (
       <View style={styles.containerScroll}>
         <View style={styles.backgroundHeader} />
         <View style={styles.headerWrapper}>
           <TouchableOpacity style={styles.searchButton} onPress={() => this.navigate_to('SearchScreen')}>
-            <Image source={Images.search} style={styles.imageSearch}/>
+            <Image source={Images.search} style={styles.imageSearch} />
             <Text style={styles.textSearch}>Cari Baju Hamil, Bra, Korset, dll</Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.wrapperSeparator}/>
+        <View style={styles.wrapperSeparator} />
         <View style={styles.contentContainer}>
           <View style={styles.leftContainer}>
             {this._renderCategories()}
@@ -372,16 +394,16 @@ class CategoryScreen extends Component {
     )
   }
 
-  _onLayout(){
-    this.list.scrollToIndex({index: this.state.selectedSubCategoriesIdx})
+  _onLayout() {
+    this.list.scrollToIndex({ index: this.state.selectedSubCategoriesIdx })
   }
 
-  onEndReached(){
+  onEndReached() {
     if (!isReloadPage) {
       if (this.state.currentPage + 1 <= this.props.productCategory.payload.how_many_pages) {
         isReloadPage = true
         let data = {
-          data_request:{
+          data_request: {
             user_id: this.props.auth.payload.user_id,
             unique_token: this.props.auth.payload.unique_token,
             category_slug: this.state.selectedSubCategoriesId,
@@ -393,27 +415,27 @@ class CategoryScreen extends Component {
     }
   }
 
-  _renderSubCategoryView(){
+  _renderSubCategoryView() {
     return (
       <View style={styles.containerScroll}>
         <View style={styles.headerWrapper}>
           <TouchableOpacity style={styles.btnHeader} onPress={
-            () => this.setState({isSelectSubCategory: false})
+            () => this.setState({ isSelectSubCategory: false })
           }>
-            <Image source={Images.back} style={styles.imgHeader}/>
+            <Image source={Images.back} style={styles.imgHeader} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.searchButton2} onPress={() => this.navigate_to('SearchScreen')}>
-            <Image source={Images.search} style={styles.imageSearch}/>
+            <Image source={Images.search} style={styles.imageSearch} />
             <Text style={styles.textSearch}>Cari Baju Hamil, Bra, Korset, dll</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.btnHeader} onPress={() => this.navigate_to('CartScreen')}>
-            <Image source={Images.shoppingCartBlack} style={styles.imgHeader}/>
+            <Image source={Images.shoppingCartBlack} style={styles.imgHeader} />
             {this.props.cart.data.length > 0 && <View style={styles.notifContainer}>
               <Text style={styles.textNotif}>{this.props.cart.data.length}</Text>
             </View>}
           </TouchableOpacity>
         </View>
-        <View style={styles.wrapperSeparator}/>
+        <View style={styles.wrapperSeparator} />
         <View style={styles.contentContainer2}>
           <View style={styles.topContainer} onLayout={() => this._onLayout()}>
             <FlatList
@@ -424,14 +446,14 @@ class CategoryScreen extends Component {
               renderItem={this._renderTopCategories}
               keyExtractor={(item, index) => index.toString()}
               getItemLayout={(data, index) => (
-                {length: Metrics.screenWidth / 4, offset: (Metrics.screenWidth / 4) * index, index}
+                { length: Metrics.screenWidth / 4, offset: (Metrics.screenWidth / 4) * index, index }
               )}
             />
           </View>
           <View style={styles.bottomContainer}>
             <Text style={styles.subtitleCategory}>{this.state.arrTopCategory[this.state.selectedSubCategoriesIdx].name}</Text>
             {this.props.productCategory.fetching && !isReloadPage && <View style={styles.containerLoading2}>
-              <ActivityIndicator size="large" color={Colors.mooimom} />
+              <DotIndicator size={12} color={Colors.mooimom} />
             </View>}
             <FlatList
               showsVerticalScrollIndicator={false}
@@ -441,6 +463,7 @@ class CategoryScreen extends Component {
               onEndReached={this.onEndReached.bind(this)}
               onEndReachedThreshold={5}
             />
+            <View style={styles.sizedVerticalMargin} />
           </View>
         </View>
         {this.state.willShareDescription && <View style={styles.modalShareView}>
@@ -453,11 +476,11 @@ class CategoryScreen extends Component {
     )
   }
 
-  render () {
-    if(this.state.categories.length < 1)
-      return(
+  render() {
+    if (this.state.categories.length < 1)
+      return (
         <View style={styles.containerLoading}>
-          <ActivityIndicator size="large" color={Colors.mooimom} />
+          <DotIndicator size={12} color={Colors.mooimom} />
         </View>
       )
     return (

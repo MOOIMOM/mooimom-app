@@ -33,22 +33,22 @@ export const CartSelectors = {
 
 // request the data from an api
 export const request = (state, { data }) => {
-    for(var i= 0;i<state.data.length;i++){
-        if(state.data[i].sku === data.sku){
-          var obj = [...state.data]
-          if(data.qty === 0){
-            obj.splice(i, 1)
-          } else {
-            obj[i] = data
-          }
-          data = obj
-          return state.merge({fetching: true, data, payload: null})
-        }
+  for (var i = 0; i < state.data.length; i++) {
+    if (state.data[i].sku === data.sku) {
+      var obj = [...state.data]
+      if (data.qty === 0) {
+        obj.splice(i, 1)
+      } else {
+        obj[i] = data
+      }
+      data = obj
+      return state.merge({ fetching: true, data, payload: null })
     }
-    var obj = [...state.data]
-    obj.push(data)
-    data = obj
-    return state.merge({ fetching: true, data, payload: null })
+  }
+  var obj = [...state.data]
+  obj.push(data)
+  data = obj
+  return state.merge({ fetching: true, data, payload: null })
 }
 
 // successful api lookup

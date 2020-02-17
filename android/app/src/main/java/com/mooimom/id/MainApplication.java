@@ -1,8 +1,9 @@
 package com.mooimom.id;
 
 import android.app.Application;
-
 import com.facebook.react.ReactApplication;
+import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
+import com.reactlibrary.RNAiquaSdkPackage;
 import com.dylanvann.fastimage.FastImageViewPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import io.invertase.firebase.RNFirebasePackage;
@@ -32,6 +33,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
             new MainReactPackage(),
+            new ReactNativeConfigPackage(),
+            new RNAiquaSdkPackage(),
             new FastImageViewPackage(),
             new PickerPackage(),
             new RNFirebaseMessagingPackage(),

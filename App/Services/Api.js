@@ -3,6 +3,7 @@ import apisauce from 'apisauce'
 import qs from 'qs';
 import R from 'ramda';
 // our "constructor"
+
 const create = (baseURL = 'https://www.mooimom.id/') => {
   // ------
   // STEP 1
@@ -16,7 +17,7 @@ const create = (baseURL = 'https://www.mooimom.id/') => {
     // here are some default headers
     headers: {
       Accept: 'application/json',
-       'Cache-Control': 'no-cache',
+      'Cache-Control': 'no-cache',
     },
     // 10 second timeout...
     timeout: 10000
@@ -30,7 +31,7 @@ const create = (baseURL = 'https://www.mooimom.id/') => {
   // };
   // api.addMonitor(monitor);
   api.addRequestTransform((request) => {
-    if(request.url === 'app-update-profile-picture'){
+    if (request.url === 'app-update-profile-picture') {
       request.headers['Content-Type'] = 'multipart/form-data';
     }
     else if (R.contains(request.method, ['post'])) {
@@ -135,6 +136,8 @@ const create = (baseURL = 'https://www.mooimom.id/') => {
     api.post('app-current-saldo', params.data_request)
   const postGetOrderStatusMidtrans = params =>
     api.post('app-get-order-status-from-midtrans', params.data_request)
+  const postGetMidtransStatus = params =>
+    api.post('app-get-order-status-from-midtrans', params.data_request)
   const postGetVideo = params =>
     api.post('app-get-youtube-videos', params.data_request)
   const postGetArticle = params =>
@@ -143,7 +146,34 @@ const create = (baseURL = 'https://www.mooimom.id/') => {
     api.post('app-get-question-and-answer', params.data_request)
   const postSubscribeProduct = params =>
     api.post('app-link-user-with-product-stock-notification', params.data_request)
-
+  const postGetMooimomPoints = params =>
+    api.post('app-get-mooimom-app-points', params.data_request)
+  const postGetGoSendShipment = params =>
+    api.post('wp-json/mooimom/v1/gosend-get-price-data-for-location-a-to-b', params.data_request)
+  const postCheckCoupon = params =>
+    api.post('app-add-coupon-to-shopping-cart', params.data_request)
+  const postGetVouchers = params =>
+    api.post('app-get-app-events', params.data_request)
+  const postGetOneVoucher = params =>
+    api.post('app-get-one-app-event', params.data_request)
+  const postEventFormHandler = params =>
+    api.post('app-event-form-handler', params.data_request)
+  const postDeleteNotif = params =>
+    api.post('app-delete-notification', params.data_request)
+  const postCancelOrder = params =>
+    api.post('app-cancel-order', params.data_request)
+  const postGetOnlineCart = params =>
+    api.post('app-get-shopping-cart', params.data_request)
+  const postGetAppVersion = () =>
+    api.post('app-get-app-version')
+  const postDeleteOrderHistory = params =>
+    api.post('app-delete-order', params.data_request)
+  const postUpdateOnlineCart = params =>
+    api.post('app-update-shopping-cart', params.data_request)
+  const postChooseFreeGift = params =>
+    api.post('app-choose-free-gift-shopping-cart', params.data_request)
+  const postGetAllEventForm = params =>
+    api.post('app-get-event-form-data', params.data_request)
 
   // ------
   // STEP 3
@@ -201,14 +231,29 @@ const create = (baseURL = 'https://www.mooimom.id/') => {
     postGetCommissionByDate,
     postGetBalance,
     postGetOrderStatusMidtrans,
+    postGetMidtransStatus,
     postGetVideo,
     postGetArticle,
     postGetQuestion,
     postSubscribeProduct,
+    postGetMooimomPoints,
+    postGetGoSendShipment,
+    postCheckCoupon,
+    postGetVouchers,
+    postGetOneVoucher,
+    postEventFormHandler,
+    postDeleteNotif,
+    postCancelOrder,
+    postGetOnlineCart,
+    postGetAppVersion,
+    postDeleteOrderHistory,
+    postUpdateOnlineCart,
+    postChooseFreeGift,
+    postGetAllEventForm
   }
 }
 
 // let's return back our create method as the default.
 export default {
-  create
+  create,
 }

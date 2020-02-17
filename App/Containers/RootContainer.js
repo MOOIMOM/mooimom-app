@@ -5,17 +5,19 @@ import { connect } from 'react-redux'
 import StartupActions from '../Redux/StartupRedux'
 import ReduxPersist from '../Config/ReduxPersist'
 
+
 // Styles
 import styles from './Styles/RootContainerStyles'
 
 class RootContainer extends Component {
-  componentDidMount () {
+
+  componentDidMount() {
     if (!ReduxPersist.active) {
       this.props.startup()
     }
   }
 
-  render () {
+  render() {
     return (
       <View style={styles.applicationView}>
         <StatusBar barStyle='light-content' />

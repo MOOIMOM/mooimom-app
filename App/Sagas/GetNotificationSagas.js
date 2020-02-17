@@ -14,27 +14,28 @@ import { call, put } from 'redux-saga/effects'
 import GetNotificationActions from '../Redux/GetNotificationRedux'
 // import { RegisterSelectors } from '../Redux/RegisterRedux'
 
-export function * postGetNotification(api, action) {
+export function* postGetNotification(api, action) {
   const { data } = action
   // get current data from Store
   // const currentData = yield select(RegisterSelectors.getData)
   // make the call to the api
   const response = yield call(api.postGetNotification, data)
-    // success?
-    if (response.data.success === 1) {
-      console.tron.log(response)
-      // You might need to change the response here - do this with a 'transform',
-      // located in ../Transforms/. Otherwise, just pass the data back from the api.
-      yield put(GetNotificationActions.getNotificationSuccess(response.data))
-    } else if (response.problem === 'TIMEOUT_ERROR') {
-      var err = {
-        error: {
-          error_code: '0',
-          error_message: 'Can not connect server now'
-        }
+  // success?
+  if (response.data.success === 1) {
+    console.log(response.data)
+    // You might need to change the response here - do this with a 'transform',
+    // located in ../Transforms/. Otherwise, just pass the data back from the api.
+    yield put(GetNotificationActions.getNotificationSuccess(response.data))
+  } else if (response.problem === 'TIMEOUT_ERROR') {
+    console.log(response)
+    var err = {
+      error: {
+        error_code: '0',
+        error_message: 'Can not connect server now'
       }
-      yield put(GetNotificationActions.getNotificationFailure(err))
-    } else {
-      yield put(GetNotificationActions.getNotificationFailure(response.data))
     }
+    yield put(GetNotificationActions.getNotificationFailure(err))
+  } else {
+    yield put(GetNotificationActions.getNotificationFailure(response.data))
+  }
 }

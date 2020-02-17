@@ -4,6 +4,7 @@ import { persistReducer } from 'redux-persist'
 import rootSaga from '../Sagas/'
 import ReduxPersist from '../Config/ReduxPersist'
 
+
 /* ------------- Assemble The Reducers ------------- */
 export const reducers = combineReducers({
   nav: require('./NavigationRedux').reducer,
@@ -44,11 +45,27 @@ export const reducers = combineReducers({
   commissionEstimation: require('./CommissionEstimationRedux').reducer,
   lastNotification: require('./LastNotificationTimeRedux').reducer,
   statusMidtrans: require('./GetOrderStatusMidtransRedux').reducer,
+  getMidtransStatus: require('./GetMidtransStatusRedux').reducer,
   video: require('./GetVideoRedux').reducer,
   article: require('./GetArticleRedux').reducer,
   question: require('./GetQuestionRedux').reducer,
   gopay: require('./GopayRedux').reducer,
   subscribeProduct: require('./SubscribeProductRedux').reducer,
+  mooimomPoints: require('./GetMooimomPointsRedux').reducer,
+  goSendShipment: require('./GetGoSendShipmentRedux').reducer,
+  checkCoupon: require('./CheckCouponRedux').reducer,
+  getVouchers: require('./GetVouchersRedux').reducer,
+  getOneVoucher: require('./GetOneVoucherRedux').reducer,
+  claimVoucher: require('./ClaimVoucherRedux').reducer,
+  eventFormHandler: require('./EventFormHandlerRedux').reducer,
+  deleteNotif: require('./DeleteNotifRedux').reducer,
+  cancelOrder: require('./CancelOrderRedux').reducer,
+  getOnlineCart: require('./GetOnlineCartRedux').reducer,
+  getAppVersion: require('./GetAppVersionRedux').reducer,
+  deleteOrderHistory: require('./DeleteOrderHistoryRedux').reducer,
+  updateOnlineCart: require('./UpdateOnlineCartRedux').reducer,
+  chooseFreeGift: require('./ChooseFreeGiftRedux').reducer,
+  getAllEventForm: require('./GetAllEventFormRedux').reducer
 })
 
 export default () => {

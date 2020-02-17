@@ -33,6 +33,7 @@ export const GetAllOrderSelectors = {
 export const request = (state, { data }) =>
   state.merge({ fetching: true, data, payload: null })
 
+
 // successful api lookup
 export const success = (state, action) => {
   const { payload } = action
