@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #  
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/)
 
@@ -65,3 +66,6 @@ The `.env` file is ignored by git keeping those secrets out of your repo.
 2. Add your config variables
 3. Follow instructions at [https://github.com/luggit/react-native-config#setup](https://github.com/luggit/react-native-config#setup)
 4. Done!
+=======
+# mooimom-app
+>>>>>>> 477bc1eaa60e53b7fb14f68d12b13877ab13cb36
