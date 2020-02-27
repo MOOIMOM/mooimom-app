@@ -15,6 +15,7 @@ import { GetHomepageTypes } from '../Redux/GetHomepageRedux'
 import { GetProductTypes } from '../Redux/GetProductRedux'
 import { GetProductCategoryTypes } from '../Redux/GetProductCategoryRedux'
 import { CartTypes } from '../Redux/CartRedux'
+import { CarttTypes } from '../Redux/CarttRedux'
 import { GetAddressTypes } from '../Redux/GetAddressRedux'
 import { EditAddressTypes } from '../Redux/EditAddressRedux'
 import { ProvinceTypes } from '../Redux/ProvinceRedux'
@@ -61,6 +62,7 @@ import { DeleteOrderHistoryTypes } from '../Redux/DeleteOrderHistoryRedux'
 import { UpdateOnlineCartTypes } from '../Redux/UpdateOnlineCartRedux'
 import { ChooseFreeGiftTypes } from '../Redux/ChooseFreeGiftRedux'
 import { GetAllEventFormTypes } from '../Redux/GetAllEventFormRedux'
+import { PassGosendDataTypes } from '../Redux/PassGosendDataRedux'
 
 /* ------------- Sagas ------------- */
 
@@ -75,6 +77,7 @@ import { postGetProduct } from './GetProductSagas'
 import { postGetProductByCategory } from './GetProductCategorySagas'
 import { postGetProductVariation } from './GetProductVariationSagas'
 import { addCart } from './AddCartSagas'
+import { addCartt } from './AddCarttSagas'
 import { postGetAddress } from './GetAddressSagas'
 import { postAddAddress } from './AddAddressSagas'
 import { postEditAddress } from './EditAddressSagas'
@@ -127,6 +130,7 @@ import { postDeleteOrderHistory } from './DeleteOrderHistorySagas'
 import { postUpdateOnlineCart } from './UpdateOnlineCartSagas'
 import { postChooseFreeGift } from './ChooseFreeGiftSagas'
 import { postGetAllEventForm } from './GetAllEventFormSagas'
+import { passGosendData } from './PassGosendDataSagas'
 
 
 /* ------------- API ------------- */
@@ -144,6 +148,8 @@ export default function* root() {
     takeLatest(StartupTypes.STARTUP, startup),
     takeLatest(SharedProductTypes.SHARED_PRODUCT_REQUEST, saveSharedProduct),
     takeLatest(CartTypes.ADD_CART_REQUEST, addCart),
+    takeLatest(CarttTypes.ADD_CARTT_REQUEST, addCartt),
+    takeLatest(PassGosendDataTypes.PASS_GOSEND_DATA_REQUEST, passGosendData),
     takeLatest(ClaimVoucherTypes.CLAIM_VOUCHER_REQUEST, claimVoucher),
     takeLatest(LastNotificationTimeTypes.LAST_NOTIFICATION_TIME_REQUEST, saveLastNotificationTime),
 

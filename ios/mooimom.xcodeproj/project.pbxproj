@@ -36,17 +36,13 @@
 		2D16E6881FA4F8E400B85C8A /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D16E6891FA4F8E400B85C8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* mooimomTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* mooimomTests.m */; };
 		2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
-		2E03E37F23FA4EC9005E5A0F /* ServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2E03E37723FA4EC9005E5A0F /* ServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		2E03E3B823FA4EEA005E5A0F /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E03E3B723FA4EEA005E5A0F /* UserNotifications.framework */; };
-		2E03E3BA23FA4EEA005E5A0F /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E03E3B923FA4EEA005E5A0F /* UserNotificationsUI.framework */; };
-		2E03E3C523FA4EEA005E5A0F /* ContentExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2E03E3B623FA4EEA005E5A0F /* ContentExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		2E03E3CB23FA4FF2005E5A0F /* NotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E03E3CA23FA4FF2005E5A0F /* NotificationService.m */; };
-		2E03E3D023FA52AE005E5A0F /* NotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E03E3CD23FA52AD005E5A0F /* NotificationViewController.m */; };
-		2E03E3D123FA52AE005E5A0F /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2E03E3CE23FA52AD005E5A0F /* MainInterface.storyboard */; };
-		2E03E3D723FA63A4005E5A0F /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E03E3D623FA63A4005E5A0F /* iCarousel.m */; };
-		2E03E3D923FA6428005E5A0F /* libQGNotificationSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E03E3D823FA6428005E5A0F /* libQGNotificationSdk.a */; };
-		2E03E3DA23FA6448005E5A0F /* libQGNotificationSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E03E3D823FA6428005E5A0F /* libQGNotificationSdk.a */; };
-		2E03E3DC23FA684F005E5A0F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E03E3DB23FA684F005E5A0F /* QuartzCore.framework */; };
+		2EBE176423FF89A700D7C0B8 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EBE173523FF89A700D7C0B8 /* AdSupport.framework */; };
+		2EBE176623FF89B100D7C0B8 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EBE176523FF89B100D7C0B8 /* SystemConfiguration.framework */; };
+		2EBE176823FF89BD00D7C0B8 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EBE176723FF89BC00D7C0B8 /* CoreTelephony.framework */; };
+		2EBE176A23FF89C500D7C0B8 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EBE176923FF89C500D7C0B8 /* CoreLocation.framework */; };
+		2EBE176C23FF89CE00D7C0B8 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EBE176B23FF89CD00D7C0B8 /* ImageIO.framework */; };
+		2EBE176E23FF89D600D7C0B8 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EBE176D23FF89D600D7C0B8 /* MobileCoreServices.framework */; };
+		2EBE177023FF89E200D7C0B8 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EBE176F23FF89E200D7C0B8 /* libz.tbd */; };
 		311600C4B06E4657B68EF660 /* libFastImage-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 31FB956A40D44C879BF09B60 /* libFastImage-tvOS.a */; };
 		3407A66A566A42B4957B1E22 /* libRNShare.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 97926DC5FE594A6BA7BDD6C9 /* libRNShare.a */; };
 		407F8EE187C44E3EAE9FDF45 /* libRNAiquaSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9CC591E2F3140CA912AEBDB /* libRNAiquaSdk.a */; };
@@ -207,20 +203,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 3D383D621EBD27B9005632C8;
 			remoteInfo = "double-conversion-tvOS";
-		};
-		2E03E37D23FA4EC9005E5A0F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2E03E37623FA4EC9005E5A0F;
-			remoteInfo = ServiceExtension;
-		};
-		2E03E3C323FA4EEA005E5A0F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2E03E3B523FA4EEA005E5A0F;
-			remoteInfo = ContentExtension;
 		};
 		2E74C3B323ED413A00DF3E71 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -434,8 +416,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				2E03E3C523FA4EEA005E5A0F /* ContentExtension.appex in Embed App Extensions */,
-				2E03E37F23FA4EC9005E5A0F /* ServiceExtension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -482,26 +462,18 @@
 		2D02E47B1E0B4A5D006451C7 /* mooimom-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "mooimom-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* mooimom-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "mooimom-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		2E03E37723FA4EC9005E5A0F /* ServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		2E03E37C23FA4EC9005E5A0F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2E03E3B623FA4EEA005E5A0F /* ContentExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ContentExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E03E3B723FA4EEA005E5A0F /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		2E03E3B923FA4EEA005E5A0F /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
-		2E03E3C223FA4EEA005E5A0F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2E03E3C923FA4FF2005E5A0F /* NotificationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotificationService.h; path = "../../../../../../Downloads/ObjC-4.6.1/QGNotificationServiceExtension/NotificationService.h"; sourceTree = "<group>"; };
-		2E03E3CA23FA4FF2005E5A0F /* NotificationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotificationService.m; path = "../../../../../../Downloads/ObjC-4.6.1/QGNotificationServiceExtension/NotificationService.m"; sourceTree = "<group>"; };
-		2E03E3CC23FA501C005E5A0F /* ServiceExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ServiceExtension.entitlements; sourceTree = "<group>"; };
-		2E03E3CD23FA52AD005E5A0F /* NotificationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotificationViewController.m; path = "../../../../../../Downloads/ObjC-4.6.1/QGNotificationContentExtension/NotificationViewController.m"; sourceTree = "<group>"; };
-		2E03E3CE23FA52AD005E5A0F /* MainInterface.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = MainInterface.storyboard; path = "../../../../../../Downloads/ObjC-4.6.1/QGNotificationContentExtension/MainInterface.storyboard"; sourceTree = "<group>"; };
-		2E03E3CF23FA52AE005E5A0F /* NotificationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotificationViewController.h; path = "../../../../../../Downloads/ObjC-4.6.1/QGNotificationContentExtension/NotificationViewController.h"; sourceTree = "<group>"; };
-		2E03E3D223FA52E8005E5A0F /* ContentExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ContentExtension.entitlements; sourceTree = "<group>"; };
-		2E03E3D323FA6379005E5A0F /* QGNotificationSdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QGNotificationSdk.h; path = "../../../../../../Downloads/ObjC-4.6.1/QGNotificationSdk/QGNotificationSdk.h"; sourceTree = "<group>"; };
-		2E03E3D423FA6387005E5A0F /* QGNotificationSdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QGNotificationSdk.h; path = "../../../../../../Downloads/ObjC-4.6.1/QGNotificationSdk/QGNotificationSdk.h"; sourceTree = "<group>"; };
-		2E03E3D523FA639D005E5A0F /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iCarousel.h; path = "../../../../../../Downloads/ObjC-4.6.1/QGNotificationSdk/iCarousel.h"; sourceTree = "<group>"; };
-		2E03E3D623FA63A4005E5A0F /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iCarousel.m; path = "../../../../../../Downloads/ObjC-4.6.1/QGNotificationSdk/iCarousel.m"; sourceTree = "<group>"; };
 		2E03E3D823FA6428005E5A0F /* libQGNotificationSdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libQGNotificationSdk.a; path = "../../../../../Downloads/ObjC-4.6.1/QGNotificationSdk/libQGNotificationSdk.a"; sourceTree = "<group>"; };
 		2E03E3DB23FA684F005E5A0F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		2E74C3CC23ED53FE00DF3E71 /* mooimomDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = mooimomDebug.entitlements; path = mooimom/mooimomDebug.entitlements; sourceTree = "<group>"; };
+		2EBE173523FF89A700D7C0B8 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		2EBE176523FF89B100D7C0B8 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		2EBE176723FF89BC00D7C0B8 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		2EBE176923FF89C500D7C0B8 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		2EBE176B23FF89CD00D7C0B8 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		2EBE176D23FF89D600D7C0B8 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		2EBE176F23FF89E200D7C0B8 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		2F524662220549359AD7DD9D /* RNGestureHandler.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNGestureHandler.xcodeproj; path = "../node_modules/react-native-gesture-handler/ios/RNGestureHandler.xcodeproj"; sourceTree = "<group>"; };
 		31FB956A40D44C879BF09B60 /* libFastImage-tvOS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = "libFastImage-tvOS.a"; sourceTree = "<group>"; };
 		526AD553C1464A9B80786C53 /* libimageCropPicker.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libimageCropPicker.a; sourceTree = "<group>"; };
@@ -554,6 +526,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2EBE177023FF89E200D7C0B8 /* libz.tbd in Frameworks */,
+				2EBE176E23FF89D600D7C0B8 /* MobileCoreServices.framework in Frameworks */,
+				2EBE176C23FF89CE00D7C0B8 /* ImageIO.framework in Frameworks */,
+				2EBE176A23FF89C500D7C0B8 /* CoreLocation.framework in Frameworks */,
+				2EBE176823FF89BD00D7C0B8 /* CoreTelephony.framework in Frameworks */,
+				2EBE176623FF89B100D7C0B8 /* SystemConfiguration.framework in Frameworks */,
+				2EBE176423FF89A700D7C0B8 /* AdSupport.framework in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				11D1A2F320CAFA9E000508D9 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
@@ -604,25 +583,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2E03E37423FA4EC9005E5A0F /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2E03E3DA23FA6448005E5A0F /* libQGNotificationSdk.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2E03E3B323FA4EEA005E5A0F /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2E03E3DC23FA684F005E5A0F /* QuartzCore.framework in Frameworks */,
-				2E03E3D923FA6428005E5A0F /* libQGNotificationSdk.a in Frameworks */,
-				2E03E3BA23FA4EEA005E5A0F /* UserNotificationsUI.framework in Frameworks */,
-				2E03E3B823FA4EEA005E5A0F /* UserNotifications.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -753,6 +713,13 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2EBE176F23FF89E200D7C0B8 /* libz.tbd */,
+				2EBE176D23FF89D600D7C0B8 /* MobileCoreServices.framework */,
+				2EBE176B23FF89CD00D7C0B8 /* ImageIO.framework */,
+				2EBE176923FF89C500D7C0B8 /* CoreLocation.framework */,
+				2EBE176723FF89BC00D7C0B8 /* CoreTelephony.framework */,
+				2EBE176523FF89B100D7C0B8 /* SystemConfiguration.framework */,
+				2EBE173523FF89A700D7C0B8 /* AdSupport.framework */,
 				2E03E3DB23FA684F005E5A0F /* QuartzCore.framework */,
 				2E03E3D823FA6428005E5A0F /* libQGNotificationSdk.a */,
 				9EE7FFC0235D845A00C3BB74 /* libMidtransCoreKit.a */,
@@ -765,33 +732,6 @@
 				2E03E3B923FA4EEA005E5A0F /* UserNotificationsUI.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		2E03E37823FA4EC9005E5A0F /* ServiceExtension */ = {
-			isa = PBXGroup;
-			children = (
-				2E03E3D323FA6379005E5A0F /* QGNotificationSdk.h */,
-				2E03E3CC23FA501C005E5A0F /* ServiceExtension.entitlements */,
-				2E03E3C923FA4FF2005E5A0F /* NotificationService.h */,
-				2E03E3CA23FA4FF2005E5A0F /* NotificationService.m */,
-				2E03E37C23FA4EC9005E5A0F /* Info.plist */,
-			);
-			path = ServiceExtension;
-			sourceTree = "<group>";
-		};
-		2E03E3BB23FA4EEA005E5A0F /* ContentExtension */ = {
-			isa = PBXGroup;
-			children = (
-				2E03E3D623FA63A4005E5A0F /* iCarousel.m */,
-				2E03E3D523FA639D005E5A0F /* iCarousel.h */,
-				2E03E3D423FA6387005E5A0F /* QGNotificationSdk.h */,
-				2E03E3D223FA52E8005E5A0F /* ContentExtension.entitlements */,
-				2E03E3CE23FA52AD005E5A0F /* MainInterface.storyboard */,
-				2E03E3CF23FA52AE005E5A0F /* NotificationViewController.h */,
-				2E03E3CD23FA52AD005E5A0F /* NotificationViewController.m */,
-				2E03E3C223FA4EEA005E5A0F /* Info.plist */,
-			);
-			path = ContentExtension;
 			sourceTree = "<group>";
 		};
 		2E74C3B023ED413A00DF3E71 /* Products */ = {
@@ -878,8 +818,6 @@
 				13B07FAE1A68108700A75B9A /* mooimom */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* mooimomTests */,
-				2E03E37823FA4EC9005E5A0F /* ServiceExtension */,
-				2E03E3BB23FA4EEA005E5A0F /* ContentExtension */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				DFE7935994274C8D80941CE7 /* Resources */,
@@ -898,8 +836,6 @@
 				00E356EE1AD99517003FC87E /* mooimomTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* mooimom-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* mooimom-tvOSTests.xctest */,
-				2E03E37723FA4EC9005E5A0F /* ServiceExtension.appex */,
-				2E03E3B623FA4EEA005E5A0F /* ContentExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1034,8 +970,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				2E03E37E23FA4EC9005E5A0F /* PBXTargetDependency */,
-				2E03E3C423FA4EEA005E5A0F /* PBXTargetDependency */,
 			);
 			name = mooimom;
 			productName = "Hello World";
@@ -1078,40 +1012,6 @@
 			productReference = 2D02E4901E0B4A5D006451C7 /* mooimom-tvOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		2E03E37623FA4EC9005E5A0F /* ServiceExtension */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 2E03E3B123FA4EC9005E5A0F /* Build configuration list for PBXNativeTarget "ServiceExtension" */;
-			buildPhases = (
-				2E03E37323FA4EC9005E5A0F /* Sources */,
-				2E03E37423FA4EC9005E5A0F /* Frameworks */,
-				2E03E37523FA4EC9005E5A0F /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = ServiceExtension;
-			productName = ServiceExtension;
-			productReference = 2E03E37723FA4EC9005E5A0F /* ServiceExtension.appex */;
-			productType = "com.apple.product-type.app-extension";
-		};
-		2E03E3B523FA4EEA005E5A0F /* ContentExtension */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 2E03E3C623FA4EEA005E5A0F /* Build configuration list for PBXNativeTarget "ContentExtension" */;
-			buildPhases = (
-				2E03E3B223FA4EEA005E5A0F /* Sources */,
-				2E03E3B323FA4EEA005E5A0F /* Frameworks */,
-				2E03E3B423FA4EEA005E5A0F /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = ContentExtension;
-			productName = ContentExtension;
-			productReference = 2E03E3B623FA4EEA005E5A0F /* ContentExtension.appex */;
-			productType = "com.apple.product-type.app-extension";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1128,9 +1028,6 @@
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = K83N4PRU8C;
 						SystemCapabilities = {
-							com.apple.BackgroundModes = {
-								enabled = 1;
-							};
 							com.apple.Push = {
 								enabled = 1;
 							};
@@ -1144,16 +1041,6 @@
 						CreatedOnToolsVersion = 8.2.1;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 2D02E47A1E0B4A5D006451C7;
-					};
-					2E03E37623FA4EC9005E5A0F = {
-						CreatedOnToolsVersion = 11.2.1;
-						DevelopmentTeam = K83N4PRU8C;
-						ProvisioningStyle = Automatic;
-					};
-					2E03E3B523FA4EEA005E5A0F = {
-						CreatedOnToolsVersion = 11.2.1;
-						DevelopmentTeam = K83N4PRU8C;
-						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -1257,8 +1144,6 @@
 				00E356ED1AD99517003FC87E /* mooimomTests */,
 				2D02E47A1E0B4A5D006451C7 /* mooimom-tvOS */,
 				2D02E48F1E0B4A5D006451C7 /* mooimom-tvOSTests */,
-				2E03E37623FA4EC9005E5A0F /* ServiceExtension */,
-				2E03E3B523FA4EEA005E5A0F /* ContentExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -1626,21 +1511,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2E03E37523FA4EC9005E5A0F /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2E03E3B423FA4EEA005E5A0F /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2E03E3D123FA52AE005E5A0F /* MainInterface.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -1752,23 +1622,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2E03E37323FA4EC9005E5A0F /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2E03E3CB23FA4FF2005E5A0F /* NotificationService.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2E03E3B223FA4EEA005E5A0F /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2E03E3D023FA52AE005E5A0F /* NotificationViewController.m in Sources */,
-				2E03E3D723FA63A4005E5A0F /* iCarousel.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1781,16 +1634,6 @@
 			isa = PBXTargetDependency;
 			target = 2D02E47A1E0B4A5D006451C7 /* mooimom-tvOS */;
 			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
-		};
-		2E03E37E23FA4EC9005E5A0F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2E03E37623FA4EC9005E5A0F /* ServiceExtension */;
-			targetProxy = 2E03E37D23FA4EC9005E5A0F /* PBXContainerItemProxy */;
-		};
-		2E03E3C423FA4EEA005E5A0F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2E03E3B523FA4EEA005E5A0F /* ContentExtension */;
-			targetProxy = 2E03E3C323FA4EEA005E5A0F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1876,7 +1719,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = mooimom/mooimomDebug.entitlements;
-				CURRENT_PROJECT_VERSION = 26;
+				CURRENT_PROJECT_VERSION = 29;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = K83N4PRU8C;
 				HEADER_SEARCH_PATHS = (
@@ -1893,7 +1736,26 @@
 				INFOPLIST_FILE = mooimom/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.2.18;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/BVLinearGradient\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/DoubleConversion\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseCore\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseMessaging\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Folly\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GoogleUtilities\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/MidtransCoreKit\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/MidtransKit\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Protobuf\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/QBImagePickerController\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/React\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/glog\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/nanopb\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/react-native-config\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/react-native-maps\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/yoga\"",
+				);
+				MARKETING_VERSION = 1.2.20;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1911,7 +1773,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = mooimom/mooimom.entitlements;
-				CURRENT_PROJECT_VERSION = 26;
+				CURRENT_PROJECT_VERSION = 29;
 				DEVELOPMENT_TEAM = K83N4PRU8C;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1927,7 +1789,26 @@
 				INFOPLIST_FILE = mooimom/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.2.18;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/BVLinearGradient\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/DoubleConversion\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseCore\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseMessaging\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Folly\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GoogleUtilities\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/MidtransCoreKit\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/MidtransKit\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Protobuf\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/QBImagePickerController\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/React\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/glog\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/nanopb\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/react-native-config\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/react-native-maps\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/yoga\"",
+				);
+				MARKETING_VERSION = 1.2.20;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -2089,110 +1970,6 @@
 			};
 			name = Release;
 		};
-		2E03E38123FA4EC9005E5A0F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = ServiceExtension/ServiceExtension.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = K83N4PRU8C;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = ServiceExtension/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.mooimom.id.ios.ServiceExtension;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		2E03E38223FA4EC9005E5A0F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = ServiceExtension/ServiceExtension.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = K83N4PRU8C;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = ServiceExtension/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.mooimom.id.ios.ServiceExtension;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		2E03E3C723FA4EEA005E5A0F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = ContentExtension/ContentExtension.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = K83N4PRU8C;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = ContentExtension/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.mooimom.id.ios.ContentExtension;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		2E03E3C823FA4EEA005E5A0F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = ContentExtension/ContentExtension.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = K83N4PRU8C;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = ContentExtension/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.mooimom.id.ios.ContentExtension;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 		83CBBA201A601CBA00E9B192 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2327,24 +2104,6 @@
 			buildConfigurations = (
 				2D02E4991E0B4A5E006451C7 /* Debug */,
 				2D02E49A1E0B4A5E006451C7 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		2E03E3B123FA4EC9005E5A0F /* Build configuration list for PBXNativeTarget "ServiceExtension" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				2E03E38123FA4EC9005E5A0F /* Debug */,
-				2E03E38223FA4EC9005E5A0F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		2E03E3C623FA4EEA005E5A0F /* Build configuration list for PBXNativeTarget "ContentExtension" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				2E03E3C723FA4EEA005E5A0F /* Debug */,
-				2E03E3C823FA4EEA005E5A0F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

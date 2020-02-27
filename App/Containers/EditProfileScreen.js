@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { SafeAreaView, ScrollView, Text, View, TouchableOpacity, TextInput, Image, KeyboardAvoidingView, Alert } from 'react-native'
 import { Images, Metrics, Colors } from '../Themes'
 import { connect } from 'react-redux'
-import { convertToRupiah } from '../Lib/utils'
+import { convertToRupiah, isIphoneXorAbove } from '../Lib/utils'
 import TextInputCustom from '../Components/TextInputCustom'
 import DatePickerCustom from '../Components/DatePickerCustom'
 import PickerCustom from '../Components/PickerCustom'
@@ -293,7 +293,7 @@ class EditProfileScreen extends Component {
                 onChangeText={val => this.setState({ zipCode: val })}
                 autoCapitalize='words'
               />
-              <View style={styles.wrapperSeparator} />
+              <View style={[styles.wrapperSeparator, { marginVertical: isIphoneXorAbove() ? 20 : 0 }]} />
             </KeyboardAvoidingView>
           </ScrollView>
         </View>

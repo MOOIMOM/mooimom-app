@@ -8,8 +8,9 @@ import GetAddressActions from '../Redux/GetAddressRedux'
 import GetShippingOptionsActions from '../Redux/GetShippingOptionsRedux'
 import CheckoutActions from '../Redux/CheckoutRedux'
 import CartActions from '../Redux/CartRedux'
+import CarttActions from '../Redux/CarttRedux'
 import CommissionEstimationActions from '../Redux/CommissionEstimationRedux'
-// import GetOnlineCartActions from '../Redux/GetOnlineCartRedux'
+import GetOnlineCartActions from '../Redux/GetOnlineCartRedux'
 import GetMooimomPointsActions from '../Redux/GetMooimomPointsRedux'
 import GetAllOrderActions from '../Redux/GetAllOrderRedux'
 import CheckCouponActions from '../Redux/CheckCouponRedux'
@@ -29,15 +30,15 @@ class DeliveryScreen extends Component {
       isShowDelivery: false,
       isShowUsePointsModal: false,
       selectedDelivery: {},
+      cart: [],
       selectedAddressID: '',
       selectedAddress: null,
       commission: 0,
       isPointButtonClicked: false,
-      isProductPriceAllowed: true,
-      buttonDisabled: false,
       usingDiscount: false,
       usingVoucher: false,
       usingCoupon: false,
+      jneSelected: false,
       points: 0,
       pointUsage: 0,
       nomPointsToUse: 0,
@@ -47,20 +48,16 @@ class DeliveryScreen extends Component {
       couponCode: "",
       discountUsage: 0,
       freeShippingUsage: 0,
-      // shoppingCartId: 0
+      shoppingCartId: 0,
+      gosendLat: 0,
+      gosendLong: 0,
+      gosendShippingType: '',
+      gosendShippingCost: 0,
+      gosendChosen: ''
     }
   }
 
   componentDidMount() {
-
-    var price = this.calculatePrice()
-
-    if (price < 100000) {
-      this.setState({
-        isProductPriceAllowed: false,
-        buttonDisabled: true
-      })
-    }
 
     let data = {
       data_request: {
@@ -68,6 +65,7 @@ class DeliveryScreen extends Component {
         unique_token: this.props.auth.payload.unique_token
       }
     }
+    this.props.getOnlineCartProcess(data)
     this.props.getAddressProcess(data)
     this.props.getMooimomPointsProcess(data)
     this.reloadCommission()
@@ -104,15 +102,15 @@ class DeliveryScreen extends Component {
       }
     }
 
-    // if (this.props.getOnlineCart !== newProps.getOnlineCart) {
-    //   if (
-    //     newProps.getOnlineCart.payload !== null &&
-    //     newProps.getOnlineCart.error === null &&
-    //     !newProps.getOnlineCart.fetching
-    //   ) {
-    //     this.setState({ shoppingCartId: newProps.getOnlineCart.payload.shopping_cart_id })
-    //   }
-    // }
+    if (this.props.getOnlineCart !== newProps.getOnlineCart) {
+      if (
+        newProps.getOnlineCart.payload !== null &&
+        newProps.getOnlineCart.error === null &&
+        !newProps.getOnlineCart.fetching
+      ) {
+        this.setState({ shoppingCartId: newProps.getOnlineCart.payload.shopping_cart_id, cart: newProps.getOnlineCart.payload.shopping_cart_content_new })
+      }
+    }
 
     if (this.props.checkout !== newProps.checkout) {
       if (
@@ -120,7 +118,7 @@ class DeliveryScreen extends Component {
         newProps.checkout.error === null &&
         !newProps.checkout.fetching
       ) {
-        this.props.emptyCartProcess()
+        this.props.emptyCarttProcess()
         this.props.navigation.popToTop()
         let data = {
           data_request: {
@@ -129,14 +127,14 @@ class DeliveryScreen extends Component {
             selected_status: 'all'
           }
         }
-        this.props.cart.data.map(cart => {
+        this.state.cart.map(cart => {
           let logData = {
-            category_name: cart.product.category_name,
-            product_id: cart.product.product_id,
-            product_name: cart.product.product_name,
-            product_image_url: cart.product.img_url,
-            product_url: `www.mooimom.id/product/${cart.product.slug}`,
-            product_price: cart.product.product_regular_price
+            category_name: cart.the_category_text,
+            product_id: cart.product_id,
+            product_name: cart.main_product_name,
+            product_image_url: cart.img_url,
+            product_url: `www.mooimom.id/product/${cart.main_product_slug}`,
+            product_price: cart.regular_price
           }
           console.log('RNAiqua, product_purchased', logData)
           RNAiqua.logEvent('product_purchased', logData)
@@ -173,15 +171,37 @@ class DeliveryScreen extends Component {
       }
     }
 
-    if (this.props.checkCoupon !== newProps.checkCoupon) {
+    if (this.props.passGosendData !== newProps.passGosendData) {
       if (
-        newProps.checkCoupon.payload !== null &&
-        newProps.checkCoupon.error === null &&
-        !newProps.checkCoupon.fetching
+        newProps.passGosendData.payload !== null &&
+        newProps.passGosendData.error === null &&
+        !newProps.passGosendData.fetching
       ) {
-        this.usingCouponAction(newProps.checkCoupon)
+        this.setState({
+          gosendLat: newProps.passGosendData.payload.lat,
+          gosendLong: newProps.passGosendData.payload.lng,
+          gosendShippingType: newProps.passGosendData.payload.shippingType,
+          gosendShippingCost: newProps.passGosendData.payload.shippingCost,
+          gosendChosen: newProps.passGosendData.payload.shippingMode,
+          selectedDelivery: {}
+        })
       }
     }
+
+    AsyncStorage.getItem('on_payment_process', (error, result) => {
+      if (result !== 'ready') {
+        if (this.props.checkCoupon !== newProps.checkCoupon) {
+          if (
+            newProps.checkCoupon.payload !== null &&
+            newProps.checkCoupon.error === null &&
+            !newProps.checkCoupon.fetching
+          ) {
+            this.usingCouponAction(newProps.checkCoupon)
+          }
+        }
+      }
+    })
+
   }
 
   usingVoucherAction(newProps) {
@@ -273,8 +293,8 @@ class DeliveryScreen extends Component {
 
   reloadCommission() {
     let dataCart = '['
-    this.props.cart.data.map(cart => {
-      dataCart = dataCart + '{"sku":"' + cart.sku + '","quantity":' + cart.qty + '},'
+    this.props.cartt.data.map(cart => {
+      dataCart = dataCart + '{"sku":"' + cart.sku + '","quantity":' + cart.quantity + '},'
     })
     if (dataCart.length > 1)
       dataCart = dataCart.substring(0, dataCart.length - 1)
@@ -298,8 +318,8 @@ class DeliveryScreen extends Component {
 
   calculatePrice() {
     var price = 0;
-    this.props.cart.data.map(cart => {
-      price += (cart.qty * (cart.is_free_gift ? 0 : (cart.product.product_sale_price > 0 ? cart.product.product_sale_price : cart.product.product_regular_price)))
+    this.state.cart.map(cart => {
+      price += (cart.quantity * (cart.sale_price > 0 ? cart.sale_price : cart.regular_price))
     })
     return price
   }
@@ -312,8 +332,8 @@ class DeliveryScreen extends Component {
     }
     else {
       let dataCart = '['
-      this.props.cart.data.map(cart => {
-        dataCart = dataCart + '{"sku":"' + cart.sku + '","quantity":' + cart.qty + '},'
+      this.props.cartt.data.map(cart => {
+        dataCart = dataCart + '{"sku":"' + cart.sku + '","quantity":' + cart.quantity + '},'
       })
       if (dataCart.length > 1)
         dataCart = dataCart.substring(0, dataCart.length - 1)
@@ -337,8 +357,8 @@ class DeliveryScreen extends Component {
     }
     var selectedAddress = this.state.selectedAddress
     let dataCart = '['
-    this.props.cart.data.map(cart => {
-      dataCart = dataCart + '{"sku":"' + cart.sku + '","quantity":' + cart.qty + '},'
+    this.props.cartt.data.map(cart => {
+      dataCart = dataCart + '{"sku":"' + cart.sku + '","quantity":' + cart.quantity + '},'
     })
     if (dataCart.length > 1)
       dataCart = dataCart.substring(0, dataCart.length - 1)
@@ -361,6 +381,7 @@ class DeliveryScreen extends Component {
   selectDelivery(index) {
     this.setState({
       isShowDelivery: false,
+      jneSelected: false,
       selectedDelivery: this.props.shippingOptions.payload.shipping_options[index]
     })
   }
@@ -370,31 +391,37 @@ class DeliveryScreen extends Component {
       Alert.alert('', 'Please input the delivery address first')
       return;
     }
-    if (!this.state.selectedDelivery.jne_or_jnt) {
+    if (!this.state.selectedDelivery.jne_or_jnt && this.state.gosendChosen === '') {
       Alert.alert('', 'Please select one of delivery option first')
       return
     }
-    let dataCart = '['
-    this.props.cart.data.map(cart => {
-      dataCart = dataCart + '{"sku":"' + cart.sku + '","quantity":' + cart.qty + '},'
-    })
-    if (dataCart.length > 1)
-      dataCart = dataCart.substring(0, dataCart.length - 1)
-    dataCart = dataCart + ']'
-    console.log(dataCart)
+    // let dataCart = '['
+    // this.props.cartt.data.map(cart => {
+    //   dataCart = dataCart + '{"sku":"' + cart.sku + '","quantity":' + cart.quantity + '},'
+    // })
+    // if (dataCart.length > 1)
+    //   dataCart = dataCart.substring(0, dataCart.length - 1)
+    // dataCart = dataCart + ']'
+    // console.log(dataCart)
     let data = {
       data_request: {
         user_id: this.props.auth.payload.user_id,
         unique_token: this.props.auth.payload.unique_token,
-        product_variations_user_want_to_buy: dataCart,
-        chosen_shipping_mode: this.state.selectedDelivery.jne_or_jnt + '_' + this.state.selectedDelivery.service,
+        // product_variations_user_want_to_buy: dataCart,
+        chosen_shipping_mode: this.state.gosendChosen !== '' ? this.state.gosendChosen : this.state.selectedDelivery.jne_or_jnt + '_' + this.state.selectedDelivery.service,
         chosen_shipping_price: this.state.selectedDelivery.price,
         chosen_app_customer_address_id: this.state.selectedAddressID,
         chosen_method: 'midtrans', // DEFAULT
         mooimom_app_points: this.state.pointUsage,  // OPTIONAL
         android_or_ios: this.state.systemName,
         coupon_code: this.state.discountCode,
-        // shopping_cart_id: this.state.shoppingCartId
+        shopping_cart_id: this.state.shoppingCartId,
+
+        // GOSEND Required Data - if using gosend
+        gosend_chosen_lat: this.state.gosendLat,
+        gosend_chosen_long: this.state.gosendLong,
+        gosend_shipping_type: this.state.gosendShippingType,
+        gosend_shipping_cost: this.state.gosendShippingCost,
       }
     }
     console.log(data)
@@ -407,27 +434,17 @@ class DeliveryScreen extends Component {
   }
 
   _renderProductCart() {
-    if (this.props.cart.data && this.props.cart.data.length > 0)
+    if (this.state.cart && this.state.cart.length > 0)
       return (
-        this.props.cart.data.map((item, index) => {
+        this.state.cart.map((item, index) => {
           console.log('cart', item)
-          var price = item.is_free_gift ? 0 : (item.product.product_sale_price > 0 ? item.product.product_sale_price : item.product.product_regular_price)
-          price = convertToRupiah(price * item.qty)
-          var isFound, size, color, title, custom = ''
-          isFound = item.product.sizes.find(x => x.slug === item.size)
-          if (isFound)
-            size = isFound.name
-          isFound = item.product.colors.find(x => x.slug === item.color)
-          if (isFound)
-            color = isFound.name
-          isFound = item.product.custom_attributes.find(x => x.slug === item.custom)
-          if (isFound) {
-            custom = isFound.name
-            title = titleCase(item.product.custom_attribute_text)
-          }
+          var price = (item.sale_price > 0 ? item.sale_price : item.regular_price)
+          price = convertToRupiah(price * item.quantity)
+          size = item.size_name
+          color = item.color_name
           var image = Images.default
-          if (item.product.img_url && item.product.img_url !== '')
-            image = { uri: item.product.img_url }
+          if (item.img_url && item.img_url !== '')
+            image = { uri: item.img_url }
           return (
             <View style={styles.productContainer} key={index.toString()}>
               <View style={styles.productImageWrapper}>
@@ -435,7 +452,7 @@ class DeliveryScreen extends Component {
               </View>
               <View style={styles.productDescriptionWrapper}>
                 <View style={styles.nameWrapper}>
-                  <Text style={styles.productName}>{item.product.product_name}</Text>
+                  <Text style={styles.productName}>{item.main_product_name}</Text>
                 </View>
                 <View style={styles.propertyWrapper}>
                   {size !== '' && <View style={styles.sizeWrapper}>
@@ -444,11 +461,8 @@ class DeliveryScreen extends Component {
                   {color !== '' && <View style={styles.colorWrapper}>
                     <Text style={styles.itemText}>Warna - {color}</Text>
                   </View>}
-                  {custom !== '' && <View style={styles.colorWrapper}>
-                    <Text style={styles.itemText}>{title} - {custom}</Text>
-                  </View>}
                   <View style={styles.qtyWrapper}>
-                    <Text style={styles.itemText}>Qty - {item.qty}</Text>
+                    <Text style={styles.itemText}>Qty - {item.quantity}</Text>
                   </View>
                 </View>
                 {
@@ -488,7 +502,7 @@ class DeliveryScreen extends Component {
     )
   }
 
-  _renderDeliveriesOption() {
+  _renderJNEDeliveriesOption() {
     if (this.props.shippingOptions.payload && this.props.shippingOptions.payload.shipping_options.length > 0)
       return (
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -504,8 +518,66 @@ class DeliveryScreen extends Component {
       )
   }
 
+  _renderDeliveriesOption() {
+    return (
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <TouchableOpacity onPress={() => this.setState({ jneSelected: true, isShowDelivery: false })} style={[styles.deliveryOptionWrapper, { flexDirection: 'row', alignItems: 'center' }]}>
+          <Image source={Images.jneLogo} style={{ width: 40, height: 20, marginRight: 20 }} />
+          <Text style={styles.deliveryNameText}>JNE</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => this.setState({ isShowDelivery: false }, () => this.actNavigate('OpenMapScreen'))} style={[styles.deliveryOptionWrapper, { flexDirection: 'row', alignItems: 'center' }]}>
+          <Image source={Images.gosendLogo} style={{ width: 40, height: 30, marginRight: 20 }} />
+          <Text style={styles.deliveryNameText}>GO-SEND</Text>
+        </TouchableOpacity>
+      </ScrollView >
+    )
+  }
+
+
+  renderJNEDeliveriesOptionModal() {
+    return (
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={this.state.jneSelected}
+        onRequestClose={() => {
+          this.setState({
+            jneSelected: false
+          })
+        }}>
+        <TouchableOpacity
+          style={styles.containerModal}
+          activeOpacity={1}
+          onPressOut={() => this.setState({
+            jneSelected: false
+          })}
+        >
+          <TouchableWithoutFeedback>
+            <View style={styles.chooseDeliveryWrapper2}>
+              <TouchableOpacity style={styles.chooseDeliveryBtn2} onPress={() => this.setState({
+                jneSelected: false,
+                isShowDelivery: true
+              })}>
+                <Image source={Images.x} style={styles.imageClose} />
+                <Text style={styles.chooseDeliveryText2}>Pilih Opsi Pengiriman</Text>
+              </TouchableOpacity>
+              {this._renderJNEDeliveriesOption()}
+            </View>
+          </TouchableWithoutFeedback>
+        </TouchableOpacity>
+      </Modal>
+    )
+  }
+
   renderDelivery() {
     var selectedDelivery = <View />
+    if (this.state.gosendChosen === 'gosend') {
+      selectedDelivery =
+        <View style={styles.selectedDeliveryWrapper}>
+          <Text style={styles.deliveryNameText}>GO-SEND {this.state.gosendShippingType === 'instant' ? "Instant" : "Same Day"}</Text>
+          <Text style={styles.deliveryPriceText}>{convertToRupiah(this.state.gosendShippingCost)}</Text>
+        </View>
+    }
     if (this.state.selectedDelivery.jne_or_jnt) {
       selectedDelivery =
         <View style={styles.selectedDeliveryWrapper}>
@@ -515,6 +587,9 @@ class DeliveryScreen extends Component {
     }
     return (
       <View style={styles.chooseDeliveryWrapper}>
+        <View style={{ marginBottom: 20, marginTop: 20 }}>
+          <Text style={{ fontFamily: Fonts.type.gotham2, color: Colors.black, fontSize: Metrics.fontSize1 }}>Opsi Pengiriman</Text>
+        </View>
         {selectedDelivery}
         <TouchableOpacity style={styles.chooseDeliveryBtn} onPress={() => this.calculateDelivery()}>
           <Text style={styles.chooseDeliveryText}>Pilih Opsi Pengiriman</Text>
@@ -543,9 +618,6 @@ class DeliveryScreen extends Component {
                   <Image source={Images.x} style={styles.imageClose} />
                   <Text style={styles.chooseDeliveryText2}>Pilih Opsi Pengiriman</Text>
                 </TouchableOpacity>
-                {this.props.shippingOptions.fetching && <View style={styles.containerLoading}>
-                  <DotIndicator size={12} color={Colors.mooimom} />
-                </View>}
                 {this._renderDeliveriesOption()}
               </View>
             </TouchableWithoutFeedback>
@@ -564,11 +636,19 @@ class DeliveryScreen extends Component {
   }
 
   onPressUsePoints() {
+    let pattern = /^-[0-9]?/gm;
+
     if (this.state.points === 0) {
       Alert.alert('', 'Nominal poin anda kosong. Anda tidak bisa menggunakan poin')
     }
     else if (this.state.nomPointsToUse > this.state.points) {
       Alert.alert('', 'Poin anda tidak cukup')
+    }
+    else if (this.state.nomPointsToUse === 0) {
+      Alert.alert('', 'Poin yang dimasukkan tidak boleh kosong')
+    }
+    else if (pattern.test(this.state.nomPointsToUse)) {
+      Alert.alert('', 'Poin yang anda masukkan tidak boleh kurang dari 0')
     }
     else {
       this.setState({
@@ -649,6 +729,9 @@ class DeliveryScreen extends Component {
 
     return (
       <>
+
+        <Text style={{ fontFamily: Fonts.type.gotham2, color: Colors.black, fontSize: Metrics.fontSize1, marginTop: 20 }}>Mooimom Points</Text>
+
         <View style={styles.mooimomPointsWrapper}>
           <View style={styles.selectedDeliveryTextWrapper}>
             <View style={styles.mooimomPointsTitleWrapper}>
@@ -664,12 +747,10 @@ class DeliveryScreen extends Component {
                 <Text style={styles.textUsePointButton}>Cancel</Text>
               </TouchableOpacity>
               :
-              <TouchableOpacity disabled={buttonDisabled} onPress={() => this.setState({ isShowUsePointsModal: true })} activeOpacity={0.5} style={[{ backgroundColor: buttonDisabled ? Colors.mediumGray : Colors.fire }, styles.usePointButton]}>
+              <TouchableOpacity onPress={() => this.setState({ isShowUsePointsModal: true })} activeOpacity={0.5} style={[{ backgroundColor: Colors.fire }, styles.usePointButton]}>
                 <Text style={styles.textUsePointButton}>Use Points</Text>
               </TouchableOpacity>
           }
-
-          {isProductPriceAllowed ? <View /> : <View style={styles.wrapperSeparator}><Text style={{ fontFamily: Fonts.type.gotham2, color: Colors.gray }}>* untuk menggunakan poin, minimal pembelian produk Rp 100.000 keatas.</Text></View>}
         </View>
         <Modal
           animationType="slide"
@@ -728,10 +809,7 @@ class DeliveryScreen extends Component {
         extraScrollHeight={100} enableOnAndroid={true}
         keyboardShouldPersistTaps='handled'
       >
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Text style={{ fontFamily: Fonts.type.gotham2, color: Colors.black, fontSize: Metrics.fontSize1 }}>Kode Kupon</Text>
-          <FastImage source={discountVoucher} style={styles.imgDiscountVoucher} resizeMode={FastImage.resizeMode.contain} />
-        </View>
+        <Text style={{ fontFamily: Fonts.type.gotham2, color: Colors.black, fontSize: Metrics.fontSize1 }}>Kode Kupon</Text>
 
         <View style={styles.couponInputContainer}>
           <TextInput
@@ -755,10 +833,7 @@ class DeliveryScreen extends Component {
     var discountVoucher = Images.discountVoucher
     return (
       <View>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Text style={{ fontFamily: Fonts.type.gotham2, color: Colors.black, fontSize: Metrics.fontSize1 }}>Voucher</Text>
-          <FastImage source={discountVoucher} style={styles.imgDiscountVoucher} resizeMode={FastImage.resizeMode.contain} />
-        </View>
+        <Text style={{ fontFamily: Fonts.type.gotham2, color: Colors.black, fontSize: Metrics.fontSize1 }}>Voucher</Text>
         {
           this.state.usingVoucher ?
             <View style={[styles.couponInputContainer, { justifyContent: 'space-between' }]}>
@@ -776,11 +851,23 @@ class DeliveryScreen extends Component {
     )
   }
 
+  calculateTotalPrice(price, deliveryPrice) {
+    let totalPrice = price + deliveryPrice - this.state.discountUsage - this.state.freeShippingUsage
+
+    if (totalPrice < this.state.pointUsage) {
+      totalPrice = totalPrice = 0
+    }
+    else {
+      totalPrice = totalPrice - this.state.pointUsage
+    }
+    return convertToRupiah(totalPrice)
+  }
+
   render() {
     console.log(this.state.discountUsage)
     var price = this.calculatePrice()
-    var deliveryPrice = this.state.selectedDelivery.price ? this.state.selectedDelivery.price : 0
-    var totalPrice = convertToRupiah(price + deliveryPrice - this.state.discountUsage - this.state.freeShippingUsage - this.state.pointUsage)
+    var deliveryPrice = this.state.gosendChosen === 'gosend' ? (this.state.gosendShippingCost ? this.state.gosendShippingCost : 0) : (this.state.selectedDelivery.price ? this.state.selectedDelivery.price : 0)
+    var totalPrice = this.calculateTotalPrice(price, deliveryPrice)
     var commission = convertToRupiah(this.state.commission)
     return (
       <SafeAreaView style={styles.container}>
@@ -810,9 +897,17 @@ class DeliveryScreen extends Component {
               }}>
                 <Text style={styles.chooseAddressText}>Pilih Alamat</Text>
               </TouchableOpacity>
-              {this._renderProductCart()}
+              {
+                this.props.getOnlineCart.fetching ?
+                  <DotIndicator size={8} color={Colors.mediumGray} style={{ marginTop: 40 }} />
+                  :
+                  <>
+                    {this._renderProductCart()}
+                  </>
+              }
               <View style={styles.wrapperSeparator} />
               {this.renderDelivery()}
+              {this.renderJNEDeliveriesOptionModal()}
               {this.renderMooimomPoints()}
               {this.renderVoucherField()}
 
@@ -842,6 +937,7 @@ class DeliveryScreen extends Component {
 const mapStateToProps = state => {
   return {
     cart: state.cart,
+    cartt: state.cartt,
     address: state.address,
     auth: state.auth,
     shippingOptions: state.shippingOptions,
@@ -850,14 +946,15 @@ const mapStateToProps = state => {
     mooimomPoints: state.mooimomPoints,
     checkCoupon: state.checkCoupon,
     claimVoucher: state.claimVoucher,
-    getOnlineCart: state.getOnlineCart
+    getOnlineCart: state.getOnlineCart,
+    passGosendData: state.passGosendData
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    emptyCartProcess: () => {
-      dispatch(CartActions.emptyCartRequest())
+    emptyCarttProcess: () => {
+      dispatch(CarttActions.emptyCarttRequest())
     },
     checkCouponProcess: data => {
       dispatch(CheckCouponActions.checkCouponRequest(data))

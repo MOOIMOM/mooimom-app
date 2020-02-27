@@ -14,27 +14,29 @@ import { call, put } from 'redux-saga/effects'
 import BalanceActions from '../Redux/BalanceRedux'
 // import { RegisterSelectors } from '../Redux/RegisterRedux'
 
-export function * postGetBalance(api, action) {
+export function* postGetBalance(api, action) {
   const { data } = action
   // get current data from Store
   // const currentData = yield select(RegisterSelectors.getData)
   // make the call to the api
   const response = yield call(api.postGetBalance, data)
-    // success?
-    if (response.data.success === 1) {
-      if (__DEV__) console.tron.log(response)
-      // You might need to change the response here - do this with a 'transform',
-      // located in ../Transforms/. Otherwise, just pass the data back from the api.
-      yield put(BalanceActions.getBalanceSuccess(response.data))
-    } else if (response.problem === 'TIMEOUT_ERROR') {
-      var err = {
-        error: {
-          error_code: '0',
-          error_message: 'Can not connect server now'
-        }
+  // success?
+  if (response.data.success === 1) {
+    if (__DEV__) console.tron.log(response)
+    console.log(response)
+    // You might need to change the response here - do this with a 'transform',
+    // located in ../Transforms/. Otherwise, just pass the data back from the api.
+    yield put(BalanceActions.getBalanceSuccess(response.data))
+  } else if (response.problem === 'TIMEOUT_ERROR') {
+    var err = {
+      error: {
+        error_code: '0',
+        error_message: 'Can not connect server now'
       }
-      yield put(BalanceActions.getBalanceFailure(err))
-    } else {
-      yield put(BalanceActions.getBalanceFailure(response.data))
     }
+    yield put(BalanceActions.getBalanceFailure(err))
+  } else {
+    console.log(response)
+    yield put(BalanceActions.getBalanceFailure(response.data))
+  }
 }

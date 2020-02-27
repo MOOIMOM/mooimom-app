@@ -162,6 +162,7 @@ export default StyleSheet.create({
     backgroundColor: Colors.mooimom,
     height: 35,
     borderRadius: 10,
+    marginBottom: 10,
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -266,6 +267,7 @@ export default StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.5)',
     width: Metrics.screenWidth,
     height: Metrics.screenHeight,
+    flex: 1,
     position: 'absolute',
     left: 0,
     top: 0,
@@ -289,7 +291,7 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 20,
     paddingVertical: 10,
-    marginVertical: 10,
+    marginBottom: 10,
     flex: 1
   },
   mooimomPointsWrapper: {
@@ -298,8 +300,9 @@ export default StyleSheet.create({
     borderRadius: 10,
     justifyContent: 'space-between',
     paddingHorizontal: 20,
-    paddingVertical: 10,
+    paddingVertical: 20,
     marginVertical: 20,
+    marginBottom: 30,
     flex: 1
   },
   selectedDeliveryTextWrapper: {

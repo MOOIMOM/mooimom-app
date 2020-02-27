@@ -23,8 +23,8 @@ export default class BeOurMerchantScreen extends React.Component {
           }}>
             <View style={{ width: '96%', alignItems: 'flex-start', alignSelf: 'center' }}>
               <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={{
-                position: 'absolute', zIndex: 1,
-                marginTop: isIphoneXorAbove() ? 40 : 20, marginLeft: 10,
+                position: isIphoneXorAbove() ? '' : 'absolute', zIndex: isIphoneXorAbove() ? 0 : 1,
+                marginTop: isIphoneXorAbove() ? 70 : 20, marginLeft: 10,
                 width: 30, height: 30, borderRadius: 20,
                 justifyContent: 'center', alignItems: 'center',
                 backgroundColor: Colors.white, shadowColor: '#CCCCCC', shadowOffset: { width: 0, height: 2 },
@@ -39,11 +39,11 @@ export default class BeOurMerchantScreen extends React.Component {
                 }} />
               </TouchableOpacity>
             </View>
-            <View style={{ height: Metrics.screenHeight, width: Metrics.screenWidth, justifyContent: 'center', alignItems: 'center' }}>
+            <View style={{ height: isIphoneXorAbove() ? Metrics.screenHeight / 1.20 : Metrics.screenHeight, width: Metrics.screenWidth, justifyContent: 'center', alignItems: 'center' }}>
               <Text style={{ fontFamily: Fonts.type.gotham2, color: Colors.white, fontSize: Metrics.fontSize5, marginBottom: 20 }}>Be Our Merchant!</Text>
               <Text style={{ fontFamily: Fonts.type.gotham2, color: Colors.white, fontSize: Metrics.fontSize4, marginBottom: 10 }}>Contact:</Text>
               <Text style={{ fontFamily: Fonts.type.gotham2, color: Colors.white, fontSize: Metrics.fontSize4 }}>Ms Fallin 0818-681-948</Text>
-              <Text style={{ fontFamily: Fonts.type.gotham2, color: Colors.white, fontSize: Metrics.fontSize4 }}>Ms Nurus 0811-8701-562</Text>
+              <Text style={{ fontFamily: Fonts.type.gotham2, color: Colors.white, fontSize: Metrics.fontSize4 }}>Mr Hazman 0877-2283-5576</Text>
             </View>
           </LinearGradient>
         </ScrollView>

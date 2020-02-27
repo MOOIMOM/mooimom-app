@@ -1,3 +1,4 @@
 <resources>
+	<string moduleConfig="true" name="reactNativeCodePush_androidDeploymentKey">0OiHjLwyA4YT-QB7QK7559ijJ77Yzx3LFmWCl</string>
     <string name="app_name">mooimom</string>
 </resources>

@@ -28,11 +28,11 @@ class HowtoScreen extends Component {
   }
 
   skipLearn() {
-    AsyncStorage.setItem('already_seen_howtoscreen', 'already')
     this.setState({ activeSlide: this.state.learnpages.length - 1 })
   }
 
   pressContinue() {
+    AsyncStorage.setItem('already_seen_howtoscreen', 'already')
     this.actNavigate('SignupScreen')
   }
 

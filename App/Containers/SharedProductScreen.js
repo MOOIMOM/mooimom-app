@@ -6,13 +6,13 @@ import WishlistActions from '../Redux/WishlistRedux'
 import EditWishlistActions from '../Redux/EditWishlistRedux'
 import SharedProductActions from '../Redux/SharedProductRedux'
 import { connect } from 'react-redux'
-import {convertToRupiah} from '../Lib/utils'
+import { convertToRupiah } from '../Lib/utils'
 
 // Styles
 import styles from './Styles/SharedProductScreenStyles'
 
 class SharedProductScreen extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       menuStatus: ['Wishlist Produk', 'Produk Dibagikan'],
@@ -24,18 +24,18 @@ class SharedProductScreen extends Component {
     this._renderMenuStatus = this._renderMenuStatus.bind(this)
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.reloadWishlist()
-    if(this.state.selectedMenuIdx === 1){
+    if (this.state.selectedMenuIdx === 1) {
       this.setState({
         products: this.props.sharedProduct.data
       })
     }
   }
 
-  reloadWishlist(){
-    let data ={
-      data_request:{
+  reloadWishlist() {
+    let data = {
+      data_request: {
         user_id: this.props.auth.payload.user_id,
         unique_token: this.props.auth.payload.unique_token
       }
@@ -43,14 +43,14 @@ class SharedProductScreen extends Component {
     this.props.getWishlistProcess(data)
   }
 
-  componentWillReceiveProps(newProps){
+  componentWillReceiveProps(newProps) {
     if (this.props.editWishlist !== newProps.editWishlist) {
       if (
         newProps.editWishlist.payload !== null &&
         newProps.editWishlist.error === null &&
         !newProps.editWishlist.fetching
       ) {
-          this.reloadWishlist()
+        this.reloadWishlist()
       }
     }
 
@@ -60,11 +60,11 @@ class SharedProductScreen extends Component {
         newProps.sharedProduct.error === null &&
         !newProps.sharedProduct.fetching
       ) {
-          if(this.state.selectedMenuIdx === 1){
-            this.setState({
-              products: newProps.sharedProduct.data
-            })
-          }
+        if (this.state.selectedMenuIdx === 1) {
+          this.setState({
+            products: newProps.sharedProduct.data
+          })
+        }
       }
     }
 
@@ -74,28 +74,28 @@ class SharedProductScreen extends Component {
         newProps.wishlist.error === null &&
         !newProps.wishlist.fetching
       ) {
-          if(this.state.selectedMenuIdx === 0){
-            this.setState({
-              products: newProps.wishlist.payload.products
-            })
-          }
+        if (this.state.selectedMenuIdx === 0) {
+          this.setState({
+            products: newProps.wishlist.payload.products
+          })
+        }
       }
     }
   }
 
-  actNavigate (screen , obj = {}) {
+  actNavigate(screen, obj = {}) {
     const { navigate } = this.props.navigation
     navigate(screen, obj)
   }
 
-  pressSelectedMenu(index){
+  pressSelectedMenu(index) {
     this.setState({
       products: [],
       selectedMenuIdx: index,
     })
     var data = []
-    if(index === 0){
-      if(this.props.wishlist.payload && this.props.wishlist.payload.products.length > 0)
+    if (index === 0) {
+      if (this.props.wishlist.payload && this.props.wishlist.payload.products.length > 0)
         data = this.props.wishlist.payload.products
     } else {
       data = this.props.sharedProduct.data
@@ -107,12 +107,12 @@ class SharedProductScreen extends Component {
     }, 100);
   }
 
-  _renderProduct ({item, index}) {
+  _renderProduct({ item, index }) {
     return (
       <TouchableWithoutFeedback
         onPress={() => this.actNavigate('ProductScreen', {
           product_slug: item.slug,
-          auth:this.props.auth
+          auth: this.props.auth
         })}
       >
         <View>
@@ -128,33 +128,33 @@ class SharedProductScreen extends Component {
     )
   }
 
-  _renderMenuStatus(){
-    if(this.state.menuStatus.length > 0){
+  _renderMenuStatus() {
+    if (this.state.menuStatus.length > 0) {
       return (
         <View style={styles.menuStatus}>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-        {this.state.menuStatus.map((item, index) => {
-        var style = styles.menuBtn
-        var styleText = styles.menuText
-        if(index === this.state.selectedMenuIdx){
-          style = styles.menuBtn2
-          styleText = styles.menuText2
-        }
-        return(
-          <TouchableOpacity key={index.toString()} onPress={() => this.pressSelectedMenu(index)}>
-            <View style={style}>
-                <Text style={styleText}>{item}</Text>
-            </View>
-          </TouchableOpacity>
-        )
-      })}
-      </ScrollView>
-      </View>
+            {this.state.menuStatus.map((item, index) => {
+              var style = styles.menuBtn
+              var styleText = styles.menuText
+              if (index === this.state.selectedMenuIdx) {
+                style = styles.menuBtn2
+                styleText = styles.menuText2
+              }
+              return (
+                <TouchableOpacity key={index.toString()} onPress={() => this.pressSelectedMenu(index)}>
+                  <View style={style}>
+                    <Text style={styleText}>{item}</Text>
+                  </View>
+                </TouchableOpacity>
+              )
+            })}
+          </ScrollView>
+        </View>
       )
     }
   }
 
-  render () {
+  render() {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.containerScroll}>
@@ -162,23 +162,23 @@ class SharedProductScreen extends Component {
             <TouchableOpacity style={styles.btnHeader} onPress={
               () => this.props.navigation.goBack()
             }>
-              <Image source={Images.back} style={styles.imgHeader}/>
+              <Image source={Images.back} style={styles.imgHeader} />
             </TouchableOpacity>
             <TouchableOpacity style={styles.searchButton} onPress={() => this.actNavigate('SearchScreen')}>
-              <Image source={Images.search} style={styles.imageSearch}/>
+              <Image source={Images.search} style={styles.imageSearch} />
               <Text style={styles.textSearch}>Cari Baju Hamil, Bra, Korset, dll</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.btnHeader} onPress={() => this.actNavigate('CartScreen')}>
-              <Image source={Images.shoppingCartBlack} style={styles.imgHeader}/>
-              {this.props.cart.data.length > 0 && <View style={styles.notifContainer}>
-                <Text style={styles.textNotif}>{this.props.cart.data.length}</Text>
+              <Image source={Images.shoppingCartBlack} style={styles.imgHeader} />
+              {this.props.cartt.data.length > 0 && <View style={styles.notifContainer}>
+                <Text style={styles.textNotif}>{this.props.cartt.data.length}</Text>
               </View>}
             </TouchableOpacity>
           </View>
-          <View style={styles.wrapperSeparator}/>
+          <View style={styles.wrapperSeparator} />
           <View style={styles.contentContainer}>
             {this._renderMenuStatus()}
-            <View style={styles.wrapperSeparator}/>
+            <View style={styles.wrapperSeparator} />
             <FlatList
               data={this.state.products}
               renderItem={this._renderProduct}
@@ -186,12 +186,12 @@ class SharedProductScreen extends Component {
               showsVerticalScrollIndicator={false}
               numColumns={2}
               getItemLayout={(data, index) => (
-                {length: Metrics.screenHeight / 2, offset: Metrics.screenHeight / 2 * index, index}
+                { length: Metrics.screenHeight / 2, offset: Metrics.screenHeight / 2 * index, index }
               )}
             />
+          </View>
         </View>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
     )
   }
 }
@@ -201,7 +201,7 @@ const mapStateToProps = state => {
     wishlist: state.wishlist,
     auth: state.auth,
     editWishlist: state.editWishlist,
-    cart: state.cart
+    cartt: state.cartt
   }
 };
 

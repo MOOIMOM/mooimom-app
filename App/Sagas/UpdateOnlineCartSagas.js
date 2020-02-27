@@ -34,6 +34,7 @@ export function* postUpdateOnlineCart(api, action) {
         error_message: 'Can not connect server now'
       }
     }
+    console.log(err)
     yield put(UpdateOnlineCartActions.updateOnlineCartFailure(err))
   } else if (response.data.success === 0) {
     console.log(response.data)

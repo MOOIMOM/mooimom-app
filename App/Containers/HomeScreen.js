@@ -11,6 +11,8 @@ import ProfileActions from '../Redux/ProfileRedux'
 import SettingActions from '../Redux/SettingRedux'
 import EditWishlistActions from '../Redux/EditWishlistRedux'
 import GetNotificationActions from '../Redux/GetNotificationRedux'
+import CarttActions from '../Redux/CarttRedux'
+import GetOnlineCartActions from '../Redux/GetOnlineCartRedux'
 import FastImage from 'react-native-fast-image'
 import firebase from 'react-native-firebase'
 import RNAiqua from 'react-native-aiqua-sdk'
@@ -73,77 +75,86 @@ class HomeScreen extends Component {
     }, 200)
   }
 
-  handleOpenURL = (event) => {
-    this.navigate(event.url)
-  }
 
   navigate = (url) => {
-    Alert.alert('AIQUA Deeplink', url)
     const { navigate } = this.props.navigation;
     const route = url.replace(/.*?:\/\//g, '');
     // const id = route.match(/\/([^\/]+)\/?$/)[1];
     const routeName1 = route.split('/')[1];
     const routeName2 = route.split('/')[2];
 
-    const routeName = routeName1 + '-' + routeName2
+    if (routeName1 === ('app-qr-code-to-app-install-page' || 'app-qr-code-to-brand' || 'app-qr-code-to-category' || 'app-qr-code-to')) {
+      const routeName = routeName1 + '-' + routeName2
 
-    console.log(routeName)
-
-    switch (routeName) {
-      case 'app-qr-code-to-app-install-page-store-kokas':
-        RNAiqua.logEvent('qr_code_install_page_store_kokas')
-        break;
-      case 'app-qr-code-to-app-install-page-store-pim':
-        RNAiqua.logEvent('qr_code_install_page_store_pim')
-        break;
-      case 'app-qr-code-to-app-install-page-store-pp':
-        RNAiqua.logEvent('qr_code_install_page_store_pp')
-        break;
-      case 'app-qr-code-to-app-install-page-store-gi':
-        RNAiqua.logEvent('qr_code_install_page_store_gi')
-        break;
-      case 'app-qr-code-to-app-install-page-store-mkg':
-        RNAiqua.logEvent('qr_code_install_page_store_mkg')
-        break;
-      case 'app-qr-code-to-app-install-page-store-lotte-avenue':
-        RNAiqua.logEvent('qr_code_install_page_store_lotte-avenue')
-        break;
-      case 'app-qr-code-to-app-install-page-store-central':
-        RNAiqua.logEvent('qr_code_install_page_store_central')
-        break;
-      case 'app-qr-code-to-app-install-page-store-aeon-bsd':
-        RNAiqua.logEvent('qr_code_install_page_store_aeon_bsd')
-        break;
-      case 'app-qr-code-to-app-install-page-store-aeon-jgc':
-        RNAiqua.logEvent('qr_code_install_page_store_kokas')
-        break;
-      case 'app-qr-code-to-app-install-page-store-kokas':
-        RNAiqua.logEvent('qr_code_install_page_store_kokas')
-        break;
-      case 'app-qr-code-to-brand-nero&bianco':
-        RNAiqua.logEvent('qr_code_brand_page_nero&bianco')
-        break;
-      case 'app-qr-code-to-brand-mooimom':
-        RNAiqua.logEvent('qr_code_brand_page_mooimom')
-        break;
-      case 'app-qr-code-to-brand-tweeling':
-        RNAiqua.logEvent('qr_code_brand_page_tweeling')
-        break;
-      case 'app-qr-code-to-category-page-jeelly':
-        RNAiqua.logEvent('qr_code_category_page_jeelly')
-        break;
-      case 'app-qr-code-to-category-page-klara':
-        RNAiqua.logEvent('qr_code_category_page_klara')
-        break;
-      case 'app-qr-code-to-expo-CBMI':
-        RNAiqua.logEvent('qr_code_expo_CBMI')
-        break;
-      case 'app-qr-code-to-expo-babymamafestival':
-        RNAiqua.logEvent('qr_code_expo_babymamafestival')
-        break;
-      case 'app-qr-code-to-app-install-page-mooimom-box':
-        RNAiqua.logEvent('qr_code_install_page_mooimom_box')
-        break;
+      switch (routeName) {
+        case 'app-qr-code-to-app-install-page-store-kokas':
+          RNAiqua.logEvent('qr_code_install_page_store_kokas')
+          break;
+        case 'app-qr-code-to-app-install-page-store-pim':
+          RNAiqua.logEvent('qr_code_install_page_store_pim')
+          break;
+        case 'app-qr-code-to-app-install-page-store-pp':
+          RNAiqua.logEvent('qr_code_install_page_store_pp')
+          break;
+        case 'app-qr-code-to-app-install-page-store-gi':
+          RNAiqua.logEvent('qr_code_install_page_store_gi')
+          break;
+        case 'app-qr-code-to-app-install-page-store-mkg':
+          RNAiqua.logEvent('qr_code_install_page_store_mkg')
+          break;
+        case 'app-qr-code-to-app-install-page-store-lotte-avenue':
+          RNAiqua.logEvent('qr_code_install_page_store_lotte-avenue')
+          break;
+        case 'app-qr-code-to-app-install-page-store-central':
+          RNAiqua.logEvent('qr_code_install_page_store_central')
+          break;
+        case 'app-qr-code-to-app-install-page-store-aeon-bsd':
+          RNAiqua.logEvent('qr_code_install_page_store_aeon_bsd')
+          break;
+        case 'app-qr-code-to-app-install-page-store-aeon-jgc':
+          RNAiqua.logEvent('qr_code_install_page_store_kokas')
+          break;
+        case 'app-qr-code-to-app-install-page-store-kokas':
+          RNAiqua.logEvent('qr_code_install_page_store_kokas')
+          break;
+        case 'app-qr-code-to-app-install-page-mooimom-box':
+          RNAiqua.logEvent('qr_code_install_page_mooimom_box')
+          break;
+        case 'app-qr-code-to-brand-nero&bianco':
+          RNAiqua.logEvent('qr_code_brand_page_nero&bianco')
+          break;
+        case 'app-qr-code-to-brand-mooimom':
+          RNAiqua.logEvent('qr_code_brand_page_mooimom')
+          break;
+        case 'app-qr-code-to-brand-tweeling':
+          RNAiqua.logEvent('qr_code_brand_page_tweeling')
+          break;
+        case 'app-qr-code-to-category-page-jeelly':
+          RNAiqua.logEvent('qr_code_category_page_jeelly')
+          break;
+        case 'app-qr-code-to-category-page-klara':
+          RNAiqua.logEvent('qr_code_category_page_klara')
+          break;
+        case 'app-qr-code-to-expo-CBMI':
+          RNAiqua.logEvent('qr_code_expo_CBMI')
+          break;
+        case 'app-qr-code-to-expo-babymamafestival':
+          RNAiqua.logEvent('qr_code_expo_babymamafestival')
+          break;
+      }
+    }
+    // Deeplink to screen
+    else if (routeName1 === 'product') {
+      this.navigate_to('ProductScreen', {
+        product_slug: routeName2,
+        auth: this.props.auth
+      })
+    }
+    else if (routeName1 === 'cart') {
+      this.navigate_to('CartScreen')
+    }
+    else if (routeName1 === 'event') {
+      this.navigate_to('EventRegistrationScreen')
     }
   }
 
@@ -174,6 +185,7 @@ class HomeScreen extends Component {
           fcm_token: this.state.fcmToken
         }
       }
+      this.props.getOnlineCartProcess(data)
       this.refreshNotification()
       this.props.getAppVersionProcess()
       this.props.getProfileProcess(data)
@@ -351,8 +363,8 @@ class HomeScreen extends Component {
         !newProps.getAppVersion.fetching
       ) {
 
-        let ANDROID_APP_VERSION = '1.2.19'
-        let IOS_APP_VERSION = '1.2.18'
+        let ANDROID_APP_VERSION = '1.2.21'
+        let IOS_APP_VERSION = '1.2.20'
 
         let currAndroidVersion = newProps.getAppVersion.payload.android
         let currIOSVersion = newProps.getAppVersion.payload.ios
@@ -368,6 +380,26 @@ class HomeScreen extends Component {
           if (currIOSVersion !== IOS_APP_VERSION) {
             console.log('Curr And :', currIOSVersion, typeof (currIOSVersion), 'Lat And :', IOS_APP_VERSION, typeof (IOS_APP_VERSION))
             this.setState({ forceUpdate: true })
+          }
+        }
+      }
+    }
+    if (this.props.getOnlineCart !== newProps.getOnlineCart) {
+      if (
+        newProps.getOnlineCart.payload !== null &&
+        newProps.getOnlineCart.error === null &&
+        !newProps.getOnlineCart.fetching
+      ) {
+        if (newProps.getOnlineCart.payload.shopping_cart_content_new.length === 0) {
+          this.props.emptyCarttProcess()
+        }
+        else if (newProps.getOnlineCart.payload.shopping_cart_content_new.length > 0) {
+          if (this.props.cartt.data.length === 0) {
+            let updateCart = [...newProps.getOnlineCart.payload.shopping_cart_content_new].reverse()
+            updateCart.map((cart, index) => {
+              let productVar = { sku: cart.sku, quantity: cart.quantity }
+              this.props.addToCarttProcess(productVar)
+            })
           }
         }
       }
@@ -616,7 +648,7 @@ class HomeScreen extends Component {
   render() {
     const { navigate } = this.props.navigation
     var notifCount = 0
-    var cartCount = this.props.cart.data.length
+    var cartCount = this.props.cartt.data.length
     if (this.props.notification.payload && this.props.notification.payload.all_notifications.length > 0) {
       notifCount = getNewNotificationsCount(this.props.notification.payload.all_notifications, this.props.lastNotification.payload)
     }
@@ -803,14 +835,16 @@ class HomeScreen extends Component {
 }
 const mapStateToProps = state => {
   return {
+    cartt: state.cartt,
     getHomepage: state.getHomepage,
     auth: state.auth,
     notification: state.notification,
     setting: state.setting,
     lastNotification: state.lastNotification,
-    cart: state.cart,
     profile: state.profile,
-    getAppVersion: state.getAppVersion
+    getAppVersion: state.getAppVersion,
+    getOnlineCart: state.getOnlineCart,
+    updateOnlineCart: state.updateOnlineCart
   }
 };
 
@@ -818,6 +852,9 @@ const mapDispatchToProps = dispatch => {
   return {
     sharedProductProcess: data => {
       dispatch(SharedProductActions.sharedProductRequest(data))
+    },
+    emptyCarttProcess: () => {
+      dispatch(CarttActions.emptyCarttRequest())
     },
     getHomepageRequest: data => {
       dispatch(GetHomepageActions.getHomepageRequest(data))
@@ -827,6 +864,9 @@ const mapDispatchToProps = dispatch => {
     },
     addWishlistProductProcess: data => {
       dispatch(EditWishlistActions.addWishlistRequest(data))
+    },
+    addToCarttProcess: data => {
+      dispatch(CarttActions.addCarttRequest(data))
     },
     deleteWishlistProductProcess: data => {
       dispatch(EditWishlistActions.deleteWishlistRequest(data))
@@ -840,6 +880,9 @@ const mapDispatchToProps = dispatch => {
     getProfileProcess: data => {
       dispatch(ProfileActions.getProfileRequest(data))
     },
+    getOnlineCartProcess: data => {
+      dispatch(GetOnlineCartActions.getOnlineCartRequest(data))
+    }
   }
 };
 

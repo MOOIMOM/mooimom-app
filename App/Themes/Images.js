@@ -75,7 +75,9 @@ const images = {
   discountVoucher: require('../Images/Icons/discount-voucher.png'),
   couponIcon: require('../Images/Icons/voucher.png'),
   gosendIcon: require('../Images/Icons/gosend.png'),
-  momsClassBanner: require('../Images/moms-class-banner.jpeg'),
+  leftFire: require('../Images/Icons/left-fire.png'),
+  gosendLogo: require('../Images/Icons/gosend-logo.png'),
+  jneLogo: require('../Images/Icons/jne-logo.png'),
   dad: require('../Images/dad.png'),
   mom: require('../Images/mom.png'),
   forceUpdatePopUp: require('../Images/notif-update.png'),
@@ -83,6 +85,8 @@ const images = {
   maternityBanner: require('../Images/banner-due-date.png'),
   babyAgeBanner: require('../Images/banner-baby-age.png'),
   bin: require('../Images/Icons/bin.png'),
+  momsClassBanner1: require('../Images/moms-class-banner-1.jpg'),
+  momsClassBanner2: require('../Images/moms-class-banner-2.jpg')
 }
 
 export default images

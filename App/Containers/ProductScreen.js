@@ -6,11 +6,12 @@ import Carousel, { Pagination } from 'react-native-snap-carousel';
 import SharedProductActions from '../Redux/SharedProductRedux'
 import GetProductActions from '../Redux/GetProductRedux'
 import CartActions from '../Redux/CartRedux'
+import CarttActions from '../Redux/CarttRedux'
 import EditWishlistActions from '../Redux/EditWishlistRedux'
 import SubscribeProductActions from '../Redux/SubscribeProductRedux'
-// import UpdateOnlineCartActions from '../Redux/UpdateOnlineCartRedux'
-// import GetOnlineCartActions from '../Redux/GetOnlineCartRedux'
-// import ChooseFreeGiftActions from '../Redux/ChooseFreeGiftRedux'
+import UpdateOnlineCartActions from '../Redux/UpdateOnlineCartRedux'
+import GetOnlineCartActions from '../Redux/GetOnlineCartRedux'
+import ChooseFreeGiftActions from '../Redux/ChooseFreeGiftRedux'
 import FastImage from 'react-native-fast-image'
 import ScaledImage from '../Components/ScaledImage';
 import { convertToRupiah, share, shareDescripton, download, titleCase, getNewNotificationsCount } from '../Lib/utils'
@@ -20,9 +21,6 @@ import { DotIndicator } from 'react-native-indicators'
 // Styles
 import styles from './Styles/ProductScreenStyles'
 
-// var cart = []
-
-// AsyncStorage.getItem('cart').then(res => cart = JSON.parse(res))
 
 class ProductScreen extends Component {
   constructor(props) {
@@ -32,9 +30,9 @@ class ProductScreen extends Component {
       product: {},
       isInWishlist: false,
       activeSlide: 0,
-      // freeGiftColorSelected: '',
-      // freeGiftSizeSelected: '',
-      // freeGiftCustomSelected: '',
+      freeGiftColorSelected: '',
+      freeGiftSizeSelected: '',
+      freeGiftCustomSelected: '',
       colorSelected: '',
       sizeSelected: '',
       customSelected: '',
@@ -49,9 +47,9 @@ class ProductScreen extends Component {
       fcmToken: '',
       isShowError: false,
       qty: 1,
-      // shoppingCartId: 0,
-      // freeGiftItem: [],
-      // freeGiftModal: false
+      shoppingCartId: 0,
+      freeGiftItem: [],
+      freeGiftModal: false
     }
   }
 
@@ -61,7 +59,7 @@ class ProductScreen extends Component {
   }
 
   async componentDidMount() {
-    // this.refreshOnlineCart()
+    this.refreshOnlineCart()
     AppState.addEventListener('change', this._handleAppStateChange);
     this.setState({ fcmToken: await AsyncStorage.getItem('fcmToken') })
     let data = {
@@ -92,38 +90,46 @@ class ProductScreen extends Component {
       }
       this.props.loadProductProcess(data)
     }
-    // if (this.props.getOnlineCart !== newProps.getOnlineCart) {
-    //   if (
-    //     newProps.getOnlineCart.payload !== null &&
-    //     newProps.getOnlineCart.error === null &&
-    //     !newProps.getOnlineCart.fetching
-    //   ) {
-    //     this.setState({
-    //       shoppingCartId: newProps.getOnlineCart.payload.shopping_cart_id
-    //     })
-    //   }
-    // }
-    // if (this.props.updateOnlineCart !== newProps.updateOnlineCart) {
-    //   if (
-    //     newProps.updateOnlineCart.payload !== null &&
-    //     newProps.updateOnlineCart.error === null &&
-    //     !newProps.updateOnlineCart.fetching
-    //   ) {
-    //     if (newProps.updateOnlineCart.payload.success === 1) {
-    //       if (newProps.updateOnlineCart.payload.show_popup_ask_user_choose_free_gift === 1) {
-    //         this.setState({
-    //           freeGiftModal: true,
-    //           freeGiftItem: newProps.updateOnlineCart.payload.the_free_gift_product
-    //         })
-    //       }
-    //     }
-    //   }
-    // }
-    if (this.props.cart !== newProps.cart) {
+    if (this.props.getOnlineCart !== newProps.getOnlineCart) {
       if (
-        newProps.cart.payload !== null &&
-        newProps.cart.error === null &&
-        !newProps.cart.fetching
+        newProps.getOnlineCart.payload !== null &&
+        newProps.getOnlineCart.error === null &&
+        !newProps.getOnlineCart.fetching
+      ) {
+        if (newProps.getOnlineCart.payload.success === 0) {
+          Alert.alert('', 'Mohon coba lagi')
+        }
+        else {
+          this.setState({
+            shoppingCartId: newProps.getOnlineCart.payload.shopping_cart_id
+          })
+        }
+      }
+    }
+    if (this.props.updateOnlineCart !== newProps.updateOnlineCart) {
+      if (
+        newProps.updateOnlineCart.payload !== null &&
+        newProps.updateOnlineCart.error === null &&
+        !newProps.updateOnlineCart.fetching
+      ) {
+        if (newProps.updateOnlineCart.payload.success === 1) {
+          if (newProps.updateOnlineCart.payload.show_popup_ask_user_choose_free_gift === 1) {
+            this.setState({
+              freeGiftModal: true,
+              freeGiftItem: newProps.updateOnlineCart.payload.the_free_gift_product
+            })
+          }
+        }
+        else {
+          Alert.alert('', 'Mohon coba lagi')
+        }
+      }
+    }
+    if (this.props.cartt !== newProps.cartt) {
+      if (
+        newProps.cartt.payload !== null &&
+        newProps.cartt.error === null &&
+        !newProps.cartt.fetching
       ) {
         let logData = {
           category_name: this.state.product.category_name,
@@ -156,17 +162,17 @@ class ProductScreen extends Component {
         RNAiqua.logEvent('product_added_to_wishlist', logData)
       }
     }
-    // if (this.props.chooseFreeGift !== newProps.chooseFreeGift) {
-    //   if (
-    //     newProps.chooseFreeGift.payload !== null &&
-    //     newProps.chooseFreeGift.error === null &&
-    //     !newProps.chooseFreeGift.fetching
-    //   ) {
-    //     if (newProps.chooseFreeGift.payload.success === 1) {
-    //       this.setState({ freeGiftModal: false })
-    //     }
-    //   }
-    // }
+    if (this.props.chooseFreeGift !== newProps.chooseFreeGift) {
+      if (
+        newProps.chooseFreeGift.payload !== null &&
+        newProps.chooseFreeGift.error === null &&
+        !newProps.chooseFreeGift.fetching
+      ) {
+        if (newProps.chooseFreeGift.payload.success === 1) {
+          this.setState({ freeGiftModal: false })
+        }
+      }
+    }
     if (this.props.product !== newProps.product) {
       if (
         newProps.product.payload !== null &&
@@ -191,9 +197,9 @@ class ProductScreen extends Component {
         }
         this.setState({
           product: newProps.product.payload,
-          // freeGiftColorSelected: color,
-          // freeGiftSizeSelected: size,
-          // freeGiftCustomSelected: custom,
+          freeGiftColorSelected: color,
+          freeGiftSizeSelected: size,
+          freeGiftCustomSelected: custom,
           colorSelected: color,
           sizeSelected: size,
           customSelected: custom,
@@ -223,54 +229,54 @@ class ProductScreen extends Component {
     }
   }
 
-  // onPressClaimFreeGift() {
-  //   if (!this.props.product.payload || !this.props.product.payload.all_product_variations_with_stock_data)
-  //     return;
-  //   var arr = this.props.product.payload.all_product_variations_with_stock_data
-  //   var sku = ''
-  //   var qty = this.state.qty
-  //   for (var i = 0; i < arr.length; i++) {
-  //     if (arr[i].color_slug === this.state.colorSelected
-  //       && arr[i].size_slug === this.state.sizeSelected
-  //       && arr[i].custom_attribute_1_slug === this.state.customSelected) {
-  //       if (arr[i].stock_quantity > 0) {
-  //         sku = arr[i].sku
-  //         if (arr[i].stock_quantity < this.state.qty) {
-  //           qty = arr[i].stock_quantity
-  //           this.setState({
-  //             qty: qty
-  //           })
-  //         }
-  //       }
-  //       break;
-  //     }
-  //   }
+  onPressClaimFreeGift() {
+    if (!this.props.product.payload || !this.props.product.payload.all_product_variations_with_stock_data)
+      return;
+    var arr = this.props.product.payload.all_product_variations_with_stock_data
+    var sku = ''
+    var qty = this.state.qty
+    for (var i = 0; i < arr.length; i++) {
+      if (arr[i].color_slug === this.state.colorSelected
+        && arr[i].size_slug === this.state.sizeSelected
+        && arr[i].custom_attribute_1_slug === this.state.customSelected) {
+        if (arr[i].stock_quantity > 0) {
+          sku = arr[i].sku
+          if (arr[i].stock_quantity < this.state.qty) {
+            qty = arr[i].stock_quantity
+            this.setState({
+              qty: qty
+            })
+          }
+        }
+        break;
+      }
+    }
 
-  //   let data2 = {
-  //     data_request: {
-  //       user_id: this.props.navigation.state.params.auth.payload.user_id,
-  //       unique_token: this.props.navigation.state.params.auth.payload.unique_token,
-  //       shopping_cart_id: this.state.shoppingCartId,
-  //       chosen_free_gift_product_sku: this.props.product.payload.sku,
-  //       chosen_size_slug: this.state.freeGiftSizeSelected,
-  //       chosen_color_slug: this.state.freeGiftColorSelected,
-  //       chosen_custom_attribute_1_slug: this.state.freeGiftCustomSelected,
-  //       the_product_variation_sku_user_added: sku,
-  //     }
-  //   }
-  //   this.props.chooseFreeGiftProcess(data2)
-  // }
+    let data2 = {
+      data_request: {
+        user_id: this.props.navigation.state.params.auth.payload.user_id,
+        unique_token: this.props.navigation.state.params.auth.payload.unique_token,
+        shopping_cart_id: this.state.shoppingCartId,
+        chosen_free_gift_product_sku: this.props.product.payload.sku,
+        chosen_size_slug: this.state.freeGiftSizeSelected,
+        chosen_color_slug: this.state.freeGiftColorSelected,
+        chosen_custom_attribute_1_slug: this.state.freeGiftCustomSelected,
+        the_product_variation_sku_user_added: sku,
+      }
+    }
+    this.props.chooseFreeGiftProcess(data2)
+  }
 
-  // refreshOnlineCart() {
-  //   let data2 = {
-  //     data_request: {
-  //       user_id: this.props.navigation.state.params.auth.payload.user_id,
-  //       unique_token: this.props.navigation.state.params.auth.payload.unique_token,
-  //     }
-  //   }
-  //   console.log('resfresing')
-  //   this.props.getOnlineCartProcess(data2)
-  // }
+  refreshOnlineCart() {
+    let data2 = {
+      data_request: {
+        user_id: this.props.navigation.state.params.auth.payload.user_id,
+        unique_token: this.props.navigation.state.params.auth.payload.unique_token,
+      }
+    }
+    console.log('resfresing')
+    this.props.getOnlineCartProcess(data2)
+  }
 
   _handleAppStateChange = (nextAppState) => {
     if (
@@ -1040,6 +1046,7 @@ class ProductScreen extends Component {
         break;
       }
     }
+
     if (sku === '') {
       Alert.alert(
         'Sorry',
@@ -1047,37 +1054,46 @@ class ProductScreen extends Component {
       )
       return;
     }
-    let data = {
-      product: this.props.product.payload,
-      color: this.state.colorSelected,
-      size: this.state.sizeSelected,
-      custom: this.state.customSelected,
-      sku: sku,
-      qty: qty
+
+
+    let productVar = { sku: sku, quantity: qty }
+    let dataCart = this.filterCart(this.props.cartt, productVar)
+
+    let data2 = {
+      data_request: {
+        user_id: this.props.navigation.state.params.auth.payload.user_id,
+        unique_token: this.props.navigation.state.params.auth.payload.unique_token,
+        shopping_cart_id: this.state.shoppingCartId,
+        product_variations_user_want_to_buy: JSON.stringify(dataCart.reverse()),
+        the_product_variation_sku_user_added: sku,
+      }
     }
 
-    // let dataCart = '['
-    // dataCart = dataCart + '{"sku":"' + sku + '","quantity":' + qty + '},'
-    // if (dataCart.length > 1)
-    //   dataCart = dataCart.substring(0, dataCart.length - 1)
-    // dataCart = dataCart + ']'
-
-    // let data2 = {
-    //   data_request: {
-    //     user_id: this.props.navigation.state.params.auth.payload.user_id,
-    //     unique_token: this.props.navigation.state.params.auth.payload.unique_token,
-    //     shopping_cart_id: this.state.shoppingCartId,
-    //     product_variations_user_want_to_buy: dataCart,
-    //     the_product_variation_sku_user_added: sku,
-    //   }
-    // }
-
-    // this.props.updateOnlineCartProcess(data2)
-    this.props.addToCartProcess(data)
+    this.props.updateOnlineCartProcess(data2)
+    this.props.addToCarttProcess(productVar)
     Alert.alert(
       '',
       'Produk Berhasil Ditambahkan!',
     )
+  }
+
+  filterCart(state, data) {
+    for (var i = 0; i < state.data.length; i++) {
+      if (state.data[i].sku === data.sku) {
+        var obj = [...state.data]
+        if (data.quantity === 0) {
+          obj.splice(i, 1)
+        } else {
+          obj[i] = data
+        }
+        data = obj
+        return data
+      }
+    }
+    var obj = [...state.data]
+    obj.unshift(data)
+    data = obj
+    return data
   }
 
   render() {
@@ -1108,8 +1124,8 @@ class ProductScreen extends Component {
             <View style={styles.headerButtonRight}>
               <TouchableOpacity onPress={() => this.actNavigate('SharedProductScreen')}><Image source={Images.wishlistBlack} style={styles.buttonHeader} /></TouchableOpacity>
               <TouchableOpacity onPress={() => this.actNavigate('CartScreen')}><Image source={Images.shoppingCartBlack} style={styles.buttonHeader} />
-                {this.props.cart.data.length > 0 && <View style={styles.notifContainer}>
-                  <Text style={styles.textNotif}>{this.props.cart.data.length}</Text>
+                {this.props.cartt.data.length > 0 && <View style={styles.notifContainer}>
+                  <Text style={styles.textNotif}>{this.props.cartt.data.length}</Text>
                 </View>}
               </TouchableOpacity>
               <TouchableOpacity onPress={() => this.actNavigate('NotificationScreen')}><Image source={Images.notif} style={styles.buttonHeader2} />
@@ -1151,8 +1167,8 @@ class ProductScreen extends Component {
           <View style={styles.headerButtonRight}>
             <TouchableOpacity onPress={() => this.actNavigate('SharedProductScreen')}><Image source={Images.wishlistBlack} style={styles.buttonHeader} /></TouchableOpacity>
             <TouchableOpacity onPress={() => this.actNavigate('CartScreen')}><Image source={Images.shoppingCartBlack} style={styles.buttonHeader} />
-              {this.props.cart.data.length > 0 && <View style={styles.notifContainer}>
-                <Text style={styles.textNotif}>{this.props.cart.data.length}</Text>
+              {this.props.cartt.data.length > 0 && <View style={styles.notifContainer}>
+                <Text style={styles.textNotif}>{this.props.cartt.data.length}</Text>
               </View>}
             </TouchableOpacity>
             <TouchableOpacity onPress={() => this.actNavigate('NotificationScreen')}><Image source={Images.notif} style={styles.buttonHeader2} />
@@ -1258,7 +1274,7 @@ class ProductScreen extends Component {
             <Text style={(this.state.finishShareImage ? styles.modalShareText : styles.modalShareText2)}>Description Copied</Text>
           </View>
         </View>}
-        {/* <Modal
+        <Modal
           animationType='fade'
           transparent
           visible={this.state.freeGiftModal}
@@ -1285,7 +1301,7 @@ class ProductScreen extends Component {
               </View>
             </View>
           </View>
-        </Modal> */}
+        </Modal>
       </SafeAreaView>
     )
   }
@@ -1295,13 +1311,14 @@ const mapStateToProps = state => {
   return {
     product: state.product,
     cart: state.cart,
-    // getOnlineCart: state.getOnlineCart,
-    // updateOnlineCart: state.updateOnlineCart,
+    cartt: state.cartt,
+    getOnlineCart: state.getOnlineCart,
+    updateOnlineCart: state.updateOnlineCart,
     wishlist: state.wishlist,
     notification: state.notification,
     lastNotification: state.lastNotification,
     subscribeProduct: state.subscribeProduct,
-    // chooseFreeGift: state.chooseFreeGift
+    chooseFreeGift: state.chooseFreeGift
   }
 };
 
@@ -1319,6 +1336,9 @@ const mapDispatchToProps = dispatch => {
     addToCartProcess: data => {
       dispatch(CartActions.addCartRequest(data))
     },
+    addToCarttProcess: data => {
+      dispatch(CarttActions.addCarttRequest(data))
+    },
     addWishlistProductProcess: data => {
       dispatch(EditWishlistActions.addWishlistRequest(data))
     },
@@ -1328,15 +1348,15 @@ const mapDispatchToProps = dispatch => {
     subscribeProductProcess: data => {
       dispatch(SubscribeProductActions.subscribeProductRequest(data))
     },
-    // updateOnlineCartProcess: data => {
-    //   dispatch(UpdateOnlineCartActions.updateOnlineCartRequest(data))
-    // },
-    // getOnlineCartProcess: data => {
-    //   dispatch(GetOnlineCartActions.getOnlineCartRequest(data))
-    // },
-    // chooseFreeGiftProcess: data => {
-    //   dispatch(ChooseFreeGiftActions.chooseFreeGiftRequest(data))
-    // }
+    updateOnlineCartProcess: data => {
+      dispatch(UpdateOnlineCartActions.updateOnlineCartRequest(data))
+    },
+    getOnlineCartProcess: data => {
+      dispatch(GetOnlineCartActions.getOnlineCartRequest(data))
+    },
+    chooseFreeGiftProcess: data => {
+      dispatch(ChooseFreeGiftActions.chooseFreeGiftRequest(data))
+    }
   }
 };
 

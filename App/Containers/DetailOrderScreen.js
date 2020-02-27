@@ -425,8 +425,6 @@ class DetailOrderScreen extends Component {
               <Text style={styles.deliveryText3}>Jumlah yang harus dibayar:</Text>
               <Text style={styles.priceText2}>{convertToRupiah(parseInt(this.state.midtrans.gross_amount))}</Text>
               <View style={styles.wrapperSeparator} />
-              <Text style={styles.deliveryText3}>Metode Pembayaran:</Text>
-              {this.renderMethod()}
             </ScrollView>
           </View>
         </SafeAreaView>

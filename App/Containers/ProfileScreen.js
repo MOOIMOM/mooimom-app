@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { ScrollView, SafeAreaView, Text, View, Image, TouchableOpacity, Alert, PermissionsAndroid, Modal, TouchableWithoutFeedback, Platform, AsyncStorage } from 'react-native'
 import { Images, Metrics, Colors, Fonts } from '../Themes'
 import FastImage from 'react-native-fast-image'
+import CarttActions from '../Redux/CarttRedux'
 import { NavigationEvents } from 'react-navigation';
 import { connect } from 'react-redux'
 import { convertToRupiah, convertToThousandOrHigher } from '../Lib/utils'
@@ -256,8 +257,8 @@ class ProfileScreen extends Component {
             </TouchableOpacity>
             <TouchableOpacity style={styles.btnHeader} onPress={() => this.actNavigate('CartScreen')}>
               <Image source={Images.shoppingCartBlack} style={styles.imgHeader} />
-              {this.props.cart.data.length > 0 && <View style={styles.notifContainer}>
-                <Text style={styles.textNotif}>{this.props.cart.data.length}</Text>
+              {this.props.cartt.data.length > 0 && <View style={styles.notifContainer}>
+                <Text style={styles.textNotif}>{this.props.cartt.data.length}</Text>
               </View>}
             </TouchableOpacity>
           </View>
@@ -279,9 +280,6 @@ class ProfileScreen extends Component {
                       </View>
                       <TouchableOpacity style={styles.btnEditProfile} onPress={() => this.actNavigate('EditProfileScreen', { profile: this.state.profile })}>
                         <Text style={styles.textEditProfile}>Edit Profile</Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity style={styles.btnEditProfile} onPress={() => this.actNavigate('OpenMapScreen', { profile: this.state.profile })}>
-                        <Text style={styles.textEditProfile}>Map</Text>
                       </TouchableOpacity>
                     </View>
                 }
@@ -396,7 +394,7 @@ class ProfileScreen extends Component {
                 </View>
               </View>
               <View style={{ marginVertical: 30 }}>
-                <Text style={{ fontFamily: Fonts.type.gotham2, fontSize: Metrics.fontSize1, color: Colors.mediumGray, alignSelf: 'center' }}>Version {Platform.OS === 'ios' ? '1.2.18' : '1.2.19'}</Text>
+                <Text style={{ fontFamily: Fonts.type.gotham2, fontSize: Metrics.fontSize1, color: Colors.mediumGray, alignSelf: 'center' }}>Version {Platform.OS === 'ios' ? '1.2.20' : '1.2.21'}</Text>
               </View>
               <View style={{ marginVertical: 20 }} />
             </ScrollView>
@@ -450,7 +448,7 @@ const mapStateToProps = state => {
     profile: state.profile,
     balance: state.balance,
     editprofile: state.editprofile,
-    cart: state.cart,
+    cartt: state.cartt,
     mooimomPoints: state.mooimomPoints
   }
 };
@@ -461,6 +459,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(AuthActions.logout(null)),
         dispatch(SendOtpActions.logout(null))
       dispatch(CartActions.logout(null))
+      dispatch(CarttActions.emptyCarttRequest())
       dispatch(LastNotificationTimeActions.logout(null))
     },
     getProfileProcess: data => {

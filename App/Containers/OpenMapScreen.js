@@ -1,17 +1,22 @@
 import React from 'react'
-import { View, TouchableOpacity, Text, Modal, TextInput, Image, SafeAreaView, StyleSheet, ScrollView } from 'react-native'
+import { View, TouchableOpacity, Text, Modal, TextInput, Image, SafeAreaView, StyleSheet, ScrollView, Dimensions, PermissionsAndroid, Platform } from 'react-native'
 
 import axios from 'axios'
 import { connect } from 'react-redux'
-// import MapView from 'react-native-maps'
+import MapView, { Marker } from 'react-native-maps'
 import Config from 'react-native-config'
 import { DotIndicator } from 'react-native-indicators'
 
-import { convertToRupiah } from '../Lib/utils'
+import { convertToRupiah, isIphoneXorAbove } from '../Lib/utils'
 import { Colors, Fonts, Metrics, Images } from '../Themes'
+
+const { width, height } = Dimensions.get('window')
+const ASPECT_RATIO = width / height
 
 
 import GetGoSendShipmentActions from '../Redux/GetGoSendShipmentRedux'
+import PassGosendDataActions from '../Redux/PassGosendDataRedux'
+import Geolocation from 'react-native-geolocation-service'
 
 
 class OpenMapScreen extends React.Component {
@@ -20,10 +25,12 @@ class OpenMapScreen extends React.Component {
     this.state = {
       openSearch: false,
       selectService: false,
+      sureButton: false,
       gosendFetching: true,
       isInstantActive: false,
       isSamedayActive: false,
       extraInfo: "",
+      selectedPlaceName: "",
       searchInput: '',
       instantPrice: 0,
       samedayPrice: 0,
@@ -41,6 +48,10 @@ class OpenMapScreen extends React.Component {
         longitudeDelta: 0.0421,
       }
     }
+  }
+
+  componentDidMount() {
+    this.getLocation()
   }
 
   componentWillReceiveProps(newProps) {
@@ -61,7 +72,87 @@ class OpenMapScreen extends React.Component {
     }
   }
 
-  async calculateGoSendPrice(lat, lng) {
+
+  actNavigate(screen, data = {}) {
+    const { navigate } = this.props.navigation
+    navigate(screen, data)
+  }
+
+  onSelectedService = async (service, price) => {
+    let data = {
+      lat: this.state.lat,
+      lng: this.state.long,
+      shippingMode: 'gosend',
+      shippingType: service,
+      shippingCost: price
+    }
+
+    await this.props.passGosendDataProcess(data)
+    this.actNavigate('DeliveryScreen')
+  }
+
+  hasLocationPermission = async () => {
+    if (Platform.OS === 'ios' ||
+      (Platform.OS === 'android' && Platform.Version < 23)) {
+      return true;
+    }
+
+    const hasPermission = await PermissionsAndroid.check(
+      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+    )
+
+    if (hasPermission) return true;
+
+    const status = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+    )
+
+    if (status === PermissionsAndroid.RESULTS.GRANTED) return true;
+
+    if (status === PermissionsAndroid.RESULTS.DENIED) {
+      ToastAndroid.show('Location permission denied by user.', ToastAndroid.LONG)
+    } else if (status === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN) {
+      ToastAndroid.show('Location permission revoked by user.', ToastAndroid.LONG)
+    }
+
+    return false;
+  }
+
+  getLocation = async () => {
+    const hasLocationPermission = await this.hasLocationPermission()
+
+    if (!hasLocationPermission) return;
+
+    Geolocation.getCurrentPosition(
+      (position) => {
+        let latitude = position.coords.latitude
+        let longitude = position.coords.longitude
+
+        this.setState({
+          region: {
+            latitude: latitude,
+            longitude: longitude,
+            latitudeDelta: 0.000922,
+            longitudeDelta: 0.000421,
+          },
+          sureButton: true,
+          lat: latitude,
+          long: longitude
+        })
+
+        this.calculateGoSendPrice(latitude, longitude)
+        console.log('init', position)
+      },
+      (error) => {
+        // this.setState({ location: error, loading: false });
+        console.log(error)
+      },
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000, distanceFilter: 50, forceRequestLocation: true }
+    )
+
+  }
+
+  calculateGoSendPrice = async (lat, lng) => {
     let data = {
       data_request: {
         user_id: this.props.auth.payload.user_id,
@@ -120,7 +211,7 @@ class OpenMapScreen extends React.Component {
 
   }
 
-  handleReversePlace(placeId) {
+  handleReversePlace(placeId, placeName) {
     axios.get('https://maps.googleapis.com/maps/api/place/details/json', {
       params: {
         placeid: placeId,
@@ -128,21 +219,30 @@ class OpenMapScreen extends React.Component {
       }
     })
       .then((res) => {
+
         latitude = res.data.result.geometry.location.lat
         longitude = res.data.result.geometry.location.lng
+
+        let northeastLat = parseFloat(res.data.result.geometry.viewport.northeast.lat)
+        let southwestLat = parseFloat(res.data.result.geometry.viewport.southwest.lat)
+
+        let latDelta = northeastLat - southwestLat
+        let lngDelta = latDelta * ASPECT_RATIO
+
         console.log(res.data.result.geometry)
 
         this.setState({
           region: {
             latitude: latitude,
             longitude: longitude,
-            latitudeDelta: 0.00005,
-            longitudeDelta: 0.00005
+            latitudeDelta: latDelta,
+            longitudeDelta: lngDelta
           },
+          selectedPlaceName: placeName,
           lat: latitude, long: longitude,
           openSearch: false,
           searchInput: '',
-          selectService: true
+          sureButton: true
         })
         this.calculateGoSendPrice(latitude, longitude)
         console.log(latitude, longitude)
@@ -182,7 +282,7 @@ class OpenMapScreen extends React.Component {
               let placeId = item.place_id
 
               return (
-                <TouchableOpacity onPress={() => this.handleReversePlace(placeId)} key={index} style={{ width: '96%', alignSelf: 'center', borderBottomWidth: 0.5, borderColor: Colors.mediumGray, paddingVertical: 10 }}>
+                <TouchableOpacity onPress={() => this.handleReversePlace(placeId, format.main_text)} key={index} style={{ width: '96%', alignSelf: 'center', borderBottomWidth: 0.5, borderColor: Colors.mediumGray, paddingVertical: 10 }}>
                   <Text style={{ fontFamily: Fonts.type.gotham2, color: Colors.mooimom }}>{format.main_text}</Text>
                   <Text style={{ fontFamily: Fonts.type.gotham2, color: Colors.gray }}>{format.secondary_text}</Text>
                 </TouchableOpacity>
@@ -219,7 +319,7 @@ class OpenMapScreen extends React.Component {
               backgroundColor: Colors.white,
               shadowColor: '#CCCCCC',
               shadowOffset: { width: 0, height: 2 },
-              shadowOpacity: 0.6,
+              shadowOpacity: 0.8,
               shadowRadius: 4,
               elevation: 3,
             }}
@@ -233,7 +333,7 @@ class OpenMapScreen extends React.Component {
             </View>
             <ScrollView showsVerticalScrollIndicator={false}>
               <View style={{ alignSelf: 'center', width: '90%' }}>
-                <TouchableOpacity disabled={this.props.goSendShipment.fetching} style={{ alignItems: 'center', paddingVertical: 20, borderBottomWidth: 0.5, borderBottomColor: Colors.mediumGray, flexDirection: 'row', alignItems: 'center' }}>
+                <TouchableOpacity onPress={() => this.onSelectedService('instant', this.state.instantPrice)} disabled={this.props.goSendShipment.fetching || !this.state.isInstantActive} style={{ alignItems: 'center', paddingVertical: 20, borderBottomWidth: 0.5, borderBottomColor: Colors.mediumGray, flexDirection: 'row', alignItems: 'center' }}>
                   <Image source={Images.gosendIcon} style={{ width: 40, height: 40, marginRight: 20, borderRadius: 10 }} />
                   <View style={{ alignItems: 'flex-start' }}>
                     <Text style={{ fontFamily: Fonts.type.gotham1, color: Colors.black }}>GO-SEND <Text style={{ fontFamily: Fonts.type.gotham2, color: Colors.black }}>{this.state.gosendServices[0].service}</Text></Text>
@@ -244,7 +344,7 @@ class OpenMapScreen extends React.Component {
                     }
                   </View>
                 </TouchableOpacity>
-                <TouchableOpacity disabled={this.props.goSendShipment.fetching} style={{ alignItems: 'center', paddingVertical: 20, borderBottomWidth: 0.5, borderBottomColor: Colors.mediumGray, flexDirection: 'row', alignItems: 'center' }}>
+                <TouchableOpacity onPress={() => this.onSelectedService('sameday', this.state.samedayPrice)} disabled={this.props.goSendShipment.fetching || !this.state.isSamedayActive} style={{ alignItems: 'center', paddingVertical: 20, borderBottomWidth: 0.5, borderBottomColor: Colors.mediumGray, flexDirection: 'row', alignItems: 'center' }}>
                   <Image source={Images.gosendIcon} style={{ width: 40, height: 40, marginRight: 20, borderRadius: 10 }} />
                   <View style={{ alignItems: 'flex-start' }}>
                     <Text style={{ fontFamily: Fonts.type.gotham1, color: Colors.black }}>GO-SEND <Text style={{ fontFamily: Fonts.type.gotham2, color: Colors.black }}>{this.state.gosendServices[1].service}</Text></Text>
@@ -264,70 +364,117 @@ class OpenMapScreen extends React.Component {
   }
 
   render() {
-
+    console.log('Instant', this.state.isInstantActive, 'Sameday', this.state.isSamedayActive)
     return (
       <SafeAreaView>
-        <TouchableOpacity onPress={() => this.setState({ openSearch: true })} style={{
+        <View style={{
+          width: '96%',
           position: 'absolute',
-          zIndex: 1000,
-          top: 30,
-          width: '90%',
-          backgroundColor: Colors.white,
-          borderRadius: 20,
+          zIndex: 1,
+          top: isIphoneXorAbove() ? 50 : 30,
           alignSelf: 'center',
-          paddingVertical: 10,
-          paddingHorizontal: 10,
           flexDirection: 'row',
-          alignItems: 'center',
-          shadowColor: '#CCCCCC',
-          shadowOffset: { width: 0, height: 2 },
-          shadowOpacity: 0.6,
-          shadowRadius: 4,
-          elevation: 3,
+          alignItems: 'center'
         }}>
-          <Image source={Images.search} style={{ width: 14, height: 14, marginHorizontal: 10 }} />
-          <Text style={{ fontFamily: Fonts.type.gotham2, color: Colors.gray }}>Cari lokasi..</Text>
-        </TouchableOpacity>
-        {/* <MapView
+          <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={{
+            backgroundColor: Colors.white,
+            width: 40, height: 40,
+            borderRadius: 20,
+            marginRight: 10,
+            justifyContent: 'center',
+            alignItems: 'center',
+            shadowColor: '#CCCCCC',
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.8,
+            shadowRadius: 4,
+            elevation: 2,
+          }}>
+            <Image source={Images.back} style={{ width: 14, height: 14 }} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => this.setState({ openSearch: true })} style={{
+            width: '86%',
+            backgroundColor: Colors.white,
+            borderRadius: 20,
+            paddingVertical: 10,
+            paddingHorizontal: 10,
+            flexDirection: 'row',
+            alignItems: 'center',
+            shadowColor: '#CCCCCC',
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.8,
+            shadowRadius: 4,
+            elevation: 2,
+          }}>
+            <Image source={Images.search} style={{ width: 14, height: 14, marginHorizontal: 10 }} />
+            <Text style={{ fontFamily: Fonts.type.gotham2, color: this.state.selectedPlaceName !== '' ? Colors.black : Colors.gray }}>{this.state.selectedPlaceName !== '' ? this.state.selectedPlaceName : "Cari lokasi.."}</Text>
+          </TouchableOpacity>
+        </View>
+        <MapView
           style={styles.map}
           region={this.state.region}
-          initialRegion={{
-            latitude: 37.78825,
-            longitude: -122.4324,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }}
+          initialRegion={this.state.region}
         >
-        </MapView> */}
+          <Marker coordinate={this.state.region} title={this.state.selectedPlaceName}>
+            <Image source={Images.pin} style={{ width: 44, height: 44 }} />
+          </Marker>
+        </MapView>
         {this.renderSearchModal()}
         {this.renderServiceSelectionModal()}
+        {
+          this.state.sureButton &&
+          <TouchableOpacity onPress={() => this.setState({ selectService: true })} style={{
+            position: 'absolute',
+            zIndex: 1,
+            top: Metrics.screenHeight / 1.2,
+            width: '90%',
+            backgroundColor: '#FFBD49',
+            borderRadius: 20,
+            alignSelf: 'center',
+            paddingVertical: 10,
+            paddingHorizontal: 10,
+            justifyContent: 'center',
+            alignItems: 'center',
+            shadowColor: '#CCCCCC',
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.8,
+            shadowRadius: 4,
+            elevation: 2,
+          }}>
+            <Text style={{ fontFamily: Fonts.type.gotham1, color: Colors.white }}>Gunakan lokasi ini</Text>
+          </TouchableOpacity>
+        }
       </SafeAreaView >
     )
   }
 
 }
 
+
+
 const styles = StyleSheet.create({
   map: {
-    height: Metrics.screenHeight / 2,
+    height: Metrics.screenHeight - 20,
     ...StyleSheet.absoluteFillObject,
   },
-});
+})
 
 const mapStateToProps = state => {
   return {
     auth: state.auth,
     goSendShipment: state.goSendShipment
   }
-};
+}
 
 const mapDispatchToProps = dispatch => {
   return {
     geGoSendShipmentProcess: data => {
       dispatch(GetGoSendShipmentActions.getGoSendShipmentRequest(data))
+    },
+    passGosendDataProcess: data => {
+      dispatch(PassGosendDataActions.passGosendDataRequest(data))
     }
   }
-};
+}
 
 export default connect(
   mapStateToProps,

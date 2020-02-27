@@ -61,6 +61,7 @@ class VoucherDetailScreen extends React.Component {
         newProps.checkCoupon.error === null &&
         !newProps.checkCoupon.fetching
       ) {
+        console.log('aww')
         this.onSuccessCheckCoupon(newProps.checkCoupon)
       }
     }
@@ -73,6 +74,7 @@ class VoucherDetailScreen extends React.Component {
 
   goBack() {
     const { goBack } = this.props.navigation
+    AsyncStorage.setItem('on_payment_process', 'not_ready')
     goBack()
   }
 
@@ -93,6 +95,7 @@ class VoucherDetailScreen extends React.Component {
               let data = {
                 voucher_code: this.state.voucherDetail.voucher_code
               }
+              AsyncStorage.setItem('on_payment_process', 'not_ready')
               this.props.claimVoucherProcess(data)
               this.actNavigate('DeliveryScreen')
             }
@@ -137,13 +140,12 @@ class VoucherDetailScreen extends React.Component {
 
   onPressUseVoucher = async () => {
     let dataCart = '['
-    this.props.cart.data.map(cart => {
-      dataCart = dataCart + '{"sku":"' + cart.sku + '","quantity":' + cart.qty + '},'
+    this.props.cartt.data.map(cart => {
+      dataCart = dataCart + '{"sku":"' + cart.sku + '","quantity":' + cart.quantity + '},'
     })
     if (dataCart.length > 1)
       dataCart = dataCart.substring(0, dataCart.length - 1)
     dataCart = dataCart + ']'
-
 
     let data = {
       data_request: {
@@ -153,9 +155,7 @@ class VoucherDetailScreen extends React.Component {
         coupon_code: this.state.voucherDetail.voucher_code
       }
     }
-
-
-
+    console.log(data)
     this.props.checkCouponProcess(data)
 
   }
@@ -218,7 +218,7 @@ const mapStateToProps = state => {
     auth: state.auth,
     getOneVoucher: state.getOneVoucher,
     checkCoupon: state.checkCoupon,
-    cart: state.cart
+    cartt: state.cartt
   }
 };
 

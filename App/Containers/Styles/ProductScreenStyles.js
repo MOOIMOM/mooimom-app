@@ -693,12 +693,14 @@ export default StyleSheet.create({
   viewOut: {
     width: Metrics.screenWidth,
     height: Metrics.screenHeight,
-    backgroundColor: 'rgba(0,0,0,0.5)'
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   viewIn: {
     width: Metrics.screenWidth - 40,
-    height: Metrics.screenHeight / 2 + 60,
-    top: Metrics.screenHeight / 4,
+    height: Metrics.screenHeight / 1.4,
     backgroundColor: Colors.white,
     alignItems: 'center',
     marginHorizontal: 20,
@@ -714,6 +716,7 @@ export default StyleSheet.create({
   },
   textModalLine: {
     color: Colors.white,
+    fontWeight: 'bold',
     fontFamily: Fonts.type.gotham1,
     fontSize: Metrics.fontSize2,
   },

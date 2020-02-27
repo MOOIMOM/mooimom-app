@@ -374,8 +374,8 @@ class OrderScreen extends Component {
             </TouchableOpacity>
             <TouchableOpacity style={styles.btnHeader} onPress={() => this.actNavigate('CartScreen')}>
               <Image source={Images.shoppingCartBlack} style={styles.imgHeader} />
-              {this.props.cart.data.length > 0 && <View style={styles.notifContainer}>
-                <Text style={styles.textNotif}>{this.props.cart.data.length}</Text>
+              {this.props.cartt.data.length > 0 && <View style={styles.notifContainer}>
+                <Text style={styles.textNotif}>{this.props.cartt.data.length}</Text>
               </View>}
             </TouchableOpacity>
           </View>
@@ -431,7 +431,7 @@ const mapStateToProps = state => {
     allOrder: state.allOrder,
     auth: state.auth,
     commissionSummary: state.commissionSummary,
-    cart: state.cart,
+    cartt: state.cartt,
     cancelOrder: state.cancelOrder,
     deleteOrderHistory: state.deleteOrderHistory
   }

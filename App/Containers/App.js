@@ -6,6 +6,7 @@ import RootContainer from './RootContainer'
 import createStore from '../Redux'
 
 import RNAiqua from 'react-native-aiqua-sdk'
+import codePush from 'react-native-code-push'
 
 // create our store
 const store = createStore()
@@ -37,6 +38,12 @@ class App extends Component {
   }
 }
 
+let codePushOptions = {
+  checkFrequency: codePush.CheckFrequency.ON_APP_RESUME,
+  installMode: codePush.InstallMode.ON_NEXT_RESUME
+}
+
+App = codePush(codePushOptions)(App)
 // allow reactotron overlay for fast design in dev mode
 export default DebugConfig.useReactotron
   ? console.tron.overlay(App)

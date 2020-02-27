@@ -1,7 +1,12 @@
 package com.mooimom.id;
 
 import android.app.Application;
+import com.airbnb.android.react.maps.MapsPackage;
 import com.facebook.react.ReactApplication;
+import com.microsoft.codepush.react.CodePush;
+import com.microsoft.codepush.react.ReactInstanceHolder;
+import com.reactnativecommunity.geolocation.GeolocationPackage;
+import com.agontuk.RNFusedLocation.RNFusedLocationPackage;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.reactlibrary.RNAiquaSdkPackage;
 import com.dylanvann.fastimage.FastImageViewPackage;
@@ -25,6 +30,11 @@ public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
     @Override
+    protected String getJSBundleFile(){
+      return CodePush.getJSBundleFile();
+    }
+
+    @Override
     public boolean getUseDeveloperSupport() {
       return BuildConfig.DEBUG;
     }
@@ -33,6 +43,10 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
             new MainReactPackage(),
+            new CodePush(getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey), getApplicationContext(), BuildConfig.DEBUG),
+            new GeolocationPackage(),
+            new RNFusedLocationPackage(),
+            new MapsPackage(),
             new ReactNativeConfigPackage(),
             new RNAiquaSdkPackage(),
             new FastImageViewPackage(),

@@ -4,21 +4,40 @@ import { Images, Metrics, Colors, Fonts } from '../Themes'
 import FastImage from 'react-native-fast-image'
 import { connect } from 'react-redux'
 import { convertToRupiah, titleCase } from '../Lib/utils'
-import ModalDropDown from '../Components/ModalDropDown'
 import CartActions from '../Redux/CartRedux'
-// import UpdateOnlineCartActions from '../Redux/UpdateOnlineCartRedux'
+import CarttActions from '../Redux/CarttRedux'
+import UpdateOnlineCartActions from '../Redux/UpdateOnlineCartRedux'
 import CommissionEstimationActions from '../Redux/CommissionEstimationRedux'
-// import GetOnlineCartActions from '../Redux/GetOnlineCartRedux'
+import GetOnlineCartActions from '../Redux/GetOnlineCartRedux'
+
+import { DotIndicator } from 'react-native-indicators'
 // Styles
 import styles from './Styles/CartScreenStyles'
+
+
 class CartScreen extends Component {
   constructor(props) {
     super(props)
     this.state = {
       commission: 0,
-      // shoppingCartId: 0,
-      // freeGiftItems: []
+      shoppingCartId: 0,
+      disabledRemoveButton: false,
+      cart: []
     }
+  }
+
+  componentWillMount() {
+    let dataCart = [...this.props.cartt.data].reverse()
+
+    let data2 = {
+      data_request: {
+        user_id: this.props.auth.payload.user_id,
+        unique_token: this.props.auth.payload.unique_token,
+        shopping_cart_id: this.props.getOnlineCart.payload.shopping_cart_id,
+        product_variations_user_want_to_buy: JSON.stringify(dataCart)
+      }
+    }
+    this.props.updateOnlineCartProcess(data2)
   }
 
   componentDidMount() {
@@ -28,8 +47,8 @@ class CartScreen extends Component {
         unique_token: this.props.auth.payload.unique_token,
       }
     }
-    // this.props.getOnlineCartProcess(data)
-    this.reloadCommission(this.props.cart.data)
+    this.props.getOnlineCartProcess(data)
+    this.reloadCommission(this.state.cart)
   }
 
   actNavigate(screen) {
@@ -50,25 +69,49 @@ class CartScreen extends Component {
       }
     }
 
-    if (this.props.cart !== newProps.cart) {
+
+    if (this.props.cartt !== newProps.cartt) {
       if (
-        newProps.commissionEstimation.payload !== null &&
-        newProps.commissionEstimation.error === null &&
-        !newProps.commissionEstimation.fetching
+        newProps.cartt.payload !== null &&
+        newProps.cartt.error === null &&
+        !newProps.cartt.fetching
       ) {
-        this.reloadCommission(newProps.cart.data)
+        let dataCart = [...this.props.cartt.data].reverse()
+
+        let data2 = {
+          data_request: {
+            user_id: this.props.auth.payload.user_id,
+            unique_token: this.props.auth.payload.unique_token,
+            shopping_cart_id: this.state.shoppingCartId,
+            product_variations_user_want_to_buy: JSON.stringify(dataCart),
+          }
+        }
+        this.props.updateOnlineCartProcess(data2)
       }
     }
 
-    // if (this.props.getOnlineCart !== newProps.getOnlineCart) {
-    //   if (
-    //     newProps.getOnlineCart.payload !== null &&
-    //     newProps.getOnlineCart.error === null &&
-    //     !newProps.getOnlineCart.fetching
-    //   ) {
-    //     this.setState({ shoppingCartId: newProps.getOnlineCart.payload.shopping_cart_id })
-    //   }
-    // }
+    if (this.props.updateOnlineCart !== newProps.updateOnlineCart) {
+      if (
+        newProps.updateOnlineCart.payload !== null &&
+        newProps.updateOnlineCart.error === null &&
+        !newProps.updateOnlineCart.fetching
+      ) {
+        this.setState({ disabledRemoveButton: false })
+        this.componentDidMount()
+      }
+    }
+
+    if (this.props.getOnlineCart !== newProps.getOnlineCart) {
+      if (
+        newProps.getOnlineCart.payload !== null &&
+        newProps.getOnlineCart.error === null &&
+        !newProps.getOnlineCart.fetching
+      ) {
+        console.log(newProps.getOnlineCart.payload.shopping_cart_content_new)
+        this.reloadCommission(newProps.getOnlineCart.payload.shopping_cart_content_new)
+        this.setState({ shoppingCartId: newProps.getOnlineCart.payload.shopping_cart_id, cart: newProps.getOnlineCart.payload.shopping_cart_content_new })
+      }
+    }
   }
 
   reloadCommission(arr) {
@@ -80,7 +123,7 @@ class CartScreen extends Component {
     };
     let dataCart = '['
     arr.map(cart => {
-      dataCart = dataCart + '{"sku":"' + cart.sku + '","quantity":' + cart.qty + '},'
+      dataCart = dataCart + '{"sku":"' + cart.sku + '","quantity":' + cart.quantity + '},'
     })
     if (dataCart.length > 1)
       dataCart = dataCart.substring(0, dataCart.length - 1)
@@ -95,83 +138,16 @@ class CartScreen extends Component {
     this.props.getCommissionEstimationProcess(data)
   }
 
-  _renderSize({ item, index }) {
-    return (
-      <TouchableOpacity>
-        <View style={styles.sizeBtn}>
-          <Text style={styles.sizeText}>
-            {item.name}
-          </Text>
-        </View>
-      </TouchableOpacity>
-    );
-  }
 
-  _renderColor({ item, index }) {
-    var image = Images.default
-    if (item.image_url && item.image_url !== '') {
-      image = { uri: item.image_url }
-    }
-    return (
-      <TouchableOpacity>
-        <View style={styles.colorBtn}>
-          <FastImage source={image} style={[styles.colorPick]} resizeMode={FastImage.resizeMode.contain} />
-        </View>
-      </TouchableOpacity>
-    );
-  }
-
-  _dropdown_renderSizeButtonText(rowData) {
-    const { name } = rowData;
-    return `${name}`;
-  }
-
-  _dropdown_renderColorButtonText(rowData) {
-    const { image_url } = rowData;
-    return `${image_url}`;
-  }
 
   calculatePrice() {
     var price = 0;
-    this.props.cart.data.map(cart => {
-      price += (cart.qty * (cart.product.product_sale_price > 0 ? cart.product.product_sale_price : cart.product.product_regular_price))
+    this.state.cart.map(cart => {
+      price += (cart.quantity * (cart.sale_price > 0 ? cart.sale_price : cart.regular_price))
     })
     return price
   }
 
-  minQty(index) {
-    var cart = Object.assign([], this.props.cart.data);
-
-
-    if (cart[index].qty - 1 <= 0) {
-      this.removeFromCart(index)
-    } else {
-      let data = {
-        product: cart[index].product,
-        color: cart[index].color,
-        size: cart[index].size,
-        custom: cart[index].custom,
-        sku: cart[index].sku,
-        qty: cart[index].qty - 1
-      }
-      this.props.addToCartProcess(data)
-    }
-  }
-
-  addQty(index) {
-    var cart = Object.assign([], this.props.cart.data);
-
-    let data = {
-      product: cart[index].product,
-      color: cart[index].color,
-      size: cart[index].size,
-      custom: cart[index].custom,
-      sku: cart[index].sku,
-      qty: cart[index].qty + 1
-    }
-
-    this.props.addToCartProcess(data)
-  }
 
   removeFromCart(index) {
     Alert.alert(
@@ -183,16 +159,15 @@ class CartScreen extends Component {
         },
         {
           text: 'Yes', onPress: () => {
-            var cart = Object.assign([], this.props.cart.data);
+            this.setState({ disabledRemoveButton: true })
+            var cart = Object.assign([], this.props.cartt.data);
+            console.log('cart', index)
+            console.log(cart[index])
             let data = {
-              product: cart[index].product,
-              color: cart[index].color,
-              size: cart[index].size,
-              custom: cart[index].custom,
               sku: cart[index].sku,
-              qty: 0
+              quantity: 0
             }
-            this.props.addToCartProcess(data)
+            this.props.addToCarttProcess(data)
           }
         }
       ],
@@ -200,107 +175,8 @@ class CartScreen extends Component {
     )
   }
 
-  selectColor(item, index, index_item) {
-    var cart = Object.assign([], this.props.cart.data);
-    var color = item.slug
-    var size = cart[index_item].size
-    var custom = cart[index_item].custom
-    var newProduct = cart[index_item].product.all_product_variations_with_stock_data.find(variant => variant.color_slug === color && variant.size_slug === size && variant.custom_attribute_1_slug === custom)
-    var sku = newProduct.sku
-    var qty = cart[index_item].qty
-    var product = { ...cart[index_item].product }
-    product.product_regular_price = newProduct.regular_price
-    product.product_sale_price = newProduct.sale_price
-    //REMOVE
-    let data = {
-      product: cart[index_item].product,
-      color: cart[index_item].color,
-      size: size,
-      sku: cart[index_item].sku,
-      custom: custom,
-      qty: 0
-    }
-    this.props.addToCartProcess(data)
-    //ADD
-    let data2 = {
-      product: product,
-      color: color,
-      size: size,
-      custom: custom,
-      sku: sku,
-      qty: qty
-    }
-    this.props.addToCartProcess(data2)
-  }
-
-  selectSize(item, index, index_item) {
-    var cart = Object.assign([], this.props.cart.data);
-    var color = cart[index_item].color
-    var size = item.slug
-    var custom = cart[index_item].custom
-    var newProduct = cart[index_item].product.all_product_variations_with_stock_data.find(variant => variant.color_slug === color && variant.size_slug === size && variant.custom_attribute_1_slug === custom)
-    var sku = newProduct.sku
-    var qty = cart[index_item].qty
-    var product = { ...cart[index_item].product }
-    product.product_regular_price = newProduct.regular_price
-    product.product_sale_price = newProduct.sale_price
-    //REMOVE
-    let data = {
-      product: cart[index_item].product,
-      color: cart[index_item].color,
-      size: size,
-      sku: cart[index_item].sku,
-      custom: custom,
-      qty: 0
-    }
-    this.props.addToCartProcess(data)
-    //ADD
-    let data2 = {
-      product: product,
-      color: color,
-      size: size,
-      sku: sku,
-      custom: custom,
-      qty: qty
-    }
-    this.props.addToCartProcess(data2)
-  }
-
-  selectCustom(item, index, index_item) {
-    var cart = Object.assign([], this.props.cart.data);
-    var color = cart[index_item].color
-    var size = cart[index_item].size
-    var custom = item.slug
-    var newProduct = cart[index_item].product.all_product_variations_with_stock_data.find(variant => variant.color_slug === color && variant.size_slug === size && variant.custom_attribute_1_slug === custom)
-    var sku = newProduct.sku
-    var qty = cart[index_item].qty
-    var product = { ...cart[index_item].product }
-    product.product_regular_price = newProduct.regular_price
-    product.product_sale_price = newProduct.sale_price
-    //REMOVE
-    let data = {
-      product: cart[index_item].product,
-      color: color,
-      size: size,
-      sku: cart[index_item].sku,
-      custom: cart[index_item].custom,
-      qty: 0
-    }
-    this.props.addToCartProcess(data)
-    //ADD
-    let data2 = {
-      product: product,
-      color: color,
-      size: size,
-      sku: sku,
-      custom: custom,
-      qty: qty
-    }
-    this.props.addToCartProcess(data2)
-  }
-
   actBuy() {
-    if (this.props.cart.data.length < 1) {
+    if (this.props.cartt.data.length < 1) {
       Alert.alert(
         'Sorry',
         'Your cart is empty',
@@ -347,124 +223,54 @@ class CartScreen extends Component {
     return true
   }
 
+
   _renderProductCart() {
-    if (this.props.cart.data.length > 0)
-      return this.props.cart.data.map((item, index) => {
-        var price = (item.product.product_sale_price > 0 ? item.product.product_sale_price : item.product.product_regular_price)
-        price = convertToRupiah(price * item.qty)
-        var isFound, size, color, title, custom = ''
-        isFound = (item.product.sizes && item.product.sizes.length > 0) ? item.product.sizes.find(x => x.slug === item.size) : false
+
+    if (this.state.cart.length > 0)
+      return this.state.cart.map((item, index) => {
+        var price = (item.sale_price > 0 ? item.sale_price : item.regular_price)
+        price = convertToRupiah(price * item.quantity)
+
+        var size = item.size_name
+        var image = { uri: item.img_url }
+
+        isFound = (item.colors && item.colors.length > 0) ? item.colors.find(x => x.slug === item.color_slug) : false
         if (isFound)
-          size = isFound.name
-        isFound = (item.product.colors && item.product.colors.length > 0) ? item.product.colors.find(x => x.slug === item.color) : false
-        if (isFound)
-          color = isFound.image_url
-        isFound = (item.product.custom_attributes && item.product.custom_attributes.length > 0) ? item.product.custom_attributes.find(x => x.slug === item.custom) : false
-        if (isFound) {
-          custom = isFound.name
-          title = titleCase(item.product.custom_attribute_text)
-        }
-        var image = Images.default
-        if (item.product.img_url && item.product.img_url !== '') {
-          image = { uri: item.product.img_url }
-        }
-        var sizes = []
-        if (item.product.sizes && item.product.sizes.length > 0) {
-          for (var i = 0; i < item.product.sizes.length; i++) {
-            if (!this.checkEmpty(item.product.all_product_variations_with_stock_data, item.product.sizes[i].slug, 2, item.size, item.color, item.custom)) {
-              sizes.push(item.product.sizes[i])
-            }
-          }
-        }
-        var colors = []
-        if (item.product.colors && item.product.colors.length > 0) {
-          for (var i = 0; i < item.product.colors.length; i++) {
-            if (!this.checkEmpty(item.product.all_product_variations_with_stock_data, item.product.colors[i].slug, 1, item.size, item.color, item.custom)) {
-              colors.push(item.product.colors[i])
-            }
-          }
-        }
-        var customs = []
-        if (item.product.custom_attributes && item.product.custom_attributes.length > 0) {
-          for (var i = 0; i < item.product.custom_attributes.length; i++) {
-            if (!this.checkEmpty(item.product.all_product_variations_with_stock_data, item.product.custom_attributes[i].slug, 3, item.size, item.color, item.custom)) {
-              customs.push(item.product.custom_attributes[i])
-            }
-          }
-        }
+          color = { uri: isFound.image_url }
+
+        var freegiftQty = item.free_gift.length
+
+
         return (
           <View key={index.toString()} >
             <View style={styles.productContainer}>
               <View style={styles.productImageWrapper}>
                 <FastImage source={image} style={styles.productImage} resizeMode={FastImage.resizeMode.contain} />
-                <TouchableOpacity style={styles.removeBtn} onPress={() => { this.removeFromCart(index) }}>
+                <TouchableOpacity disabled={this.state.disabledRemoveButton} style={styles.removeBtn} onPress={() => { this.removeFromCart(index) }}>
                   <Image source={Images.x} style={styles.removeImg} />
                 </TouchableOpacity>
               </View>
               <View style={styles.productDescriptionWrapper}>
                 <View style={styles.nameWrapper}>
-                  <Text style={styles.productName}>{item.product.product_name}</Text>
+                  <Text style={styles.productName}>{item.main_product_name}</Text>
                 </View>
                 <View style={styles.propertyWrapper}>
-                  {colors.length > 0 &&
-                    <View style={styles.colorWrapper}>
-                      <Text style={styles.itemText}>Warna</Text>
-                      <ModalDropDown
-                        renderRow={this._renderColor.bind(this)}
-                        options={colors}
-                        style={styles.size_dropdown}
-                        textStyle={styles.dropdown_text}
-                        dropdownStyle={styles.dropdown_dropdown}
-                        defaultValue={color}
-                        isColor={true}
-                        index_item={index}
-                        onSelect={(item, index, index_item) => this.selectColor(item, index, index_item)}
-                        renderButtonText={(rowData) => this._dropdown_renderColorButtonText(rowData)}
-                      />
+
+                  <View style={styles.colorWrapper}>
+                    <Text style={styles.itemText}>Warna</Text>
+                    <View style={{ width: 21, height: 21, borderWidth: item.color_slug === 'white' ? 0.5 : 0, borderColor: item.color_slug === 'white' ? Colors.black : '' }}>
+                      <Image source={color} style={{ width: 20, height: 20, resizeMode: 'contain' }} />
                     </View>
-                  }
-                  {sizes.length > 0 &&
-                    <View style={styles.sizeWrapper}>
-                      <Text style={styles.itemText}>Ukuran</Text>
-                      <ModalDropDown
-                        renderRow={this._renderSize.bind(this)}
-                        options={sizes}
-                        style={styles.size_dropdown}
-                        textStyle={styles.dropdown_text}
-                        dropdownStyle={styles.dropdown_dropdown}
-                        defaultValue={size}
-                        index_item={index}
-                        isColor={false}
-                        onSelect={(item, index, index_item) => this.selectSize(item, index, index_item)}
-                        renderButtonText={(rowData) => this._dropdown_renderSizeButtonText(rowData)}
-                      />
-                    </View>
-                  }
-                  {customs.length > 0 &&
-                    <View style={styles.sizeWrapper}>
-                      <Text style={styles.itemText}>{title}</Text>
-                      <ModalDropDown
-                        renderRow={this._renderSize.bind(this)}
-                        options={customs}
-                        style={styles.size_dropdown}
-                        textStyle={styles.dropdown_text}
-                        dropdownStyle={styles.dropdown_dropdown}
-                        defaultValue={custom}
-                        index_item={index}
-                        isColor={false}
-                        onSelect={(item, index, index_item) => this.selectCustom(item, index, index_item)}
-                        renderButtonText={(rowData) => this._dropdown_renderSizeButtonText(rowData)}
-                      />
-                    </View>
-                  }
+                  </View>
+
+                  <View style={styles.sizeWrapper}>
+                    <Text style={styles.itemText}>Ukuran</Text>
+                    <Text>{size}</Text>
+                  </View>
+
                   <View style={styles.qtyWrapper}>
                     <Text style={styles.itemText}>Qty</Text>
-                    <View style={styles.qtyContainer}>
-                      <TouchableOpacity onPress={() => this.minQty(index)}><View style={styles.btnQty}>
-                        <Text style={styles.dropdown_text}>-</Text></View></TouchableOpacity>
-                      <View style={styles.qtyText}><Text style={styles.dropdown_text}>{item.qty}</Text></View>
-                      <TouchableOpacity onPress={() => { this.addQty(index) }}><View style={styles.btnQty}><Text style={styles.dropdown_text}>+</Text></View></TouchableOpacity>
-                    </View>
+                    <Text style={styles.dropdown_text}>{item.quantity}</Text>
                   </View>
                 </View>
                 <View style={styles.priceWrapper}>
@@ -472,66 +278,84 @@ class CartScreen extends Component {
                 </View>
               </View>
             </View>
-            {/* {
-              item.product.app_buy_one_get_one
-                ?
-                <View style={{ width: '100%', height: 100, backgroundColor: Colors.mooimom, paddingBottom: 10 }}>
-                  <View style={{ width: '100%', alignItems: 'flex-end' }}>
-                    <Text style={{ fontFamily: Fonts.type.gotham1, color: Colors.white, fontSize: Metrics.fontSize3, marginVertical: 10, marginRight: 10 }}>+{item.qty} Produk Gratis</Text>
-                    <View style={{ width: '100%', backgroundColor: Colors.white, flexDirection: 'row', alignItems: 'center' }}>
-                      <FastImage source={image} style={{ width: 70, height: 50 }} resizeMode={FastImage.resizeMode.contain} />
-                      <View style={{ width: '60%', paddingHorizontal: 10 }}>
-                        <Text style={[styles.productName, { fontSize: Metrics.fontSize1 }]}>{item.product.product_name}</Text>
-                      </View>
-                    </View>
-                  </View>
-                </View>
-                :
-                <View />
-            } */}
+            {this.renderFreeGift(item, freegiftQty)}
           </View >
         );
       })
   }
 
+  renderFreeGift(items, fgQty) {
+    if (items.free_gift.length > 0) {
+      return (
+        <View style={{ width: '100%', height: 100, backgroundColor: Colors.mooimom, paddingBottom: 10 }}>
+          <View style={{ width: '100%', alignItems: 'flex-end' }}>
+            <Text style={{ fontFamily: Fonts.type.gotham1, fontWeight: 'bold', color: Colors.white, fontSize: Metrics.fontSize3, marginVertical: 5, marginRight: 10 }}>+{fgQty} Produk Gratis</Text>
+            {
+              items.free_gift.map((item, index) => {
+                freeGiftImage = { uri: item.img_url }
+                return (
+                  <View key={index} style={{ width: '100%', backgroundColor: Colors.white, flexDirection: 'row', alignItems: 'center', marginVertical: 5 }}>
+                    <FastImage source={freeGiftImage} style={{ width: 70, height: 50 }} resizeMode={FastImage.resizeMode.contain} />
+                    <View style={{ width: '60%', paddingHorizontal: 10 }}>
+                      <Text style={[styles.productName, { fontSize: Metrics.fontSize1 }]}>{item.main_product_name}</Text>
+                    </View>
+                  </View>
+                )
+              })
+            }
+          </View>
+        </View>
+      )
+    }
+    else { return; }
+  }
 
   render() {
     var price = this.calculatePrice()
     var totalPrice = convertToRupiah(price)
     var commission = convertToRupiah(this.state.commission)
     return (
-      <SafeAreaView style={styles.container}>
-        <View style={styles.headerWrapper}>
-          <TouchableOpacity style={styles.headerButtonLeft} onPress={() => this.props.navigation.goBack()}>
-            <Image source={Images.back} style={styles.buttonHeader} />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.cartContainer}>
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-          >
-            {this.props.cart.data.length === 0 &&
-              <View style={{ marginVertical: 10, justifyContent: 'center', alignItems: 'center' }}>
-                <Text style={styles.subtotalText}>Keranjang Belanja Masih Kosong</Text>
-                <Text style={styles.subtotalText}>Ayo Mulai Belanja Sekarang</Text>
+      <>
+        {
+          this.props.getOnlineCart.fetching || this.props.updateOnlineCart.fetching ?
+            <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+              <DotIndicator size={12} color={Colors.mooimom} />
+            </SafeAreaView>
+            :
+            <SafeAreaView style={styles.container}>
+              <View style={styles.headerWrapper}>
+                <TouchableOpacity style={styles.headerButtonLeft} onPress={() => this.props.navigation.goBack()}>
+                  <Image source={Images.back} style={styles.buttonHeader} />
+                </TouchableOpacity>
               </View>
-            }
-            {this.props.cart.data.length > 0 && <Text style={styles.productSubtitle}>Cart {(this.props.cart.data.length > 1 ? '(' + this.props.cart.data.length + ')' : '')}</Text>}
-            {this._renderProductCart()}
-
-          </ScrollView>
-        </View>
-        {this.props.cart.data.length > 0 && <View style={styles.menuWrapper}>
-          <View style={styles.subtotalWrapper}>
-            <Text style={styles.subtotalText}>SUBTOTAL</Text>
-            <Text style={styles.priceText}>{totalPrice}</Text>
-            {!this.props.commissionEstimation.fetching && <Text style={styles.commissionText}>Est. Komisi {commission}</Text>}
-          </View>
-          <TouchableOpacity style={styles.buyBtn} onPress={() => this.actBuy()}>
-            <Text style={styles.buyText}>Beli</Text>
-          </TouchableOpacity>
-        </View>}
-      </SafeAreaView>
+              <View style={styles.cartContainer}>
+                <ScrollView
+                  showsVerticalScrollIndicator={false}
+                >
+                  {this.state.cart.length === 0 &&
+                    <View style={{ marginVertical: 10, justifyContent: 'center', alignItems: 'center' }}>
+                      <Text style={styles.subtotalText}>Keranjang Belanja Masih Kosong</Text>
+                      <Text style={styles.subtotalText}>Ayo Mulai Belanja Sekarang</Text>
+                    </View>
+                  }
+                  {this.state.cart.length > 0 && <Text style={styles.productSubtitle}>Cart {(this.state.cart.length > 1 ? '(' + this.state.cart.length + ')' : '')}</Text>}
+                  {this._renderProductCart()}
+                  <View style={{ marginVertical: 20 }} />
+                </ScrollView>
+              </View>
+              {this.state.cart.length > 0 && <View style={styles.menuWrapper}>
+                <View style={styles.subtotalWrapper}>
+                  <Text style={styles.subtotalText}>SUBTOTAL</Text>
+                  <Text style={styles.priceText}>{totalPrice}</Text>
+                  {!this.props.commissionEstimation.fetching && <Text style={styles.commissionText}>Est. Komisi {commission}</Text>}
+                </View>
+                <TouchableOpacity style={styles.buyBtn} onPress={() => this.actBuy()}>
+                  <Text style={styles.buyText}>Beli</Text>
+                </TouchableOpacity>
+              </View>}
+            </SafeAreaView>
+        }
+      </>
     )
   }
 }
@@ -539,9 +363,11 @@ class CartScreen extends Component {
 const mapStateToProps = state => {
   return {
     cart: state.cart,
+    cartt: state.cartt,
     auth: state.auth,
     commissionEstimation: state.commissionEstimation,
-    // getOnlineCart: state.getOnlineCart
+    getOnlineCart: state.getOnlineCart,
+    updateOnlineCart: state.updateOnlineCart
   }
 };
 
@@ -550,15 +376,18 @@ const mapDispatchToProps = dispatch => {
     addToCartProcess: data => {
       dispatch(CartActions.addCartRequest(data))
     },
+    addToCarttProcess: data => {
+      dispatch(CarttActions.addCarttRequest(data))
+    },
     getCommissionEstimationProcess: data => {
       dispatch(CommissionEstimationActions.getCommissionEstimationRequest(data))
     },
-    // getOnlineCartProcess: data => {
-    //   dispatch(GetOnlineCartActions.getOnlineCartRequest(data))
-    // },
-    // updateOnlineCartProcess: data => {
-    //   dispatch(UpdateOnlineCartActions.updateOnlineCartRequest(data))
-    // }
+    getOnlineCartProcess: data => {
+      dispatch(GetOnlineCartActions.getOnlineCartRequest(data))
+    },
+    updateOnlineCartProcess: data => {
+      dispatch(UpdateOnlineCartActions.updateOnlineCartRequest(data))
+    }
   }
 };
 

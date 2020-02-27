@@ -6,13 +6,14 @@
  */
 
 #import "AppDelegate.h"
-#import "Firebase.h"
+#import <CodePush/CodePush.h>
+//#import "Firebase.h"
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 #import <React/RCTLinkingManager.h>
 #import <UserNotifications/UserNotifications.h>
 #import "QGSdk.h"
-//#import <GoogleMaps/GoogleMaps.h>
+
 
 
 @interface AppDelegate() <UNUserNotificationCenterDelegate>
@@ -44,10 +45,10 @@ continueUserActivity:(NSUserActivity *)userActivity
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   QGSdk *qgsdk = [QGSdk getSharedInstance];
-//  [GMSServices provideAPIKey:@"AIzaSyCIYrqBPBLJFOZK1Ub7-fv2YiwbKqTl3Dw"];
+
   
-  [FIRApp configure];
-  [FIRMessaging messaging].delegate = self;
+//  [FIRApp configure];
+//  [FIRMessaging messaging].delegate = self;
   NSURL *jsCodeLocation;
 
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
