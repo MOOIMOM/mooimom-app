@@ -45,7 +45,6 @@
 		2EBE177023FF89E200D7C0B8 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EBE176F23FF89E200D7C0B8 /* libz.tbd */; };
 		311600C4B06E4657B68EF660 /* libFastImage-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 31FB956A40D44C879BF09B60 /* libFastImage-tvOS.a */; };
 		3407A66A566A42B4957B1E22 /* libRNShare.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 97926DC5FE594A6BA7BDD6C9 /* libRNShare.a */; };
-		407F8EE187C44E3EAE9FDF45 /* libRNAiquaSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9CC591E2F3140CA912AEBDB /* libRNAiquaSdk.a */; };
 		41B3D9F3F07447DCA4D5CEC9 /* libFastImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D68E62ED1D6D4C2E9EC2F948 /* libFastImage.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		842643EBAE9B43449110191E /* libRNFetchBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0019236E53844ABA94120CD0 /* libRNFetchBlob.a */; };
@@ -203,13 +202,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 3D383D621EBD27B9005632C8;
 			remoteInfo = "double-conversion-tvOS";
-		};
-		2E74C3B323ED413A00DF3E71 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 64221BB8734242B7A5A7AA50 /* RNAiquaSdk.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 134814201AA4EA6300B7C361;
-			remoteInfo = RNAiquaSdk;
 		};
 		3DAD3E831DF850E9000B6D8A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -479,7 +471,6 @@
 		526AD553C1464A9B80786C53 /* libimageCropPicker.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libimageCropPicker.a; sourceTree = "<group>"; };
 		552DF2DC1E0B4C959441F0BA /* RNShare.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNShare.xcodeproj; path = "../node_modules/react-native-share/ios/RNShare.xcodeproj"; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
-		64221BB8734242B7A5A7AA50 /* RNAiquaSdk.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNAiquaSdk.xcodeproj; path = "../node_modules/react-native-aiqua-sdk/ios/RNAiquaSdk.xcodeproj"; sourceTree = "<group>"; };
 		66AA6E460A614AA59DF7FF2B /* FastImage.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = FastImage.xcodeproj; path = "../node_modules/react-native-fast-image/ios/FastImage.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
@@ -508,7 +499,6 @@
 		B71E67465ACC957F2D2605A0 /* Pods-mooimom.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mooimom.release.xcconfig"; path = "Target Support Files/Pods-mooimom/Pods-mooimom.release.xcconfig"; sourceTree = "<group>"; };
 		BF3A4486442E43809C59C0DA /* Gotham Book.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Gotham Book.otf"; path = "../App/fonts/Gotham Book.otf"; sourceTree = "<group>"; };
 		D68E62ED1D6D4C2E9EC2F948 /* libFastImage.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libFastImage.a; sourceTree = "<group>"; };
-		D9CC591E2F3140CA912AEBDB /* libRNAiquaSdk.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNAiquaSdk.a; sourceTree = "<group>"; };
 		EBA0EEDC19B1406F99D27E13 /* libRNFirebase.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFirebase.a; sourceTree = "<group>"; };
 		FB04DE2A9E6C49678AF85F04 /* Gotham Light.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Gotham Light.otf"; path = "../App/fonts/Gotham Light.otf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -558,7 +548,6 @@
 				9EE7FFC1235D845A00C3BB74 /* libMidtransCoreKit.a in Frameworks */,
 				9EE7FFC3235D845A00C3BB74 /* libMidtransKit.a in Frameworks */,
 				DC1B715FEB27F1564894A19F /* libPods-mooimom.a in Frameworks */,
-				407F8EE187C44E3EAE9FDF45 /* libRNAiquaSdk.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -734,14 +723,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		2E74C3B023ED413A00DF3E71 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				2E74C3B423ED413A00DF3E71 /* libRNAiquaSdk.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		4DDB249DF729F69C8E673924 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -791,7 +772,6 @@
 				B50BDBC736404985A0140077 /* RNFirebase.xcodeproj */,
 				AE7BE21F558148A4B545734F /* imageCropPicker.xcodeproj */,
 				66AA6E460A614AA59DF7FF2B /* FastImage.xcodeproj */,
-				64221BB8734242B7A5A7AA50 /* RNAiquaSdk.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1118,10 +1098,6 @@
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
 				{
-					ProductGroup = 2E74C3B023ED413A00DF3E71 /* Products */;
-					ProjectRef = 64221BB8734242B7A5A7AA50 /* RNAiquaSdk.xcodeproj */;
-				},
-				{
 					ProductGroup = 9E4E08232349B655001CB993 /* Products */;
 					ProjectRef = 8CFE55A6374C4B08ADB31E32 /* RNFetchBlob.xcodeproj */;
 				},
@@ -1266,13 +1242,6 @@
 			fileType = archive.ar;
 			path = "libdouble-conversion.a";
 			remoteRef = 2DF0FFE82056DD460020B375 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		2E74C3B423ED413A00DF3E71 /* libRNAiquaSdk.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNAiquaSdk.a;
-			remoteRef = 2E74C3B323ED413A00DF3E71 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		3DAD3E841DF850E9000B6D8A /* libRCTImage-tvOS.a */ = {
@@ -1667,7 +1636,6 @@
 					"$(SRCROOT)..\node_modules\neact-native-firebaseiosRNFirebase/**",
 					"$(SRCROOT)..\node_modules\neact-native-image-crop-pickerios/**",
 					"$(SRCROOT)..\node_modules\neact-native-fast-imageiosFastImage/**",
-					"$(SRCROOT)/../node_modules/react-native-aiqua-sdk/ios",
 				);
 				INFOPLIST_FILE = mooimomTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -1697,7 +1665,6 @@
 					"$(SRCROOT)..\node_modules\neact-native-firebaseiosRNFirebase/**",
 					"$(SRCROOT)..\node_modules\neact-native-image-crop-pickerios/**",
 					"$(SRCROOT)..\node_modules\neact-native-fast-imageiosFastImage/**",
-					"$(SRCROOT)/../node_modules/react-native-aiqua-sdk/ios",
 				);
 				INFOPLIST_FILE = mooimomTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -1719,7 +1686,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = mooimom/mooimomDebug.entitlements;
-				CURRENT_PROJECT_VERSION = 29;
+				CURRENT_PROJECT_VERSION = 30;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = K83N4PRU8C;
 				HEADER_SEARCH_PATHS = (
@@ -1731,7 +1698,6 @@
 					"$(SRCROOT)..\node_modules\neact-native-firebaseiosRNFirebase/**",
 					"$(SRCROOT)..\node_modules\neact-native-image-crop-pickerios/**",
 					"$(SRCROOT)..\node_modules\neact-native-fast-imageiosFastImage/**",
-					"$(SRCROOT)/../node_modules/react-native-aiqua-sdk/ios",
 				);
 				INFOPLIST_FILE = mooimom/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -1773,7 +1739,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = mooimom/mooimom.entitlements;
-				CURRENT_PROJECT_VERSION = 29;
+				CURRENT_PROJECT_VERSION = 30;
 				DEVELOPMENT_TEAM = K83N4PRU8C;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1784,7 +1750,6 @@
 					"$(SRCROOT)..\node_modules\neact-native-firebaseiosRNFirebase/**",
 					"$(SRCROOT)..\node_modules\neact-native-image-crop-pickerios/**",
 					"$(SRCROOT)..\node_modules\neact-native-fast-imageiosFastImage/**",
-					"$(SRCROOT)/../node_modules/react-native-aiqua-sdk/ios",
 				);
 				INFOPLIST_FILE = mooimom/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -1841,7 +1806,6 @@
 					"$(SRCROOT)..\node_modules\neact-native-firebaseiosRNFirebase/**",
 					"$(SRCROOT)..\node_modules\neact-native-image-crop-pickerios/**",
 					"$(SRCROOT)..\node_modules\neact-native-fast-imageiosFastImage/**",
-					"$(SRCROOT)/../node_modules/react-native-aiqua-sdk/ios",
 				);
 				INFOPLIST_FILE = "mooimom-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1879,7 +1843,6 @@
 					"$(SRCROOT)..\node_modules\neact-native-firebaseiosRNFirebase/**",
 					"$(SRCROOT)..\node_modules\neact-native-image-crop-pickerios/**",
 					"$(SRCROOT)..\node_modules\neact-native-fast-imageiosFastImage/**",
-					"$(SRCROOT)/../node_modules/react-native-aiqua-sdk/ios",
 				);
 				INFOPLIST_FILE = "mooimom-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1916,7 +1879,6 @@
 					"$(SRCROOT)..\node_modules\neact-native-firebaseiosRNFirebase/**",
 					"$(SRCROOT)..\node_modules\neact-native-image-crop-pickerios/**",
 					"$(SRCROOT)..\node_modules\neact-native-fast-imageiosFastImage/**",
-					"$(SRCROOT)/../node_modules/react-native-aiqua-sdk/ios",
 				);
 				INFOPLIST_FILE = "mooimom-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1953,7 +1915,6 @@
 					"$(SRCROOT)..\node_modules\neact-native-firebaseiosRNFirebase/**",
 					"$(SRCROOT)..\node_modules\neact-native-image-crop-pickerios/**",
 					"$(SRCROOT)..\node_modules\neact-native-fast-imageiosFastImage/**",
-					"$(SRCROOT)/../node_modules/react-native-aiqua-sdk/ios",
 				);
 				INFOPLIST_FILE = "mooimom-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

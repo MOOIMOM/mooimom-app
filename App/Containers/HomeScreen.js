@@ -61,13 +61,11 @@ class HomeScreen extends Component {
 
   async componentDidMount() {
 
-
     Linking.getInitialURL().then(url => {
       if (url || url !== null) {
         this.navigate(url)
       }
     })
-
     this.checkPermission()
     setTimeout(() => {
       // this.createNotificationListeners()
@@ -155,6 +153,12 @@ class HomeScreen extends Component {
     }
     else if (routeName1 === 'event') {
       this.navigate_to('EventRegistrationScreen')
+    }
+    else if (routeName1 === 'product_category') {
+      this.navigate_to('Category', {
+        category_id: item.slug,
+        auth: this.props.auth
+      })
     }
   }
 
@@ -363,7 +367,7 @@ class HomeScreen extends Component {
         !newProps.getAppVersion.fetching
       ) {
 
-        let ANDROID_APP_VERSION = '1.2.21'
+        let ANDROID_APP_VERSION = '1.2.22'
         let IOS_APP_VERSION = '1.2.20'
 
         let currAndroidVersion = newProps.getAppVersion.payload.android
@@ -882,7 +886,7 @@ const mapDispatchToProps = dispatch => {
     },
     getOnlineCartProcess: data => {
       dispatch(GetOnlineCartActions.getOnlineCartRequest(data))
-    }
+    },
   }
 };
 

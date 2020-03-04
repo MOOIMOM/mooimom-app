@@ -86,7 +86,12 @@ const images = {
   babyAgeBanner: require('../Images/banner-baby-age.png'),
   bin: require('../Images/Icons/bin.png'),
   momsClassBanner1: require('../Images/moms-class-banner-1.jpg'),
-  momsClassBanner2: require('../Images/moms-class-banner-2.jpg')
+  momsClassBanner2: require('../Images/moms-class-banner-2.jpg'),
+  danaLogo: require('../Images/Icons/dana-logo.png'),
+  gopayLogo: require('../Images/Icons/gopay-logo.png'),
+  ovoLogo: require('../Images/Icons/ovo-logo.png'),
+  indomaretLogo: require('../Images/Icons/indomaret-logo.png'),
+  alfamartLogo: require('../Images/Icons/alfamart-logo.png')
 }
 
 export default images

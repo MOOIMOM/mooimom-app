@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { SafeAreaView, ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Alert, Modal, Linking } from 'react-native'
+import { SafeAreaView, ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Alert, Modal, Linking, WebView } from 'react-native'
 import { Images, Metrics, Colors, Fonts } from '../Themes'
 import FastImage from 'react-native-fast-image'
 import GetOrderActions from '../Redux/GetOrderRedux'
@@ -9,7 +9,7 @@ import DeleteOrderHistoryActions from '../Redux/DeleteOrderHistoryRedux'
 import GopayActions from '../Redux/GopayRedux'
 import CartActions from '../Redux/CartRedux'
 import { connect } from 'react-redux'
-import { convertToRupiah, getDateFromString, convertToThousandOrHigher } from '../Lib/utils'
+import { convertToRupiah, getDateFromString, convertToThousandOrHigher, isIphoneXorAbove } from '../Lib/utils'
 import MidtransModule from '../Lib/Midtrans'
 
 import { DotIndicator } from 'react-native-indicators'
@@ -33,6 +33,8 @@ class DetailOrderScreen extends Component {
       paymentType: '',
       order: {},
       midtrans: {},
+      xenditLink: "",
+      openXendit: false,
       isShowPaymentMethod: false
     }
   }
@@ -55,6 +57,7 @@ class DetailOrderScreen extends Component {
           totalPrice: newProps.order.payload.order_total,
           commission: newProps.order.payload.total_commission_for_this_order,
           midtrans: JSON.parse(newProps.order.payload.midtrans_data),
+          xenditLink: newProps.order.payload.xendit_link,
           isShowPaymentMethod: false
         })
 
@@ -144,95 +147,101 @@ class DetailOrderScreen extends Component {
   }
 
   async payNow() {
-    if (this.state.midtrans && this.state.midtrans.payment_type && this.state.midtrans.payment_type === 'gopay' && this.state.midtrans.transaction_status === 'pending') {
-      var link = this.getGopayLink()
-      if (link === '') {
-        Alert.alert(
-          'Sorry',
-          'This order is not valid anymore, please make a new order',
-        )
-        return;
-      }
-      Linking.canOpenURL(link).then(supported => {
-        if (supported) {
-          Linking.openURL(link);
-        } else {
+    if (this.state.xenditLink !== null) {
+      // Linking.openURL(this.state.z)
+      this.setState({ openXendit: true })
+    }
+    else {
+      if (this.state.midtrans && this.state.midtrans.payment_type && this.state.midtrans.payment_type === 'gopay' && this.state.midtrans.transaction_status === 'pending') {
+        var link = this.getGopayLink()
+        if (link === '') {
           Alert.alert(
             'Sorry',
-            'Go-jek is not installed on your phone',
+            'This order is not valid anymore, please make a new order',
           )
+          return;
         }
-      });
-      return
-    }
-
-    const optionConect = {
-      clientKey: "VT-client-35STW7Jm-F0bTh1x",
-      urlMerchant: "http://www.mooimom.id"
-    }
-
-    const transRequest = {
-      transactionId: '' + this.state.order.order_id,
-      totalAmount: this.state.order.order_total,
-      token: this.state.order.midtrans_token,
-    }
-
-    const itemDetails = [
-
-    ];
-
-    const creditCardOptions = {
-      saveCard: false,
-      saveToken: false,
-      paymentMode: "Normal",
-      secure: false
-    };
-
-    const userDetail = {
-      fullName: this.state.order.billing_name,
-      email: '',
-      phoneNumber: this.state.order.billing_address,
-      userId: this.state.order.billing_phone,
-      address: this.state.order.billing_address,
-      city: this.state.order.billing_city,
-      country: "IDN",
-      zipCode: this.state.order.billing_zip_code
-    };
-
-    const optionColorTheme = {
-      primary: Colors.mooimom,
-      primaryDark: Colors.mooimom,
-      secondary: Colors.mooimom,
-    }
-
-    const optionFont = {
-      defaultText: Fonts.type.gotham2,
-      semiBoldText: Fonts.type.gotham2,
-      boldText: Fonts.type.gotham2,
-    }
-
-    const callback = (res, gopay) => {
-      this.reloadData()
-      if (gopay && gopay !== '') {
-        let data = {
-          order_id: this.state.order.order_id,
-          token: this.state.order.midtrans_token,
-          gopay_link: gopay
-        }
-        this.props.saveGopayRequestProcess(data)
+        Linking.canOpenURL(link).then(supported => {
+          if (supported) {
+            Linking.openURL(link);
+          } else {
+            Alert.alert(
+              'Sorry',
+              'Go-jek is not installed on your phone',
+            )
+          }
+        });
+        return
       }
-    };
 
-    MidtransModule.checkOut(
-      optionConect,
-      transRequest,
-      itemDetails,
-      creditCardOptions,
-      userDetail,
-      optionColorTheme,
-      optionFont,
-      callback
-    );
+      const optionConect = {
+        clientKey: "VT-client-35STW7Jm-F0bTh1x",
+        urlMerchant: "http://www.mooimom.id"
+      }
+
+      const transRequest = {
+        transactionId: '' + this.state.order.order_id,
+        totalAmount: this.state.order.order_total,
+        token: this.state.order.midtrans_token,
+      }
+
+      const itemDetails = [
+
+      ];
+
+      const creditCardOptions = {
+        saveCard: false,
+        saveToken: false,
+        paymentMode: "Normal",
+        secure: false
+      };
+
+      const userDetail = {
+        fullName: this.state.order.billing_name,
+        email: '',
+        phoneNumber: this.state.order.billing_address,
+        userId: this.state.order.billing_phone,
+        address: this.state.order.billing_address,
+        city: this.state.order.billing_city,
+        country: "IDN",
+        zipCode: this.state.order.billing_zip_code
+      };
+
+      const optionColorTheme = {
+        primary: Colors.mooimom,
+        primaryDark: Colors.mooimom,
+        secondary: Colors.mooimom,
+      }
+
+      const optionFont = {
+        defaultText: Fonts.type.gotham2,
+        semiBoldText: Fonts.type.gotham2,
+        boldText: Fonts.type.gotham2,
+      }
+
+      const callback = (res, gopay) => {
+        this.reloadData()
+        if (gopay && gopay !== '') {
+          let data = {
+            order_id: this.state.order.order_id,
+            token: this.state.order.midtrans_token,
+            gopay_link: gopay
+          }
+          this.props.saveGopayRequestProcess(data)
+        }
+      };
+
+      MidtransModule.checkOut(
+        optionConect,
+        transRequest,
+        itemDetails,
+        creditCardOptions,
+        userDetail,
+        optionColorTheme,
+        optionFont,
+        callback
+      );
+    }
   }
 
   pressOrderAgain() {
@@ -315,6 +324,59 @@ class DetailOrderScreen extends Component {
         <Text style={styles.address}>{order.billing_province} - {order.billing_zip_code}</Text>
         <Text style={styles.address}>+62{order.billing_phone}</Text>
       </View>
+    )
+  }
+
+  renderXenditPayment() {
+    return (
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={this.state.openXendit}
+        onRequestClose={() => {
+          this.setState({
+            openXendit: false
+          })
+        }}>
+        <SafeAreaView
+          style={{ width: Metrics.screenWidth, height: Metrics.screenHeight, top: 0, bottom: 5 }}
+          activeOpacity={1}
+        >
+          <View style={{ width: '96%', alignItems: 'flex-start', alignSelf: 'center' }}>
+            <TouchableOpacity onPress={() => this.setState({ openXendit: false })} style={{
+              position: isIphoneXorAbove() ? '' : 'absolute', zIndex: isIphoneXorAbove() ? 0 : 1,
+              marginTop: isIphoneXorAbove() ? 70 : 20, marginLeft: 10,
+              width: 30, height: 30, borderRadius: 20,
+              justifyContent: 'center', alignItems: 'center',
+              backgroundColor: Colors.white, shadowColor: '#CCCCCC', shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.8,
+              shadowRadius: 4,
+              elevation: 3,
+            }}>
+              <Image source={Images.back} style={{
+                height: 12 * Metrics.screenWidth / 320,
+                width: 12 * Metrics.screenWidth / 320,
+                resizeMode: 'contain'
+              }} />
+            </TouchableOpacity>
+          </View>
+          <WebView
+            startInLoadingState={true}
+            renderLoading={() => {
+              return (
+                <DotIndicator
+                  color={Colors.mooimom}
+                  size={12}
+                />
+              )
+            }}
+            style={{ marginBottom: 20 }}
+            useWebKit={false}
+            scalesPageToFit={false}
+            source={{ uri: this.state.xenditLink }}
+          />
+        </SafeAreaView>
+      </Modal>
     )
   }
 
@@ -526,6 +588,7 @@ class DetailOrderScreen extends Component {
   }
 
   render() {
+    console.log('xendit', this.state.xenditLink)
     if (this.props.order.fetching) {
       return (
         <View style={{ width: Metrics.screenWidth, height: Metrics.screenHeight, justifyContent: 'center', alignItems: 'center', position: 'absolute', top: 0, left: 0 }}>
@@ -559,22 +622,17 @@ class DetailOrderScreen extends Component {
 
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
               <Text style={styles.productSubtitle}>Detail Order #{order.order_id}</Text>
-              <TouchableOpacity onPress={() => this.pressDeleteOrderHistory(order.order_id)}>
-                <FastImage source={Images.bin} style={{ width: 18, height: 18 }} resizeMode={FastImage.resizeMode.contain} />
-              </TouchableOpacity>
+              {
+                this.state.order.order_status === 'completed' || this.state.order.order_status === 'cancelled' &&
+                <TouchableOpacity onPress={() => this.pressDeleteOrderHistory(order.order_id)}>
+                  <FastImage source={Images.bin} style={{ width: 18, height: 18 }} resizeMode={FastImage.resizeMode.contain} />
+                </TouchableOpacity>
+              }
             </View>
 
             <View style={styles.wrapperSeparator} />
-            {
-              order.waresix_delivery_status === 'in-progress' ?
-                <View>
-                  <Text style={styles.productSubtitle2}>Status: Sedang Dikirim</Text>
-                </View>
-                :
-                <View>
-                  <Text style={styles.productSubtitle2}>Status: {status}</Text>
-                </View>
-            }
+
+            <Text style={styles.productSubtitle2}>Status: {status}</Text>
 
             <Text style={styles.productSubtitle2}>{getDateFromString(order.order_date, true, false, true, false)}</Text>
             <View style={styles.wrapperSeparator} />
@@ -594,6 +652,7 @@ class DetailOrderScreen extends Component {
           </ScrollView>
         </View>
         {this.renderShowPayment()}
+        {this.renderXenditPayment()}
       </SafeAreaView>
     )
   }

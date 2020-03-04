@@ -8,7 +8,6 @@ import com.microsoft.codepush.react.ReactInstanceHolder;
 import com.reactnativecommunity.geolocation.GeolocationPackage;
 import com.agontuk.RNFusedLocation.RNFusedLocationPackage;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
-import com.reactlibrary.RNAiquaSdkPackage;
 import com.dylanvann.fastimage.FastImageViewPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import io.invertase.firebase.RNFirebasePackage;
@@ -48,7 +47,6 @@ public class MainApplication extends Application implements ReactApplication {
             new RNFusedLocationPackage(),
             new MapsPackage(),
             new ReactNativeConfigPackage(),
-            new RNAiquaSdkPackage(),
             new FastImageViewPackage(),
             new PickerPackage(),
             new RNFirebaseMessagingPackage(),

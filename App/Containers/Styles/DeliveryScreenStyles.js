@@ -151,6 +151,7 @@ export default StyleSheet.create({
   containerModal: {
     width: Metrics.screenWidth,
     height: Metrics.screenHeight,
+    backgroundColor: 'rgba(0,0,0,0.5)'
   },
   chooseDeliveryWrapper2: {
     backgroundColor: Colors.white,

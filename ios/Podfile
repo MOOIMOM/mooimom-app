@@ -48,6 +48,7 @@ target 'mooimom' do
 
   pod 'CodePush', :path => '../node_modules/react-native-code-push'
 
+
   post_install do |installer|
     installer.pods_project.targets.each do |target|
           if target.name == "React"

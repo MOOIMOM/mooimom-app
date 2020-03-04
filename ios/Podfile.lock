@@ -1,7 +1,13 @@
 PODS:
+  - Base64 (1.1.2)
   - boost-for-react-native (1.63.0)
   - BVLinearGradient (2.5.6):
     - React
+  - CodePush (5.7.0):
+    - Base64 (~> 1.1)
+    - JWT (~> 3.0.0-beta.7)
+    - React
+    - SSZipArchive (~> 2.1)
   - DoubleConversion (1.1.6)
   - Firebase/Core (5.15.0):
     - Firebase/CoreOnly
@@ -63,6 +69,8 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (5.8.0):
     - GoogleUtilities/Logger
+  - JWT (3.0.0-beta.12):
+    - Base64 (~> 1.1.2)
   - MidtransCoreKit (1.16.0)
   - MidtransKit (1.16.0):
     - MidtransCoreKit (= 1.16.0)
@@ -137,10 +145,12 @@ PODS:
     - React/Core
     - React/fishhook
     - React/RCTBlob
+  - SSZipArchive (2.2.2)
   - yoga (0.59.10.React)
 
 DEPENDENCIES:
   - BVLinearGradient (from `../node_modules/react-native-linear-gradient`)
+  - CodePush (from `../node_modules/react-native-code-push`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - Firebase/Core (~> 5.15.0)
   - Firebase/Messaging (~> 5.15.0)
@@ -170,6 +180,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - Base64
     - boost-for-react-native
     - Firebase
     - FirebaseAnalytics
@@ -179,14 +190,18 @@ SPEC REPOS:
     - FirebaseMessaging
     - GoogleAppMeasurement
     - GoogleUtilities
+    - JWT
     - MidtransCoreKit
     - MidtransKit
     - nanopb
     - Protobuf
+    - SSZipArchive
 
 EXTERNAL SOURCES:
   BVLinearGradient:
     :path: "../node_modules/react-native-linear-gradient"
+  CodePush:
+    :path: "../node_modules/react-native-code-push"
   DoubleConversion:
     :podspec: "../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
   Folly:
@@ -207,8 +222,10 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
+  Base64: cecfb41a004124895a7bcee567a89bae5a89d49b
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   BVLinearGradient: e3aad03778a456d77928f594a649e96995f1c872
+  CodePush: fe25db2e24ff1a2fab8b280a9633d9ba520867be
   DoubleConversion: bb338842f62ab1d708ceb63ec3d999f0f3d98ecd
   Firebase: 8bb9268bff82374f2cbaaabb143e725743c316ae
   FirebaseAnalytics: c06f9d70577d79074214700a71fd5d39de5550fb
@@ -220,6 +237,7 @@ SPEC CHECKSUMS:
   glog: aefd1eb5dda2ab95ba0938556f34b98e2da3a60d
   GoogleAppMeasurement: 98b71f5e04142793729a5ef23e5b96651ff4b70f
   GoogleUtilities: 04fce34bcd5620c1ee76fb79172105c74a4df335
+  JWT: 9b5c05abbcc1a0e69c3c91e1655b3387fc7e581d
   MidtransCoreKit: f26aeea63b1f5ccd153baf1e41c4c7d4c2474589
   MidtransKit: 0d2ec0f285a458559dfb5560fa5d46dd2a9bd4a8
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
@@ -229,8 +247,9 @@ SPEC CHECKSUMS:
   react-native-config: 765b96af04e154492c83f88ac1f0166098be1729
   react-native-geolocation: 79c743ad7a2e86617811ef23f49308824e92520c
   react-native-maps: e113fc992ce79e18622d6d647ce36d8367e801cb
+  SSZipArchive: fa16b8cc4cdeceb698e5e5d9f67e9558532fbf23
   yoga: 684513b14b03201579ba3cee20218c9d1298b0cc
 
-PODFILE CHECKSUM: 455960a25de2a884a307d198af5b67f547e46797
+PODFILE CHECKSUM: 0a977f8a92137db47e8c7a9492f2df47664b010a
 
 COCOAPODS: 1.8.4
