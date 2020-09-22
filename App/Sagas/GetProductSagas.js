@@ -35,6 +35,15 @@ export function* postGetProduct(api, action) {
       }
     }
     yield put(GetProductActions.getProductFailure(err))
+  }
+  else if (response.problem === 'NETWORK_ERROR') {
+    var err = {
+      error: {
+        error_code: '0',
+        error_message: 'Can not connect server now'
+      }
+    }
+    yield put(GetProductActions.getProductFailure(err))
   } else {
     console.log(data)
     yield put(GetProductActions.getProductFailure(response.data))

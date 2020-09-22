@@ -14,27 +14,36 @@ import { call, put } from 'redux-saga/effects'
 import CommissionEstimationActions from '../Redux/CommissionEstimationRedux'
 // import { RegisterSelectors } from '../Redux/RegisterRedux'
 
-export function * postGetCommissionEstimation(api, action) {
+export function* postGetCommissionEstimation(api, action) {
   const { data } = action
   // get current data from Store
   // const currentData = yield select(RegisterSelectors.getData)
   // make the call to the api
   const response = yield call(api.postGetCommissionEstimation, data)
-    // success?
-    if (response.data.success === 1) {
-      if (__DEV__) console.tron.log(response)
-      // You might need to change the response here - do this with a 'transform',
-      // located in ../Transforms/. Otherwise, just pass the data back from the api.
-      yield put(CommissionEstimationActions.getCommissionEstimationSuccess(response.data))
-    } else if (response.problem === 'TIMEOUT_ERROR') {
-      var err = {
-        error: {
-          error_code: '0',
-          error_message: 'Can not connect server now'
-        }
+  // success?
+  if (response.data.success === 1) {
+    if (__DEV__) console.tron.log(response)
+    // You might need to change the response here - do this with a 'transform',
+    // located in ../Transforms/. Otherwise, just pass the data back from the api.
+    yield put(CommissionEstimationActions.getCommissionEstimationSuccess(response.data))
+  } else if (response.problem === 'TIMEOUT_ERROR') {
+    var err = {
+      error: {
+        error_code: '0',
+        error_message: 'Can not connect server now'
       }
-      yield put(CommissionEstimationActions.getCommissionEstimationFailure(err))
-    } else {
-      yield put(CommissionEstimationActions.getCommissionEstimationFailure(response.data))
     }
+    yield put(CommissionEstimationActions.getCommissionEstimationFailure(err))
+  }
+  else if (response.problem === 'NETWORK_ERROR') {
+    var err = {
+      error: {
+        error_code: '0',
+        error_message: 'Can not connect server now'
+      }
+    }
+    yield put(CommissionEstimationActions.getCommissionEstimationFailure(err))
+  } else {
+    yield put(CommissionEstimationActions.getCommissionEstimationFailure(response.data))
+  }
 }

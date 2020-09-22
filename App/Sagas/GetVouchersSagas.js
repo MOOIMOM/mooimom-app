@@ -34,6 +34,15 @@ export function* postGetVouchers(api, action) {
       }
     }
     yield put(GetVouchersActions.getVouchersFailure(err))
+  }
+  else if (response.problem === 'NETWORK_ERROR') {
+    var err = {
+      error: {
+        error_code: '0',
+        error_message: 'Can not connect server now'
+      }
+    }
+    yield put(GetVouchersActions.getVouchersFailure(err))
   } else if (response.data.success === 0) {
     yield put(GetVouchersActions.getVouchersSuccess(response.data))
   }

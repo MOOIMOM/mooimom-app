@@ -35,6 +35,15 @@ export function* postGetAllEventForm(api, action) {
       }
     }
     yield put(GetAllEventFormActions.getAllEventFormFailure(err))
+  }
+  else if (response.problem === 'NETWORK_ERROR') {
+    var err = {
+      error: {
+        error_code: '0',
+        error_message: 'Can not connect server now'
+      }
+    }
+    yield put(GetAllEventFormActions.getAllEventFormFailure(err))
   } else if (response.data.success === 0) {
     console.log(response.data)
     yield put(GetAllEventFormActions.getAllEventFormSuccess(response.data))

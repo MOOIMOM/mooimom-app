@@ -34,7 +34,25 @@ import PointsHistoryScreen from '../Containers/PointsHistoryScreen'
 import ProfileCompletionScreen from '../Containers/ProfileCompletionScreen'
 import OpenMapScreen from '../Containers/OpenMapScreen'
 import BeOurMerchantScreen from '../Containers/BeOurMerchantScreen'
-
+import NewCategoryScreen from '../Containers/NewCategoryScreen'
+import NewCategoryProductScreen from '../Containers/NewCategoryProductScreen'
+import NewProductScreen from '../Containers/NewProductScreen'
+import NewProfileScreen from '../Containers/NewProfileScreen'
+import NewEditProfileScreen from '../Containers/NewEditProfileScreen'
+import NewPurchaseScreen from '../Containers/NewPurchaseScreen'
+import NewDetailOrderScreen from '../Containers/NewDetailOrderScreen'
+import NewTrackOrderScreen from '../Containers/NewTrackOrderScreen'
+import NewWishlistScreen from '../Containers/NewWishlistScreen'
+import NewReferralScreen from '../Containers/NewReferralScreen'
+import NewVoucherListScreen from '../Containers/NewVoucherListScreen'
+import NewAddressListScreen from '../Containers/NewAddressListScreen'
+import NewChangePasswordScreen from '../Containers/NewChangePasswordScreen'
+import NewBankAccountList from '../Containers/NewBankAccountList'
+import NewReturnExchangeScreen from '../Containers/NewReturnExchangeScreen'
+import NewContactUsScreen from '../Containers/NewContactUsScreen'
+import NewMooimomPointsScreen from '../Containers/NewMooimomPointsScreen'
+import NewChangePhoneNumberScreen from '../Containers/NewChangePhoneNumberScreen'
+import NewCheckoutScreen from '../Containers/NewCheckoutScreen'
 
 import { Images, Colors, Fonts, Metrics } from '../Themes'
 
@@ -42,10 +60,12 @@ import styles from './Styles/NavigationStyles'
 
 const MainNav = createBottomTabNavigator({
   Home: { screen: HomeScreen },
-  Learn: { screen: LearnScreen },
-  Category: { screen: CategoryScreen },
+  Mamapedia: { screen: LearnScreen },
+  // Category: { screen: CategoryScreen },
+  Inbox: { screen: NotificationScreen },
   Order: { screen: OrderScreen },
-  Akun: { screen: ProfileScreen },
+  // Profile: { screen: ProfileScreen },
+  Profile: { screen: NewProfileScreen }
 }, {
   // Default config for all screens
   // Default config for all screens
@@ -79,6 +99,24 @@ const AppStack = createStackNavigator({
   MainScreen: {
     screen: MainNav
   },
+  NewCheckoutScreen: { screen: NewCheckoutScreen },
+  NewChangePhoneNumberScreen: { screen: NewChangePhoneNumberScreen },
+  NewMooimomPointsScreen: { screen: NewMooimomPointsScreen },
+  NewContactUsScreen: { screen: NewContactUsScreen },
+  NewReturnExchangeScreen: { screen: NewReturnExchangeScreen },
+  NewBankAccountList: { screen: NewBankAccountList },
+  NewChangePasswordScreen: { screen: NewChangePasswordScreen },
+  NewAddressListScreen: { screen: NewAddressListScreen },
+  NewVoucherListScreen: { screen: NewVoucherListScreen },
+  NewReferralScreen: { screen: NewReferralScreen },
+  NewWishlistScreen: { screen: NewWishlistScreen },
+  NewTrackOrderScreen: { screen: NewTrackOrderScreen },
+  NewDetailOrderScreen: { screen: NewDetailOrderScreen },
+  NewPurchaseScreen: { screen: NewPurchaseScreen },
+  NewEditProfileScreen: { screen: NewEditProfileScreen },
+  NewCategoryProductScreen: { screen: NewCategoryProductScreen },
+  NewCategoryScreen: { screen: NewCategoryScreen },
+  NewProductScreen: { screen: NewProductScreen },
   ProductScreen: { screen: ProductScreen },
   CartScreen: { screen: CartScreen },
   DeliveryScreen: { screen: DeliveryScreen },
@@ -91,7 +129,7 @@ const AppStack = createStackNavigator({
   DetailTargetScreen: { screen: DetailTargetScreen },
   DetailOrderScreen: { screen: DetailOrderScreen },
   ContactScreen: { screen: ContactScreen },
-  NotificationScreen: { screen: NotificationScreen },
+  // NotificationScreen: { screen: NotificationScreen },
   AccountListScreen: { screen: AccountListScreen },
   NewAccountScreen: { screen: NewAccountScreen },
   UpdateAccountScreen: { screen: UpdateAccountScreen },

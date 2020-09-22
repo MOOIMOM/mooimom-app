@@ -34,6 +34,15 @@ export function* postEventFormHandler(api, action) {
       }
     }
     yield put(EventFormHandlerActions.eventFormHandlerFailure(err))
+  }
+  else if (response.problem === 'NETWORK_ERROR') {
+    var err = {
+      error: {
+        error_code: '0',
+        error_message: 'Can not connect server now'
+      }
+    }
+    yield put(EventFormHandlerActions.eventFormHandlerFailure(err))
   } else if (response.data.success === 0) {
     console.log(response.data)
     yield put(EventFormHandlerActions.eventFormHandlerSuccess(response.data))

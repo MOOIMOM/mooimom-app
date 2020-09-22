@@ -7,10 +7,11 @@ import createStore from '../Redux'
 
 import RNAiqua from 'react-native-aiqua-sdk'
 import codePush from 'react-native-code-push'
+import { NetworkProvider } from '../Components/NetworkProvider'
+// import LowConnectionAlert from '../Components/LowConnectionAlert'
 
 // create our store
 const store = createStore()
-
 
 RNAiqua.configure({
   appId: '886fd65fc66d1db30244',
@@ -32,7 +33,10 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <RootContainer />
+        <NetworkProvider>
+          {/* <LowConnectionAlert /> */}
+          <RootContainer />
+        </NetworkProvider>
       </Provider>
     )
   }

@@ -11,13 +11,20 @@ import { DotIndicator } from 'react-native-indicators'
 // import Swipeout from 'react-native-swipeout'
 // Styles
 import styles from './Styles/NotificationScreenStyles'
+import menuStyles from './Styles/MenuComponentStyles'
 
 class NotificationScreen extends Component {
+  static navigationOptions = {
+    tabBarIcon: ({ focused, tintColor }) => {
+      const iconName = (focused ? Images.inbox2 : Images.inbox)
+      return <Image source={iconName} style={menuStyles.menuImage} />
+    },
+  };
   constructor(props) {
     super(props)
     this.state = {
       notification: [],
-      fcmToken: this.props.navigation.state.params.fcmToken
+      fcmToken: ''
     }
   }
 
@@ -29,7 +36,10 @@ class NotificationScreen extends Component {
         fcmToken: this.state.fcmToken
       }
     }
-    this.props.getNotificationProcess(data)
+    this.getToken()
+    setTimeout(() => {
+      this.props.getNotificationProcess(data)
+    }, 200)
   }
 
   componentWillReceiveProps(newProps) {
@@ -54,6 +64,12 @@ class NotificationScreen extends Component {
         this.componentDidMount()
       }
     }
+  }
+
+  async getToken() {
+    let fcmToken = await AsyncStorage.getItem('fcmToken')
+
+    this.setState({ fcmToken: fcmToken })
   }
 
   actNavigate(screen, obj = {}) {

@@ -34,6 +34,15 @@ export function* postGetWithdraw(api, action) {
       }
     }
     yield put(WithdrawActions.getWithdrawFailure(err))
+  }
+  else if (response.problem === 'NETWORK_ERROR') {
+    var err = {
+      error: {
+        error_code: '0',
+        error_message: 'Can not connect server now'
+      }
+    }
+    yield put(WithdrawActions.getWithdrawFailure(err))
   } else {
     yield put(WithdrawActions.getWithdrawFailure(response.data))
   }

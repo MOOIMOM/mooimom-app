@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { SafeAreaView, ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Alert, Modal, Linking, WebView } from 'react-native'
+import { SafeAreaView, ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Alert, Modal, Linking, WebView, Platform } from 'react-native'
 import { Images, Metrics, Colors, Fonts } from '../Themes'
 import FastImage from 'react-native-fast-image'
 import GetOrderActions from '../Redux/GetOrderRedux'
@@ -8,6 +8,8 @@ import GetOrderStatusMidtransActions from '../Redux/GetOrderStatusMidtransRedux'
 import DeleteOrderHistoryActions from '../Redux/DeleteOrderHistoryRedux'
 import GopayActions from '../Redux/GopayRedux'
 import CartActions from '../Redux/CartRedux'
+import CarttActions from '../Redux/CarttRedux'
+import UpdateOnlineCartActions from '../Redux/UpdateOnlineCartRedux'
 import { connect } from 'react-redux'
 import { convertToRupiah, getDateFromString, convertToThousandOrHigher, isIphoneXorAbove } from '../Lib/utils'
 import MidtransModule from '../Lib/Midtrans'
@@ -246,35 +248,31 @@ class DetailOrderScreen extends Component {
 
   pressOrderAgain() {
     const { order_items } = this.state.order
+    let dataCart = []
     if (!order_items || order_items.length < 1)
       return;
-    order_items.map(item => {
-      let product = {
-        colors: item.colors,
-        slug: item.product_slug,
-        product_name: item.product_name,
-        product_regular_price: item.product_regular_price,
-        product_sale_price: item.product_sale_price,
-        sizes: item.sizes,
-        all_product_variations_with_stock_data: item.all_product_variations_with_stock_data,
-        custom_attribute_text: item.custom_attribute_text,
-        custom_attributes: item.custom_attributes,
-        img_url: item.main_image
-      }
-      let data = {
-        product: product,
-        color: item.color_slug,
-        size: item.size_slug,
-        custom: item.custom_attribute_1_slug,
-        sku: item.sku,
-        qty: item.quantity
-      }
-      this.props.addToCartProcess(data)
+    order_items.map((order, index) => {
+      let productVar = { sku: order.sku, quantity: order.quantity }
+      this.props.addToCarttProcess(productVar)
+      dataCart.unshift(productVar)
     })
+
+    let data2 = {
+      data_request: {
+        user_id: this.props.auth.payload.user_id,
+        unique_token: this.props.auth.payload.unique_token,
+        shopping_cart_id: this.props.getOnlineCart.payload.shopping_cart_id,
+        product_variations_user_want_to_buy: JSON.stringify(dataCart.reverse())
+      }
+    }
+
+    this.props.updateOnlineCartProcess(data2)
+
     Alert.alert(
       '',
       'Produk Berhasil Ditambahkan!',
     )
+
   }
 
   _renderProductCart(data) {
@@ -342,24 +340,7 @@ class DetailOrderScreen extends Component {
           style={{ width: Metrics.screenWidth, height: Metrics.screenHeight, top: 0, bottom: 5 }}
           activeOpacity={1}
         >
-          <View style={{ width: '96%', alignItems: 'flex-start', alignSelf: 'center' }}>
-            <TouchableOpacity onPress={() => this.setState({ openXendit: false })} style={{
-              position: isIphoneXorAbove() ? '' : 'absolute', zIndex: isIphoneXorAbove() ? 0 : 1,
-              marginTop: isIphoneXorAbove() ? 70 : 20, marginLeft: 10,
-              width: 30, height: 30, borderRadius: 20,
-              justifyContent: 'center', alignItems: 'center',
-              backgroundColor: Colors.white, shadowColor: '#CCCCCC', shadowOffset: { width: 0, height: 2 },
-              shadowOpacity: 0.8,
-              shadowRadius: 4,
-              elevation: 3,
-            }}>
-              <Image source={Images.back} style={{
-                height: 12 * Metrics.screenWidth / 320,
-                width: 12 * Metrics.screenWidth / 320,
-                resizeMode: 'contain'
-              }} />
-            </TouchableOpacity>
-          </View>
+
           <WebView
             startInLoadingState={true}
             renderLoading={() => {
@@ -375,6 +356,24 @@ class DetailOrderScreen extends Component {
             scalesPageToFit={false}
             source={{ uri: this.state.xenditLink }}
           />
+          <View style={{ width: '96%', alignItems: 'flex-start', alignSelf: 'center', position: 'absolute', zIndex: 1, }}>
+            <TouchableOpacity onPress={() => this.setState({ openXendit: false })} style={{
+              marginTop: Platform.OS === 'ios' ? 30 : 20, marginLeft: 10,
+              width: 30, height: 30, borderRadius: 20,
+              justifyContent: 'center', alignItems: 'center',
+              backgroundColor: Colors.white, shadowColor: '#CCCCCC', shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.8,
+              shadowRadius: 4,
+              elevation: 3,
+            }}>
+              <Image source={Images.back} style={{
+                height: 12 * Metrics.screenWidth / 320,
+                width: 12 * Metrics.screenWidth / 320,
+                resizeMode: 'contain'
+              }} />
+            </TouchableOpacity>
+          </View>
+
         </SafeAreaView>
       </Modal>
     )
@@ -507,25 +506,6 @@ class DetailOrderScreen extends Component {
 
   }
 
-  renderPaymentType() {
-    const { order, midtrans } = this.state
-
-    if (order.order_status === 'processing' || order.order_status === 'completed' || order.order_status === 'cancelled' || order.waresix_delivery_status === 'in-progress') {
-      return (
-        <View style={styles.selectedDeliveryWrapper}>
-          <View style={styles.selectedDeliveryTextWrapper}>
-            <Text style={styles.deliveryText2}>Pembayaran:</Text>
-            <Text style={styles.deliveryText}>{this.hasNullorNot(order.payment_method)}</Text>
-          </View>
-        </View>
-      )
-    } else if (order.order_status === 'pending') {
-      return (
-        <View />
-      )
-    }
-
-  }
 
   renderMenu() {
     var totalPrice = convertToRupiah(this.state.totalPrice)
@@ -567,7 +547,7 @@ class DetailOrderScreen extends Component {
             </View>
           </View>
           <View style={styles.menuTextTopWrapper}>
-            <TouchableOpacity style={styles.btnOrderAgain} onPress={() => this.pressOrderAgain()}>
+            <TouchableOpacity style={[styles.btnOrderAgain, { backgroundColor: '#43aea0' }]} onPress={() => this.pressOrderAgain()}>
               <Text style={styles.textOrderAgain}>Beli Lagi</Text>
             </TouchableOpacity>
           </View>
@@ -645,7 +625,6 @@ class DetailOrderScreen extends Component {
                 <Text style={styles.deliveryText}>{convertToRupiah(order.shipping_total)}</Text>
               </View>
             </View>
-            {this.renderPaymentType()}
             <View style={styles.wrapperSeparator} />
             {this._renderProductCart(order.order_items)}
             {this.renderMenu()}
@@ -665,7 +644,8 @@ const mapStateToProps = state => {
     commissionEstimation: state.commissionEstimation,
     statusMidtrans: state.statusMidtrans,
     gopay: state.gopay,
-    deleteOrderHistory: state.deleteOrderHistory
+    deleteOrderHistory: state.deleteOrderHistory,
+    getOnlineCart: state.getOnlineCart
   }
 };
 
@@ -688,6 +668,12 @@ const mapDispatchToProps = dispatch => {
     },
     deleteOrderHistoryProcess: data => {
       dispatch(DeleteOrderHistoryActions.deleteOrderHistoryRequest(data))
+    },
+    updateOnlineCartProcess: data => {
+      dispatch(UpdateOnlineCartActions.updateOnlineCartRequest(data))
+    },
+    addToCarttProcess: data => {
+      dispatch(CarttActions.addCarttRequest(data))
     }
   }
 };

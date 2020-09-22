@@ -4,28 +4,28 @@ import { Images, Metrics, Colors } from '../Themes'
 import { connect } from 'react-redux'
 import BankAccountActions from '../Redux/BankAccountRedux'
 import EditBankAccountActions from '../Redux/EditBankAccountRedux'
-import {convertToRupiah } from '../Lib/utils'
+import { convertToRupiah } from '../Lib/utils'
 import ModalDropDown from '../Components/ModalDropDown'
 // Styles
 import styles from './Styles/AccountListScreenStyles'
 var dataAccounts = [
-  {id:1, name:'James', bank:'Bank Central Asia', account:'12345667'},
+  { id: 1, name: 'James', bank: 'Bank Central Asia', account: '12345667' },
 ]
 
 class AccountListScreen extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       accounts: []
     }
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.reloadData()
   }
 
-  componentWillReceiveProps(newProps){
-    if(this.props.bankAccount !== newProps.bankAccount){
+  componentWillReceiveProps(newProps) {
+    if (this.props.bankAccount !== newProps.bankAccount) {
       if (
         newProps.bankAccount.payload !== null &&
         newProps.bankAccount.error === null &&
@@ -37,7 +37,7 @@ class AccountListScreen extends Component {
       }
     }
 
-    if(this.props.editBankAccount !== newProps.editBankAccount){
+    if (this.props.editBankAccount !== newProps.editBankAccount) {
       if (
         newProps.editBankAccount.payload !== null &&
         newProps.editBankAccount.error === null &&
@@ -48,9 +48,9 @@ class AccountListScreen extends Component {
     }
   }
 
-  reloadData(){
-    let data ={
-      data_request:{
+  reloadData() {
+    let data = {
+      data_request: {
         user_id: this.props.auth.payload.user_id,
         unique_token: this.props.auth.payload.unique_token,
       }
@@ -58,19 +58,19 @@ class AccountListScreen extends Component {
     this.props.getBankAccountsProcess(data)
   }
 
-  actNavigate (screen, obj={}) {
+  actNavigate(screen, obj = {}) {
     const { navigate } = this.props.navigation
     navigate(screen, obj)
   }
 
-  actSelect(item){
-    if(this.props.navigation.state.params.selectAccount){
+  actSelect(item) {
+    if (this.props.navigation.state.params.selectAccount) {
       this.props.navigation.state.params.selectAccount(item)
       this.props.navigation.goBack()
     }
   }
 
-  deleteAddress(id){
+  deleteAddress(id) {
     Alert.alert(
       '',
       'Hapus Rekening Ini?',
@@ -81,7 +81,7 @@ class AccountListScreen extends Component {
         {
           text: 'Yes', onPress: () => {
             let data = {
-              data_request:{
+              data_request: {
                 user_id: this.props.auth.payload.user_id,
                 unique_token: this.props.auth.payload.unique_token,
                 bank_data_id: id
@@ -95,32 +95,32 @@ class AccountListScreen extends Component {
     )
   }
 
-  _renderAccount(){
-    if(this.state.accounts.length > 0)
-    return this.state.accounts.map((item, index) => {
-      var style = styles.deliveryAddressContainer
-      var color = Colors.black
-      var imgEdit = Images.edit
-      var imgDelete = Images.delete
-      return(
-        <TouchableWithoutFeedback onPress={() => this.actSelect(item)} key={index.toString()}>
-          <View style={style}>
-            <View style={styles.btnContainer}>
-              <Text style={[styles.addressName, {color: color}]}>{item.bank_account_name}</Text>
-              <View style={styles.btnContainer2}>
-                <TouchableOpacity onPress={() => this.actNavigate('UpdateAccountScreen', {bank: item})}><Image source={imgEdit} style={styles.btnEditAddress}/></TouchableOpacity>
-                <TouchableOpacity onPress={() => this.deleteAddress(item.bank_data_id)}><Image source={imgDelete} style={styles.btnEditAddress}/></TouchableOpacity>
+  _renderAccount() {
+    if (this.state.accounts.length > 0)
+      return this.state.accounts.map((item, index) => {
+        var style = styles.deliveryAddressContainer
+        var color = Colors.black
+        var imgEdit = Images.edit
+        var imgDelete = Images.delete
+        return (
+          <TouchableWithoutFeedback onPress={() => this.actSelect(item)} key={index.toString()}>
+            <View style={style}>
+              <View style={styles.btnContainer}>
+                <Text style={[styles.addressName, { color: color }]}>{item.bank_account_name}</Text>
+                <View style={styles.btnContainer2}>
+                  <TouchableOpacity onPress={() => this.actNavigate('UpdateAccountScreen', { bank: item })}><Image source={imgEdit} style={styles.btnEditAddress} /></TouchableOpacity>
+                  <TouchableOpacity onPress={() => this.deleteAddress(item.bank_data_id)}><Image source={imgDelete} style={styles.btnEditAddress} /></TouchableOpacity>
+                </View>
               </View>
+              <Text style={[styles.address, { color: color }]}>{item.the_bank_name}</Text>
+              <Text style={[styles.address, { color: color }]}>{item.bank_account_number}</Text>
             </View>
-            <Text style={[styles.address, {color: color}]}>{item.the_bank_name}</Text>
-            <Text style={[styles.address, {color: color}]}>{item.bank_account_number}</Text>
-          </View>
-        </TouchableWithoutFeedback>
-      )
-    })
+          </TouchableWithoutFeedback>
+        )
+      })
   }
 
-  render () {
+  render() {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.headerWrapper}>
@@ -130,15 +130,15 @@ class AccountListScreen extends Component {
         </View>
         <View style={styles.cartContainer}>
           <ScrollView
-          showsVerticalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
           >
-          <Text style={styles.productSubtitle}>Rekening Bank Anda</Text>
-          <View style={styles.wrapperSeparator}/>
+            <Text style={styles.productSubtitle}>Rekening Bank Anda</Text>
+            <View style={styles.wrapperSeparator} />
             {this._renderAccount()}
-          <View style={styles.wrapperSeparator}/>
-          <TouchableOpacity style={styles.chooseAddressBtn} onPress={() => {this.actNavigate('NewAccountScreen')}}>
-            <Text style={styles.chooseAddressText}>+ Tambah Nomor Rekening Bank</Text>
-          </TouchableOpacity>
+            <View style={styles.wrapperSeparator} />
+            <TouchableOpacity style={styles.chooseAddressBtn} onPress={() => { this.actNavigate('NewAccountScreen') }}>
+              <Text style={styles.chooseAddressText}>+ Tambah Nomor Rekening Bank</Text>
+            </TouchableOpacity>
           </ScrollView>
         </View>
       </SafeAreaView>

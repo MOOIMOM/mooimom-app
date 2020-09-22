@@ -24,14 +24,14 @@
 	<dict>
 		<key>NSExtensionAttributes</key>
 		<dict>
-			<key>UNNotificationExtensionCategory</key>
-			<string>QGCAROUSEL</string>
 			<key>UNNotificationExtensionDefaultContentHidden</key>
 			<true/>
-			<key>UNNotificationExtensionInitialContentSizeRatio</key>
-			<real>1</real>
 			<key>UNNotificationExtensionUserInteractionEnabled</key>
 			<true/>
+			<key>UNNotificationExtensionCategory</key>
+			<string>QGCAROUSEL</string>
+			<key>UNNotificationExtensionInitialContentSizeRatio</key>
+			<real>1</real>
 		</dict>
 		<key>NSExtensionMainStoryboard</key>
 		<string>MainInterface</string>

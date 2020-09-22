@@ -52,7 +52,7 @@ class CategoryScreen extends Component {
     this.shareWhatsapp = this.shareWhatsapp.bind(this)
   }
 
-  componentWillMount() {
+  componentDidMount() {
     AppState.addEventListener('change', this._handleAppStateChange);
     let data = {
       data_request: {
@@ -71,10 +71,10 @@ class CategoryScreen extends Component {
       && newProps.navigation.state.params.category_id !== this.state.selectedCategoriesId) {
       const idx = this.getCategoryIndex(newProps.navigation.state.params.category_id)
       this.setState({
-        selectedSubCategoriesId: newProps.navigation.state.params.category_id,
-        selectedSubCategoriesIdx: idx,
+        selectedCategoriesId: newProps.navigation.state.params.category_id,
+        selectedCategoriesIdx: idx,
         currentPage: 1,
-        isSelectSubCategory: true
+        isSelectSubCategory: false
       })
     }
 
@@ -211,7 +211,6 @@ class CategoryScreen extends Component {
     this.setState({
       selectedSubCategoriesId: slug,
       selectedSubCategoriesIdx: index,
-      isSelectSubCategory: true,
       currentPage: 1,
       products: []
     })
@@ -243,7 +242,6 @@ class CategoryScreen extends Component {
       arrTopCategory: arrTopCategory,
     })
     this.pressSubCategory(id, index)
-    console.log('AWW')
   }
 
   _renderCategories() {

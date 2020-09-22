@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ReactNative from 'react-native'
-import { SafeAreaView, ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Alert, Modal, TextInput, AsyncStorage, Keyboard } from 'react-native'
+import { SafeAreaView, ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Alert, Modal, TextInput, AsyncStorage, Keyboard, Platform } from 'react-native'
 import { Images, Metrics, Colors, Fonts } from '../Themes'
 import FastImage from 'react-native-fast-image'
 import { connect } from 'react-redux'
@@ -570,7 +570,7 @@ class DeliveryScreen extends Component {
               <View style={{ width: '20%', alignItems: 'center', marginRight: 20 }}>
                 <FastImage
                   source={item.icon}
-                  style={{ width: item.value === 'ovo' ? 40 : 60, height: 40 }}
+                  style={{ width: 48, height: 28 }}
                   resizeMode={FastImage.resizeMode.contain}
                 />
               </View>
@@ -633,7 +633,7 @@ class DeliveryScreen extends Component {
           })}
         >
           <TouchableWithoutFeedback>
-            <View style={styles.chooseDeliveryWrapper2}>
+            <View style={styles.chooseDeliveryWrapper3}>
               <TouchableOpacity style={styles.chooseDeliveryBtn2} onPress={() => this.setState({
                 jneSelected: false,
                 isShowDelivery: true
@@ -731,7 +731,7 @@ class DeliveryScreen extends Component {
             })}
           >
             <TouchableWithoutFeedback>
-              <View style={styles.chooseDeliveryWrapper2}>
+              <View style={styles.chooseDeliveryWrapper3}>
                 <TouchableOpacity style={styles.chooseDeliveryBtn2} onPress={() => this.setState({
                   isShowDelivery: false
                 })}>
@@ -887,7 +887,7 @@ class DeliveryScreen extends Component {
               isShowUsePointsModal: false
             })}
           >
-            <View style={[styles.chooseDeliveryWrapper2, { marginBottom: this.state.mooimomPointsMarginBottom !== '' ? Metrics.screenHeight / 2 : 0, top: this.state.mooimomPointsMarginBottom !== '' ? 0 : Metrics.screenHeight / 2 }]}>
+            <View style={[styles.chooseDeliveryWrapper2, { height: this.state.mooimomPointsMarginBottom !== '' ? Metrics.screenHeight : (Platform.OS === 'ios' ? Metrics.screenHeight / 2 : Metrics.screenHeight / 2 - 20), marginBottom: this.state.mooimomPointsMarginBottom !== '' ? Metrics.screenHeight / 2 : 0, top: this.state.mooimomPointsMarginBottom !== '' ? 0 : Metrics.screenHeight / 2 }]}>
               <TouchableOpacity style={styles.chooseDeliveryBtn2} onPress={() => this.setState({
                 isShowUsePointsModal: false
               })}>

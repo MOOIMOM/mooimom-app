@@ -35,6 +35,15 @@ export function* postDeleteOrderHistory(api, action) {
       }
     }
     yield put(DeleteOrderHistoryActions.deleteOrderHistoryFailure(err))
+  }
+  else if (response.problem === 'NETWORK_ERROR') {
+    var err = {
+      error: {
+        error_code: '0',
+        error_message: 'Can not connect server now'
+      }
+    }
+    yield put(DeleteOrderHistoryActions.deleteOrderHistoryFailure(err))
   } else {
     console.log(response.data)
     yield put(DeleteOrderHistoryActions.deleteOrderHistoryFailure(response.data))

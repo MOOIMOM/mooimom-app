@@ -149,7 +149,7 @@ export default StyleSheet.create({
   topContainer: {
     height: 65,
     borderBottomWidth: 2,
-    borderBottomColor: Colors.gray
+    borderBottomColor: Colors.mediumGray
   },
   btnTopCategories: {
     justifyContent: 'center',

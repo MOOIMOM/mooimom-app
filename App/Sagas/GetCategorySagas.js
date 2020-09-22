@@ -35,6 +35,15 @@ export function* postGetCategory(api, action) {
       }
     }
     yield put(CategoryActions.getCategoryFailure(err))
+  }
+  else if (response.problem === 'NETWORK_ERROR') {
+    var err = {
+      error: {
+        error_code: '0',
+        error_message: 'Can not connect server now'
+      }
+    }
+    yield put(CategoryActions.getCategoryFailure(err))
   } else {
     console.log(response)
     yield put(CategoryActions.getCategoryFailure(response.data))

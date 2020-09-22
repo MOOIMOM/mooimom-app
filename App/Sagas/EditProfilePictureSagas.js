@@ -14,27 +14,36 @@ import { call, put } from 'redux-saga/effects'
 import EditProfileActions from '../Redux/EditProfileRedux'
 // import { RegisterSelectors } from '../Redux/RegisterRedux'
 
-export function * postUpdateProfilePicture(api, action) {
+export function* postUpdateProfilePicture(api, action) {
   const { data } = action
   // get current data from Store
   // const currentData = yield select(RegisterSelectors.getData)
   // make the call to the api
   const response = yield call(api.postUpdateProfilePicture, data)
-    // success?
-    if (response.data.success === 1) {
-      if (__DEV__) console.tron.log(response)
-      // You might need to change the response here - do this with a 'transform',
-      // located in ../Transforms/. Otherwise, just pass the data back from the api.
-      yield put(EditProfileActions.editProfileSuccess(response.data))
-    } else if (response.problem === 'TIMEOUT_ERROR') {
-      var err = {
-        error: {
-          error_code: '0',
-          error_message: 'Can not connect server now'
-        }
+  // success?
+  if (response.data.success === 1) {
+    if (__DEV__) console.tron.log(response)
+    // You might need to change the response here - do this with a 'transform',
+    // located in ../Transforms/. Otherwise, just pass the data back from the api.
+    yield put(EditProfileActions.editProfileSuccess(response.data))
+  } else if (response.problem === 'TIMEOUT_ERROR') {
+    var err = {
+      error: {
+        error_code: '0',
+        error_message: 'Can not connect server now'
       }
-      yield put(EditProfileActions.editProfileFailure(err))
-    } else {
-      yield put(EditProfileActions.editProfileFailure(response.data))
     }
+    yield put(EditProfileActions.editProfileFailure(err))
+  }
+  else if (response.problem === 'NETWORK_ERROR') {
+    var err = {
+      error: {
+        error_code: '0',
+        error_message: 'Can not connect server now'
+      }
+    }
+    yield put(EditProfileActions.editProfileFailure(err))
+  } else {
+    yield put(EditProfileActions.editProfileFailure(response.data))
+  }
 }

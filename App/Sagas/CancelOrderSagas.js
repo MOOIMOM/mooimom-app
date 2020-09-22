@@ -34,6 +34,15 @@ export function* postCancelOrder(api, action) {
       }
     }
     yield put(CancelOrderActions.cancelOrderFailure(err))
+  }
+  else if (response.problem === 'NETWORK_ERROR') {
+    var err = {
+      error: {
+        error_code: '0',
+        error_message: 'Can not connect server now'
+      }
+    }
+    yield put(CancelOrderActions.cancelOrderFailure(err))
   } else {
     yield put(CancelOrderActions.cancelOrderFailure(response.data))
   }

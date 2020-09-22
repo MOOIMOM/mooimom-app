@@ -35,6 +35,15 @@ export function* postGetBalance(api, action) {
       }
     }
     yield put(BalanceActions.getBalanceFailure(err))
+  }
+  else if (response.problem === 'NETWORK_ERROR') {
+    var err = {
+      error: {
+        error_code: '0',
+        error_message: 'Can not connect server now'
+      }
+    }
+    yield put(BalanceActions.getBalanceFailure(err))
   } else {
     console.log(response)
     yield put(BalanceActions.getBalanceFailure(response.data))

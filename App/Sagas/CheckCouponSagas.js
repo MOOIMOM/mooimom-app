@@ -27,7 +27,15 @@ export function* postCheckCoupon(api, action) {
     // located in ../Transforms/. Otherwise, just pass the data back from the api.
     yield put(CheckCouponActions.checkCouponSuccess(response.data))
   } else if (response.problem === 'TIMEOUT_ERROR') {
-    console.log("Failed", response)
+    var err = {
+      error: {
+        error_code: '0',
+        error_message: 'Can not connect server now'
+      }
+    }
+    yield put(CheckCouponActions.checkCouponFailure(err))
+  }
+  else if (response.problem === 'NETWORK_ERROR') {
     var err = {
       error: {
         error_code: '0',

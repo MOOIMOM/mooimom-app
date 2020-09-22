@@ -36,6 +36,17 @@
 		2D16E6881FA4F8E400B85C8A /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D16E6891FA4F8E400B85C8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* mooimomTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* mooimomTests.m */; };
 		2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
+		2E5493122411E87200B5FADF /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E03E3B723FA4EEA005E5A0F /* UserNotifications.framework */; };
+		2E5493132411E87200B5FADF /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E03E3B923FA4EEA005E5A0F /* UserNotificationsUI.framework */; };
+		2E54931E2411E87200B5FADF /* ContentExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2E5493112411E87200B5FADF /* ContentExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		2E54932E2411E88800B5FADF /* ServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2E5493262411E88800B5FADF /* ServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		2E5493342411EAB900B5FADF /* NotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E5493332411EAB900B5FADF /* NotificationService.m */; };
+		2E5493392411EBEE00B5FADF /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2E5493362411EBEE00B5FADF /* MainInterface.storyboard */; };
+		2E54933A2411EBEE00B5FADF /* NotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E5493382411EBEE00B5FADF /* NotificationViewController.m */; };
+		2E54933C2411ED0E00B5FADF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E03E3DB23FA684F005E5A0F /* QuartzCore.framework */; };
+		2E54934D2411F14B00B5FADF /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E54934A2411F14A00B5FADF /* iCarousel.m */; };
+		2E5493512411F3D700B5FADF /* lQGNotificationSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E5493482411F14A00B5FADF /* lQGNotificationSdk.a */; };
+		2E5493522411F3F500B5FADF /* lQGNotificationSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E5493482411F14A00B5FADF /* lQGNotificationSdk.a */; };
 		2EBE176423FF89A700D7C0B8 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EBE173523FF89A700D7C0B8 /* AdSupport.framework */; };
 		2EBE176623FF89B100D7C0B8 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EBE176523FF89B100D7C0B8 /* SystemConfiguration.framework */; };
 		2EBE176823FF89BD00D7C0B8 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EBE176723FF89BC00D7C0B8 /* CoreTelephony.framework */; };
@@ -46,6 +57,7 @@
 		311600C4B06E4657B68EF660 /* libFastImage-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 31FB956A40D44C879BF09B60 /* libFastImage-tvOS.a */; };
 		3407A66A566A42B4957B1E22 /* libRNShare.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 97926DC5FE594A6BA7BDD6C9 /* libRNShare.a */; };
 		41B3D9F3F07447DCA4D5CEC9 /* libFastImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D68E62ED1D6D4C2E9EC2F948 /* libFastImage.a */; };
+		687BBA2335774CDB8C81C8B6 /* libRNAiquaSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B4658E92755A410787811D81 /* libRNAiquaSdk.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		842643EBAE9B43449110191E /* libRNFetchBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0019236E53844ABA94120CD0 /* libRNFetchBlob.a */; };
 		9E0349A62357145A004D5CE5 /* GothamRounded-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9E03497423571459004D5CE5 /* GothamRounded-Bold.otf */; };
@@ -202,6 +214,27 @@
 			proxyType = 2;
 			remoteGlobalIDString = 3D383D621EBD27B9005632C8;
 			remoteInfo = "double-conversion-tvOS";
+		};
+		2E5492CF2411E64E00B5FADF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3BBDA65808674DD0A7E8A5C8 /* RNAiquaSdk.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNAiquaSdk;
+		};
+		2E54931C2411E87200B5FADF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2E5493102411E87200B5FADF;
+			remoteInfo = ContentExtension;
+		};
+		2E54932C2411E88800B5FADF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2E5493252411E88800B5FADF;
+			remoteInfo = ServiceExtension;
 		};
 		3DAD3E831DF850E9000B6D8A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -408,6 +441,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				2E54932E2411E88800B5FADF /* ServiceExtension.appex in Embed App Extensions */,
+				2E54931E2411E87200B5FADF /* ContentExtension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -458,6 +493,24 @@
 		2E03E3B923FA4EEA005E5A0F /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
 		2E03E3D823FA6428005E5A0F /* libQGNotificationSdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libQGNotificationSdk.a; path = "../../../../../Downloads/ObjC-4.6.1/QGNotificationSdk/libQGNotificationSdk.a"; sourceTree = "<group>"; };
 		2E03E3DB23FA684F005E5A0F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		2E5493112411E87200B5FADF /* ContentExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ContentExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		2E54931B2411E87200B5FADF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2E5493262411E88800B5FADF /* ServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		2E54932B2411E88800B5FADF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2E5493322411EAB900B5FADF /* NotificationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotificationService.h; path = "../../../../../../Downloads/ObjC-4.6.1/QGNotificationServiceExtension/NotificationService.h"; sourceTree = "<group>"; };
+		2E5493332411EAB900B5FADF /* NotificationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotificationService.m; path = "../../../../../../Downloads/ObjC-4.6.1/QGNotificationServiceExtension/NotificationService.m"; sourceTree = "<group>"; };
+		2E5493352411EB0300B5FADF /* ServiceExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ServiceExtension.entitlements; sourceTree = "<group>"; };
+		2E5493362411EBEE00B5FADF /* MainInterface.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = MainInterface.storyboard; path = "../../../../../../Downloads/ObjC-4.6.1/QGNotificationContentExtension/MainInterface.storyboard"; sourceTree = "<group>"; };
+		2E5493372411EBEE00B5FADF /* NotificationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotificationViewController.h; path = "../../../../../../Downloads/ObjC-4.6.1/QGNotificationContentExtension/NotificationViewController.h"; sourceTree = "<group>"; };
+		2E5493382411EBEE00B5FADF /* NotificationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotificationViewController.m; path = "../../../../../../Downloads/ObjC-4.6.1/QGNotificationContentExtension/NotificationViewController.m"; sourceTree = "<group>"; };
+		2E54933B2411EC1000B5FADF /* ContentExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ContentExtension.entitlements; sourceTree = "<group>"; };
+		2E5493452411EF7000B5FADF /* libQGNotificationSdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libQGNotificationSdk.a; path = "../../../../../Downloads/ObjC-4.6-1.1/QGNotificationSdk/libQGNotificationSdk.a"; sourceTree = "<group>"; };
+		2E5493482411F14A00B5FADF /* lQGNotificationSdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = lQGNotificationSdk.a; path = "../../../../../../Downloads/ObjC-4.6-1.1/QGNotificationSdk/lQGNotificationSdk.a"; sourceTree = "<group>"; };
+		2E5493492411F14A00B5FADF /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iCarousel.h; path = "../../../../../../Downloads/ObjC-4.6-1.1/QGNotificationSdk/iCarousel.h"; sourceTree = "<group>"; };
+		2E54934A2411F14A00B5FADF /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iCarousel.m; path = "../../../../../../Downloads/ObjC-4.6-1.1/QGNotificationSdk/iCarousel.m"; sourceTree = "<group>"; };
+		2E54934B2411F14A00B5FADF /* QGNotificationSdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QGNotificationSdk.h; path = "../../../../../../Downloads/ObjC-4.6-1.1/QGNotificationSdk/QGNotificationSdk.h"; sourceTree = "<group>"; };
+		2E54934E2411F15E00B5FADF /* lQGNotificationSdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = lQGNotificationSdk.a; path = "../../../../../../Downloads/ObjC-4.6.1/QGNotificationSdk/lQGNotificationSdk.a"; sourceTree = "<group>"; };
+		2E54934F2411F15E00B5FADF /* QGNotificationSdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QGNotificationSdk.h; path = "../../../../../../Downloads/ObjC-4.6.1/QGNotificationSdk/QGNotificationSdk.h"; sourceTree = "<group>"; };
 		2E74C3CC23ED53FE00DF3E71 /* mooimomDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = mooimomDebug.entitlements; path = mooimom/mooimomDebug.entitlements; sourceTree = "<group>"; };
 		2EBE173523FF89A700D7C0B8 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		2EBE176523FF89B100D7C0B8 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -468,6 +521,7 @@
 		2EBE176F23FF89E200D7C0B8 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		2F524662220549359AD7DD9D /* RNGestureHandler.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNGestureHandler.xcodeproj; path = "../node_modules/react-native-gesture-handler/ios/RNGestureHandler.xcodeproj"; sourceTree = "<group>"; };
 		31FB956A40D44C879BF09B60 /* libFastImage-tvOS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = "libFastImage-tvOS.a"; sourceTree = "<group>"; };
+		3BBDA65808674DD0A7E8A5C8 /* RNAiquaSdk.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNAiquaSdk.xcodeproj; path = "../node_modules/react-native-aiqua-sdk/ios/RNAiquaSdk.xcodeproj"; sourceTree = "<group>"; };
 		526AD553C1464A9B80786C53 /* libimageCropPicker.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libimageCropPicker.a; sourceTree = "<group>"; };
 		552DF2DC1E0B4C959441F0BA /* RNShare.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNShare.xcodeproj; path = "../node_modules/react-native-share/ios/RNShare.xcodeproj"; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
@@ -495,6 +549,7 @@
 		AC668D3D66E744A284E591D4 /* Gotham Bold.TTF */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Gotham Bold.TTF"; path = "../App/fonts/Gotham Bold.TTF"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		AE7BE21F558148A4B545734F /* imageCropPicker.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = imageCropPicker.xcodeproj; path = "../node_modules/react-native-image-crop-picker/ios/imageCropPicker.xcodeproj"; sourceTree = "<group>"; };
+		B4658E92755A410787811D81 /* libRNAiquaSdk.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNAiquaSdk.a; sourceTree = "<group>"; };
 		B50BDBC736404985A0140077 /* RNFirebase.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFirebase.xcodeproj; path = "../node_modules/react-native-firebase/ios/RNFirebase.xcodeproj"; sourceTree = "<group>"; };
 		B71E67465ACC957F2D2605A0 /* Pods-mooimom.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mooimom.release.xcconfig"; path = "Target Support Files/Pods-mooimom/Pods-mooimom.release.xcconfig"; sourceTree = "<group>"; };
 		BF3A4486442E43809C59C0DA /* Gotham Book.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Gotham Book.otf"; path = "../App/fonts/Gotham Book.otf"; sourceTree = "<group>"; };
@@ -548,6 +603,7 @@
 				9EE7FFC1235D845A00C3BB74 /* libMidtransCoreKit.a in Frameworks */,
 				9EE7FFC3235D845A00C3BB74 /* libMidtransKit.a in Frameworks */,
 				DC1B715FEB27F1564894A19F /* libPods-mooimom.a in Frameworks */,
+				687BBA2335774CDB8C81C8B6 /* libRNAiquaSdk.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -572,6 +628,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2E54930E2411E87200B5FADF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2E5493512411F3D700B5FADF /* lQGNotificationSdk.a in Frameworks */,
+				2E54933C2411ED0E00B5FADF /* QuartzCore.framework in Frameworks */,
+				2E5493132411E87200B5FADF /* UserNotificationsUI.framework in Frameworks */,
+				2E5493122411E87200B5FADF /* UserNotifications.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2E5493232411E88800B5FADF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2E5493522411F3F500B5FADF /* lQGNotificationSdk.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -702,6 +777,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2E5493452411EF7000B5FADF /* libQGNotificationSdk.a */,
 				2EBE176F23FF89E200D7C0B8 /* libz.tbd */,
 				2EBE176D23FF89D600D7C0B8 /* MobileCoreServices.framework */,
 				2EBE176B23FF89CD00D7C0B8 /* ImageIO.framework */,
@@ -721,6 +797,43 @@
 				2E03E3B923FA4EEA005E5A0F /* UserNotificationsUI.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2E5492CC2411E64E00B5FADF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2E5492D02411E64E00B5FADF /* libRNAiquaSdk.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2E5493142411E87200B5FADF /* ContentExtension */ = {
+			isa = PBXGroup;
+			children = (
+				2E5493492411F14A00B5FADF /* iCarousel.h */,
+				2E54934A2411F14A00B5FADF /* iCarousel.m */,
+				2E5493482411F14A00B5FADF /* lQGNotificationSdk.a */,
+				2E54934B2411F14A00B5FADF /* QGNotificationSdk.h */,
+				2E54933B2411EC1000B5FADF /* ContentExtension.entitlements */,
+				2E5493362411EBEE00B5FADF /* MainInterface.storyboard */,
+				2E5493372411EBEE00B5FADF /* NotificationViewController.h */,
+				2E5493382411EBEE00B5FADF /* NotificationViewController.m */,
+				2E54931B2411E87200B5FADF /* Info.plist */,
+			);
+			path = ContentExtension;
+			sourceTree = "<group>";
+		};
+		2E5493272411E88800B5FADF /* ServiceExtension */ = {
+			isa = PBXGroup;
+			children = (
+				2E54934E2411F15E00B5FADF /* lQGNotificationSdk.a */,
+				2E54934F2411F15E00B5FADF /* QGNotificationSdk.h */,
+				2E5493352411EB0300B5FADF /* ServiceExtension.entitlements */,
+				2E5493322411EAB900B5FADF /* NotificationService.h */,
+				2E5493332411EAB900B5FADF /* NotificationService.m */,
+				2E54932B2411E88800B5FADF /* Info.plist */,
+			);
+			path = ServiceExtension;
 			sourceTree = "<group>";
 		};
 		4DDB249DF729F69C8E673924 /* Pods */ = {
@@ -772,6 +885,7 @@
 				B50BDBC736404985A0140077 /* RNFirebase.xcodeproj */,
 				AE7BE21F558148A4B545734F /* imageCropPicker.xcodeproj */,
 				66AA6E460A614AA59DF7FF2B /* FastImage.xcodeproj */,
+				3BBDA65808674DD0A7E8A5C8 /* RNAiquaSdk.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -798,6 +912,8 @@
 				13B07FAE1A68108700A75B9A /* mooimom */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* mooimomTests */,
+				2E5493142411E87200B5FADF /* ContentExtension */,
+				2E5493272411E88800B5FADF /* ServiceExtension */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				DFE7935994274C8D80941CE7 /* Resources */,
@@ -816,6 +932,8 @@
 				00E356EE1AD99517003FC87E /* mooimomTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* mooimom-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* mooimom-tvOSTests.xctest */,
+				2E5493112411E87200B5FADF /* ContentExtension.appex */,
+				2E5493262411E88800B5FADF /* ServiceExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -830,7 +948,7 @@
 				526AD553C1464A9B80786C53 /* libimageCropPicker.a */,
 				D68E62ED1D6D4C2E9EC2F948 /* libFastImage.a */,
 				31FB956A40D44C879BF09B60 /* libFastImage-tvOS.a */,
-				D9CC591E2F3140CA912AEBDB /* libRNAiquaSdk.a */,
+				B4658E92755A410787811D81 /* libRNAiquaSdk.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -950,6 +1068,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				2E54931D2411E87200B5FADF /* PBXTargetDependency */,
+				2E54932D2411E88800B5FADF /* PBXTargetDependency */,
 			);
 			name = mooimom;
 			productName = "Hello World";
@@ -992,6 +1112,40 @@
 			productReference = 2D02E4901E0B4A5D006451C7 /* mooimom-tvOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		2E5493102411E87200B5FADF /* ContentExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2E54931F2411E87200B5FADF /* Build configuration list for PBXNativeTarget "ContentExtension" */;
+			buildPhases = (
+				2E54930D2411E87200B5FADF /* Sources */,
+				2E54930E2411E87200B5FADF /* Frameworks */,
+				2E54930F2411E87200B5FADF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ContentExtension;
+			productName = ContentExtension;
+			productReference = 2E5493112411E87200B5FADF /* ContentExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		2E5493252411E88800B5FADF /* ServiceExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2E54932F2411E88800B5FADF /* Build configuration list for PBXNativeTarget "ServiceExtension" */;
+			buildPhases = (
+				2E5493222411E88800B5FADF /* Sources */,
+				2E5493232411E88800B5FADF /* Frameworks */,
+				2E5493242411E88800B5FADF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ServiceExtension;
+			productName = ServiceExtension;
+			productReference = 2E5493262411E88800B5FADF /* ServiceExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1021,6 +1175,16 @@
 						CreatedOnToolsVersion = 8.2.1;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 2D02E47A1E0B4A5D006451C7;
+					};
+					2E5493102411E87200B5FADF = {
+						CreatedOnToolsVersion = 11.2.1;
+						DevelopmentTeam = K83N4PRU8C;
+						ProvisioningStyle = Automatic;
+					};
+					2E5493252411E88800B5FADF = {
+						CreatedOnToolsVersion = 11.2.1;
+						DevelopmentTeam = K83N4PRU8C;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -1098,6 +1262,10 @@
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
 				{
+					ProductGroup = 2E5492CC2411E64E00B5FADF /* Products */;
+					ProjectRef = 3BBDA65808674DD0A7E8A5C8 /* RNAiquaSdk.xcodeproj */;
+				},
+				{
 					ProductGroup = 9E4E08232349B655001CB993 /* Products */;
 					ProjectRef = 8CFE55A6374C4B08ADB31E32 /* RNFetchBlob.xcodeproj */;
 				},
@@ -1120,6 +1288,8 @@
 				00E356ED1AD99517003FC87E /* mooimomTests */,
 				2D02E47A1E0B4A5D006451C7 /* mooimom-tvOS */,
 				2D02E48F1E0B4A5D006451C7 /* mooimom-tvOSTests */,
+				2E5493102411E87200B5FADF /* ContentExtension */,
+				2E5493252411E88800B5FADF /* ServiceExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -1242,6 +1412,13 @@
 			fileType = archive.ar;
 			path = "libdouble-conversion.a";
 			remoteRef = 2DF0FFE82056DD460020B375 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		2E5492D02411E64E00B5FADF /* libRNAiquaSdk.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNAiquaSdk.a;
+			remoteRef = 2E5492CF2411E64E00B5FADF /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		3DAD3E841DF850E9000B6D8A /* libRCTImage-tvOS.a */ = {
@@ -1480,6 +1657,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2E54930F2411E87200B5FADF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2E5493392411EBEE00B5FADF /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2E5493242411E88800B5FADF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -1591,6 +1783,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2E54930D2411E87200B5FADF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2E54933A2411EBEE00B5FADF /* NotificationViewController.m in Sources */,
+				2E54934D2411F14B00B5FADF /* iCarousel.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2E5493222411E88800B5FADF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2E5493342411EAB900B5FADF /* NotificationService.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1603,6 +1812,16 @@
 			isa = PBXTargetDependency;
 			target = 2D02E47A1E0B4A5D006451C7 /* mooimom-tvOS */;
 			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
+		};
+		2E54931D2411E87200B5FADF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2E5493102411E87200B5FADF /* ContentExtension */;
+			targetProxy = 2E54931C2411E87200B5FADF /* PBXContainerItemProxy */;
+		};
+		2E54932D2411E88800B5FADF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2E5493252411E88800B5FADF /* ServiceExtension */;
+			targetProxy = 2E54932C2411E88800B5FADF /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1636,11 +1855,14 @@
 					"$(SRCROOT)..\node_modules\neact-native-firebaseiosRNFirebase/**",
 					"$(SRCROOT)..\node_modules\neact-native-image-crop-pickerios/**",
 					"$(SRCROOT)..\node_modules\neact-native-fast-imageiosFastImage/**",
+					"$(SRCROOT)/../node_modules/react-native-aiqua-sdk/ios",
 				);
 				INFOPLIST_FILE = mooimomTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1665,11 +1887,14 @@
 					"$(SRCROOT)..\node_modules\neact-native-firebaseiosRNFirebase/**",
 					"$(SRCROOT)..\node_modules\neact-native-image-crop-pickerios/**",
 					"$(SRCROOT)..\node_modules\neact-native-fast-imageiosFastImage/**",
+					"$(SRCROOT)/../node_modules/react-native-aiqua-sdk/ios",
 				);
 				INFOPLIST_FILE = mooimomTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1686,7 +1911,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = mooimom/mooimomDebug.entitlements;
-				CURRENT_PROJECT_VERSION = 30;
+				CURRENT_PROJECT_VERSION = 32;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = K83N4PRU8C;
 				HEADER_SEARCH_PATHS = (
@@ -1698,6 +1923,7 @@
 					"$(SRCROOT)..\node_modules\neact-native-firebaseiosRNFirebase/**",
 					"$(SRCROOT)..\node_modules\neact-native-image-crop-pickerios/**",
 					"$(SRCROOT)..\node_modules\neact-native-fast-imageiosFastImage/**",
+					"$(SRCROOT)/../node_modules/react-native-aiqua-sdk/ios",
 				);
 				INFOPLIST_FILE = mooimom/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -1721,7 +1947,7 @@
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/react-native-maps\"",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/yoga\"",
 				);
-				MARKETING_VERSION = 1.2.20;
+				MARKETING_VERSION = 1.2.21;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1739,7 +1965,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = mooimom/mooimom.entitlements;
-				CURRENT_PROJECT_VERSION = 30;
+				CURRENT_PROJECT_VERSION = 32;
 				DEVELOPMENT_TEAM = K83N4PRU8C;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1750,6 +1976,7 @@
 					"$(SRCROOT)..\node_modules\neact-native-firebaseiosRNFirebase/**",
 					"$(SRCROOT)..\node_modules\neact-native-image-crop-pickerios/**",
 					"$(SRCROOT)..\node_modules\neact-native-fast-imageiosFastImage/**",
+					"$(SRCROOT)/../node_modules/react-native-aiqua-sdk/ios",
 				);
 				INFOPLIST_FILE = mooimom/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -1773,7 +2000,7 @@
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/react-native-maps\"",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/yoga\"",
 				);
-				MARKETING_VERSION = 1.2.20;
+				MARKETING_VERSION = 1.2.21;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1806,10 +2033,13 @@
 					"$(SRCROOT)..\node_modules\neact-native-firebaseiosRNFirebase/**",
 					"$(SRCROOT)..\node_modules\neact-native-image-crop-pickerios/**",
 					"$(SRCROOT)..\node_modules\neact-native-fast-imageiosFastImage/**",
+					"$(SRCROOT)/../node_modules/react-native-aiqua-sdk/ios",
 				);
 				INFOPLIST_FILE = "mooimom-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1843,10 +2073,13 @@
 					"$(SRCROOT)..\node_modules\neact-native-firebaseiosRNFirebase/**",
 					"$(SRCROOT)..\node_modules\neact-native-image-crop-pickerios/**",
 					"$(SRCROOT)..\node_modules\neact-native-fast-imageiosFastImage/**",
+					"$(SRCROOT)/../node_modules/react-native-aiqua-sdk/ios",
 				);
 				INFOPLIST_FILE = "mooimom-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1879,10 +2112,13 @@
 					"$(SRCROOT)..\node_modules\neact-native-firebaseiosRNFirebase/**",
 					"$(SRCROOT)..\node_modules\neact-native-image-crop-pickerios/**",
 					"$(SRCROOT)..\node_modules\neact-native-fast-imageiosFastImage/**",
+					"$(SRCROOT)/../node_modules/react-native-aiqua-sdk/ios",
 				);
 				INFOPLIST_FILE = "mooimom-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1915,10 +2151,13 @@
 					"$(SRCROOT)..\node_modules\neact-native-firebaseiosRNFirebase/**",
 					"$(SRCROOT)..\node_modules\neact-native-image-crop-pickerios/**",
 					"$(SRCROOT)..\node_modules\neact-native-fast-imageiosFastImage/**",
+					"$(SRCROOT)/../node_modules/react-native-aiqua-sdk/ios",
 				);
 				INFOPLIST_FILE = "mooimom-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1928,6 +2167,130 @@
 				SDKROOT = appletvos;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/mooimom-tvOS.app/mooimom-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
+			};
+			name = Release;
+		};
+		2E5493202411E87200B5FADF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = ContentExtension/ContentExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = K83N4PRU8C;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = ContentExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mooimom.id.ios.ContentExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+				);
+			};
+			name = Debug;
+		};
+		2E5493212411E87200B5FADF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = ContentExtension/ContentExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = K83N4PRU8C;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = ContentExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mooimom.id.ios.ContentExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+				);
+			};
+			name = Release;
+		};
+		2E5493302411E88800B5FADF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = ServiceExtension/ServiceExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = K83N4PRU8C;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = ServiceExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mooimom.id.ios.ServiceExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+				);
+			};
+			name = Debug;
+		};
+		2E5493312411E88800B5FADF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = ServiceExtension/ServiceExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = K83N4PRU8C;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = ServiceExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mooimom.id.ios.ServiceExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+				);
 			};
 			name = Release;
 		};
@@ -2065,6 +2428,24 @@
 			buildConfigurations = (
 				2D02E4991E0B4A5E006451C7 /* Debug */,
 				2D02E49A1E0B4A5E006451C7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2E54931F2411E87200B5FADF /* Build configuration list for PBXNativeTarget "ContentExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2E5493202411E87200B5FADF /* Debug */,
+				2E5493212411E87200B5FADF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2E54932F2411E88800B5FADF /* Build configuration list for PBXNativeTarget "ServiceExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2E5493302411E88800B5FADF /* Debug */,
+				2E5493312411E88800B5FADF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

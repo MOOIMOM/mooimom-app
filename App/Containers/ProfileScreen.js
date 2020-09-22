@@ -394,7 +394,7 @@ class ProfileScreen extends Component {
                 </View>
               </View>
               <View style={{ marginVertical: 30 }}>
-                <Text style={{ fontFamily: Fonts.type.gotham2, fontSize: Metrics.fontSize1, color: Colors.mediumGray, alignSelf: 'center' }}>Version {Platform.OS === 'ios' ? '1.2.20' : '1.2.22'}</Text>
+                <Text style={{ fontFamily: Fonts.type.gotham2, fontSize: Metrics.fontSize1, color: Colors.mediumGray, alignSelf: 'center' }}>Version {Platform.OS === 'ios' ? '1.2.21' : '1.2.23'}</Text>
               </View>
               <View style={{ marginVertical: 20 }} />
             </ScrollView>

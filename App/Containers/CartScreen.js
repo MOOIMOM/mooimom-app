@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { SafeAreaView, ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Alert } from 'react-native'
+import { SafeAreaView, ScrollView, Text, View, TouchableOpacity, TouchableWithoutFeedback, Image, Alert, Modal } from 'react-native'
 import { Images, Metrics, Colors, Fonts } from '../Themes'
 import FastImage from 'react-native-fast-image'
 import { connect } from 'react-redux'
@@ -9,13 +9,17 @@ import CarttActions from '../Redux/CarttRedux'
 import UpdateOnlineCartActions from '../Redux/UpdateOnlineCartRedux'
 import CommissionEstimationActions from '../Redux/CommissionEstimationRedux'
 import GetOnlineCartActions from '../Redux/GetOnlineCartRedux'
+import { NetworkContext } from '../Components/NetworkProvider'
 
 import { DotIndicator } from 'react-native-indicators'
+
 // Styles
 import styles from './Styles/CartScreenStyles'
 
 
 class CartScreen extends Component {
+  static contextType = NetworkContext
+
   constructor(props) {
     super(props)
     this.state = {
@@ -27,28 +31,32 @@ class CartScreen extends Component {
   }
 
   componentWillMount() {
-    let dataCart = [...this.props.cartt.data].reverse()
+    if (this.context.isConnected) {
+      let dataCart = [...this.props.cartt.data].reverse()
 
-    let data2 = {
-      data_request: {
-        user_id: this.props.auth.payload.user_id,
-        unique_token: this.props.auth.payload.unique_token,
-        shopping_cart_id: this.props.getOnlineCart.payload.shopping_cart_id,
-        product_variations_user_want_to_buy: JSON.stringify(dataCart)
+      let data2 = {
+        data_request: {
+          user_id: this.props.auth.payload.user_id,
+          unique_token: this.props.auth.payload.unique_token,
+          shopping_cart_id: this.props.getOnlineCart.payload.shopping_cart_id,
+          product_variations_user_want_to_buy: JSON.stringify(dataCart)
+        }
       }
+      this.props.updateOnlineCartProcess(data2)
     }
-    this.props.updateOnlineCartProcess(data2)
   }
 
   componentDidMount() {
-    let data = {
-      data_request: {
-        user_id: this.props.auth.payload.user_id,
-        unique_token: this.props.auth.payload.unique_token,
+    if (this.context.isConnected) {
+      let data = {
+        data_request: {
+          user_id: this.props.auth.payload.user_id,
+          unique_token: this.props.auth.payload.unique_token,
+        }
       }
+      this.props.getOnlineCartProcess(data)
+      this.reloadCommission(this.state.cart)
     }
-    this.props.getOnlineCartProcess(data)
-    this.reloadCommission(this.state.cart)
   }
 
   actNavigate(screen) {
@@ -222,7 +230,6 @@ class CartScreen extends Component {
     }
     return true
   }
-
 
   _renderProductCart() {
 

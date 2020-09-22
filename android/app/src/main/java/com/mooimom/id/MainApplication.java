@@ -3,6 +3,9 @@ package com.mooimom.id;
 import android.app.Application;
 import com.airbnb.android.react.maps.MapsPackage;
 import com.facebook.react.ReactApplication;
+import com.henninghall.date_picker.DatePickerPackage;
+import com.reactnativecommunity.netinfo.NetInfoPackage;
+import com.reactlibrary.RNAiquaSdkPackage;
 import com.microsoft.codepush.react.CodePush;
 import com.microsoft.codepush.react.ReactInstanceHolder;
 import com.reactnativecommunity.geolocation.GeolocationPackage;
@@ -42,6 +45,9 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
             new MainReactPackage(),
+            new DatePickerPackage(),
+            new NetInfoPackage(),
+            new RNAiquaSdkPackage(),
             new CodePush(getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey), getApplicationContext(), BuildConfig.DEBUG),
             new GeolocationPackage(),
             new RNFusedLocationPackage(),

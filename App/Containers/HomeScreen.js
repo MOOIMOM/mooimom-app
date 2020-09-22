@@ -3,7 +3,9 @@ import { SafeAreaView, ScrollView, Text, View, TouchableOpacity, TouchableWithou
 import { Images, Metrics, Colors, Fonts } from '../Themes'
 import { connect } from 'react-redux'
 import Carousel, { ParallaxImage, Pagination } from 'react-native-snap-carousel';
+import CountDown from 'react-native-countdown-component'
 import ProductCard from '../Components/ProductCard'
+import NewProductCard from '../Components/NewProductCard'
 import SharedProductActions from '../Redux/SharedProductRedux'
 import GetHomepageActions from '../Redux/GetHomepageRedux'
 import GetAppVersionActions from '../Redux/GetAppVersionRedux'
@@ -14,11 +16,13 @@ import GetNotificationActions from '../Redux/GetNotificationRedux'
 import CarttActions from '../Redux/CarttRedux'
 import GetOnlineCartActions from '../Redux/GetOnlineCartRedux'
 import FastImage from 'react-native-fast-image'
+import ScaledImage from '../Components/ScaledImage'
 import firebase from 'react-native-firebase'
 import RNAiqua from 'react-native-aiqua-sdk'
-import { getNewNotificationsCount } from '../Lib/utils'
-
+import { getNewNotificationsCount, convertToRupiah } from '../Lib/utils'
+import axios from 'axios'
 import { DotIndicator } from 'react-native-indicators'
+import LinearGradient from 'react-native-linear-gradient'
 
 
 
@@ -38,9 +42,14 @@ class HomeScreen extends Component {
     super(props)
     this.state = {
       products: [],
+      newProducts: [],
       banners: [],
       popups: [],
       categories: [],
+      highlight: [],
+      stages: [],
+      flashsale: {},
+      flashSaleLength: 0,
       activeSlide: 0,
       activeSlide2: 0,
       fcmToken: '',
@@ -53,6 +62,8 @@ class HomeScreen extends Component {
     }
 
     this._renderProduct = this._renderProduct.bind(this)
+    this.renderNewProduct = this.renderNewProduct.bind(this)
+    this.renderFlashSaleProducts = this.renderFlashSaleProducts.bind(this)
     this.navigate_to = this.navigate_to.bind(this)
     this.refreshPage = this.refreshPage.bind(this)
 
@@ -154,12 +165,6 @@ class HomeScreen extends Component {
     else if (routeName1 === 'event') {
       this.navigate_to('EventRegistrationScreen')
     }
-    else if (routeName1 === 'product_category') {
-      this.navigate_to('Category', {
-        category_id: item.slug,
-        auth: this.props.auth
-      })
-    }
   }
 
   forceUpdate() {
@@ -195,7 +200,27 @@ class HomeScreen extends Component {
       this.props.getProfileProcess(data)
       this.props.getSettingRequest(data)
       this.props.getHomepageRequest(data)
+      this.getHomepageData()
     }
+  }
+
+  getHomepageData() {
+    try {
+      axios.get('https://mooimom-alpha.ec.tnpgroup.co/web/homepage?type=mobile')
+        .then((res) => {
+          console.log('WE', res.data)
+          this.setState({
+            newProducts: res.data.our_picks,
+            highlight: res.data.highlight,
+            stages: res.data.stage,
+            flashsale: res.data.flash_sale,
+            flashSaleLength: res.data.flash_sale.product_list.length
+          })
+        })
+    } catch (error) {
+      console.log('ini error ', error)
+    }
+
   }
 
   componentWillUnmount() {
@@ -367,8 +392,8 @@ class HomeScreen extends Component {
         !newProps.getAppVersion.fetching
       ) {
 
-        let ANDROID_APP_VERSION = '1.2.22'
-        let IOS_APP_VERSION = '1.2.20'
+        let ANDROID_APP_VERSION = '1.2.23'
+        let IOS_APP_VERSION = '1.2.21'
 
         let currAndroidVersion = newProps.getAppVersion.payload.android
         let currIOSVersion = newProps.getAppVersion.payload.ios
@@ -554,14 +579,14 @@ class HomeScreen extends Component {
   }
 
   renderCategories() {
-    if (this.state.categories.length > 0)
+    if (this.state.stages.length > 0)
       return (
-        this.state.categories.map((item, index) => {
+        this.state.stages.map((item, index) => {
           var image = Images.default
-          if (item.img_url && item.img_url !== '')
-            image = { uri: item.img_url }
+          if (item.image && item.image !== '')
+            image = { uri: item.image }
           return (
-            <TouchableOpacity key={index.toString()} style={styles.catButton} onPress={() => this.navigate_to('Category', { category_id: item.slug })}>
+            <TouchableOpacity key={index.toString()} style={styles.catButton} >
               <FastImage source={image} style={styles.catImage} resizeMode={FastImage.resizeMode.contain} />
               <Text style={styles.catText}>{item.name}</Text>
             </TouchableOpacity>
@@ -570,9 +595,84 @@ class HomeScreen extends Component {
       )
   }
 
+  renderHotDeal({ item, index }) {
+    return (
+      <TouchableOpacity key={index}>
+        {/* <View style={{ backgroundColor: '#F0D0F7', borderRadius: 10, width: 180, height: 210, marginLeft: 10 }}> */}
+        <Image source={{ uri: item.image }} style={{ borderBottomLeftRadius: 10, borderBottomRightRadius: 10, borderTopLeftRadius: 10, borderTopRightRadius: 10, marginLeft: 10, width: 180, height: 210 }} />
+        {/* </View> */}
+      </TouchableOpacity>
+    )
+  }
+
+  renderNewProductBanner({ item, index }) {
+    return (
+      <ScaledImage key={index.toString()} uri={item} width={Metrics.screenWidth - 20} />
+      // <TouchableOpacity>
+      //   <View style={{ width: Metrics.screenWidth - 20, height: 70 * Metrics.screenWidth / 320, justifyContent: 'center', alignItems: 'center', alignSelf: 'center' }}>
+
+      //     <Image source={{ uri: item }} style={{ width: '100%', height: '100%', borderTopLeftRadius: 10, borderTopRightRadius: 10, borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }} />
+      //   </View>
+      // </TouchableOpacity >
+    )
+  }
+
+  renderChosenCategory({ item, index }) {
+    return (
+      <TouchableOpacity key={index} style={{ width: 100, height: 140, marginBottom: 30, marginLeft: 20 }}>
+        <Image source={item.image} style={{ width: 70, height: 100, marginBottom: 10 }} />
+        <Text style={{ fontFamily: Fonts.gotham2, fontSize: Metrics.fontSize1, color: Colors.black }}>Pakaian hamil & menyusui</Text>
+      </TouchableOpacity>
+    )
+  }
+
+  renderFlashSaleProducts({ item, index }) {
+    return (
+      <TouchableOpacity onPress={() => this.navigate_to('NewProductScreen', { productId: '3' })} key={index} style={{ width: 180, height: 280, marginLeft: 10, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center', borderRadius: 5 }}>
+        <View style={{ width: 160, height: 160, justifyContent: 'center', alignItems: 'center', paddingTop: 5 }}>
+          <Image source={{ uri: item.image }} style={{ width: '100%', height: '100%' }} />
+        </View>
+        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+          <View style={{ paddingHorizontal: 10, paddingTop: 10, justifyContent: 'center' }}>
+            <Text style={{
+              flexWrap: 'wrap',
+              fontSize: Metrics.fontSize0,
+              lineHeight: Metrics.fontSize2,
+              fontFamily: Fonts.type.gotham2,
+              marginBottom: 5
+            }}>
+              {item.name}
+            </Text>
+          </View>
+
+          <Text style={{
+            color: Colors.mooimom,
+            fontSize: Metrics.fontSize1,
+            fontFamily: Fonts.type.gotham2,
+          }}>
+            {convertToRupiah(item.special_price)}
+          </Text>
+          <Text style={{ fontFamily: Fonts.gotham1, textDecorationLine: 'line-through', fontSize: Metrics.fontSize0 }}>{convertToRupiah(item.retail_price)}</Text>
+        </View>
+
+        <View style={{ width: 160, height: 10, backgroundColor: 'gray', borderRadius: 5, marginVertical: 5 }}>
+          <View style={{
+            width: '70%', height: 10, backgroundColor: '#FFC627', position: 'absolute', left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0, borderRadius: 5
+          }}></View>
+        </View>
+
+        <Text style={{ fontFamily: Fonts.gotham1, fontSize: 12 }}>segera habis</Text>
+      </TouchableOpacity>
+    )
+  }
+
   _renderProduct({ item, index }) {
     return (
       <TouchableWithoutFeedback
+        key={index}
         onPress={() => this.navigate_to('ProductScreen', {
           product_slug: item.slug,
           auth: this.props.auth
@@ -585,6 +685,29 @@ class HomeScreen extends Component {
             sharedProductProcess={this.props.sharedProductProcess}
             addWishlistProductProcess={this.props.addWishlistProductProcess}
             deleteWishlistProductProcess={this.props.deleteWishlistProductProcess}
+          />
+        </View>
+      </TouchableWithoutFeedback>
+    )
+  }
+
+  renderNewProduct({ item, index }) {
+    return (
+      <TouchableWithoutFeedback
+        key={index}
+        onPress={() => this.navigate_to('NewProductScreen', { productId: '123' })}
+      // onPress={() => this.navigate_to('ProductScreen', {
+      //   product_slug: item.slug,
+      //   auth: this.props.auth
+      // })}
+      >
+        <View>
+          <NewProductCard
+            product={item}
+          // auth={this.props.auth}
+          // sharedProductProcess={this.props.sharedProductProcess}
+          // addWishlistProductProcess={this.props.addWishlistProductProcess}
+          // deleteWishlistProductProcess={this.props.deleteWishlistProductProcess}
           />
         </View>
       </TouchableWithoutFeedback>
@@ -660,6 +783,29 @@ class HomeScreen extends Component {
       <SafeAreaView style={{ backgroundColor: Colors.mooimom, flex: 1 }}>
         <View style={styles.container}>
           <View style={styles.containerScroll}>
+            <LinearGradient colors={['#8df2e5', '#28C9B9']} style={{ width: '100%', height: 60 }}>
+              <View style={styles.headerWrapper1}>
+                <View style={styles.headerButtonLeft}>
+                  <TouchableOpacity onPress={() => this.navigate_to('NewCategoryScreen')}><Image source={Images.menuLogo} style={styles.buttonMenu} /></TouchableOpacity>
+                  <Image source={Images.mooimomLogoWhite} style={styles.logo} />
+                </View>
+                <View style={styles.headerButtonRight}>
+                  <TouchableOpacity onPress={() => this.navigate_to('SearchScreen')}><Image source={Images.search2} style={styles.buttonHeader} /></TouchableOpacity>
+                  <TouchableOpacity onPress={() => this.navigate_to('SharedProductScreen')}><Image source={Images.wishlist} style={styles.buttonHeader} /></TouchableOpacity>
+                  <TouchableOpacity onPress={() => this.navigate_to('CartScreen')}><Image source={Images.shoppingCart} style={styles.buttonHeader} />
+                    {cartCount > 0 && <View style={styles.notifContainer}>
+                      <Text style={styles.textNotif}>{cartCount}</Text>
+                    </View>}
+                  </TouchableOpacity>
+                  {/* <TouchableOpacity onPress={() => this.navigate_to('NotificationScreen', { fcmToken: this.state.fcmToken })}>
+                    <Image source={Images.notifWhite} style={styles.buttonHeader2} />
+                    {notifCount > 0 && <View style={styles.notifContainer}>
+                      <Text style={styles.textNotif}>{notifCount}</Text>
+                    </View>}
+                  </TouchableOpacity> */}
+                </View>
+              </View>
+            </LinearGradient>
             <ScrollView
               showsVerticalScrollIndicator={false}
               stickyHeaderIndices={[2]}
@@ -673,35 +819,14 @@ class HomeScreen extends Component {
                 <RefreshControl refreshing={this.state.refreshing} onRefresh={this.refreshPage} />}
             >
               <View style={styles.backgroundHeader} />
-              <View style={styles.headerWrapper}>
-                <View style={styles.headerWrapper1}>
-                  <View style={styles.headerButtonLeft}>
-                    <Image source={Images.mooimomLogoWhite} style={styles.logo} />
-                  </View>
-                  <View style={styles.headerButtonRight}>
-                    <TouchableOpacity onPress={() => this.navigate_to('SharedProductScreen')}><Image source={Images.wishlist} style={styles.buttonHeader} /></TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.navigate_to('CartScreen')}><Image source={Images.shoppingCart} style={styles.buttonHeader} />
-                      {cartCount > 0 && <View style={styles.notifContainer}>
-                        <Text style={styles.textNotif}>{cartCount}</Text>
-                      </View>}
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.navigate_to('NotificationScreen', { fcmToken: this.state.fcmToken })}>
-                      <Image source={Images.notifWhite} style={styles.buttonHeader2} />
-                      {notifCount > 0 && <View style={styles.notifContainer}>
-                        <Text style={styles.textNotif}>{notifCount}</Text>
-                      </View>}
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              </View>
-              <View style={styles.headerWrapper}>
+              {/* <View style={styles.headerWrapper}>
                 <View style={styles.headerWrapper2}>
                   <TouchableOpacity style={styles.searchButton} onPress={() => this.navigate_to('SearchScreen')}>
                     <Image source={Images.search} style={styles.imageSearch} />
                     <Text style={styles.textSearch}>Cari Baju Hamil, Bra, Korset, dll</Text>
                   </TouchableOpacity>
                 </View>
-              </View>
+              </View> */}
               <View style={styles.heroBannerWrapper}>
                 <Carousel
                   ref={(carousel) => { this._carousel = carousel; }}
@@ -725,6 +850,7 @@ class HomeScreen extends Component {
                 />
               </View>
               <View style={styles.wrapperSeparator} />
+              <View style={styles.wrapperSeparator} />
               <View style={styles.categoryWrapper}>
                 <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                   {this.renderCategories()}
@@ -732,28 +858,103 @@ class HomeScreen extends Component {
               </View>
               <View style={styles.wrapperSeparator} />
               <View style={styles.wrapperSeparator} />
-              <View style={styles.productWrapper}>
-                <View>
-                  {this.state.products.length > 0 && <Text style={styles.subTitleWrapper}>Produk Terlaris</Text>}
-                  <FlatList
-                    data={this.state.products}
-                    renderItem={this._renderProduct}
-                    keyExtractor={(item, index) => index.toString()}
-                    showsVerticalScrollIndicator={false}
-                    numColumns={2}
-                    getItemLayout={(data, index) => (
-                      { length: Metrics.screenHeight / 2, offset: Metrics.screenHeight / 2 * index, index }
-                    )}
-                  />
-                  {this.props.getHomepage.fetching &&
-                    <DotIndicator color={Colors.mediumGray} size={8} style={{ marginVertical: 20 }} />}
-                  {this.state.seeMore &&
-                    <TouchableOpacity onPress={() => this.navigate_to('Category')} style={{ paddingHorizontal: 20, paddingVertical: 5, backgroundColor: Colors.white, borderColor: Colors.mooimom, borderWidth: 1, justifyContent: 'center', alignItems: 'center', marginVertical: 20, borderRadius: 20, width: '50%', alignSelf: 'center' }}>
-                      <Text style={{ fontFamily: Fonts.type.gotham1, color: Colors.mooimom, fontSize: Metrics.fontSize1 }}>See More</Text>
-                    </TouchableOpacity>
-                  }
-                </View>
+              <View style={{ marginVertical: 10 }}>
+                <FlatList
+                  data={this.state.highlight}
+                  renderItem={this.renderHotDeal}
+                  showsHorizontalScrollIndicator={false}
+                  horizontal={true}
+                  ListFooterComponent={<View style={{ marginRight: 10 }} />}
+                />
               </View>
+              <View style={styles.wrapperSeparator} />
+              <View style={styles.wrapperSeparator} />
+              {
+                this.state.flashSaleLength !== 0 &&
+
+                <View style={{ width: '100%', height: 400, backgroundColor: Colors.mooimom, flexDirection: 'column', justifyContent: 'space-evenly' }}>
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20, marginTop: 10, marginBottom: 30 }}>
+                    <View>
+                      <Text style={{ color: Colors.white, fontFamily: Fonts.gotham1, fontSize: 20, marginBottom: 5 }}>Flash Sale</Text>
+                      <CountDown
+                        until={60 * 10}
+                        size={14}
+                        digitStyle={{ backgroundColor: '#FFF' }}
+                        digitTxtStyle={{ color: Colors.gray, fontFamily: Fonts.gotham1 }}
+                        timeToShow={['H', 'M', 'S']}
+                        timeLabels={{ h: null, m: null, s: null }}
+                      />
+                    </View>
+                    <View>
+                      <Text style={{ color: Colors.white, fontFamily: Fonts.gotham1, fontSize: 14 }}>Lihat semua </Text>
+                    </View>
+                  </View>
+
+                  <FlatList
+                    data={this.state.flashsale.product_list}
+                    renderItem={this.renderFlashSaleProducts}
+                    showsHorizontalScrollIndicator={false}
+                    horizontal={true}
+                    ListHeaderComponent={<View style={{ marginLeft: 20 }} />}
+                    ListFooterComponent={<View style={{ marginRight: 30 }} />}
+                  />
+                </View>
+              }
+              <View style={styles.wrapperSeparator} />
+              <View style={styles.wrapperSeparator} />
+              <View style={styles.productWrapper}>
+
+                <FlatList
+                  data={this.state.newProducts}
+                  showsVerticalScrollIndicator={false}
+                  // keyExtractor={(parentItem, index) => index.toString()}
+                  renderItem={(parentItem, index) => (
+
+                    <View>
+                      <View style={styles.wrapperSeparator} />
+                      {this.state.newProducts.length > 0 && <Text style={{ marginLeft: 20, fontFamily: Fonts.gotham1, fontSize: 18 }}>{parentItem.item.tittle}</Text>}
+                      <View style={styles.wrapperSeparator} />
+                      {parentItem.item.image_list.length != 0 &&
+
+                        <FlatList
+                          data={parentItem.item.image_list}
+                          horizontal={true}
+                          showsHorizontalScrollIndicator={false}
+                          renderItem={this.renderNewProductBanner}
+                          ListHeaderComponent={<View style={{ marginLeft: 10 }} />}
+                          ListFooterComponent={<View style={{ marginLeft: 20 }} />}
+                        />
+
+                      }
+                      <View style={styles.wrapperSeparator} />
+                      <FlatList
+                        data={parentItem.item.product_list}
+                        renderItem={this.renderNewProduct}
+                        // keyExtractor={(item, index) => index.toString()}
+                        showsVerticalScrollIndicator={false}
+                        showsHorizontalScrollIndicator={false}
+                        horizontal={true}
+                        ListHeaderComponent={<View style={{ marginLeft: 10 }} />}
+                        ListFooterComponent={<View style={{ marginLeft: 20 }} />}
+                        getItemLayout={(data, index) => (
+                          { length: Metrics.screenHeight / 2, offset: Metrics.screenHeight / 2 * index, index }
+                        )}
+                      />
+
+                      {/* {this.props.getHomepage.fetching &&
+                        <DotIndicator color={Colors.mediumGray} size={8} style={{ marginVertical: 20 }} />}
+                      {this.state.seeMore &&
+                        <TouchableOpacity onPress={() => this.navigate_to('Category')} style={{ paddingHorizontal: 20, paddingVertical: 5, backgroundColor: Colors.white, borderColor: Colors.mooimom, borderWidth: 1, justifyContent: 'center', alignItems: 'center', marginVertical: 20, borderRadius: 20, width: '50%', alignSelf: 'center' }}>
+                          <Text style={{ fontFamily: Fonts.type.gotham1, color: Colors.mooimom, fontSize: Metrics.fontSize1 }}>See More</Text>
+                        </TouchableOpacity>
+                      } */}
+                    </View>
+                  )}
+                />
+              </View>
+              <View style={styles.wrapperSeparator} />
+              <View style={styles.wrapperSeparator} />
+
             </ScrollView>
             {
               this.state.forceUpdate ?
@@ -887,6 +1088,7 @@ const mapDispatchToProps = dispatch => {
     getOnlineCartProcess: data => {
       dispatch(GetOnlineCartActions.getOnlineCartRequest(data))
     },
+
   }
 };
 

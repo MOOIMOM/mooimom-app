@@ -38,6 +38,17 @@ export function* postGetMooimomPoints(api, action) {
       }
     }
     yield put(GetMooimomPointsActions.getMooimomPointsFailure(err))
+  }
+  else if (response.problem === 'NETWORK_ERROR') {
+    console.log("HAI 2")
+
+    var err = {
+      error: {
+        error_code: '0',
+        error_message: 'Can not connect server now'
+      }
+    }
+    yield put(GetMooimomPointsActions.getMooimomPointsFailure(err))
   } else {
     console.log("HAI 3" + response)
 

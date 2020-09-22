@@ -7,6 +7,8 @@ import GetAllOrderActions from '../Redux/GetAllOrderRedux';
 import CancelOrderActions from '../Redux/CancelOrderRedux';
 import GetCommissionSummaryActions from '../Redux/GetCommissionSummaryRedux';
 import CartActions from '../Redux/CartRedux';
+import CarttActions from '../Redux/CarttRedux'
+import UpdateOnlineCartActions from '../Redux/UpdateOnlineCartRedux'
 import { connect } from 'react-redux'
 import { convertToRupiah, getDateFromString } from '../Lib/utils'
 
@@ -188,33 +190,28 @@ class OrderScreen extends Component {
   pressOrderAgain(items) {
     if (!items || items.length < 1)
       return;
-    items.map(item => {
-      let product = {
-        colors: item.colors,
-        slug: item.product_slug,
-        product_name: item.product_name,
-        product_regular_price: item.product_regular_price,
-        product_sale_price: item.product_sale_price,
-        sizes: item.sizes,
-        all_product_variations_with_stock_data: item.all_product_variations_with_stock_data,
-        custom_attribute_text: item.custom_attribute_text,
-        custom_attributes: item.custom_attributes,
-        img_url: item.main_image
-      }
-      let data = {
-        product: product,
-        color: item.color_slug,
-        size: item.size_slug,
-        custom: item.custom_attribute_1_slug,
-        sku: item.sku,
-        qty: item.quantity
-      }
-      this.props.addToCartProcess(data)
+    let dataCart = []
+
+    items.map((order, index) => {
+      let productVar = { sku: order.sku, quantity: order.quantity }
+      this.props.addToCarttProcess(productVar)
+      dataCart.unshift(productVar)
     })
+
+    let data2 = {
+      data_request: {
+        user_id: this.props.auth.payload.user_id,
+        unique_token: this.props.auth.payload.unique_token,
+        shopping_cart_id: this.props.getOnlineCart.payload.shopping_cart_id,
+        product_variations_user_want_to_buy: JSON.stringify(dataCart.reverse())
+      }
+    }
+    this.props.updateOnlineCartProcess(data2)
     Alert.alert(
       '',
       'Produk Berhasil Ditambahkan!',
     )
+
   }
 
   pressCancelOrder(orderId) {
@@ -433,7 +430,8 @@ const mapStateToProps = state => {
     commissionSummary: state.commissionSummary,
     cartt: state.cartt,
     cancelOrder: state.cancelOrder,
-    deleteOrderHistory: state.deleteOrderHistory
+    deleteOrderHistory: state.deleteOrderHistory,
+    getOnlineCart: state.getOnlineCart
   }
 };
 
@@ -450,6 +448,12 @@ const mapDispatchToProps = dispatch => {
     },
     cancelOrderProcess: data => {
       dispatch(CancelOrderActions.cancelOrderRequest(data))
+    },
+    updateOnlineCartProcess: data => {
+      dispatch(UpdateOnlineCartActions.updateOnlineCartRequest(data))
+    },
+    addToCarttProcess: data => {
+      dispatch(CarttActions.addCarttRequest(data))
     }
   }
 };

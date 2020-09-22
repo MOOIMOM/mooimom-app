@@ -13,12 +13,12 @@ export default StyleSheet.create({
   },
   backgroundHeader: {
     width: Metrics.screenWidth,
-    height: Metrics.screenWidth,
+    height: 250 * Metrics.screenWidth / 320,
     position: 'absolute',
     alignSelf: "center",
     alignContent: "center",
     top: Metrics.screenHeight * (isIphoneXorAbove() ? -0.15 : -0.25),
-    backgroundColor: Colors.mooimom,
+    backgroundColor: '#28C9B9',
     borderBottomLeftRadius: Metrics.screenWidth / 2,
     borderBottomRightRadius: Metrics.screenWidth / 2,
     transform: [{ scaleX: (isIphoneXorAbove() ? 3 : 2) }, { scaleY: 0.65 }],
@@ -44,7 +44,9 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: Metrics.screenWidth - 40,
-    marginHorizontal: 20
+    marginHorizontal: 20,
+    alignItems: 'center',
+    height: 60
   },
   logo: {
     width: Metrics.screenWidth / 3,
@@ -66,6 +68,13 @@ export default StyleSheet.create({
     height: 18 * Metrics.screenWidth / 320,
     width: 18 * Metrics.screenWidth / 320,
     marginLeft: 18,
+    resizeMode: 'contain'
+  },
+  buttonMenu: {
+    height: 16 * Metrics.screenWidth / 320,
+    width: 16 * Metrics.screenWidth / 320,
+    marginRight: 20,
+    marginTop: 5,
     resizeMode: 'contain'
   },
   buttonHeader2: {
@@ -118,6 +127,7 @@ export default StyleSheet.create({
     fontSize: Metrics.fontSize1
   },
   heroBannerWrapper: {
+    top: 20 * Metrics.screenWidth / 320,
     flex: 1
   },
   itemHeroBanner: {
@@ -142,7 +152,9 @@ export default StyleSheet.create({
   paginationContainerStyleHeroBanner: {
     paddingVertical: 0,
     paddingHorizontal: 0,
-    top: -15 * (Metrics.screenWidth / 320),
+    alignSelf: 'flex-start',
+    top: 10 * (Metrics.screenWidth / 320),
+    left: 20 * (Metrics.screenWidth / 320)
   },
   paginationDotContainerStyleHeroBanner: {
     marginHorizontal: 2
@@ -152,7 +164,8 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: Metrics.screenWidth - 40,
-    marginLeft: 20
+    marginLeft: 20,
+    marginTop: 40
   },
   catButton: {
     flexDirection: 'column',
@@ -176,9 +189,8 @@ export default StyleSheet.create({
   },
   productWrapper: {
     flex: 1,
-    width: Metrics.screenWidth - 40,
+    width: Metrics.screenWidth,
     flexGrow: 1,
-    marginHorizontal: 20
   },
   productContainer: {
     flex: 1,

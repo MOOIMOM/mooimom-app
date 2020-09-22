@@ -3,16 +3,16 @@ import { Metrics, ApplicationStyles, Colors, Fonts } from '../../Themes/'
 
 export default StyleSheet.create({
   container: {
-    flex:1,
+    flex: 1,
   },
-  containerScroll:{
+  containerScroll: {
     paddingTop: 0,
     height: Metrics.screenHeight - 160
   },
-  wrapperSeparator:{
+  wrapperSeparator: {
     marginTop: 20,
   },
-  headerWrapper:{
+  headerWrapper: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
@@ -21,7 +21,7 @@ export default StyleSheet.create({
     marginTop: 10,
     height: 40
   },
-  searchButton:{
+  searchButton: {
     width: Metrics.screenWidth - 100,
     height: 40,
     borderRadius: 25,
@@ -29,86 +29,86 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  imageSearch:{
-    height:20,
-    width:20,
+  imageSearch: {
+    height: 20,
+    width: 20,
     marginHorizontal: 10,
     resizeMode: 'contain'
   },
-  textSearch:{
-    color:Colors.gray,
+  textSearch: {
+    color: Colors.gray,
     fontFamily: Fonts.type.gotham5,
-    fontSize:Metrics.fontSize1
+    fontSize: Metrics.fontSize1
   },
-  btnHeader:{
+  btnHeader: {
     height: 20 * Metrics.screenWidth / 320,
     width: 20 * Metrics.screenWidth / 320,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  imgHeader:{
+  imgHeader: {
     height: 20 * Metrics.screenWidth / 320,
     width: 20 * Metrics.screenWidth / 320,
     resizeMode: 'contain'
   },
-  contentContainer:{
-    flexDirection:'row',
+  contentContainer: {
+    flexDirection: 'row',
     width: Metrics.screenWidth - 40,
     marginHorizontal: 20,
   },
-  containerMenu:{
+  containerMenu: {
 
   },
-  menu:{
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.gray,
+  menu: {
+    borderBottomWidth: 0.5,
+    borderBottomColor: Colors.mediumGray,
     paddingVertical: 10,
     paddingLeft: 10,
-    paddingRight:10
+    paddingRight: 10
   },
-  leftContainerMenu:{
+  leftContainerMenu: {
     flexDirection: 'row'
   },
-  contactContainer:{
+  contactContainer: {
     flexDirection: 'column',
     marginLeft: 20
   },
-  btnMenu:{
+  btnMenu: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between'
   },
-  imgMenu:{
+  imgMenu: {
     width: 25 * Metrics.screenWidth / 320,
-    height:25 * Metrics.screenWidth / 320,
+    height: 25 * Metrics.screenWidth / 320,
     resizeMode: 'contain'
   },
-  imgMenu2:{
+  imgMenu2: {
     width: 10 * Metrics.screenWidth / 320,
-    height:10 * Metrics.screenWidth / 320,
+    height: 10 * Metrics.screenWidth / 320,
     resizeMode: 'contain'
   },
-  imgText:{
+  imgText: {
     color: Colors.gray,
     fontFamily: Fonts.type.gotham2,
     fontSize: Metrics.fontSize2,
   },
-  imgText2:{
+  imgText2: {
     color: Colors.gray,
     fontFamily: Fonts.type.gotham2,
     fontSize: Metrics.fontSize2,
   },
-  imgText3:{
+  imgText3: {
     color: Colors.black,
     fontFamily: Fonts.type.gotham2,
     fontSize: Metrics.fontSize2,
   },
-  menuBottom:{
+  menuBottom: {
     marginTop: 50,
     justifyContent: 'center',
     alignItems: 'center'
   },
-  notifContainer:{
+  notifContainer: {
     width: 16 * Metrics.screenWidth / 320,
     height: 16 * Metrics.screenWidth / 320,
     position: 'absolute',
@@ -121,7 +121,7 @@ export default StyleSheet.create({
     flex: 1,
     flexWrap: 'nowrap'
   },
-  textNotif:{
+  textNotif: {
     fontSize: Metrics.fontSize1,
     fontFamily: Fonts.type.gotham2,
     color: Colors.white,

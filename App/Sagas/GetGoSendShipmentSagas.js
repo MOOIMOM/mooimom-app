@@ -37,6 +37,17 @@ export function* postGetGoSendShipment(api, action) {
       }
     }
     yield put(GetGoSendShipmentActions.getGoSendShipmentFailure(err))
+  }
+  else if (response.problem === 'NETWORK_ERROR') {
+    console.log("Hore 2", response)
+
+    var err = {
+      error: {
+        error_code: '0',
+        error_message: 'Can not connect server now'
+      }
+    }
+    yield put(GetGoSendShipmentActions.getGoSendShipmentFailure(err))
   } else {
     console.log("Hore 3", response)
 

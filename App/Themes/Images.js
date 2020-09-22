@@ -14,6 +14,8 @@ const images = {
   home2: require('../Images/Icons/home-2.png'),
   learn: require('../Images/Icons/learn.png'),
   learn2: require('../Images/Icons/learn-2.png'),
+  inbox: require('../Images/Icons/inbox.png'),
+  inbox2: require('../Images/Icons/inbox2.png'),
   order: require('../Images/Icons/order.png'),
   order2: require('../Images/Icons/order-2.png'),
   shoppingCart: require('../Images/Icons/shopping-cart.png'),
@@ -25,6 +27,7 @@ const images = {
   wishlistProduct: require('../Images/Icons/wishlist-2.png'),
   isWishlistProduct: require('../Images/Icons/wishlist-3.png'),
   search: require('../Images/Icons/search.png'),
+  search2: require('../Images/Icons/search2.png'),
   notif: require('../Images/Icons/notif.png'),
   notifWhite: require('../Images/Icons/notif-white.png'),
   back: require('../Images/Icons/back.png'),
@@ -35,8 +38,10 @@ const images = {
   rightArrow: require('../Images/Icons/next.png'),
   rightArrowBlack: require('../Images/Icons/next2.png'),
   downArrow: require('../Images/Icons/down-arrow.png'),
+  downArrowBlack: require('../Images/Icons/down.png'),
   share: require('../Images/Icons/share.png'),
   starEmpty: require('../Images/Icons/star-empty.png'),
+  quote: require('../Images/Icons/quote.png'),
   star: require('../Images/Icons/star.png'),
   bank: require('../Images/Icons/bank.png'),
   card: require('../Images/Icons/card.png'),
@@ -80,6 +85,7 @@ const images = {
   jneLogo: require('../Images/Icons/jne-logo.png'),
   dad: require('../Images/dad.png'),
   mom: require('../Images/mom.png'),
+  selectedCat: require('../Images/selectedCat.jpg'),
   forceUpdatePopUp: require('../Images/notif-update.png'),
   profilePopUp: require('../Images/profile-popup.png'),
   maternityBanner: require('../Images/banner-due-date.png'),
@@ -91,7 +97,9 @@ const images = {
   gopayLogo: require('../Images/Icons/gopay-logo.png'),
   ovoLogo: require('../Images/Icons/ovo-logo.png'),
   indomaretLogo: require('../Images/Icons/indomaret-logo.png'),
-  alfamartLogo: require('../Images/Icons/alfamart-logo.png')
+  alfamartLogo: require('../Images/Icons/alfamart-logo.png'),
+  menuLogo: require('../Images/Icons/menu.png'),
+  closeLogo: require('../Images/Icons/close.png')
 }
 
 export default images

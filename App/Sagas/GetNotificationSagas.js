@@ -35,6 +35,16 @@ export function* postGetNotification(api, action) {
       }
     }
     yield put(GetNotificationActions.getNotificationFailure(err))
+  }
+  else if (response.problem === 'NETWORK_ERROR') {
+    console.log(response)
+    var err = {
+      error: {
+        error_code: '0',
+        error_message: 'Can not connect server now'
+      }
+    }
+    yield put(GetNotificationActions.getNotificationFailure(err))
   } else {
     yield put(GetNotificationActions.getNotificationFailure(response.data))
   }

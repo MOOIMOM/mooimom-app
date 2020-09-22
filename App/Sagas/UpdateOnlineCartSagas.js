@@ -20,24 +20,38 @@ export function* postUpdateOnlineCart(api, action) {
   // const currentData = yield select(RegisterSelectors.getData)
   // make the call to the api
   const response = yield call(api.postUpdateOnlineCart, data)
+
   // success?
-  if (response.data.success === 1) {
-    if (__DEV__) console.tron.log(response)
-    console.log(response.data)
-    // You might need to change the response here - do this with a 'transform',
-    // located in ../Transforms/. Otherwise, just pass the data back from the api.
-    yield put(UpdateOnlineCartActions.updateOnlineCartSuccess(response.data))
-  } else if (response.problem === 'TIMEOUT_ERROR') {
-    var err = {
-      error: {
-        error_code: '0',
-        error_message: 'Can not connect server now'
-      }
+  if (response.ok === true) {
+    if (response.data.success === 1) {
+      if (__DEV__) console.tron.log(response)
+      console.log(response.data)
+      // You might need to change the response here - do this with a 'transform',
+      // located in ../Transforms/. Otherwise, just pass the data back from the api.
+      yield put(UpdateOnlineCartActions.updateOnlineCartSuccess(response.data))
+    } else if (response.data.success === 0) {
+      console.log(response.data)
+      yield put(UpdateOnlineCartActions.updateOnlineCartSuccess(response.data))
     }
-    console.log(err)
-    yield put(UpdateOnlineCartActions.updateOnlineCartFailure(err))
-  } else if (response.data.success === 0) {
-    console.log(response.data)
-    yield put(UpdateOnlineCartActions.updateOnlineCartSuccess(response.data))
+  }
+  else if (response.ok === false) {
+    if (response.problem === 'TIMEOUT_ERROR') {
+      var err = {
+        error: {
+          error_code: '0',
+          error_message: 'Can not connect server now'
+        }
+      }
+      yield put(UpdateOnlineCartActions.updateOnlineCartFailure(err))
+    }
+    else if (response.problem === 'NETWORK_ERROR') {
+      var err = {
+        error: {
+          error_code: '0',
+          error_message: 'Can not connect server now'
+        }
+      }
+      yield put(UpdateOnlineCartActions.updateOnlineCartFailure(err))
+    }
   }
 }

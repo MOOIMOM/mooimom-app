@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, Image } from 'react-native'
-import { Images } from '../Themes'
+import { Images, Metrics, Colors } from '../Themes'
 import FastImage from 'react-native-fast-image'
 import { convertToRupiah, share } from '../Lib/utils'
 
@@ -96,12 +96,14 @@ export default class ProductCard extends Component {
     if (this.state.isInWishlist)
       image = Images.wishlist1
     return (
+
       <TouchableOpacity onPress={() => this.onWishlistPress()} style={styles.wishlist}>
         <Image
           source={image}
           style={styles.wishlistImage}
         />
       </TouchableOpacity>
+
     )
   }
 
@@ -122,15 +124,15 @@ export default class ProductCard extends Component {
         {this.renderOutofstock()}
         {this.renderWishlist()}
         <View style={styles.productNameContainer}>
-          <Text style={styles.name}>{this.state.product.product_name}</Text>
+          <Text numberOfLines={2} ellipsizeMode={"tail"} style={styles.name}>{this.state.product.product_name}</Text>
         </View>
         <View style={styles.priceGroup}>
-          <Text style={styles.priceDiscount}>{disc}</Text>
           <Text style={styles.price}>{price}</Text>
+          <Text style={styles.priceDiscount}>{disc}</Text>
         </View>
         <View style={styles.extra}>
           <TouchableOpacity onPress={() => this.onSharePress()} style={styles.btnShare}>
-            <Text style={styles.textBtn}>BAGIKAN</Text>
+            <Text style={styles.textBtn}>Add to cart</Text>
           </TouchableOpacity>
         </View>
         {this.state.modalClipboardVisible && <View style={styles.modalView}>

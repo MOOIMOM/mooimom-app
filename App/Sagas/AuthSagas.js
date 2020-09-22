@@ -14,27 +14,36 @@ import { call, put } from 'redux-saga/effects'
 import AuthActions from '../Redux/AuthRedux'
 // import { RegisterSelectors } from '../Redux/RegisterRedux'
 
-export function * postAuth(api, action) {
+export function* postAuth(api, action) {
   const { data } = action
   // get current data from Store
   // const currentData = yield select(RegisterSelectors.getData)
   // make the call to the api
   const response = yield call(api.postAuth, data)
-    // success?
-    if (response.data.success === 1) {
-      if (__DEV__) console.tron.log(response)
-      // You might need to change the response here - do this with a 'transform',
-      // located in ../Transforms/. Otherwise, just pass the data back from the api.
-      yield put(AuthActions.authSuccess(response.data))
-    } else if (response.problem === 'TIMEOUT_ERROR') {
-      var err = {
-        error: {
-          error_code: '0',
-          error_message: 'Can not connect server now'
-        }
+  // success?
+  if (response.data.success === 1) {
+    if (__DEV__) console.tron.log(response)
+    // You might need to change the response here - do this with a 'transform',
+    // located in ../Transforms/. Otherwise, just pass the data back from the api.
+    yield put(AuthActions.authSuccess(response.data))
+  } else if (response.problem === 'TIMEOUT_ERROR') {
+    var err = {
+      error: {
+        error_code: '0',
+        error_message: 'Can not connect server now'
       }
-      yield put(AuthActions.authFailure(err))
-    } else {
-      yield put(AuthActions.authFailure(response.data))
     }
+    yield put(AuthActions.authFailure(err))
+  }
+  else if (response.problem === 'NETWORK_ERROR') {
+    var err = {
+      error: {
+        error_code: '0',
+        error_message: 'Can not connect server now'
+      }
+    }
+    yield put(AuthActions.authFailure(err))
+  } else {
+    yield put(AuthActions.authFailure(response.data))
+  }
 }

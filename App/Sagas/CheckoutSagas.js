@@ -35,6 +35,15 @@ export function* postCheckout(api, action) {
       }
     }
     yield put(CheckoutActions.getCheckoutFailure(err))
+  }
+  else if (response.problem === 'NETWORK_ERROR') {
+    var err = {
+      error: {
+        error_code: '0',
+        error_message: 'Can not connect server now'
+      }
+    }
+    yield put(CheckoutActions.getCheckoutFailure(err))
   } else {
     console.log(response.data)
     yield put(CheckoutActions.getCheckoutFailure(response.data))

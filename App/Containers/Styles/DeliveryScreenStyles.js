@@ -156,6 +156,11 @@ export default StyleSheet.create({
   chooseDeliveryWrapper2: {
     backgroundColor: Colors.white,
     top: Metrics.screenHeight / 2,
+    width: Metrics.screenWidth,
+  },
+  chooseDeliveryWrapper3: {
+    backgroundColor: Colors.white,
+    top: Metrics.screenHeight / 2,
     height: Platform.OS === 'ios' ? Metrics.screenHeight / 2 : Metrics.screenHeight / 2 - 20,
     width: Metrics.screenWidth,
   },
@@ -214,7 +219,6 @@ export default StyleSheet.create({
   },
   menuWrapper: {
     // position: 'absolute',
-    bottom: isIphoneXorAbove() ? 20 : 0,
     left: 0,
     height: 60 * Metrics.screenWidth / 320,
     width: Metrics.screenWidth,

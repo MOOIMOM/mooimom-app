@@ -49,6 +49,14 @@ target 'mooimom' do
   pod 'CodePush', :path => '../node_modules/react-native-code-push'
 
 
+
+
+  pod 'react-native-netinfo', :path => '../node_modules/@react-native-community/netinfo'
+
+
+
+  pod 'react-native-date-picker', :path => '../node_modules/react-native-date-picker'
+
   post_install do |installer|
     installer.pods_project.targets.each do |target|
           if target.name == "React"
