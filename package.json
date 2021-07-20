@@ -35,7 +35,7 @@
     "querystringify": "1.0.0",
     "ramda": "^0.25.0",
     "react": "16.8.3",
-    "react-native": "0.59.10",
+    "react-native": "0.62.3",
     "react-native-aiqua-sdk": "^1.2.3",
     "react-native-code-push": "^5.7.0",
     "react-native-config": "^0.10.0",
